@@ -8,6 +8,11 @@ import processing.data.JSONObject;
 
 //TODO Make the granularity of a GranularPath changeable.
 
+/**
+ * 
+ * @author James Morrow
+ *
+ */
 public class GranularPath implements Path {
 	private Point[] vertices;
 	private float cenx, ceny, width, height, perimeter;
