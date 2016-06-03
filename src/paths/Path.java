@@ -3,6 +3,7 @@ package paths;
 import processing.core.PApplet;
 
 /**
+ * A Traceable with a known perimeter, position, and size.
  * 
  * @author James Morrow
  *
