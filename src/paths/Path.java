@@ -61,41 +61,6 @@ public interface Path extends Traceable {
 		if (amt > 1) amt %= 1;
 		return trace(amt);
 	}
-
-	/**
-	 * Returns the slope of the Point on the Path at trace(amt).
-	 * @param amt
-	 * @return the slope
-	 */
-	public default float slope(float amt) {
-		if (amt >= 0.001f) {
-			Point a = this.trace(amt - 0.001f);
-			Point b = this.trace(amt);
-			return Point.slope(a, b);
-		}
-		else {
-			Point a = this.trace(amt + 0.001f);
-			Point b = this.trace(amt);
-			return Point.slope(a, b);
-		}
-	}
-	/**
-	 * Returns the slope of the Point on the Path at trace2(amt).
-	 * @param amt
-	 * @return the slope
-	 */
-	public default float slope2(float amt) {
-		if (amt >= 0.001f) {
-			Point a = this.trace(amt - this.getPerimeter()*0.001f);
-			Point b = this.trace(amt);
-			return Point.slope(a, b);
-		}
-		else {
-			Point a = this.trace(amt + this.getPerimeter()*0.001f);
-			Point b = this.trace(amt);
-			return Point.slope(a, b);
-		}
-	}
 	
 	/**
 	 * Returns the length of the Path.
@@ -130,6 +95,24 @@ public interface Path extends Traceable {
         if (num % denom >= 0) return num % denom;        
         else return denom - ((-num) % denom);
     }
+	
+	/**
+	 * Returns the slope of the Point on the Path at trace2(amt).
+	 * @param amt
+	 * @return the slope
+	 */
+	public default float slope2(float amt) {
+		if (amt >= 0.001f) {
+			Point a = this.trace(amt - this.getPerimeter()*0.001f);
+			Point b = this.trace(amt);
+			return Point.slope(a, b);
+		}
+		else {
+			Point a = this.trace(amt + this.getPerimeter()*0.001f);
+			Point b = this.trace(amt);
+			return Point.slope(a, b);
+		}
+	}
 	
 	/**
 	 * Returns true if this Path is considered a closed path and false otherwise.

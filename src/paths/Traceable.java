@@ -29,4 +29,21 @@ public interface Traceable {
 		pa.endShape();
 	}
 	public void translate(float dx, float dy);
+	/**
+	 * Returns the slope of the Point on the Path at trace(amt).
+	 * @param amt
+	 * @return the slope
+	 */
+	public default float slope(float amt) {
+		if (amt >= 0.001f) {
+			Point a = this.trace(amt - 0.001f);
+			Point b = this.trace(amt);
+			return Point.slope(a, b);
+		}
+		else {
+			Point a = this.trace(amt + 0.001f);
+			Point b = this.trace(amt);
+			return Point.slope(a, b);
+		}
+	}
 }
