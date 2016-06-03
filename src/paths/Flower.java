@@ -15,6 +15,10 @@ public class Flower implements Traceable {
 	private float cenx, ceny, xRadius, yRadius, freq1, freq2;
 	private int granularity;
 	
+	/**************************
+	 ***** Initialization *****
+	 **************************/
+	
 	public Flower(float cenx, float ceny, float radius, int freq1, int freq2, int granularity) {
 		this(cenx, ceny, radius, radius, freq1, freq2, granularity);
 	}
@@ -28,6 +32,10 @@ public class Flower implements Traceable {
         this.freq2 = freq2;
         this.granularity = granularity;
 	}
+	
+	/*************************
+	 ***** Functionality *****
+	 *************************/
 	
 	@Override
 	public void trace(Point pt, float amt) {
@@ -54,5 +62,65 @@ public class Flower implements Traceable {
 	public String toString() {
 		return "Flower [cenx=" + cenx + ", ceny=" + ceny + ", xRadius=" + xRadius +
 					", yRadius= " + yRadius + ", freq1=" + freq1 + ", freq2=" + freq2 + "]";
+	}
+	
+	/*******************************
+	 ***** Getters and Setters *****
+	 *******************************/
+	
+	public float getCenx() {
+		return cenx;
+	}
+
+	public void setCenx(float cenx) {
+		this.cenx = cenx;
+	}
+
+	public float getCeny() {
+		return ceny;
+	}
+
+	public void setCeny(float ceny) {
+		this.ceny = ceny;
+	}
+
+	public float getxRadius() {
+		return xRadius;
+	}
+
+	public void setxRadius(float xRadius) {
+		this.xRadius = xRadius;
+	}
+
+	public float getyRadius() {
+		return yRadius;
+	}
+
+	public void setyRadius(float yRadius) {
+		this.yRadius = yRadius;
+	}
+
+	public float getFreq1() {
+		return freq1;
+	}
+
+	public void setFreq1(float freq1) {
+		this.freq1 = freq1;
+	}
+
+	public float getFreq2() {
+		return freq2;
+	}
+
+	public void setFreq2(float freq2) {
+		this.freq2 = freq2;
+	}
+
+	public int getGranularity() {
+		return granularity;
+	}
+
+	public void setGranularity(int granularity) {
+		this.granularity = granularity;
 	}
 }

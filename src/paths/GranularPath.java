@@ -6,17 +6,15 @@ import json_lib.JSONable;
 import processing.core.PApplet;
 import processing.data.JSONObject;
 
-//TODO Make the granularity of a GranularPath changeable.
-
 /**
  * 
  * @author James Morrow
  *
  */
 public class GranularPath<T extends Traceable> implements Path {
-	private Point[] vertices;
+	private Point[] vertices; //TODO Listify
+	private float[] segAmts; //TODO Listify
 	private float cenx, ceny, width, height, perimeter;
-	private float[] segAmts;
 	private T traceable;
 	
 	/**************************

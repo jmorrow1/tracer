@@ -10,6 +10,10 @@ import processing.core.PApplet;
 public class Arc implements Traceable {
 	private float cenx, ceny, xRadius, yRadius, startAngle, endAngle;
 	
+	/**************************
+	 ***** Initialization *****
+	 **************************/
+	
 	public Arc(float a, float b, float c, float d, float startAngle, float endAngle, int ellipseMode, int granularity) {
 		switch (ellipseMode) {
 			case PApplet.RADIUS:
@@ -41,6 +45,10 @@ public class Arc implements Traceable {
 		this.endAngle = endAngle;
 	}
 	
+	/*************************
+	 ***** Functionality *****
+	 *************************/
+	
 	@Override
 	public void display(PApplet pa) {
 		pa.ellipseMode(pa.RADIUS);
@@ -64,5 +72,57 @@ public class Arc implements Traceable {
 	public String toString() {
 		return "Arc [cenx=" + cenx + ", ceny=" + ceny + ", xRadius=" + xRadius + ", yRadius=" + yRadius
 				+ ", startAngle=" + startAngle + ", endAngle=" + endAngle + "]";
+	}
+	
+	/*******************************
+	 ***** Getters and Setters *****
+	 *******************************/
+	
+	public float getCenx() {
+		return cenx;
+	}
+
+	public void setCenx(float cenx) {
+		this.cenx = cenx;
+	}
+
+	public float getCeny() {
+		return ceny;
+	}
+
+	public void setCeny(float ceny) {
+		this.ceny = ceny;
+	}
+
+	public float getWidth() {
+		return 2*xRadius;
+	}
+
+	public void setWidth(float width) {
+		this.xRadius = width/2f;
+	}
+
+	public float getHeight() {
+		return 2f*yRadius;
+	}
+
+	public void setHeight(float height) {
+		this.yRadius = height/2f;
+	}
+
+	public float getStartAngle() {
+		return startAngle;
+	}
+
+	public void setStartAngle(float startAngle) {
+		this.startAngle = startAngle;
+	}
+
+	public float getEndAngle() {
+		return endAngle;
+	}
+
+	public void setEndAngle(float endAngle) {
+		this.endAngle = endAngle;
 	}
 }
