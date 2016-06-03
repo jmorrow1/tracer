@@ -12,6 +12,7 @@ import processing.data.JSONObject;
 public class Ellipse implements Path, JSONable {
 	private float x, y, xRadius, yRadius;
 	private float perimeter;
+	private boolean perimeterOutOfSync;
 	
 	/**
 	 * Constructs an Ellipse analogously to Processing's native ellipse() function.
@@ -49,7 +50,7 @@ public class Ellipse implements Path, JSONable {
 				this.y = b + yRadius;
 				break;
 		}
-		recompute();
+		recomputePerimeter();
 	}
 	
 	public Ellipse(Ellipse ellipse) {
@@ -75,10 +76,11 @@ public class Ellipse implements Path, JSONable {
 		return j;
 	}
 	
-	private void recompute() {
+	private void recomputePerimeter() {
 		float a = PApplet.max(xRadius, yRadius);
 		float b = PApplet.min(xRadius, yRadius);
 		perimeter = PApplet.PI * (3*(a+b) - PApplet.sqrt((3*a + b) * (a + 3*b)));
+		perimeterOutOfSync = false;
 	}
 	
 	@Override
@@ -110,7 +112,7 @@ public class Ellipse implements Path, JSONable {
 	public void scale(float s) {
 		xRadius *= s;
 		yRadius *= s;
-		recompute();
+		perimeterOutOfSync = true;
 	}
 	
 	@Override
@@ -124,6 +126,9 @@ public class Ellipse implements Path, JSONable {
 	
 	@Override
 	public float getPerimeter() {
+		if (perimeterOutOfSync) {
+			recomputePerimeter();
+		}
 		return perimeter;
 	}
 	
@@ -157,7 +162,7 @@ public class Ellipse implements Path, JSONable {
 	 */
 	public void setWidth(float width) {
 		this.xRadius = width/2f;
-		recompute();
+		perimeterOutOfSync = true;
 	}
 	
 	@Override
@@ -171,6 +176,6 @@ public class Ellipse implements Path, JSONable {
 	 */
 	public void setHeight(float height) {
 		this.yRadius = height/2f;
-		recompute();
+		perimeterOutOfSync = true;
 	}
 }

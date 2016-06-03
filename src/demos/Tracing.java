@@ -19,7 +19,7 @@ import processing.core.PApplet;
  *
  */
 public class Tracing extends PApplet {
-	ArrayList<Traceable> paths;
+	ArrayList<Traceable> ts;
 	Point pt = new Point(0, 0);
 	float amt = 0;
 	
@@ -34,8 +34,8 @@ public class Tracing extends PApplet {
 	}
 	
 	public void setup() {	
-		paths = initList();
-		repositionPaths(paths);
+		ts = initList();
+		reposition(ts);
 	}
 	
 	private ArrayList<Traceable> initList() {
@@ -52,12 +52,12 @@ public class Tracing extends PApplet {
         return paths;
 	}
 	
-	private void repositionPaths(ArrayList<Traceable> paths) {
+	private void reposition(ArrayList<Traceable> ts) {
 		int x = cellSize/2;
 		int y = cellSize/2;
 		
-		for (Traceable p : paths) {
-			p.translate(x, y);
+		for (Traceable t : ts) {
+			t.translate(x, y);
 			
 			x += cellSize;
 			if (x >= width) {
@@ -70,19 +70,19 @@ public class Tracing extends PApplet {
 	public void draw() {
 		background(255);
 
-		for (Traceable p : paths) {
+		for (Traceable p : ts) {
 			drawPath(p);
 		}
 		
 		amt += 0.005f;
 	}
 	
-	private void drawPath(Traceable p) {
+	private void drawPath(Traceable t) {
 		noFill();
 		strokeWeight(2);
-		p.display(this);
+		t.display(this);
 	
-		p.trace(pt, amt);
+		t.trace(pt, amt);
 		strokeWeight(6);
 		pt.display(this);
 	}
