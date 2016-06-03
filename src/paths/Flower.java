@@ -120,7 +120,7 @@ public class Flower implements Traceable {
 		return drawGranularity;
 	}
 
-	public void setDrawGranularity(int granularity) {
-		this.drawGranularity = granularity;
+	public void setDrawGranularity(int drawGranularity) {
+		this.drawGranularity = drawGranularity;
 	}
 }

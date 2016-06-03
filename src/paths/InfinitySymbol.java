@@ -76,11 +76,11 @@ public class InfinitySymbol implements Traceable {
 		this.yRadius = yRadius;
 	}
 
-	public int getGranularity() {
+	public int getDrawGranulariy() {
 		return drawGranularity;
 	}
 
-	public void setGranularity(int granularity) {
-		this.drawGranularity = granularity;
+	public void setDrawGranularity(int drawGranularity) {
+		this.drawGranularity = drawGranularity;
 	}
 }
