@@ -4,18 +4,18 @@ import processing.core.PApplet;
 
 public class InfinitySymbol implements Traceable {
 	private float cenx, ceny, xRadius, yRadius;
-	private int granularity;
+	private int drawGranularity;
 	
 	/**************************
 	 ***** Initialization *****
 	 **************************/
 
-	public InfinitySymbol(float cenx, float ceny, float xRadius, float yRadius, int granularity) {
+	public InfinitySymbol(float cenx, float ceny, float xRadius, float yRadius, int drawGranularity) {
 		this.cenx = cenx;
 		this.ceny = ceny;
 		this.xRadius = xRadius;
 		this.yRadius = yRadius;
-		this.granularity = granularity;
+		this.drawGranularity = drawGranularity;
 	}
 	
 	/*************************
@@ -31,7 +31,7 @@ public class InfinitySymbol implements Traceable {
 
 	@Override
 	public void display(PApplet pa) {
-		display(pa, granularity);
+		display(pa, drawGranularity);
 	}
 
 	@Override
@@ -77,10 +77,10 @@ public class InfinitySymbol implements Traceable {
 	}
 
 	public int getGranularity() {
-		return granularity;
+		return drawGranularity;
 	}
 
 	public void setGranularity(int granularity) {
-		this.granularity = granularity;
+		this.drawGranularity = granularity;
 	}
 }

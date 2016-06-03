@@ -13,24 +13,24 @@ import processing.core.PApplet;
  */
 public class Flower implements Traceable {
 	private float cenx, ceny, xRadius, yRadius, freq1, freq2;
-	private int granularity;
+	private int drawGranularity;
 	
 	/**************************
 	 ***** Initialization *****
 	 **************************/
 	
-	public Flower(float cenx, float ceny, float radius, int freq1, int freq2, int granularity) {
-		this(cenx, ceny, radius, radius, freq1, freq2, granularity);
+	public Flower(float cenx, float ceny, float radius, int freq1, int freq2, int drawGranularity) {
+		this(cenx, ceny, radius, radius, freq1, freq2, drawGranularity);
 	}
 	
-	public Flower(float cenx, float ceny, float xRadius, float yRadius, int freq1, int freq2, int granularity) {
+	public Flower(float cenx, float ceny, float xRadius, float yRadius, int freq1, int freq2, int drawGranularity) {
 		this.cenx = cenx;
 		this.ceny = ceny;
 		this.xRadius = xRadius;
 		this.yRadius = yRadius;
 		this.freq1 = freq1;
         this.freq2 = freq2;
-        this.granularity = granularity;
+        this.drawGranularity = drawGranularity;
 	}
 	
 	/*************************
@@ -49,7 +49,7 @@ public class Flower implements Traceable {
 	}
 
 	public void display(PApplet pa) {
-		display(pa, granularity);
+		display(pa, drawGranularity);
 	}
 	
 	@Override
@@ -116,11 +116,11 @@ public class Flower implements Traceable {
 		this.freq2 = freq2;
 	}
 
-	public int getGranularity() {
-		return granularity;
+	public int getDrawGranularity() {
+		return drawGranularity;
 	}
 
-	public void setGranularity(int granularity) {
-		this.granularity = granularity;
+	public void setDrawGranularity(int granularity) {
+		this.drawGranularity = granularity;
 	}
 }

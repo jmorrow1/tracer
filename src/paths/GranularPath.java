@@ -11,11 +11,10 @@ import processing.data.JSONObject;
  * @author James Morrow
  *
  */
-public class GranularPath<T extends Traceable> implements Path {
+public class GranularPath implements Path {
 	private Point[] vertices; //TODO Listify
 	private float[] segAmts; //TODO Listify
 	private float cenx, ceny, width, height, perimeter;
-	private T traceable;
 	
 	/**************************
 	 ***** Initialization *****
@@ -26,11 +25,17 @@ public class GranularPath<T extends Traceable> implements Path {
 		update();
 	}
 	
-	public GranularPath(T pathDef, int numVertices) {
+	/**
+	 * Construct a GranularPath by taking a snapshot of a Traceable.
+	 * 
+	 * @param pathDef The Traceable which will be read and then discarded.
+	 * @param numVertices The resolution of the snapshot.
+	 */
+	public GranularPath(Traceable pathDef, int numVertices) {
 		initVertices(pathDef, numVertices);
 	}
 	
-	private GranularPath(GranularPath<T> path) {
+	private GranularPath(GranularPath path) {
 		this.cenx = path.getCenx();
 		this.ceny = path.getCeny();
 		this.width = path.getWidth();
@@ -41,7 +46,6 @@ public class GranularPath<T extends Traceable> implements Path {
 		for (int i=0; i<this.vertices.length; i++) {
 			this.vertices[i] = new Point(path.vertices[i]);
 		}
-		this.traceable = path.traceable;
 		update();
 	}
 	
@@ -183,17 +187,9 @@ public class GranularPath<T extends Traceable> implements Path {
 		computePerimeter();
 	}
 	
-	public void setTraceable(Traceable def, int numVertices) {
-		initVertices(def, numVertices);
+	public void setTraceable(Traceable pathDef, int numVertices) {
+		initVertices(pathDef, numVertices);
 		update();
-	}	
-	
-	public boolean hasTraceable() {
-		return traceable != null;
-	}
-	
-	public T getTraceable() {
-		return traceable;
 	}
 	
 	@Override
