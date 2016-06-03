@@ -13,10 +13,11 @@ import processing.data.JSONObject;
  * @author James Morrow
  *
  */
-public class GranularPath implements Path {
+public class GranularPath<T extends Traceable> implements Path {
 	private Point[] vertices;
 	private float cenx, ceny, width, height, perimeter;
 	private float[] segAmts;
+	private T traceable;
 	
 	/**************************
 	 ***** Initialization *****
@@ -27,12 +28,11 @@ public class GranularPath implements Path {
 		update();
 	}
 	
-	public GranularPath(PathDefinition pathDef, int numVertices) {
+	public GranularPath(T pathDef, int numVertices) {
 		initVertices(pathDef, numVertices);
-		update();
 	}
 	
-	private GranularPath(GranularPath path) {
+	private GranularPath(GranularPath<T> path) {
 		this.cenx = path.getCenx();
 		this.ceny = path.getCeny();
 		this.width = path.getWidth();
@@ -43,29 +43,26 @@ public class GranularPath implements Path {
 		for (int i=0; i<this.vertices.length; i++) {
 			this.vertices[i] = new Point(path.vertices[i]);
 		}
+		this.traceable = path.traceable;
 		update();
 	}
 	
-	private void initVertices(PathDefinition def, int numVertices) {
-		vertices = new Point[numVertices];
+	private void initVertices(Traceable def, int numVertices) {
+		if (vertices == null || vertices.length != numVertices) {
+			vertices = new Point[numVertices];
+		}
 		float dAmt = 1f / (numVertices-1);
 		float amt = 0;
 		for (int i=0; i<numVertices; i++) {
-			vertices[i] = def.trace(amt);
+			if (vertices[i] == null) {
+				vertices[i] = def.trace(amt);
+			}
+			else {
+				def.trace(vertices[i], amt);
+			}
 			amt += dAmt;
 		}
 	}
-	
-	private void update() {
-		computeDimensions();
-		computePerimeter();
-	}
-	
-	
-	public void update(PathDefinition def, int numVertices) {
-		initVertices(def, numVertices);
-		update();
-	}	
 	
 	private void computeDimensions() {
 		if (vertices.length > 0) {
@@ -182,6 +179,24 @@ public class GranularPath implements Path {
 	/*******************************
 	 ***** Getters and Setters *****
 	 *******************************/
+	
+	public void update() {
+		computeDimensions();
+		computePerimeter();
+	}
+	
+	public void setTraceable(Traceable def, int numVertices) {
+		initVertices(def, numVertices);
+		update();
+	}	
+	
+	public boolean hasTraceable() {
+		return traceable != null;
+	}
+	
+	public T getTraceable() {
+		return traceable;
+	}
 	
 	@Override
 	public float getPerimeter() {

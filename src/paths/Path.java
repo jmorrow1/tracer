@@ -7,7 +7,7 @@ import processing.core.PApplet;
  * @author James Morrow
  *
  */
-public interface Path {
+public interface Path extends Traceable {
 	/**
 	 * Displays the Path in the Processing canvas.
 	 * @param pa The PApplet instance.
