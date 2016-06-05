@@ -1,4 +1,4 @@
-package paths;
+package traceables;
 
 import processing.core.PApplet;
 

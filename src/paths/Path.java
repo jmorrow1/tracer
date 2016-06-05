@@ -1,6 +1,8 @@
 package paths;
 
 import processing.core.PApplet;
+import traceables.Point;
+import traceables.Traceable;
 
 /**
  * A Traceable with a known perimeter, position, and size.

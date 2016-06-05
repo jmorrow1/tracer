@@ -2,19 +2,19 @@ package demos;
 
 import java.util.ArrayList;
 
-import paths.Arc;
-import paths.Bezier;
-import paths.Blender;
+import functions.Polygonize;
 import paths.Circle;
 import paths.Ellipse;
-import paths.Flower;
-import paths.InfinitySymbol;
 import paths.Line;
-import paths.Point;
-import paths.Polygonize;
-import paths.Superellipse;
-import paths.Traceable;
 import processing.core.PApplet;
+import traceables.Arc;
+import traceables.Bezier;
+import traceables.Blender;
+import traceables.Flower;
+import traceables.InfinitySymbol;
+import traceables.Point;
+import traceables.Superellipse;
+import traceables.Traceable;
 
 /**
  * 

@@ -3,6 +3,7 @@ package paths;
 import json_lib.JSONable;
 import processing.core.PApplet;
 import processing.data.JSONObject;
+import traceables.Point;
 
 /**
  * 

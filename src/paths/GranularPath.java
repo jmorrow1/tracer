@@ -5,6 +5,8 @@ import java.util.Arrays;
 import json_lib.JSONable;
 import processing.core.PApplet;
 import processing.data.JSONObject;
+import traceables.Point;
+import traceables.Traceable;
 
 /**
  * 
