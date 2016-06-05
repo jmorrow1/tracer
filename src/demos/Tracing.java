@@ -23,8 +23,7 @@ import processing.core.PApplet;
  */
 public class Tracing extends PApplet {
 	ArrayList<Traceable> ts;
-	Blender blender;
-	Superellipse superellipse;
+	Blender<InfinitySymbol, Superellipse> blender;
 	
 	Point pt = new Point(0, 0);
 	float amt = 0;
@@ -48,7 +47,6 @@ public class Tracing extends PApplet {
 		ArrayList<Traceable> ts = new ArrayList<Traceable>();
 		ts.add(new Line(r*cos(0.25f*PI), r*sin(0.25f*PI), r*cos(1.25f*PI), r*sin(1.25f*PI)));
         ts.add(new Circle(0, 0, r));
-        
         ts.add(new Ellipse(0, 0, 2*r, r, CENTER));
         ts.add(Polygonize.makeRegularPolygon(0, 0, r, 6, 0));
         ts.add(Polygonize.makeRegularPolygon(0, 0, 25, 4, QUARTER_PI));
@@ -58,10 +56,11 @@ public class Tracing extends PApplet {
         ts.add(new InfinitySymbol(0, 0, r, 0.75f*r, 50));
         ts.add(new Bezier(random(-r, r), random(-r, r), random(-r, r), random(-r, r),
         		          random(-r, r), random(-r, r), random(-r, r), random(-r, r)));    
-        blender = new Blender(Polygonize.makePolygon(0, 0, r, 0.75f*r, 4, QUARTER_PI), new Circle(0, 0, r), 0, 100);
+        //blender = new Blender(Polygonize.makePolygon(0, 0, r, 0.75f*r, 4, QUARTER_PI), new Circle(0, 0, r), 0, 100);
+        blender = new Blender(new InfinitySymbol(0, 0, r, 0.75f*r, 50), new Superellipse(0, 0, r, r, 0.5f, 50), 0.5f, 100);
         ts.add(blender);
-        superellipse = new Superellipse(0, 0, r, r, 4, 50);
-        ts.add(superellipse);
+        ts.add(new Superellipse(0, 0, r, r, 0.5f, 50));
+        
         return ts;
 	}
 	
@@ -103,7 +102,8 @@ public class Tracing extends PApplet {
 	public void mouseMoved() {
 		float blendAmt = map(mouseX, 0, width, 0, 1);
 		blender.setBlendAmt(blendAmt);
-		float n = map(mouseX, 0, width, 0, 2);
+		Superellipse superellipse = blender.getB();
+		float n = map(mouseY, 0, height, 0.25f, 2);
 		superellipse.setN(n);
 	}
 }

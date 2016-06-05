@@ -8,7 +8,7 @@ import processing.core.PApplet;
  * @author James Morrow
  *
  */
-public class Blender implements Traceable{
+public class Blender<T extends Traceable, U extends Traceable> implements Traceable {
 	
 	/******************
 	 ***** Static *****
@@ -44,7 +44,8 @@ public class Blender implements Traceable{
 	 ******************/
 	
 	private float x, y;
-	private Traceable a, b;
+	private T a;
+	private U b;
 	private int drawGranularity;
 	private float blendAmt;
 	
@@ -52,7 +53,7 @@ public class Blender implements Traceable{
 	 ***** Initialization *****
 	 **************************/
 	
-	public Blender(Traceable a, Traceable b, float blendAmt, int drawGranularity) {
+	public Blender(T a, U b, float blendAmt, int drawGranularity) {
 		this.a = a;
 		this.b = b;
 		this.blendAmt = blendAmt;
@@ -86,19 +87,19 @@ public class Blender implements Traceable{
 	 ***** Getters and Setters *****
 	 *******************************/
 	
-	public Traceable getA() {
+	public T getA() {
 		return a;
 	}
 
-	public void setA(Traceable a) {
+	public void setA(T a) {
 		this.a = a;
 	}
 
-	public Traceable getB() {
+	public U getB() {
 		return b;
 	}
 
-	public void setB(Traceable b) {
+	public void setB(U b) {
 		this.b = b;
 	}
 

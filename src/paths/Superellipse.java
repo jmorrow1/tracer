@@ -52,7 +52,7 @@ public class Superellipse implements Traceable {
 		ceny += dy;
 	}
 	
-	private int sgn(float x) {
+	private static int sgn(float x) {
 		if (x > 0) return 1;
 		if (x < 0) return -1;
 		return 0;
