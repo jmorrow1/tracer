@@ -1,4 +1,4 @@
-package traceables;
+package paths;
 
 import json_lib.JSONable;
 import processing.core.PApplet;

@@ -3,19 +3,19 @@ package demos;
 import java.util.ArrayList;
 
 import functions.Polygonize;
-import paths.Circle;
-import paths.Ellipse;
-import paths.Line;
+import paths.Arc;
+import paths.Bezier;
+import paths.Blender;
+import paths.Composite;
+import paths.Flower;
+import paths.IPath;
+import paths.InfinitySymbol;
+import paths.Point;
+import paths.Superellipse;
+import paths2.Circle;
+import paths2.Ellipse;
+import paths2.Line;
 import processing.core.PApplet;
-import traceables.Arc;
-import traceables.Bezier;
-import traceables.Blender;
-import traceables.Composite;
-import traceables.Flower;
-import traceables.InfinitySymbol;
-import traceables.Point;
-import traceables.Superellipse;
-import traceables.Traceable;
 
 /**
  * 
@@ -23,7 +23,7 @@ import traceables.Traceable;
  *
  */
 public class Tracing extends PApplet {
-	ArrayList<Traceable> ts;
+	ArrayList<IPath> ts;
 	Blender<InfinitySymbol, Superellipse> blender;
 	
 	Point pt = new Point(0, 0);
@@ -43,10 +43,11 @@ public class Tracing extends PApplet {
 		reposition(ts);
 	}
 	
-	private ArrayList<Traceable> initList() {
+	private ArrayList<IPath> initList() {
 		float r = 0.4f * cellSize;
-		ArrayList<Traceable> ts = new ArrayList<Traceable>();
+		ArrayList<IPath> ts = new ArrayList<IPath>();
 		ts.add(new Line(r*cos(0.25f*PI), r*sin(0.25f*PI), r*cos(1.25f*PI), r*sin(1.25f*PI)));
+		ts.get(ts.size()-1).reverse();
 		ts.add(new Circle(0, 0, r));
 		ts.add(new Ellipse(0, 0, 2*r, r, CENTER));
 		ts.add(Polygonize.makeRegularPolygon(0, 0, r, 6, 0));
@@ -56,21 +57,23 @@ public class Tracing extends PApplet {
 		ts.add(new Flower(0, 0, r, 4, 3, 100));
 		ts.add(new InfinitySymbol(0, 0, r, 0.75f*r, 50));
 		ts.add(new Bezier(random(-r, r), random(-r, r), random(-r, r), random(-r, r),
-				          random(-r, r), random(-r, r), random(-r, r), random(-r, r)));    
+                          random(-r, r), random(-r, r), random(-r, r), random(-r, r)));		
 		blender = new Blender(new InfinitySymbol(0, 0, r, 0.75f*r, 50), new Superellipse(0, 0, r, r, 0.5f, 50), 0.5f, 100);
 		ts.add(blender);
 		ts.add(new Superellipse(0, 0, r, r, 0.5f, 50));
-		ts.add(new Composite(new Arc(0, 0, r, r, 0, PI, RADIUS, 50),
-				             new Arc(cellSize, 0, r, r, PI, TWO_PI, RADIUS, 50)));
+		Arc a = new Arc(0, 0, r, r, 0, PI, RADIUS, 50);
+		a.reverse();
+		Arc b = new Arc(cellSize, 0, r, r, PI, TWO_PI, RADIUS, 50);
+		ts.add(new Composite(a, b));
 		
 		return ts;
 	}
 	
-	private void reposition(ArrayList<Traceable> ts) {
+	private void reposition(ArrayList<IPath> ts) {
 		int x = cellSize/2;
 		int y = cellSize/2;
 		
-		for (Traceable t : ts) {
+		for (IPath t : ts) {
 			t.translate(x, y);
 			
 			x += (t instanceof Composite) ? 2*cellSize : cellSize;
@@ -84,14 +87,14 @@ public class Tracing extends PApplet {
 	public void draw() {
 		background(255);
 
-		for (Traceable p : ts) {
+		for (IPath p : ts) {
 			drawPath(p);
 		}
 		
 		amt = (amt + 0.005f) % 1f;
 	}
 	
-	private void drawPath(Traceable t) {
+	private void drawPath(IPath t) {
 		noFill();
 		strokeWeight(2);
 		t.display(this);

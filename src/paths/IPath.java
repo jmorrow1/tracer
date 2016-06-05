@@ -1,4 +1,4 @@
-package traceables;
+package paths;
 
 import processing.core.PApplet;
 
@@ -8,7 +8,7 @@ import processing.core.PApplet;
  * @author James Morrow
  *
  */
-public interface Traceable {
+public interface IPath {
 	final static Point pt = new Point(0, 0);
 	
 	/**
@@ -75,4 +75,6 @@ public interface Traceable {
 			return Point.slope(a, b);
 		}
 	}
+	
+	public void reverse();
 }

@@ -1,16 +1,16 @@
-package paths;
+package paths2;
 
 import json_lib.JSONable;
+import paths.Point;
 import processing.core.PApplet;
 import processing.data.JSONObject;
-import traceables.Point;
 
 /**
  * 
  * @author James Morrow
  *
  */
-public class Line implements Path, JSONable {
+public class Line extends Path2 implements JSONable {
 	private Point a, b;
 	private float length;
 	private static int intersectionRadius = 8;
@@ -116,6 +116,13 @@ public class Line implements Path, JSONable {
 	@Override
 	public Line clone() {
 		return new Line(this);
+	}
+	
+	public void reverse() {
+		super.reverse();
+		Point temp = b;
+		b = a;
+		a = temp;
 	}
 	
 	/*******************************

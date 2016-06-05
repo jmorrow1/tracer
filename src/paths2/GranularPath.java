@@ -1,19 +1,19 @@
-package paths;
+package paths2;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import paths.IPath;
+import paths.Point;
 import processing.core.PApplet;
-import traceables.Point;
-import traceables.Traceable;
 
 /**
  * 
  * @author James Morrow
  *
  */
-public class GranularPath implements Path {
+public class GranularPath implements IPath2 {
 	private List<Point> vertices;
 	private List<Float> segAmts;
 	private float cenx, ceny, width, height, perimeter;
@@ -31,21 +31,13 @@ public class GranularPath implements Path {
 		update();
 	}
 	
-	private static List<Point> listify(Point[] xs) {
-		List<Point> list = new ArrayList<Point>();
-		for (int i=0; i<xs.length; i++) {
-			list.add(xs[i]);
-		}
-		return list;
-	}
-	
 	/**
 	 * Construct a GranularPath by taking a snapshot of a Traceable.
 	 * 
 	 * @param pathDef The Traceable which will be read and then discarded.
 	 * @param numVertices The resolution of the snapshot.
 	 */
-	public GranularPath(Traceable pathDef, int numVertices) {
+	public GranularPath(IPath pathDef, int numVertices) {
 		initVertices(pathDef, numVertices);
 	}
 	
@@ -66,7 +58,7 @@ public class GranularPath implements Path {
 		update();
 	}
 	
-	private void initVertices(Traceable def, int numVertices) {
+	private void initVertices(IPath def, int numVertices) {
 		if (vertices == null || vertices.size() != numVertices) {
 			vertices = new ArrayList<Point>(numVertices);
 		}
@@ -160,7 +152,7 @@ public class GranularPath implements Path {
 
 	@Override
 	public void trace(Point pt, float amt) {
-		amt = Path.remainder(amt, 1);
+		amt = IPath2.remainder(amt, 1);
 		for (int i=1; i<segAmts.size(); i++) {
 			if (amt < segAmts.get(i)) {
 				amt = PApplet.map(amt, segAmts.get(i-1), segAmts.get(i), 0, 1);
@@ -199,12 +191,17 @@ public class GranularPath implements Path {
 	 ***** Getters and Setters *****
 	 *******************************/
 	
+	public void reverse() {
+		reverse(segAmts);
+		reverse(vertices);
+	}
+	
 	public void update() {
 		computeDimensions();
 		computePerimeter();
 	}
 	
-	public void setTraceable(Traceable pathDef, int numVertices) {
+	public void setTraceable(IPath pathDef, int numVertices) {
 		initVertices(pathDef, numVertices);
 		update();
 	}
@@ -232,5 +229,26 @@ public class GranularPath implements Path {
 	@Override
 	public float getHeight() {
 		return height;
+	}
+	
+	/****************************
+	 ***** Static Functions *****
+	 ****************************/
+	
+	private static List<Point> listify(Point[] xs) {
+		List<Point> list = new ArrayList<Point>();
+		for (int i=0; i<xs.length; i++) {
+			list.add(xs[i]);
+		}
+		return list;
+	}
+	
+	private static List reverse(List in) {
+		List out = new ArrayList();
+		int i = in.size() - 1;
+		while (i >= 0) {
+			out.add(in.get(i));
+		}
+		return out;
 	}
 }

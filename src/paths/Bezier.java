@@ -1,4 +1,4 @@
-package traceables;
+package paths;
 
 import processing.core.PApplet;
 
@@ -7,12 +7,16 @@ import processing.core.PApplet;
  * @author James Morrow
  *
  */
-public class Bezier implements Traceable {
+public class Bezier extends Path {
 	private float ax1, ay1, cx1, cy1, cx2, cy2, ax2, ay2;
 	
 	/**************************
 	 ***** Initialization *****
 	 **************************/
+	
+	public Bezier(Bezier b) {
+		this(b.ax1, b.ay1, b.cx1, b.cy1, b.cx2, b.cy2, b.ax2, b.ay2);
+	}
 	
 	public Bezier(float ax1, float ay1, float cx1, float cy1, float cx2, float cy2, float ax2, float ay2) {
 		this.ax1 = ax1;
@@ -31,6 +35,7 @@ public class Bezier implements Traceable {
 	
 	@Override
 	public void trace(Point pt, float amt) {
+		if (reversed) amt = PApplet.map(amt, 0, 1, 1, 0);
 		pt.x = bezierPoint(ax1, cx1, cx2, ax2, amt);
 		pt.y = bezierPoint(ay1, cy1, cy2, ay2, amt);	
 	}

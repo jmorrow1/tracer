@@ -1,4 +1,4 @@
-package traceables;
+package paths;
 
 import processing.core.PApplet;
 
@@ -9,7 +9,7 @@ import processing.core.PApplet;
  * @param <T>
  * @param <U>
  */
-public class Composite<T extends Traceable, U extends Traceable> implements Traceable {
+public class Composite<T extends IPath, U extends IPath> extends Path {
 	private T a;
 	private U b;
 	
@@ -28,6 +28,7 @@ public class Composite<T extends Traceable, U extends Traceable> implements Trac
 	
 	@Override
 	public void trace(Point pt, float amt) {
+		if (reversed) amt = PApplet.map(amt, 0, 1, 1, 0);
 		if (amt < 0.5f) {
 			a.trace(pt, 2f*amt);
 		}

@@ -1,8 +1,8 @@
-package traceables;
+package paths;
 
 import processing.core.PApplet;
 
-public class InfinitySymbol implements Traceable {
+public class InfinitySymbol extends Path {
 	private float cenx, ceny, xRadius, yRadius;
 	private int drawGranularity;
 	
@@ -25,6 +25,7 @@ public class InfinitySymbol implements Traceable {
 	@Override
 	public void trace(Point pt, float amt) {
 		float radians = amt * PApplet.TWO_PI;
+		if (reversed) radians *= -1;
 		pt.x = cenx + xRadius * PApplet.sin(radians);
 		pt.y = ceny + yRadius * PApplet.cos(radians) * PApplet.sin(radians);
 	}

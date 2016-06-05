@@ -1,4 +1,4 @@
-package traceables;
+package paths;
 
 import processing.core.PApplet;
 
@@ -7,7 +7,7 @@ import processing.core.PApplet;
  * @author James Morrow
  *
  */
-public class Superellipse implements Traceable {
+public class Superellipse extends Path {
 	private float cenx, ceny, xRadius, yRadius;
 	private float n;
 	private float twoOverN;
@@ -34,7 +34,7 @@ public class Superellipse implements Traceable {
 	@Override
 	public void trace(Point pt, float amt) {
 		float theta = amt*PApplet.TWO_PI;
-		
+		if (reversed) theta *= -1;		
 		float cosTheta = PApplet.cos(theta);
 		pt.x = cenx + PApplet.pow(PApplet.abs(cosTheta), twoOverN) * xRadius * sgn(cosTheta);
 		float sinTheta = PApplet.sin(theta);

@@ -1,16 +1,16 @@
-package paths;
+package paths2;
 
 import json_lib.JSONable;
+import paths.Point;
 import processing.core.PApplet;
 import processing.data.JSONObject;
-import traceables.Point;
 
 /**
  * 
  * @author James Morrow
  *
  */
-public class Circle implements Path, JSONable {
+public class Circle extends Path2 implements JSONable {
 	private float x, y;
 	private float radius;
 	private float angleOffset;
@@ -50,8 +50,8 @@ public class Circle implements Path, JSONable {
 
 	@Override
 	public void trace(Point pt, float amt) {
-		amt %= 1;
 		float radians = amt * PApplet.TWO_PI;
+		if (reversed) radians *= -1;
 		pt.x = x + radius*PApplet.cos(angleOffset+radians);
 		pt.y = y + radius*PApplet.sin(angleOffset+radians);
 	}

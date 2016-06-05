@@ -1,4 +1,4 @@
-package traceables;
+package paths;
 
 import processing.core.PApplet;
 
@@ -7,7 +7,7 @@ import processing.core.PApplet;
  * @author James Morrow
  *
  */
-public class Arc implements Traceable {
+public class Arc extends Path {
 	private float cenx, ceny, xRadius, yRadius, startAngle, endAngle;
 	
 	/**************************
@@ -57,6 +57,7 @@ public class Arc implements Traceable {
 
 	@Override
 	public void trace(Point pt, float amt) {
+		if (reversed) amt = PApplet.map(amt, 0, 1, 1, 0);
 		float angle = PApplet.map(amt % 1, 0, 1, startAngle, endAngle);
 		pt.x = cenx + xRadius*PApplet.cos(angle);
 		pt.y = ceny + yRadius*PApplet.sin(angle);

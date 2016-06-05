@@ -1,16 +1,16 @@
-package paths;
+package paths2;
 
 import json_lib.JSONable;
+import paths.Point;
 import processing.core.PApplet;
 import processing.data.JSONObject;
-import traceables.Point;
 
 /**
  * 
  * @author James Morrow
  *
  */
-public class Ellipse implements Path, JSONable {
+public class Ellipse extends Path2 implements JSONable {
 	private float x, y, xRadius, yRadius;
 	private float perimeter;
 	private boolean perimeterOutOfSync;
@@ -93,6 +93,7 @@ public class Ellipse implements Path, JSONable {
 	@Override
 	public void trace(Point pt, float amt) {
 		float radians = amt*PApplet.TWO_PI;
+		if (reversed) radians *= -1;
 		pt.x = x + xRadius*PApplet.cos(radians);
 		pt.y = y + yRadius*PApplet.sin(radians);
 	}

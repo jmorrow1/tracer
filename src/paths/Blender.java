@@ -1,4 +1,4 @@
-package traceables;
+package paths;
 
 import processing.core.PApplet;
 
@@ -8,7 +8,7 @@ import processing.core.PApplet;
  * @author James Morrow
  *
  */
-public class Blender<T extends Traceable, U extends Traceable> implements Traceable {
+public class Blender<T extends IPath, U extends IPath> extends Path {
 	
 	/******************
 	 ***** Static *****
@@ -25,7 +25,7 @@ public class Blender<T extends Traceable, U extends Traceable> implements Tracea
 	 * @param blendAmt The interpolation amount, a value from [0,1].
 	 * @param pa The Processing instance to draw to.
 	 */
-	public static void draw(Traceable a, Traceable b, int numVertices, float blendAmt, PApplet pa) {
+	public static void draw(IPath a, IPath b, int numVertices, float blendAmt, PApplet pa) {
 		float amt = 0;
 		float dAmt = 1f / numVertices;
 		
@@ -66,6 +66,7 @@ public class Blender<T extends Traceable, U extends Traceable> implements Tracea
 	
 	@Override
 	public void trace(Point pt, float amt) {
+		if (reversed) amt = PApplet.map(amt, 0, 1, 1, 0);
 		a.trace(ptA, amt);
 		b.trace(ptB, amt);
 		pt.x = PApplet.lerp(ptA.x, ptB.x, blendAmt);

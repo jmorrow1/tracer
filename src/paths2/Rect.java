@@ -1,16 +1,16 @@
-package paths;
+package paths2;
 
 import json_lib.JSONable;
+import paths.Point;
 import processing.core.PApplet;
 import processing.data.JSONObject;
-import traceables.Point;
 
 /**
  * 
  * @author James Morrow
  *
  */
-public class Rect implements Path, JSONable {
+public class Rect extends Path2 implements JSONable {
 	private float cenx, ceny, width, height;
 	private float perimeter;
 	private float[] breaks = new float[4];
@@ -92,6 +92,7 @@ public class Rect implements Path, JSONable {
 
 	@Override
 	public void trace(Point pt, float amt) {
+		if (reversed) amt = PApplet.map(amt, 0, 1, 1, 0);
 		if (amt < breaks[0]) {			
 			amt = PApplet.map(amt, 0, breaks[0], 0, 1);
 			float x = PApplet.lerp(getX1(), getX2(), amt);

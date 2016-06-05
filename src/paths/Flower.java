@@ -1,4 +1,4 @@
-package traceables;
+package paths;
 
 import processing.core.PApplet;
 
@@ -11,7 +11,7 @@ import processing.core.PApplet;
  * @author James Morrow
  *
  */
-public class Flower implements Traceable {
+public class Flower extends Path {
 	private float cenx, ceny, xRadius, yRadius, freq1, freq2;
 	private int drawGranularity;
 	
@@ -39,6 +39,7 @@ public class Flower implements Traceable {
 	
 	@Override
 	public void trace(Point pt, float amt) {
+		if (reversed) amt *= -1;
 		float alpha = amt * PApplet.TWO_PI * freq1;
         float beta = amt * PApplet.TWO_PI * freq2;
         float x = cenx + xRadius*PApplet.cos(alpha);
