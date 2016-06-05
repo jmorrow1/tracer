@@ -92,7 +92,6 @@ public class Rect implements Path, JSONable {
 
 	@Override
 	public void trace(Point pt, float amt) {
-		if (amt > 1) amt %= 1;
 		if (amt < breaks[0]) {			
 			amt = PApplet.map(amt, 0, breaks[0], 0, 1);
 			float x = PApplet.lerp(getX1(), getX2(), amt);

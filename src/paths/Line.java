@@ -58,13 +58,11 @@ public class Line implements Path, JSONable {
 
 	@Override
 	public void trace(Point pt, float amt) {
-		amt %= 1;
 		pt.x = PApplet.lerp(a.x, b.x, amt);
 		pt.y = PApplet.lerp(a.y, b.y, amt);
 	}
 	
 	public static void trace(Point pt, float ax, float ay, float bx, float by, float amt) {
-		amt %= 1;
 		pt.x = PApplet.lerp(ax, bx, amt);
 		pt.y = PApplet.lerp(ay, by, amt);
 	}

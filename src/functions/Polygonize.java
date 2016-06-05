@@ -13,6 +13,8 @@ import traceables.Point;
  *
  */
 public class Polygonize {
+	private Polygonize() {}
+	
 	/**
 	 * Makes a regular polygon, a polygon circumscribed in an ellipse,
 	 * with its angles equally spaced apart.

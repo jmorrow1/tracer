@@ -56,7 +56,6 @@ public class Tracing extends PApplet {
 		ts.add(new InfinitySymbol(0, 0, r, 0.75f*r, 50));
 		ts.add(new Bezier(random(-r, r), random(-r, r), random(-r, r), random(-r, r),
 				          random(-r, r), random(-r, r), random(-r, r), random(-r, r)));    
-		//blender = new Blender(Polygonize.makePolygon(0, 0, r, 0.75f*r, 4, QUARTER_PI), new Circle(0, 0, r), 0, 100);
 		blender = new Blender(new InfinitySymbol(0, 0, r, 0.75f*r, 50), new Superellipse(0, 0, r, r, 0.5f, 50), 0.5f, 100);
 		ts.add(blender);
 		ts.add(new Superellipse(0, 0, r, r, 0.5f, 50));
