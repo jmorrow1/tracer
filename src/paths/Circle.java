@@ -10,7 +10,7 @@ import traceables.Point;
  * @author James Morrow
  *
  */
-public class Circle implements Path, JSONable {
+public class Circle implements IPath2, JSONable {
 	private float x, y;
 	private float radius;
 	private float angleOffset;

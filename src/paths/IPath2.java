@@ -2,7 +2,7 @@ package paths;
 
 import processing.core.PApplet;
 import traceables.Point;
-import traceables.Traceable;
+import traceables.IPath;
 
 /**
  * A Traceable with a known perimeter, position, and size.
@@ -10,7 +10,7 @@ import traceables.Traceable;
  * @author James Morrow
  *
  */
-public interface Path extends Traceable {
+public interface IPath2 extends IPath {
 	/**
 	 * Displays the Path in the Processing canvas.
 	 * @param pa The PApplet instance.
@@ -133,7 +133,7 @@ public interface Path extends Traceable {
 	/**
 	 * Returns a deep copy of this Path.
 	 */
-	public Path clone();
+	public IPath2 clone();
 	
 	/**
 	 * Returns the center x-coordinate of this Path.

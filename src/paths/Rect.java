@@ -10,7 +10,7 @@ import traceables.Point;
  * @author James Morrow
  *
  */
-public class Rect implements Path, JSONable {
+public class Rect implements IPath2, JSONable {
 	private float cenx, ceny, width, height;
 	private float perimeter;
 	private float[] breaks = new float[4];

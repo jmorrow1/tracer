@@ -10,7 +10,7 @@ import traceables.Point;
  * @author James Morrow
  *
  */
-public class Ellipse implements Path, JSONable {
+public class Ellipse implements IPath2, JSONable {
 	private float x, y, xRadius, yRadius;
 	private float perimeter;
 	private boolean perimeterOutOfSync;

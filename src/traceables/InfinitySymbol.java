@@ -2,7 +2,7 @@ package traceables;
 
 import processing.core.PApplet;
 
-public class InfinitySymbol implements Traceable {
+public class InfinitySymbol extends Path {
 	private float cenx, ceny, xRadius, yRadius;
 	private int drawGranularity;
 	

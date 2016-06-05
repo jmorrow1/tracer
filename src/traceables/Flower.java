@@ -11,7 +11,7 @@ import processing.core.PApplet;
  * @author James Morrow
  *
  */
-public class Flower implements Traceable {
+public class Flower extends Path {
 	private float cenx, ceny, xRadius, yRadius, freq1, freq2;
 	private int drawGranularity;
 	

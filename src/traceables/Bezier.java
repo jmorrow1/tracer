@@ -7,7 +7,7 @@ import processing.core.PApplet;
  * @author James Morrow
  *
  */
-public class Bezier implements Traceable {
+public class Bezier extends Path {
 	private float ax1, ay1, cx1, cy1, cx2, cy2, ax2, ay2;
 	
 	/**************************
