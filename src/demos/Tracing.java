@@ -10,6 +10,7 @@ import processing.core.PApplet;
 import traceables.Arc;
 import traceables.Bezier;
 import traceables.Blender;
+import traceables.Composite;
 import traceables.Flower;
 import traceables.InfinitySymbol;
 import traceables.Point;
@@ -59,6 +60,8 @@ public class Tracing extends PApplet {
 		blender = new Blender(new InfinitySymbol(0, 0, r, 0.75f*r, 50), new Superellipse(0, 0, r, r, 0.5f, 50), 0.5f, 100);
 		ts.add(blender);
 		ts.add(new Superellipse(0, 0, r, r, 0.5f, 50));
+		ts.add(new Composite(new Arc(0, 0, r, r, 0, PI, RADIUS, 50),
+				             new Arc(cellSize, 0, r, r, PI, TWO_PI, RADIUS, 50)));
 		
 		return ts;
 	}
@@ -70,7 +73,7 @@ public class Tracing extends PApplet {
 		for (Traceable t : ts) {
 			t.translate(x, y);
 			
-			x += cellSize;
+			x += (t instanceof Composite) ? 2*cellSize : cellSize;
 			if (x >= width) {
 				x = cellSize/2;
 				y += cellSize;
@@ -93,8 +96,8 @@ public class Tracing extends PApplet {
 		strokeWeight(2);
 		t.display(this);
 	
-		t.trace(pt, amt);
 		strokeWeight(6);
+		t.trace(pt, amt);
 		pt.display(this);
 	}
 	

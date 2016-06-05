@@ -1,10 +1,10 @@
 package paths;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
-import json_lib.JSONable;
 import processing.core.PApplet;
-import processing.data.JSONObject;
 import traceables.Point;
 import traceables.Traceable;
 
@@ -14,8 +14,8 @@ import traceables.Traceable;
  *
  */
 public class GranularPath implements Path {
-	private Point[] vertices; //TODO Listify
-	private float[] segAmts; //TODO Listify
+	private List<Point> vertices;
+	private List<Float> segAmts;
 	private float cenx, ceny, width, height, perimeter;
 	
 	/**************************
@@ -23,8 +23,20 @@ public class GranularPath implements Path {
 	 **************************/
 	
 	public GranularPath(Point[] vertices) {
+		this(listify(vertices));
+	}
+	
+	public GranularPath(List<Point> vertices) {
 		this.vertices = vertices;
 		update();
+	}
+	
+	private static List<Point> listify(Point[] xs) {
+		List<Point> list = new ArrayList<Point>();
+		for (int i=0; i<xs.length; i++) {
+			list.add(xs[i]);
+		}
+		return list;
 	}
 	
 	/**
@@ -43,47 +55,50 @@ public class GranularPath implements Path {
 		this.width = path.getWidth();
 		this.height = path.getHeight();
 		this.perimeter = path.getPerimeter();
-		this.segAmts = Arrays.copyOf(path.segAmts, path.segAmts.length);
-		this.vertices = new Point[path.vertices.length];
-		for (int i=0; i<this.vertices.length; i++) {
-			this.vertices[i] = new Point(path.vertices[i]);
+		this.segAmts = new ArrayList<Float>(path.segAmts.size());
+		for (Float f : path.segAmts) {
+			this.segAmts.add(f.floatValue());
+		}
+		this.vertices = new ArrayList<Point>(path.vertices.size());
+		for (Point vtx : vertices) {
+			this.vertices.add(new Point(vtx));
 		}
 		update();
 	}
 	
 	private void initVertices(Traceable def, int numVertices) {
-		if (vertices == null || vertices.length != numVertices) {
-			vertices = new Point[numVertices];
+		if (vertices == null || vertices.size() != numVertices) {
+			vertices = new ArrayList<Point>(numVertices);
 		}
 		float dAmt = 1f / (numVertices-1);
 		float amt = 0;
 		for (int i=0; i<numVertices; i++) {
-			if (vertices[i] == null) {
-				vertices[i] = def.trace(amt);
+			if (vertices.get(i) == null) {
+				vertices.set(i, def.trace(amt));
 			}
 			else {
-				def.trace(vertices[i], amt);
+				def.trace(vertices.get(i), amt);
 			}
 			amt += dAmt;
 		}
 	}
 	
 	private void computeDimensions() {
-		if (vertices.length > 0) {
-			float minX = vertices[0].x, maxX = vertices[0].x;
-			float minY = vertices[0].y, maxY = vertices[0].y;
-			for (int i=1; i<vertices.length; i++) {
-				if (vertices[i].x < minX) {
-					minX = vertices[i].x;
+		if (vertices.size() > 0) {
+			float minX = vertices.get(0).x, maxX = vertices.get(0).x;
+			float minY = vertices.get(0).y, maxY = vertices.get(0).y;
+			for (int i=1; i<vertices.size(); i++) {
+				if (vertices.get(i).x < minX) {
+					minX = vertices.get(i).x;
 				}
-				else if (vertices[i].x > maxX) {
-					maxX = vertices[i].x;
+				else if (vertices.get(i).x > maxX) {
+					maxX = vertices.get(i).x;
 				}
-				if (vertices[i].y < minY) {
-					minY = vertices[i].y;
+				if (vertices.get(i).y < minY) {
+					minY = vertices.get(i).y;
 				}
-				else if (vertices[i].y > maxY) {
-					maxY = vertices[i].y;
+				else if (vertices.get(i).y > maxY) {
+					maxY = vertices.get(i).y;
 				}
 			}
 			this.width = maxX - minX;
@@ -100,17 +115,17 @@ public class GranularPath implements Path {
 	}
 	
 	private void computePerimeter() {
-		float[] segLengths = new float[vertices.length];
+		float[] segLengths = new float[vertices.size()];
 		
 		this.perimeter = 0;
 		
 		//compute the total length of the perimeter and lengths of line segments comprising the perimeter
-		if (vertices.length > 0) {
-			float ax = vertices[0].x;
-			float ay = vertices[0].y;
-			for (int i=1; i<vertices.length; i++) {
-				float bx = vertices[i].x;
-				float by = vertices[i].y;
+		if (vertices.size() > 0) {
+			float ax = vertices.get(0).x;
+			float ay = vertices.get(0).y;
+			for (int i=1; i<vertices.size(); i++) {
+				float bx = vertices.get(i).x;
+				float by = vertices.get(i).y;
 				segLengths[i] += Line.getLength(ax, ay, bx, by);
 				this.perimeter += segLengths[i];
 				ax = bx;
@@ -119,14 +134,14 @@ public class GranularPath implements Path {
 		}
 		
 		//compute segAmts
-		segAmts = new float[segLengths.length];
-		if (vertices.length > 0) {
+		segAmts = new ArrayList<Float>(segLengths.length);
+		if (segAmts.size() > 0) {
 			float sum = 0;
-			for (int i=0; i<segAmts.length-1; i++) {
+			for (int i=0; i<segAmts.size()-1; i++) {
 				sum += segLengths[i];
-				segAmts[i] = sum / perimeter;
+				segAmts.set(i, sum / perimeter);
 			}
-			segAmts[segAmts.length-1] = 1;
+			segAmts.set(segAmts.size()-1, 1f);
 		}
 	}
 	
@@ -137,8 +152,8 @@ public class GranularPath implements Path {
 	@Override
 	public void display(PApplet pa) {
 		pa.beginShape();
-		for (int i=0; i<vertices.length; i++) {
-			pa.vertex(vertices[i].x, vertices[i].y);
+		for (int i=0; i<vertices.size(); i++) {
+			pa.vertex(vertices.get(i).x, vertices.get(i).y);
 		}
 		pa.endShape();
 	}
@@ -146,11 +161,11 @@ public class GranularPath implements Path {
 	@Override
 	public void trace(Point pt, float amt) {
 		amt = Path.remainder(amt, 1);
-		for (int i=1; i<segAmts.length; i++) {
-			if (amt < segAmts[i]) {
-				amt = PApplet.map(amt, segAmts[i-1], segAmts[i], 0, 1);
-				Point a = vertices[i-1];
-				Point b = (i != vertices.length) ? vertices[i] : vertices[0];
+		for (int i=1; i<segAmts.size(); i++) {
+			if (amt < segAmts.get(i)) {
+				amt = PApplet.map(amt, segAmts.get(i-1), segAmts.get(i), 0, 1);
+				Point a = vertices.get(i-1);
+				Point b = (i != vertices.size()) ? vertices.get(i) : vertices.get(0);
 				Line.trace(pt, a.x, a.y, b.x, b.y, amt);
 				break;
 			}
@@ -169,7 +184,7 @@ public class GranularPath implements Path {
 			pt.x += dx;
 			pt.y += dy;
 		}
-		if (vertices.length != 0) {
+		if (vertices.size() != 0) {
 			cenx += dx;
 			ceny += dy;
 		}
