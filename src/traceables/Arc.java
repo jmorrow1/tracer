@@ -7,7 +7,7 @@ import processing.core.PApplet;
  * @author James Morrow
  *
  */
-public class Arc extends Path {
+public class Arc implements Traceable {
 	private float cenx, ceny, xRadius, yRadius, startAngle, endAngle;
 	
 	/**************************

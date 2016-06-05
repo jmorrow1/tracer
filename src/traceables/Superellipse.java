@@ -7,7 +7,7 @@ import processing.core.PApplet;
  * @author James Morrow
  *
  */
-public class Superellipse extends Path {
+public class Superellipse implements Traceable {
 	private float cenx, ceny, xRadius, yRadius;
 	private float n;
 	private float twoOverN;

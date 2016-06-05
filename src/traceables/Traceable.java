@@ -8,7 +8,7 @@ import processing.core.PApplet;
  * @author James Morrow
  *
  */
-public interface IPath {
+public interface Traceable {
 	final static Point pt = new Point(0, 0);
 	
 	public void trace(Point pt, float amt);

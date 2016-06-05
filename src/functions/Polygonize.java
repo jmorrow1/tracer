@@ -3,7 +3,7 @@ package functions;
 import paths.Circle;
 import paths.Ellipse;
 import paths.GranularPath;
-import paths.IPath2;
+import paths.Path;
 import processing.core.PApplet;
 import traceables.Point;
 
@@ -24,7 +24,7 @@ public class Polygonize {
 	 * @param startAngle
 	 * @return
 	 */
-	public static IPath2 makeRegularPolygon(Circle c, int numPoints, float startAngle) {
+	public static Path makeRegularPolygon(Circle c, int numPoints, float startAngle) {
 		return makePolygon(c.getCenx(), c.getCeny(), c.getRadius(), c.getRadius(), numPoints, startAngle);
 	}
 
@@ -38,7 +38,7 @@ public class Polygonize {
 	 * @param numPoints
 	 * @param startAngle
 	 */
-	public static IPath2 makeRegularPolygon(float cenx, float ceny, float radius, int numPoints, float startAngle) {
+	public static Path makeRegularPolygon(float cenx, float ceny, float radius, int numPoints, float startAngle) {
 		return makePolygon(cenx, ceny, radius, radius, numPoints, startAngle);
 	}
 	
@@ -51,7 +51,7 @@ public class Polygonize {
 	 * @param startAngle
 	 * @return
 	 */
-	public static IPath2 makePolygon(Ellipse e, int numPoints, float startAngle) {
+	public static Path makePolygon(Ellipse e, int numPoints, float startAngle) {
 		return makePolygon(e.getCenx(), e.getCeny(), 0.5f*e.getWidth(), 0.5f*e.getHeight(), numPoints, startAngle);
 	}
 	
@@ -67,7 +67,7 @@ public class Polygonize {
 	 * @param startAngle
 	 * @return
 	 */
-	public static IPath2 makePolygon(float cenx, float ceny,
+	public static Path makePolygon(float cenx, float ceny,
 			float half_width, float half_height, int numVertices, float startAngle) {
 		if (numVertices > 0) {
 			float theta = startAngle;
@@ -94,7 +94,7 @@ public class Polygonize {
 	 * @param angles
 	 * @return
 	 */
-	public static IPath2 makePolygon(Circle c, float[] angles) {
+	public static Path makePolygon(Circle c, float[] angles) {
 		return makePolygon(c.getCenx(), c.getCeny(), c.getRadius(), c.getRadius(), angles);
 	}
 	
@@ -108,7 +108,7 @@ public class Polygonize {
 	 * @param angles
 	 * @return
 	 */
-	public static IPath2 makePolygon(float cenx, float ceny, float radius, float[] angles) {
+	public static Path makePolygon(float cenx, float ceny, float radius, float[] angles) {
 		return makePolygon(cenx, ceny, radius, radius, angles);
 	}
 
@@ -120,7 +120,7 @@ public class Polygonize {
 	 * @param angles
 	 * @return
 	 */
-	public static IPath2 makePolygon(Ellipse e, float[] angles) {
+	public static Path makePolygon(Ellipse e, float[] angles) {
 		return makePolygon(e.getCenx(), e.getCeny(), 0.5f*e.getWidth(), 0.5f*e.getHeight(), angles);
 	}
 	
@@ -135,7 +135,7 @@ public class Polygonize {
 	 * @param angles
 	 * @return
 	 */
-	public static IPath2 makePolygon(float cenx, float ceny, float half_width, float half_height, float[] angles) {
+	public static Path makePolygon(float cenx, float ceny, float half_width, float half_height, float[] angles) {
 		if (angles.length != 0) {
 			angles = PApplet.sort(angles);
 			int n = angles.length;

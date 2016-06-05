@@ -10,7 +10,7 @@ import traceables.Point;
  * @author James Morrow
  *
  */
-public class Line implements IPath2, JSONable {
+public class Line implements Path, JSONable {
 	private Point a, b;
 	private float length;
 	private static int intersectionRadius = 8;

@@ -6,17 +6,15 @@ import functions.Polygonize;
 import paths.Circle;
 import paths.Ellipse;
 import paths.Line;
-import paths.Rect;
 import processing.core.PApplet;
 import traceables.Arc;
 import traceables.Bezier;
 import traceables.Blender;
-import traceables.Composite;
 import traceables.Flower;
 import traceables.InfinitySymbol;
 import traceables.Point;
 import traceables.Superellipse;
-import traceables.IPath;
+import traceables.Traceable;
 
 /**
  * 
@@ -24,7 +22,7 @@ import traceables.IPath;
  *
  */
 public class Tracing extends PApplet {
-	ArrayList<IPath> ts;
+	ArrayList<Traceable> ts;
 	Blender<InfinitySymbol, Superellipse> blender;
 	
 	Point pt = new Point(0, 0);
@@ -44,9 +42,9 @@ public class Tracing extends PApplet {
 		reposition(ts);
 	}
 	
-	private ArrayList<IPath> initList() {
+	private ArrayList<Traceable> initList() {
 		float r = 0.4f * cellSize;
-		ArrayList<IPath> ts = new ArrayList<IPath>();
+		ArrayList<Traceable> ts = new ArrayList<Traceable>();
 		ts.add(new Line(r*cos(0.25f*PI), r*sin(0.25f*PI), r*cos(1.25f*PI), r*sin(1.25f*PI)));
 		ts.add(new Circle(0, 0, r));
 		ts.add(new Ellipse(0, 0, 2*r, r, CENTER));
@@ -61,20 +59,18 @@ public class Tracing extends PApplet {
 		blender = new Blender(new InfinitySymbol(0, 0, r, 0.75f*r, 50), new Superellipse(0, 0, r, r, 0.5f, 50), 0.5f, 100);
 		ts.add(blender);
 		ts.add(new Superellipse(0, 0, r, r, 0.5f, 50));
-		ts.add(new Composite(new Arc(0, 0, r, r, 0, PI, RADIUS, 50),
-				             new Arc(cellSize, 0, r, r, PI, TWO_PI, RADIUS, 50)));
 		
 		return ts;
 	}
 	
-	private void reposition(ArrayList<IPath> ts) {
+	private void reposition(ArrayList<Traceable> ts) {
 		int x = cellSize/2;
 		int y = cellSize/2;
 		
-		for (IPath t : ts) {
+		for (Traceable t : ts) {
 			t.translate(x, y);
 			
-			x += (t instanceof Composite) ? 2*cellSize : cellSize;
+			x += cellSize;
 			if (x >= width) {
 				x = cellSize/2;
 				y += cellSize;
@@ -85,14 +81,14 @@ public class Tracing extends PApplet {
 	public void draw() {
 		background(255);
 
-		for (IPath p : ts) {
+		for (Traceable p : ts) {
 			drawPath(p);
 		}
 		
 		amt = (amt + 0.005f) % 1f;
 	}
 	
-	private void drawPath(IPath t) {
+	private void drawPath(Traceable t) {
 		noFill();
 		strokeWeight(2);
 		t.display(this);

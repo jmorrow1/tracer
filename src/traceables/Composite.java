@@ -9,7 +9,7 @@ import processing.core.PApplet;
  * @param <T>
  * @param <U>
  */
-public class Composite<T extends IPath, U extends IPath> extends Path {
+public class Composite<T extends Traceable, U extends Traceable> implements Traceable {
 	private T a;
 	private U b;
 	

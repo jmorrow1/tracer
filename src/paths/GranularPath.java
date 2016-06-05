@@ -6,14 +6,14 @@ import json_lib.JSONable;
 import processing.core.PApplet;
 import processing.data.JSONObject;
 import traceables.Point;
-import traceables.IPath;
+import traceables.Traceable;
 
 /**
  * 
  * @author James Morrow
  *
  */
-public class GranularPath implements IPath2 {
+public class GranularPath implements Path {
 	private Point[] vertices; //TODO Listify
 	private float[] segAmts; //TODO Listify
 	private float cenx, ceny, width, height, perimeter;
@@ -33,7 +33,7 @@ public class GranularPath implements IPath2 {
 	 * @param pathDef The Traceable which will be read and then discarded.
 	 * @param numVertices The resolution of the snapshot.
 	 */
-	public GranularPath(IPath pathDef, int numVertices) {
+	public GranularPath(Traceable pathDef, int numVertices) {
 		initVertices(pathDef, numVertices);
 	}
 	
@@ -51,7 +51,7 @@ public class GranularPath implements IPath2 {
 		update();
 	}
 	
-	private void initVertices(IPath def, int numVertices) {
+	private void initVertices(Traceable def, int numVertices) {
 		if (vertices == null || vertices.length != numVertices) {
 			vertices = new Point[numVertices];
 		}
@@ -145,7 +145,7 @@ public class GranularPath implements IPath2 {
 
 	@Override
 	public void trace(Point pt, float amt) {
-		amt = IPath2.remainder(amt, 1);
+		amt = Path.remainder(amt, 1);
 		for (int i=1; i<segAmts.length; i++) {
 			if (amt < segAmts[i]) {
 				amt = PApplet.map(amt, segAmts[i-1], segAmts[i], 0, 1);
@@ -189,7 +189,7 @@ public class GranularPath implements IPath2 {
 		computePerimeter();
 	}
 	
-	public void setTraceable(IPath pathDef, int numVertices) {
+	public void setTraceable(Traceable pathDef, int numVertices) {
 		initVertices(pathDef, numVertices);
 		update();
 	}
