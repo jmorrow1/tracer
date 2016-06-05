@@ -46,22 +46,22 @@ public class Tracing extends PApplet {
 		float r = 0.4f * cellSize;
 		ArrayList<Traceable> ts = new ArrayList<Traceable>();
 		ts.add(new Line(r*cos(0.25f*PI), r*sin(0.25f*PI), r*cos(1.25f*PI), r*sin(1.25f*PI)));
-        ts.add(new Circle(0, 0, r));
-        ts.add(new Ellipse(0, 0, 2*r, r, CENTER));
-        ts.add(Polygonize.makeRegularPolygon(0, 0, r, 6, 0));
-        ts.add(Polygonize.makeRegularPolygon(0, 0, 25, 4, QUARTER_PI));
-        ts.add(Polygonize.makePolygon(0, 0, r/2, r, 4, QUARTER_PI));
-        ts.add(new Arc(0, 0, r, r/2, 0, 1.5f*PI, RADIUS, 50));
-        ts.add(new Flower(0, 0, r, 4, 3, 100));
-        ts.add(new InfinitySymbol(0, 0, r, 0.75f*r, 50));
-        ts.add(new Bezier(random(-r, r), random(-r, r), random(-r, r), random(-r, r),
-        		          random(-r, r), random(-r, r), random(-r, r), random(-r, r)));    
-        //blender = new Blender(Polygonize.makePolygon(0, 0, r, 0.75f*r, 4, QUARTER_PI), new Circle(0, 0, r), 0, 100);
-        blender = new Blender(new InfinitySymbol(0, 0, r, 0.75f*r, 50), new Superellipse(0, 0, r, r, 0.5f, 50), 0.5f, 100);
-        ts.add(blender);
-        ts.add(new Superellipse(0, 0, r, r, 0.5f, 50));
-        
-        return ts;
+		ts.add(new Circle(0, 0, r));
+		ts.add(new Ellipse(0, 0, 2*r, r, CENTER));
+		ts.add(Polygonize.makeRegularPolygon(0, 0, r, 6, 0));
+		ts.add(Polygonize.makeRegularPolygon(0, 0, 25, 4, QUARTER_PI));
+		ts.add(Polygonize.makePolygon(0, 0, r/2, r, 4, QUARTER_PI));
+		ts.add(new Arc(0, 0, r, r/2, 0, 1.5f*PI, RADIUS, 50));
+		ts.add(new Flower(0, 0, r, 4, 3, 100));
+		ts.add(new InfinitySymbol(0, 0, r, 0.75f*r, 50));
+		ts.add(new Bezier(random(-r, r), random(-r, r), random(-r, r), random(-r, r),
+				          random(-r, r), random(-r, r), random(-r, r), random(-r, r)));    
+		//blender = new Blender(Polygonize.makePolygon(0, 0, r, 0.75f*r, 4, QUARTER_PI), new Circle(0, 0, r), 0, 100);
+		blender = new Blender(new InfinitySymbol(0, 0, r, 0.75f*r, 50), new Superellipse(0, 0, r, r, 0.5f, 50), 0.5f, 100);
+		ts.add(blender);
+		ts.add(new Superellipse(0, 0, r, r, 0.5f, 50));
+		
+		return ts;
 	}
 	
 	private void reposition(ArrayList<Traceable> ts) {
