@@ -47,7 +47,6 @@ public class Tracing extends PApplet {
 		float r = 0.4f * cellSize;
 		ArrayList<IPath> ts = new ArrayList<IPath>();
 		ts.add(new Line(r*cos(0.25f*PI), r*sin(0.25f*PI), r*cos(1.25f*PI), r*sin(1.25f*PI)));
-		ts.get(ts.size()-1).reverse();
 		ts.add(new Circle(0, 0, r));
 		ts.add(new Ellipse(0, 0, 2*r, r, CENTER));
 		ts.add(Polygonize.makeRegularPolygon(0, 0, r, 6, 0));
