@@ -14,7 +14,7 @@ public class Blender implements Traceable{
 	 ***** Static *****
 	 ******************/
 	
-	private static Point ptA = new Point(0, 0), ptB = new Point(0, 0);
+	private final static Point ptA = new Point(0, 0), ptB = new Point(0, 0);
 	
 	/**
 	 * Draws the result of interpolating between two traceables.
