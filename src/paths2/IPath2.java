@@ -10,35 +10,7 @@ import processing.core.PApplet;
  * @author James Morrow
  *
  */
-public interface IPath2 extends IPath {
-	/**
-	 * Displays the Path in the Processing canvas.
-	 * @param pa The PApplet instance.
-	 */
-	public void display(PApplet pa);	
-	
-	/**
-	 * Maps a given floating point number from 0 to 1 to a given Point
-	 * along the perimeter of the Path.
-	 * 
-	 * @param pt The point.
-	 * @param amt A number from 0 to 1.
-	 */
-	public void trace(Point pt, float amt);
-	
-	/**
-	 * Maps a given floating point number from 0 to 1 to a Point
-	 * along the perimeter of the Path.
-	 * 
-	 * @param amt A number from 0 to 1.
-	 * @return The point.
-	 */
-	public default Point trace(float amt) {
-		Point pt = new Point(0, 0);
-		this.trace(pt, amt);
-		return pt;
-	}
-	
+public interface IPath2 extends IPath {	
 	/**
 	 * Maps a given floating point number from 0 to this.getPerimeter() to a given Point
 	 * along the perimeter of the Path.
@@ -122,13 +94,6 @@ public interface IPath2 extends IPath {
 	 * @return
 	 */
 	//public boolean isClosedPath();
-	
-	/**
-	 * Shifts this Path dx units in the x-direction and dy units in the y-direction.
-	 * @param dx
-	 * @param dy
-	 */
-	public void translate(float dx, float dy);
 	
 	/**
 	 * Returns the center x-coordinate of this Path.

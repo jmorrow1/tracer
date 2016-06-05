@@ -29,8 +29,8 @@ public class Blending2D extends PApplet {
 				        		     new InfinitySymbol(cenx, ceny, r, 1.25f*r, 50), 0.5f, 75),
 				         0.5f,
 				         150);
-		//p2 = new InfinitySymbol(cenx, ceny, width/2f, width/4f, 50);
-		p2 = new Flower(cenx, ceny, width/2f, 3, 4, 100);
+		p2 = new InfinitySymbol(cenx, ceny, width/2f, width/4f, 50);
+		//p2 = new Flower(cenx, ceny, width/2f, 3, 4, 100);
 	}
 	
 	public void draw() {
@@ -38,7 +38,7 @@ public class Blending2D extends PApplet {
 		
 		p2.trace(pt, amt);
 		dot(pt.x, pt.y);
-		amt = (amt + 0.002f) % 1f;
+		amt = (amt + 0.005f) % 1f;
 		
 		stroke(0);
 		noFill();

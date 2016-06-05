@@ -1,5 +1,6 @@
 package paths;
 
+import paths2.IPath2;
 import processing.core.PApplet;
 
 /**
@@ -88,6 +89,6 @@ public class Blender<T extends IPath, U extends IPath> extends Path {
 	}
 	
 	public void addToBlendAmt(float dAmt) {
-		this.blendAmt = (this.blendAmt + dAmt) % 1; //TODO Use remainder function so as to deal with negative dAmt values
+		this.blendAmt = IPath2.remainder(this.blendAmt + dAmt, 1);
 	}
 }
