@@ -127,13 +127,13 @@ public class GranularPath implements IPath2 {
 		
 		//compute segAmts
 		segAmts = new ArrayList<Float>(segLengths.length);
-		if (segAmts.size() > 0) {
+		if (segLengths.length > 0) {
 			float sum = 0;
-			for (int i=0; i<segAmts.size()-1; i++) {
+			for (int i=0; i<segLengths.length; i++) {
 				sum += segLengths[i];
-				segAmts.set(i, sum / perimeter);
+				segAmts.add(i, sum / perimeter);
 			}
-			segAmts.set(segAmts.size()-1, 1f);
+			segAmts.add(segAmts.size()-1, 1f);
 		}
 	}
 	
@@ -145,6 +145,7 @@ public class GranularPath implements IPath2 {
 	public void display(PApplet pa) {
 		pa.beginShape();
 		for (int i=0; i<vertices.size(); i++) {
+			
 			pa.vertex(vertices.get(i).x, vertices.get(i).y);
 		}
 		pa.endShape();
@@ -154,6 +155,7 @@ public class GranularPath implements IPath2 {
 	public void trace(Point pt, float amt) {
 		amt = IPath2.remainder(amt, 1);
 		for (int i=1; i<segAmts.size(); i++) {
+			
 			if (amt < segAmts.get(i)) {
 				amt = PApplet.map(amt, segAmts.get(i-1), segAmts.get(i), 0, 1);
 				Point a = vertices.get(i-1);

@@ -9,40 +9,7 @@ import processing.core.PApplet;
  *
  */
 public class Blender<T extends IPath, U extends IPath> extends Path {
-	
-	/******************
-	 ***** Static *****
-	 ******************/
-	
-	private final static Point ptA = new Point(0, 0), ptB = new Point(0, 0);
-	
-	/**
-	 * Draws the result of interpolating between two traceables.
-	 * 
-	 * @param a The first traceable
-	 * @param b The second traceable
-	 * @param numVertices Determines how precisely the drawn figure is approximated.
-	 * @param blendAmt The interpolation amount, a value from [0,1].
-	 * @param pa The Processing instance to draw to.
-	 */
-	public static void draw(IPath a, IPath b, int numVertices, float blendAmt, PApplet pa) {
-		float amt = 0;
-		float dAmt = 1f / numVertices;
-		
-		pa.beginShape();
-		for (int i=0; i<numVertices; i++) {
-			a.trace(ptA, amt);
-			b.trace(ptB, amt);
-			pa.vertex(PApplet.lerp(ptA.x, ptB.x, blendAmt), 
-	                  PApplet.lerp(ptA.y, ptB.y, blendAmt));
-		}
-		pa.endShape();
-	}
-	
-	/******************
-	 ***** Fields *****
-	 ******************/
-	
+	private Point ptA = new Point(0, 0), ptB = new Point(0, 0);	
 	private float x, y;
 	private T a;
 	private U b;
@@ -121,6 +88,6 @@ public class Blender<T extends IPath, U extends IPath> extends Path {
 	}
 	
 	public void addToBlendAmt(float dAmt) {
-		this.blendAmt = (this.blendAmt + dAmt) % 1;
+		this.blendAmt = (this.blendAmt + dAmt) % 1; //TODO Use remainder function so as to deal with negative dAmt values
 	}
 }
