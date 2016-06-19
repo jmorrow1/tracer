@@ -4,6 +4,8 @@ import processing.core.PApplet;
 
 /**
  * 
+ * See http://paulbourke.net/geometry/superellipse/ for more info on the superellipse.
+ * 
  * @author James Morrow
  *
  */

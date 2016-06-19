@@ -12,6 +12,7 @@ import paths.IPath;
 import paths.InfinitySymbol;
 import paths.Point;
 import paths.Superellipse;
+import paths.Supershape;
 import paths2.Circle;
 import paths2.Ellipse;
 import paths2.Line;
@@ -64,6 +65,7 @@ public class Tracing extends PApplet {
 		a.reverse();
 		Arc b = new Arc(cellSize, 0, r, r, PI, TWO_PI, RADIUS, 50);
 		ts.add(new Composite(a, b));
+		ts.add(new Supershape(0, 0, r, r, 5, 100));
 		
 		return ts;
 	}
