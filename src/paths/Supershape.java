@@ -10,13 +10,16 @@ import processing.core.PApplet;
  */
 public class Supershape extends Path {
 	private float cenx, ceny, xMaxRadius, yMaxRadius, m, n1, n2, n3;
-	private int granularity;
 	
 	private float mOver4, n1Inverted;
 	
 	/**************************
 	 ***** Initialization *****
 	 **************************/
+	
+	public Supershape(Supershape s) {
+		this(s.cenx, s.ceny, s.xMaxRadius, s.yMaxRadius, s.m, s.n1, s.n2, s.n3, s.granularity);
+	}
 
 	public Supershape(float cenx, float ceny, float xMaxRadius, float yMaxRadius,
 			float m, float n1, float n2, float n3, int granularity) {
@@ -136,5 +139,9 @@ public class Supershape extends Path {
 
 	public void setGranularity(int granularity) {
 		this.granularity = granularity;
+	}
+	
+	public Supershape clone() {
+		return new Supershape(this);
 	}
 }

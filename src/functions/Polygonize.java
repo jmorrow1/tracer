@@ -16,7 +16,7 @@ public class Polygonize {
 	private Polygonize() {}
 	
 	/**
-	 * Makes a regular polygon, a polygon circumscribed in an ellipse,
+	 * Makes a regular polygon, a polygon circumscribed in a circle
 	 * with its angles equally spaced apart.
 	 * 
 	 * @param c
@@ -29,7 +29,7 @@ public class Polygonize {
 	}
 
 	/**
-	 * Makes a regular polygon, a polygon circumscribed in an ellipse,
+	 * Makes a regular polygon, a polygon circumscribed in a  circle
 	 * with its angles equally spaced apart.
 	 * 
 	 * @param cenx

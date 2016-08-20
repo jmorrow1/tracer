@@ -96,4 +96,10 @@ public interface IPath {
 	 * Reverses the path.
 	 */
 	public void reverse();
+	
+	/**
+	 * Clones the path.
+	 * @return
+	 */
+	public IPath clone();
 }

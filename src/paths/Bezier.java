@@ -130,4 +130,8 @@ public class Bezier extends Path {
 	public void setAnchorY2(float ay2) {
 		this.ay2 = ay2;
 	}
+	
+	public Bezier clone() {
+		return new Bezier(this);
+	}
 }

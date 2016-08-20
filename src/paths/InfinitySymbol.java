@@ -10,6 +10,10 @@ public class InfinitySymbol extends Path {
 	 ***** Initialization *****
 	 **************************/
 
+	public InfinitySymbol(InfinitySymbol s) {
+		this(s.cenx, s.ceny, s.xRadius, s.yRadius, s.drawGranularity);
+	}
+	
 	public InfinitySymbol(float cenx, float ceny, float xRadius, float yRadius, int drawGranularity) {
 		this.cenx = cenx;
 		this.ceny = ceny;
@@ -83,5 +87,9 @@ public class InfinitySymbol extends Path {
 
 	public void setDrawGranularity(int drawGranularity) {
 		this.drawGranularity = drawGranularity;
+	}
+	
+	public InfinitySymbol clone() {
+		return new InfinitySymbol(this);
 	}
 }

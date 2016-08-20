@@ -2,6 +2,11 @@ package paths;
 
 import paths2.IPath2;
 import processing.core.PApplet;
+import processing.core.PGraphics;
+
+//TODO Could add an (optional) optimization where, when getting points from the T path and the U path,
+	//the Blender has the T and U paths return their closest cached points which approximate the desired points
+	//rather than interpolate between cached points.
 
 /**
  * Provides static functions for blending (interpolating) paths.
@@ -20,6 +25,10 @@ public class Blender<T extends IPath, U extends IPath> extends Path {
 	/**************************
 	 ***** Initialization *****
 	 **************************/
+	
+	public Blender(Blender<T, U> blender) {
+		this(blender.a, blender.b, blender.blendAmt, blender.drawGranularity);
+	}
 	
 	public Blender(T a, U b, float blendAmt, int drawGranularity) {
 		this.a = a;
@@ -90,5 +99,9 @@ public class Blender<T extends IPath, U extends IPath> extends Path {
 	
 	public void addToBlendAmt(float dAmt) {
 		this.blendAmt = IPath2.remainder(this.blendAmt + dAmt, 1);
+	}
+	
+	public Blender<T, U> clone() {
+		return new Blender(this);
 	}
 }

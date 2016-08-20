@@ -14,7 +14,11 @@ public class Arc extends Path {
 	 ***** Initialization *****
 	 **************************/
 	
-	public Arc(float a, float b, float c, float d, float startAngle, float endAngle, int ellipseMode, int granularity) {
+	public Arc(Arc arc) {
+		this(arc.cenx, arc.ceny, arc.xRadius, arc.yRadius, arc.startAngle, arc.endAngle, PApplet.RADIUS);
+	}
+	
+	public Arc(float a, float b, float c, float d, float startAngle, float endAngle, int ellipseMode) {
 		switch (ellipseMode) {
 			case PApplet.RADIUS:
 				this.cenx = a;
@@ -125,5 +129,9 @@ public class Arc extends Path {
 
 	public void setEndAngle(float endAngle) {
 		this.endAngle = endAngle;
+	}
+	
+	public Arc clone() {
+		return new Arc(this);
 	}
 }

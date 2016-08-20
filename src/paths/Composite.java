@@ -17,6 +17,10 @@ public class Composite<T extends IPath, U extends IPath> extends Path {
 	 ***** Initialization *****
 	 **************************/
 	
+	public Composite(Composite<T, U> c) {
+		this(c.a, c.b);
+	}
+	
 	public Composite(T a, U b) {
 		this.a = a;
 		this.b = b;
@@ -67,5 +71,9 @@ public class Composite<T extends IPath, U extends IPath> extends Path {
 	
 	public void setB(U b) {
 		this.b = b;
+	}
+	
+	public Composite<T, U> clone() {
+		return new Composite(this);
 	}
 }

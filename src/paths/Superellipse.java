@@ -13,20 +13,23 @@ public class Superellipse extends Path {
 	private float cenx, ceny, xRadius, yRadius;
 	private float n;
 	private float twoOverN;
-	private int granularity;
 	
 	/**************************
 	 ***** Initialization *****
 	 **************************/
 	
+	public Superellipse(Superellipse e) {
+		this(e.cenx, e.ceny, e.xRadius, e.yRadius, e.n, e.granularity);
+	}
+	
 	public Superellipse(float cenx, float ceny, float xRadius, float yRadius, float n, int granularity) {
+		super(granularity);
 		this.cenx = cenx;
 		this.ceny = ceny;
 		this.xRadius = xRadius;
 		this.yRadius = yRadius;
 		this.n = n;
 		this.twoOverN = 2f / n;
-		this.granularity = granularity;
 	}
 	
 	/*************************
@@ -111,5 +114,9 @@ public class Superellipse extends Path {
 
 	public void setGranularity(int granularity) {
 		this.granularity = granularity;
+	}
+	
+	public Superellipse clone() {
+		return new Superellipse(this);
 	}
 }

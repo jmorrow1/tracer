@@ -19,11 +19,15 @@ public class Flower extends Path {
 	 ***** Initialization *****
 	 **************************/
 	
-	public Flower(float cenx, float ceny, float radius, int freq1, int freq2, int drawGranularity) {
+	public Flower(Flower f) {
+		this(f.cenx, f.ceny, f.xRadius, f.yRadius, f.freq1, f.freq2, f.drawGranularity);
+	}
+	
+	public Flower(float cenx, float ceny, float radius, float freq1, float freq2, int drawGranularity) {
 		this(cenx, ceny, radius, radius, freq1, freq2, drawGranularity);
 	}
 	
-	public Flower(float cenx, float ceny, float xRadius, float yRadius, int freq1, int freq2, int drawGranularity) {
+	public Flower(float cenx, float ceny, float xRadius, float yRadius, float freq1, float freq2, int drawGranularity) {
 		this.cenx = cenx;
 		this.ceny = ceny;
 		this.xRadius = xRadius;
@@ -123,5 +127,9 @@ public class Flower extends Path {
 
 	public void setDrawGranularity(int drawGranularity) {
 		this.drawGranularity = drawGranularity;
+	}
+	
+	public Flower clone() {
+		return new Flower(this);
 	}
 }
