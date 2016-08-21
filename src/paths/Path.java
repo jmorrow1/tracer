@@ -3,6 +3,11 @@ package paths;
 import processing.core.PApplet;
 
 /**
+ * A continuous sequence of points in 2D space.
+ * 
+ * <br><br>
+ * 
+ * <a href="IPath.html">More information on paths</a>
  * 
  * @author James Morrow
  *

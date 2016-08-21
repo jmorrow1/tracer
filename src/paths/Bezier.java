@@ -3,6 +3,7 @@ package paths;
 import processing.core.PApplet;
 
 /**
+ * A Bezier curve defined by two anchor points and two control points.
  * 
  * @author James Morrow
  *
@@ -14,10 +15,25 @@ public class Bezier extends Path {
 	 ***** Initialization *****
 	 **************************/
 	
+	/**
+	 * Copy constructor
+	 * @param b The Bezier to copy
+	 */
 	public Bezier(Bezier b) {
 		this(b.ax1, b.ay1, b.cx1, b.cy1, b.cx2, b.cy2, b.ax2, b.ay2);
 	}
 	
+	/**
+	 * 
+	 * @param ax1 the x-coordinate of the 1st anchor point
+	 * @param ay1 the y-coordinate of the 1st anchor point
+	 * @param cx1 the x-coordinate of the 1st control point
+	 * @param cy1 the y-coordinate of the 1st control point
+	 * @param cx2 the x-coordinate of the 2nd control point
+	 * @param cy2 the y-coordinate of the 2nd control point
+	 * @param ax2 the x-coordinate of the 2nd anchor point
+	 * @param ay2 the y-coordinate of the 2nd anchor point
+	 */
 	public Bezier(float ax1, float ay1, float cx1, float cy1, float cx2, float cy2, float ax2, float ay2) {
 		this.ax1 = ax1;
 		this.ay1 = ay1;
@@ -67,70 +83,135 @@ public class Bezier extends Path {
 	 ***** Getters and Setters *****
 	 *******************************/
 	
+	/**
+	 * 
+	 * @return the x-coordinate of the 1st anchor point
+	 */
 	public float getAnchorX1() {
 		return ax1;
 	}
 
+	/**
+	 * 
+	 * @param ax1 the x-coordinate of the 1st anchor point
+	 */
 	public void setAnchorX1(float ax1) {
 		this.ax1 = ax1;
 	}
 
+	/**
+	 * 
+	 * @return the y-coordinate of the 1st anchor point
+	 */
 	public float getAnchorY1() {
 		return ay1;
 	}
 
+	/**
+	 * 
+	 * @param ay1 the y-coordinate of the 2nd anchor point
+	 */
 	public void setAnchorY1(float ay1) {
 		this.ay1 = ay1;
 	}
 
+	/**
+	 * 
+	 * @return the x-coordinate of the 1st control point
+	 */
 	public float getControlX1() {
 		return cx1;
 	}
 
+	/**
+	 * 
+	 * @param cx1 the x-coordinate of the 1st anchor point
+	 */
 	public void setControlX1(float cx1) {
 		this.cx1 = cx1;
 	}
 
+	/**
+	 * 
+	 * @return the t-coordinate of the 1st control point
+	 */
 	public float getControlY1() {
 		return cy1;
 	}
 
+	/**
+	 * 
+	 * @param cy1 the y-coordinate of the 1st control point
+	 */
 	public void setControlY1(float cy1) {
 		this.cy1 = cy1;
 	}
 
+	/**
+	 * 
+	 * @return the x-coordinate of the 2nd control point
+	 */
 	public float getControlX2() {
 		return cx2;
 	}
 
+	/**
+	 * 
+	 * @param cx2 the x-coordinate of the 2nd control point
+	 */
 	public void setControlX2(float cx2) {
 		this.cx2 = cx2;
 	}
 
+	/**
+	 * 
+	 * @return the y-coordinate of the 2nd control point
+	 */
 	public float getControlY2() {
 		return cy2;
 	}
 
+	/**
+	 * 
+	 * @param cy2 the y-coordinate of the 2nd control point
+	 */
 	public void setControlY2(float cy2) {
 		this.cy2 = cy2;
 	}
 
+	/**
+	 * 
+	 * @return the x-coordinate of the 2nd anchor point
+	 */
 	public float getAnchorX2() {
 		return ax2;
 	}
 
+	/**
+	 * 
+	 * @param ax2 the x-coordinate of the 2nd anchor point
+	 */
 	public void setAnchorX2(float ax2) {
 		this.ax2 = ax2;
 	}
 
+	/**
+	 * 
+	 * @return the y-coordinate of the 2nd anchor point
+	 */
 	public float getAnchorY2() {
 		return ay2;
 	}
 
+	/**
+	 * 
+	 * @param ay2 the y-coordinate of the 2nd anchor point
+	 */
 	public void setAnchorY2(float ay2) {
 		this.ay2 = ay2;
 	}
 	
+	@Override
 	public Bezier clone() {
 		return new Bezier(this);
 	}

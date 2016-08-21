@@ -9,6 +9,8 @@ import processing.core.PApplet;
 
 /**
  * 
+ * Functions for creating polygonal paths.
+ * 
  * @author James Morrow
  *
  */

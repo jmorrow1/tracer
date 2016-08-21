@@ -9,10 +9,13 @@ import processing.core.PGraphics;
 	//rather than interpolate between cached points.
 
 /**
- * Provides static functions for blending (interpolating) paths.
+ * 
+ * A path that interpolates between two aggregate paths.
  * 
  * @author James Morrow
  *
+ * @param <T>
+ * @param <U>
  */
 public class Blender<T extends IPath, U extends IPath> extends Path {
 	private Point ptA = new Point(0, 0), ptB = new Point(0, 0);	

@@ -10,6 +10,21 @@ import processing.core.PApplet;
 
 /**
  * 
+ * A finite sequence of vertices, linearly interpolated.
+ * 
+ * <br><br>
+ * 
+ * Usage:<br>
+ * The most direct way to construct a GranularPath is to pass
+ * a sequence of Points to act as the path's vertices. This can be
+ * done either with a List of points or an array of Points.
+ * 
+ * <br><br>
+ * 
+ * Another way to construct a GranularPath is to provide an
+ * <a href="../paths/IPath.html">IPath</a>, which will act as
+ * the blueprint for a new GranularPath.
+ * 
  * @author James Morrow
  *
  */
@@ -22,25 +37,40 @@ public class GranularPath implements IPath2 {
 	 ***** Initialization *****
 	 **************************/
 	
+	/**
+	 * Makes a path from the given sequence of vertices.
+	 * 
+	 * @param vertices the vertex sequence
+	 */
 	public GranularPath(Point[] vertices) {
 		this(listify(vertices));
 	}
 	
+	/**
+	 * Makes a path from the given sequence of vertices.
+	 * 
+	 * @param vertices the vertex sequence
+	 */
 	public GranularPath(List<Point> vertices) {
 		this.vertices = vertices;
 		update();
 	}
 	
 	/**
-	 * Construct a GranularPath by taking a snapshot of a Traceable.
+	 * Construct a GranularPath by taking a snapshot of an IPath.
 	 * 
-	 * @param pathDef The Traceable which will be read and then discarded.
-	 * @param numVertices The resolution of the snapshot.
+	 * @param pathDef the IPath which will be read and then discarded.
+	 * @param numVertices the resolution of the snapshot.
 	 */
 	public GranularPath(IPath pathDef, int numVertices) {
 		initVertices(pathDef, numVertices);
 	}
 	
+	/**
+	 * Copy constructor.
+	 * 
+	 * @param path the path to copy
+	 */
 	private GranularPath(GranularPath path) {
 		this.cenx = path.getCenx();
 		this.ceny = path.getCeny();
@@ -155,7 +185,7 @@ public class GranularPath implements IPath2 {
 	public void trace(Point pt, float amt) {
 		amt = IPath2.remainder(amt, 1);
 		for (int i=1; i<segAmts.size(); i++) {
-			
+//			
 			if (amt < segAmts.get(i)) {
 				amt = PApplet.map(amt, segAmts.get(i-1), segAmts.get(i), 0, 1);
 				Point a = vertices.get(i-1);
@@ -193,6 +223,7 @@ public class GranularPath implements IPath2 {
 	 ***** Getters and Setters *****
 	 *******************************/
 	
+	@Override
 	public void reverse() {
 		reverse(segAmts);
 		reverse(vertices);
@@ -203,7 +234,13 @@ public class GranularPath implements IPath2 {
 		computePerimeter();
 	}
 	
-	public void setTraceable(IPath pathDef, int numVertices) {
+	/**
+	 * Reinitializes the GranularPath by taking a snapshot of an IPath.
+	 * 
+	 * @param pathDef the IPath which will be read and then discarded
+	 * @param numVertices the resolution of the snapshot
+	 */
+	public void set(IPath pathDef, int numVertices) {
 		initVertices(pathDef, numVertices);
 		update();
 	}

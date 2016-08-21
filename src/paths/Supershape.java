@@ -3,7 +3,12 @@ package paths;
 import processing.core.PApplet;
 
 /**
- * See http://paulbourke.net/geometry/supershape/ for more info on the supershape.
+ * 
+ * A more generalized version of the <a href="Superellipse.html">superellipse</a>
+ * 
+ * <br><br>
+ * 
+ * <a href="http://paulbourke.net/geometry/supershape/"> More info on the supershape </a>
  * 
  * @author James Morrow
  *

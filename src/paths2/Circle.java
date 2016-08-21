@@ -1,16 +1,17 @@
 package paths2;
 
-import json_lib.JSONable;
 import paths.Point;
 import processing.core.PApplet;
 import processing.data.JSONObject;
 
 /**
  * 
+ * A circle.
+ * 
  * @author James Morrow
  *
  */
-public class Circle extends Path2 implements JSONable {
+public class Circle extends Path2 {
 	private float x, y;
 	private float radius;
 	private float angleOffset;
@@ -32,7 +33,6 @@ public class Circle extends Path2 implements JSONable {
 		angleOffset = j.getFloat("angleOffset");
 	}
 	
-	@Override
 	public JSONObject toJSON() {
 		JSONObject j = new JSONObject();
 		j.setFloat("x", x);

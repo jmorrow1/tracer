@@ -1,16 +1,17 @@
 package paths2;
 
-import json_lib.JSONable;
 import paths.Point;
 import processing.core.PApplet;
 import processing.data.JSONObject;
 
 /**
  * 
+ * A rect.
+ * 
  * @author James Morrow
  *
  */
-public class Rect extends Path2 implements JSONable {
+public class Rect extends Path2 {
 	private float cenx, ceny, width, height;
 	private float perimeter;
 	private float[] breaks = new float[4];
@@ -27,7 +28,7 @@ public class Rect extends Path2 implements JSONable {
 		j.setFloat("height", height);
 		return j;
 	}
-	
+		
 	public Rect(JSONObject j) {
 		cenx = j.getFloat("cenx");
 		ceny = j.getFloat("ceny");
@@ -36,6 +37,14 @@ public class Rect extends Path2 implements JSONable {
 		recompute();
 	}
 	
+	/**
+	 * 
+	 * @param a the 1st rect argument, whose meaning is determined by the given rectMode
+	 * @param b the 2nd rect argument, whose meaning is determined by the given rectMode
+	 * @param c the 3rd rect argument, whose meaning is determined by the given rectMode
+	 * @param d the 4th rect argument, whose meaning is determined by the given rectMode
+	 * @param rectMode Determines the meaning of a, b, c, and d. The rectMode can be CENTER, RADIUS, CORNER, or CORNERS.
+	 */
 	public Rect(float a, float b, float c, float d, int rectMode) {
 		if (rectMode == PApplet.CENTER) {
 			this.cenx = a;
@@ -64,10 +73,15 @@ public class Rect extends Path2 implements JSONable {
 		recompute();
 	}
 	
+	/**
+	 * Copy constructor.
+	 * @param r the Rect to copy
+	 */
 	public Rect(Rect r) {
 		this(r.cenx, r.ceny, r.width, r.height, PApplet.CENTER);
 	}
 	
+	@Override
 	public Rect clone() {
 		return new Rect(this);
 	}

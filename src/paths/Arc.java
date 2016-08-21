@@ -4,6 +4,8 @@ import processing.core.PApplet;
 
 /**
  * 
+ * A path drawn along the perimeter of an ellipse.
+ * 
  * @author James Morrow
  *
  */
@@ -14,10 +16,28 @@ public class Arc extends Path {
 	 ***** Initialization *****
 	 **************************/
 	
+	/**
+	 * Copy constructor.
+	 * 
+	 * @param arc the arc to copy
+	 */
 	public Arc(Arc arc) {
 		this(arc.cenx, arc.ceny, arc.xRadius, arc.yRadius, arc.startAngle, arc.endAngle, PApplet.RADIUS);
 	}
 	
+	/**
+	 * 
+	 * Constructs an Arc analogously to Processing's native ellipse() function.
+	 * See the <a href="https://processing.org/reference/arc_.html">Processing documentation</a> for more information.
+	 * 
+	 * @param a the 1st ellipse argument, whose meaning is determined by the given ellipseMode
+	 * @param b the 2nd ellipse argument, whose meaning is determined by the given ellipseMode
+	 * @param c the 3rd ellipse argument, whose meaning is determined by the given ellipseMode
+	 * @param d the 4th ellipse argument, whose meaning is determined by the given ellipseMode
+	 * @param startAngle the angle at which to start the arc
+	 * @param endAngle the angle at which to start the arc
+	 * @param ellipseMode determines the meaning of a,b,c, and d and can be of value RADIUS, CENTER, CORNER, or CORNERS
+	 */
 	public Arc(float a, float b, float c, float d, float startAngle, float endAngle, int ellipseMode) {
 		switch (ellipseMode) {
 			case PApplet.RADIUS:
@@ -82,55 +102,102 @@ public class Arc extends Path {
 	/*******************************
 	 ***** Getters and Setters *****
 	 *******************************/
-	
+
+	/**
+	 * @return the center x-coordinate
+	 */
 	public float getCenx() {
 		return cenx;
 	}
 
+	/**
+	 * @param cenx the center x-coordinate
+	 */
 	public void setCenx(float cenx) {
 		this.cenx = cenx;
 	}
-
+	
+	/**
+	 * 
+	 * @return the center y-coordinate
+	 */
 	public float getCeny() {
 		return ceny;
 	}
-
+	
+	/**
+	 * 
+	 * @param ceny the center y-coordinate
+	 */
 	public void setCeny(float ceny) {
 		this.ceny = ceny;
 	}
 
+	/**
+	 * 
+	 * @return the width of the ellipse
+	 */
 	public float getWidth() {
 		return 2*xRadius;
 	}
 
+	/**
+	 * 
+	 * @param width the width of the ellipse
+	 */
 	public void setWidth(float width) {
 		this.xRadius = width/2f;
 	}
 
+	/**
+	 * 
+	 * @return the height of the ellipse
+	 */
 	public float getHeight() {
 		return 2f*yRadius;
 	}
 
+	/**
+	 * 
+	 * @param height the height of the ellipse
+	 */
 	public void setHeight(float height) {
 		this.yRadius = height/2f;
 	}
 
+	/**
+	 * 
+	 * @return the angle where the arc starts
+	 */
 	public float getStartAngle() {
 		return startAngle;
 	}
 
+	/**
+	 * 
+	 * @param startAngle the angle where the arc starts
+	 */
 	public void setStartAngle(float startAngle) {
 		this.startAngle = startAngle;
 	}
 
+	/**
+	 * 
+	 * @return the angle where the arc ends
+	 */
 	public float getEndAngle() {
 		return endAngle;
 	}
 
+	/**
+	 * 
+	 * @param endAngle the angle where the arc ends
+	 */
 	public void setEndAngle(float endAngle) {
 		this.endAngle = endAngle;
 	}
 	
+	@Override
 	public Arc clone() {
 		return new Arc(this);
 	}

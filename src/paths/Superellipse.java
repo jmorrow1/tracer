@@ -4,7 +4,11 @@ import processing.core.PApplet;
 
 /**
  * 
- * See http://paulbourke.net/geometry/superellipse/ for more info on the superellipse.
+ * A more generalized version of the <a href="ellipse.html">ellipse</a>.
+ * 
+ * <br><br>
+ * 
+ * <a href="http://paulbourke.net/geometry/superellipse/"> More info on the superellipse </a>.
  * 
  * @author James Morrow
  *

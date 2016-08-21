@@ -4,6 +4,8 @@ import processing.core.PApplet;
 
 /**
  * 
+ * A path that connects two aggregate paths, end to end.
+ * 
  * @author James Morrow
  *
  * @param <T>

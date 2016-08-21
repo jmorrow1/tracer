@@ -4,6 +4,30 @@ import processing.core.PApplet;
 
 /**
  * 
+ * A continuous sequence of points in 2D space.
+ * 
+ * <br><br>
+ * 
+ * Usage:<br>
+ * To get a point on an IPath p, use p.trace(amt) or p.trace(pt, amt) where amt
+ * is a floating point value between 0 and 1 and pt is a Point (a coordinate in 2D space).
+ * 
+ * <br><br>
+ * 
+ * p.trace(0) returns a Point at the beginning of the path.
+ * p.trace(0.5) returns a Point in the middle of the path.
+ * p.trace(1) returns the point at the end of the path.
+ * And so on.
+ * 
+ * <br><br>
+ * 
+ * Alternatively, you can use p.trace(pt, amt) which, instead of returning a Point, stores
+ * the result of the computation in the given pt. This method is more efficient because it
+ * doesn't require a new Point to be allocated.
+ * 
+ * <br><br>
+ * 
+ * To display an IPath p, use p.display(pa) where pa is a PApplet.
  * 
  * @author James Morrow
  *
@@ -99,7 +123,7 @@ public interface IPath {
 	
 	/**
 	 * Clones the path.
-	 * @return
+	 * @return a copy of the path
 	 */
 	public IPath clone();
 }

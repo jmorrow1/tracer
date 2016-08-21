@@ -1,27 +1,29 @@
 package paths2;
 
-import json_lib.JSONable;
 import paths.Point;
 import processing.core.PApplet;
 import processing.data.JSONObject;
 
 /**
  * 
+ * An ellipse.
+ * 
  * @author James Morrow
  *
  */
-public class Ellipse extends Path2 implements JSONable {
+public class Ellipse extends Path2 {
 	private float x, y, xRadius, yRadius;
 	private float perimeter;
 	private boolean perimeterOutOfSync;
 	
 	/**
 	 * Constructs an Ellipse analogously to Processing's native ellipse() function.
+	 * See the <a href="https://processing.org/reference/ellipse_.html">Processing documentation</a> for more information.
 	 * 
-	 * @param a
-	 * @param b
-	 * @param c
-	 * @param d
+	 * @param a the 1st ellipse argument, whose meaning is determined by the given ellipseMode
+	 * @param b the 2nd ellipse argument, whose meaning is determined by the given ellipseMode
+	 * @param c the 3rd ellipse argument, whose meaning is determined by the given ellipseMode
+	 * @param d the 4th ellipse argument, whose meaning is determined by the given ellipseMode
 	 * @param ellipseMode Determines the meaning of a, b, c, and d. The ellipseMode can be CENTER, RADIUS, CORNER, or CORNERS.
 	 */
 	public Ellipse(float a, float b, float c, float d, int ellipseMode) {
@@ -66,7 +68,6 @@ public class Ellipse extends Path2 implements JSONable {
 		perimeter = j.getFloat("perimeter");
 	}
 	
-	@Override
 	public JSONObject toJSON() {
 		JSONObject j = new JSONObject();
 		j.setFloat("x", x);

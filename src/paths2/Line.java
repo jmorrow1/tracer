@@ -1,6 +1,5 @@
 package paths2;
 
-import json_lib.JSONable;
 import paths.Point;
 import processing.core.PApplet;
 import processing.data.JSONObject;
@@ -10,7 +9,7 @@ import processing.data.JSONObject;
  * @author James Morrow
  *
  */
-public class Line extends Path2 implements JSONable {
+public class Line extends Path2 {
 	private Point a, b;
 	private float length;
 	private static int intersectionRadius = 8;

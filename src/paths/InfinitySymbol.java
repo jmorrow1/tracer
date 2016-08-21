@@ -2,6 +2,12 @@ package paths;
 
 import processing.core.PApplet;
 
+/**
+ * An infinity symbol.
+ * 
+ * @author James Morrow
+ *
+ */
 public class InfinitySymbol extends Path {
 	private float cenx, ceny, xRadius, yRadius;
 	private int drawGranularity;

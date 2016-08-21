@@ -2,11 +2,9 @@ package paths;
 
 import processing.core.PApplet;
 
-//TODO Make it so Flowers can be ellipitical
-
 /**
  * 
- * Flower-like patterns made from two sinusoidal motions of different frequencies.
+ * A flower-like pattern made from two sinusoidal motions of different frequencies.
  * 
  * @author James Morrow
  *

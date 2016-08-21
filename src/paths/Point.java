@@ -1,16 +1,16 @@
 package paths;
 
-import json_lib.JSONable;
 import processing.core.PApplet;
 import processing.core.PVector;
 import processing.data.JSONObject;
 
 /**
+ * A point in 2D space.
  * 
  * @author James Morrow
  *
  */
-public class Point implements JSONable {
+public class Point {
 	public float x, y;
 	
 	public Point(Point pt) {
@@ -28,7 +28,6 @@ public class Point implements JSONable {
 		y = j.getFloat("y");
 	}
 	
-	@Override
 	public JSONObject toJSON() {
 		JSONObject j = new JSONObject();
 		j.setFloat("x", x);
