@@ -5,6 +5,7 @@ import processing.core.PApplet;
 import processing.data.JSONObject;
 
 /**
+ * A line.
  * 
  * @author James Morrow
  *
@@ -12,18 +13,29 @@ import processing.data.JSONObject;
 public class Line extends Path2 {
 	private Point a, b;
 	private float length;
-	private static int intersectionRadius = 8;
+	public final static int DEFAULT_INTERSECT_RADIUS = 8;
 	
 	/**************************
 	 ***** Initialization *****
 	 **************************/
 	
-	public Line(float x1, float y1, float x2, float y2){
-		a = new Point(x1, y1);
-		b = new Point(x2, y2);
+	/**
+	 * 
+	 * @param ax the x-coordinate of the first point
+	 * @param ay the y-coordinate of the first point
+	 * @param bx the x-ccoordinate of the second point
+	 * @param by the y-coordinate of the second point
+	 */
+	public Line(float ax, float ay, float bx, float by){
+		a = new Point(ax, ay);
+		b = new Point(bx, by);
 		recompute();
 	}
 	
+	/**
+	 * Copy constructor.
+	 * @param line the line to copy
+	 */
 	public Line(Line line) {
 		this(line.getAx(), line.getAy(), line.getBx(), line.getBy());
 	}
@@ -61,6 +73,16 @@ public class Line extends Path2 {
 		pt.y = PApplet.lerp(a.y, b.y, amt);
 	}
 	
+	/**
+	 * Interpolates between the line defined by (ax, ay) and (bx, by) by the given amount (a value between 0 and 1)
+	 * and stores the result in the given point.
+	 * @param pt the point
+	 * @param ax the x-coordinate of the first point
+	 * @param ay the y-coordinate of the first point
+	 * @param bx the x-coordinate of the second point
+	 * @param by the y-coordinate of the second point
+	 * @param amt the amount by which to interpolate (a value from 0 to 1)
+	 */
 	public static void trace(Point pt, float ax, float ay, float bx, float by, float amt) {
 		pt.x = PApplet.lerp(ax, bx, amt);
 		pt.y = PApplet.lerp(ay, by, amt);
@@ -71,15 +93,61 @@ public class Line extends Path2 {
 		return false;
 	}
 	
-	public boolean touches(float x, float y) {
-		return touches(a.x, a.y, b.x, b.y, x, y);
+	/**
+	 * Returns true if the given point comes within the given radius to any point in the line.
+	 * @param x the x of the point
+	 * @param y the y of the point
+	 * @param intersectRadius the maximum distance that can be considered touching
+	 * @return true if the point touches the line and false otherwise
+	 */
+	public boolean touches(float x, float y, float intersectRadius) {
+		return touches(a.x, a.y, b.x, b.y, x, y, intersectRadius);
 	}
 	
-	public static boolean touches(float x1, float y1, float x2, float y2, float x, float y) {
-		if (!((x1 - intersectionRadius <= x && x <= x2 + intersectionRadius && y1 - intersectionRadius <= y && y <= y2 + intersectionRadius) ||
-               (x1 - intersectionRadius <= x && x <= x2 + intersectionRadius && y2 - intersectionRadius <= y && y <= y1 + intersectionRadius) ||
-               (x2 - intersectionRadius <= x && x <= x1 + intersectionRadius && y1 - intersectionRadius <= y && y <= y2 + intersectionRadius) ||
-               (x2 - intersectionRadius <= x && x <= x1 + intersectionRadius && y2 - intersectionRadius <= y && y <= y1 + intersectionRadius))) {
+	/**
+	 * Returns true if the given point comes in close enough contact with the line.
+	 * @param x the x of the point
+	 * @param y the y of the point
+	 * @return true if the point touches the line and false otherwise
+	 */
+	public boolean touches(float x, float y) {
+		return touches(a.x, a.y, b.x, b.y, x, y, DEFAULT_INTERSECT_RADIUS);
+	}
+
+	/**
+	 * Returns true if the given point comes in close enough contact with the line.
+	 * @param ax the x-coordinate of the first point
+	 * @param ay the y-coordinate of the first point
+	 * @param bx the x-coordinate of the second point
+	 * @param by the y-coordinate of the second point
+	 * @param x the x of the point
+	 * @param y the y of the point
+	 * @return true if the point touches the line and false otherwise
+	 */
+	public static boolean touches(float ax, float ay, float bx, float by, float x, float y) {
+		return touches(ax, ay, bx, by, x, y, DEFAULT_INTERSECT_RADIUS);
+	}
+	
+	/**
+	 * Returns true if the line defined by (ax, ay) and (bx, by) comes within the given radius to any point in the line.
+	 * @param ax the x-coordinate of the first point
+	 * @param ay the y-coordinate of the second point
+	 * @param bx the x-coordinate of the first point
+	 * @param by the y-coordinate of the second point
+	 * @param x the x of the point
+	 * @param y the y of the point
+	 * @param intersectRadius the maximum distance that can be considered touching
+	 * @return true if the point touches the line and false otherwise
+	 */
+	public static boolean touches(float ax, float ay, float bx, float by, float x, float y, float intersectRadius) {
+		float x1 = PApplet.min(ax, bx);
+		float y1 = PApplet.min(ay, by);
+		float x2 = PApplet.max(ax, bx);
+		float y2 = PApplet.max(ay, by);
+		if (!((x1 - intersectRadius <= x && x <= x2 + intersectRadius && y1 - intersectRadius <= y && y <= y2 + intersectRadius) ||
+               (x1 - intersectRadius <= x && x <= x2 + intersectRadius && y2 - intersectRadius <= y && y <= y1 + intersectRadius) ||
+               (x2 - intersectRadius <= x && x <= x1 + intersectRadius && y1 - intersectRadius <= y && y <= y2 + intersectRadius) ||
+               (x2 - intersectRadius <= x && x <= x1 + intersectRadius && y2 - intersectRadius <= y && y <= y1 + intersectRadius))) {
             return false;
         }
         
@@ -98,7 +166,7 @@ public class Line extends Path2 {
         float lec = PApplet.dist(ex, ey, x, y);
    
         //test if line touches circle centered about (x, y)
-        if (lec < intersectionRadius) {
+        if (lec < DEFAULT_INTERSECT_RADIUS) {
             return true;
         }     
         else {
@@ -127,14 +195,6 @@ public class Line extends Path2 {
 	/*******************************
 	 ***** Getters and Setters *****
 	 *******************************/
-	
-	public static float getPerimeter(float x1, float y1, float x2, float y2) {
-		return PApplet.dist(x1, y1, x2, y2);
-	}
-	
-	public static float getLength(float x1, float y1, float x2, float y2) {
-		return PApplet.dist(x1, y1, x2, y2);
-	}
 	
 	@Override
 	public float getPerimeter() {
@@ -190,9 +250,9 @@ public class Line extends Path2 {
 	 * @param x1
 	 * @param y1
 	 */
-	public void setStartPoint(float x1, float y1) {
-		a.x = x1;
-		a.y = y1;
+	public void setStartPoint(float ax, float ay) {
+		a.x = ax;
+		a.y = ay;
 		recompute();
 	}
 	
@@ -214,12 +274,12 @@ public class Line extends Path2 {
 	
 	/**
 	 * Set the line's end point.
-	 * @param x1
-	 * @param y1
+	 * @param x1 the x-coordinate of the point
+	 * @param y1 the y-coordinate of the point
 	 */
-	public void setEndPoint(float x1, float y1) {
-		b.x = x1;
-		b.y = y1;
+	public void setEndPoint(float bx, float by) {
+		b.x = bx;
+		b.y = by;
 		recompute();
 	}
 }

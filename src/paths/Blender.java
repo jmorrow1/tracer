@@ -14,8 +14,8 @@ import processing.core.PGraphics;
  * 
  * @author James Morrow
  *
- * @param <T>
- * @param <U>
+ * @param <T> the type of the first path
+ * @param <U> the type of thes second path
  */
 public class Blender<T extends IPath, U extends IPath> extends Path {
 	private Point ptA = new Point(0, 0), ptB = new Point(0, 0);	
@@ -29,10 +29,21 @@ public class Blender<T extends IPath, U extends IPath> extends Path {
 	 ***** Initialization *****
 	 **************************/
 	
+	/**
+	 * Copy constructor.
+	 * @param blender the blender to copy
+	 */
 	public Blender(Blender<T, U> blender) {
 		this(blender.a, blender.b, blender.blendAmt, blender.drawGranularity);
 	}
 	
+	/**
+	 * 
+	 * @param a the first path
+	 * @param b the second path
+	 * @param blendAmt a value between 0 and 1 specifying how much to blend between a and b
+	 * @param drawGranularity the number of sample points
+	 */
 	public Blender(T a, U b, float blendAmt, int drawGranularity) {
 		this.a = a;
 		this.b = b;
@@ -68,42 +79,79 @@ public class Blender<T extends IPath, U extends IPath> extends Path {
 	 ***** Getters and Setters *****
 	 *******************************/
 	
+	/**
+	 * 
+	 * @return the first path
+	 */
 	public T getA() {
 		return a;
 	}
 
+	/**
+	 * 
+	 * @param a the first path
+	 */
 	public void setA(T a) {
 		this.a = a;
 	}
 
+	/**
+	 * 
+	 * @return the second path
+	 */
 	public U getB() {
 		return b;
 	}
 
+	/**
+	 * 
+	 * @param b the second path
+	 */
 	public void setB(U b) {
 		this.b = b;
 	}
 
+	/**
+	 * 
+	 * @return the number of sample points
+	 */
 	public int getDrawGranularity() {
 		return drawGranularity;
 	}
 
+	/**
+	 * 
+	 * @param drawGranularity the number of sample points
+	 */
 	public void setDrawGranularity(int drawGranularity) {
 		this.drawGranularity = drawGranularity;
 	}
 
+	/**
+	 * 
+	 * @return a value between 0 and 1 specifying how much to blend between the first and second paths
+	 */
 	public float getBlendAmt() {
 		return blendAmt;
 	}
 
+	/**
+	 * 
+	 * @param blendAmt a value between 0 and 1 specifying how much to blend between the first and second paths
+	 */
 	public void setBlendAmt(float blendAmt) {
 		this.blendAmt = blendAmt;
 	}
 	
+	/**
+	 * 
+	 * @param dAmt how much to change the blendAmt
+	 */
 	public void addToBlendAmt(float dAmt) {
 		this.blendAmt = IPath2.remainder(this.blendAmt + dAmt, 1);
 	}
 	
+	@Override
 	public Blender<T, U> clone() {
 		return new Blender(this);
 	}

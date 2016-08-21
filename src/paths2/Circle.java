@@ -16,12 +16,22 @@ public class Circle extends Path2 {
 	private float radius;
 	private float angleOffset;
 	
+	/**
+	 * 
+	 * @param x the center x-coordinate
+	 * @param y the center y-coordinate
+	 * @param radius the radius
+	 */
 	public Circle(float x, float y, float radius) {
 		this.x = x;
 		this.y = y;
 		this.radius = radius;
 	}
 	
+	/**
+	 * Copy constructor.
+	 * @param c the circle to copy
+	 */
 	public Circle(Circle c) {
 		this(c.getCenx(), c.getCeny(), c.getRadius());
 	}
@@ -133,7 +143,7 @@ public class Circle extends Path2 {
 	
 	/**
 	 * Set the radius.
-	 * @param radius
+	 * @param radius the radius
 	 */
 	public void setRadius(float radius) {
 		this.radius = radius;

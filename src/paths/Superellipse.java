@@ -22,10 +22,23 @@ public class Superellipse extends Path {
 	 ***** Initialization *****
 	 **************************/
 	
+	/**
+	 * Copy constructor.
+	 * @param e the superellipse to copy
+	 */
 	public Superellipse(Superellipse e) {
 		this(e.cenx, e.ceny, e.xRadius, e.yRadius, e.n, e.granularity);
 	}
 	
+	/**
+	 * 
+	 * @param cenx the center x-coordinate
+	 * @param ceny the center y-coordinate
+	 * @param xRadius half the width
+	 * @param yRadius half the height
+	 * @param n controls the amount of pinching (smaller values give more pinching)
+	 * @param granularity the number of sample points
+	 */
 	public Superellipse(float cenx, float ceny, float xRadius, float yRadius, float n, int granularity) {
 		super(granularity);
 		this.cenx = cenx;
@@ -71,55 +84,104 @@ public class Superellipse extends Path {
 	 ***** Getters and Setters *****
 	 *******************************/
 	
+	/**
+	 * 
+	 * @return the center x-coordinate
+	 */
 	public float getCenx() {
 		return cenx;
 	}
 
+	/**
+	 * 
+	 * @param cenx the center x-coordinate
+	 */
 	public void setCenx(float cenx) {
 		this.cenx = cenx;
 	}
 
+	/**
+	 * 
+	 * @return the center y-coordinate
+	 */
 	public float getCeny() {
 		return ceny;
 	}
 
+	/**
+	 * 
+	 * @param ceny the center y-coordinate
+	 */
 	public void setCeny(float ceny) {
 		this.ceny = ceny;
 	}
 
-	public float getxRadius() {
+	/**
+	 * 
+	 * @return half the width
+	 */
+	public float getXRadius() {
 		return xRadius;
 	}
 
-	public void setxRadius(float xRadius) {
+	/**
+	 * 
+	 * @param xRadius half the width
+	 */
+	public void setXRadius(float xRadius) {
 		this.xRadius = xRadius;
 	}
 
-	public float getyRadius() {
+	/**
+	 * 
+	 * @return half the height
+	 */
+	public float getYRadius() {
 		return yRadius;
 	}
 
-	public void setyRadius(float yRadius) {
+	/**
+	 * 
+	 * @param yRadius half the height
+	 */
+	public void setYRadius(float yRadius) {
 		this.yRadius = yRadius;
 	}
 
+	/**
+	 * 
+	 * @return the amount of pinching (smaller amounts of n give more pinching)
+	 */
 	public float getN() {
 		return n;
 	}
 
+	/**
+	 * 
+	 * @param n the amount of pinching (smaller amounts of n give more pinching)
+	 */
 	public void setN(float n) {
 		this.n = n;
 		this.twoOverN = 2f / n;
 	}
 
+	/**
+	 * 
+	 * @return the number of sample points
+	 */
 	public int getGranularity() {
 		return granularity;
 	}
 
+	/**
+	 * 
+	 * @param granularity the number of sample points
+	 */
 	public void setGranularity(int granularity) {
 		this.granularity = granularity;
 	}
 	
+	@Override
 	public Superellipse clone() {
 		return new Superellipse(this);
 	}

@@ -176,18 +176,12 @@ public class Rect extends Path2 {
 		return ceny;
 	}
 	
-	/**
-	 * 
-	 * @return the width of the rectangle
-	 */
+	@Override
 	public float getWidth() {
 		return width;
 	}
 	
-	/**
-	 * 
-	 * @return the height of the rectangle
-	 */
+	@Override
 	public float getHeight() {
 		return height;
 	}
@@ -250,7 +244,7 @@ public class Rect extends Path2 {
 	
 	/**
 	 * Set the width of the rectangle to the given float
-	 * @param width
+	 * @param width the width
 	 */
 	public void setWidth(float width) {
 		this.width = width;
@@ -259,18 +253,14 @@ public class Rect extends Path2 {
 	
 	/**
 	 * Set the height of the rectangle to the given float
-	 * @param height
+	 * @param height the height
 	 */
 	public void setHeight(float height) {
 		this.height = height;
 		recompute();
 	}
 	
-	/**
-	 * Set the center point of the rectangle.
-	 * @param cenx
-	 * @param ceny
-	 */
+	@Override
 	public void setCenter(float cenx, float ceny) {
 		this.cenx = cenx;
 		this.ceny = ceny;

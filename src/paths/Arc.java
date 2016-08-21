@@ -104,6 +104,7 @@ public class Arc extends Path {
 	 *******************************/
 
 	/**
+	 * 
 	 * @return the center x-coordinate
 	 */
 	public float getCenx() {

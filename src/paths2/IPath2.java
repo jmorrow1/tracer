@@ -39,22 +39,22 @@ public interface IPath2 extends IPath {
 	
 	/**
 	 * Returns the length of the Path.
-	 * @return
+	 * @return the perimeter
 	 */
 	public float getPerimeter();
 	
 	/**
-	 * Returns true if (x,y) is a point within the Path (which would imply that this is a closed path) and false otherwise.
-	 * @param x
-	 * @param y
-	 * @return
+	 * Returns true if (x,y) is a point within the path (which would imply that this is a closed path) and false otherwise.
+	 * @param x the x of the point
+	 * @param y the y of the point
+	 * @return true if the point is inside the path and false otherwise
 	 */
 	public boolean inside(float x, float y);
 	
 	/**
-	 * Returns true if pt is a Point within the Path (which would imply that this is a closed path) and false otherwise.
-	 * @param pt
-	 * @return
+	 * Returns true if pt is a point within the path (which would imply that this is a closed path) and false otherwise.
+	 * @param pt the point
+	 * @return true if the point is within the path and false otherwise
 	 */
 	public default boolean inside(Point pt) {
 		return inside(pt.x, pt.y);
@@ -73,7 +73,7 @@ public interface IPath2 extends IPath {
 	
 	/**
 	 * Returns the slope of the Point on the Path at trace2(amt).
-	 * @param amt
+	 * @param amt the amount (a value between 0 and 1) at which to get the slope
 	 * @return the slope
 	 */
 	public default float slope2(float amt) {
@@ -89,29 +89,25 @@ public interface IPath2 extends IPath {
 		}
 	}
 	
-	/**
-	 * Returns true if this Path is considered a closed path and false otherwise.
-	 * @return
-	 */
 	//public boolean isClosedPath();
 	
 	/**
-	 * Returns the center x-coordinate of this Path.
-	 * @return
+	 * Returns the center x-coordinate
+	 * @return the center x-coordinate
 	 */
 	public float getCenx();
 	
 	
 	/**
-	 * Returns the center y-coordinate of this Path.
-	 * @return
+	 * Returns the center y-coordinate
+	 * @return the center y-coordinate
 	 */
 	public float getCeny();
 	
 	/**
 	 * Sets the center point of this Path to (x,y).
-	 * @param x
-	 * @param y
+	 * @param x the center x-coordinate
+	 * @param y the center y-coordinate
 	 */
 	public default void setCenter(float x, float y) {
 		float dx = x - this.getCenx();
@@ -121,12 +117,21 @@ public interface IPath2 extends IPath {
 	
 	/**
 	 * Sets the center point of this Path to the given pt.
-	 * @param pt
+	 * @param pt the center point
 	 */
 	public default void setCenter(Point pt) {
 		setCenter(pt.x, pt.y);
 	}
 	
+	/**
+	 * 
+	 * @return the width of the path
+	 */
 	public float getWidth();
+	
+	/**
+	 * 
+	 * @return the height of the path
+	 */
 	public float getHeight();
 }

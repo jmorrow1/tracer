@@ -16,10 +16,22 @@ public class InfinitySymbol extends Path {
 	 ***** Initialization *****
 	 **************************/
 
+	/**
+	 * Copy constructor.
+	 * @param s The infinity symbol to copy
+	 */
 	public InfinitySymbol(InfinitySymbol s) {
 		this(s.cenx, s.ceny, s.xRadius, s.yRadius, s.drawGranularity);
 	}
 	
+	/**
+	 * 
+	 * @param cenx the center x-coordinate
+	 * @param ceny the center y-coordinate
+	 * @param xRadius half the width
+	 * @param yRadius half the height
+	 * @param drawGranularity the number of sample points
+	 */
 	public InfinitySymbol(float cenx, float ceny, float xRadius, float yRadius, int drawGranularity) {
 		this.cenx = cenx;
 		this.ceny = ceny;
@@ -55,46 +67,87 @@ public class InfinitySymbol extends Path {
 	 ***** Getters and Setters *****
 	 *******************************/
 	
+	/**
+	 * 
+	 * @return the center x-coordinate
+	 */
 	public float getCenx() {
 		return cenx;
 	}
 
+	/**
+	 * 
+	 * @param cenx the center x-coordinate
+	 */
 	public void setCenx(float cenx) {
 		this.cenx = cenx;
 	}
 
+	/**
+	 * 
+	 * @return the center y-coordinate
+	 */
 	public float getCeny() {
 		return ceny;
 	}
 
+	/**
+	 * 
+	 * @param ceny the center y-coordinate
+	 */
 	public void setCeny(float ceny) {
 		this.ceny = ceny;
 	}
 
-	public float getxRadius() {
+	/**
+	 * 
+	 * @return half the width
+	 */
+	public float getXRadius() {
 		return xRadius;
 	}
 
-	public void setxRadius(float xRadius) {
+	/**
+	 * 
+	 * @param xRadius half the width
+	 */
+	public void setXRadius(float xRadius) {
 		this.xRadius = xRadius;
 	}
 
-	public float getyRadius() {
+	/**
+	 * 
+	 * @return half the height
+	 */
+	public float getYRadius() {
 		return yRadius;
 	}
 
-	public void setyRadius(float yRadius) {
+	/**
+	 * 
+	 * @param yRadius half the height
+	 */
+	public void setYRadius(float yRadius) {
 		this.yRadius = yRadius;
 	}
 
+	/**
+	 * 
+	 * @return the number of sample points
+	 */
 	public int getDrawGranulariy() {
 		return drawGranularity;
 	}
 
+	/**
+	 * 
+	 * @param drawGranularity the number of sample points
+	 */
 	public void setDrawGranularity(int drawGranularity) {
 		this.drawGranularity = drawGranularity;
 	}
 	
+	@Override
 	public InfinitySymbol clone() {
 		return new InfinitySymbol(this);
 	}

@@ -17,10 +17,16 @@ public abstract class Path implements IPath {
 	protected int granularity = -1;
 	
 	public Path() {}
+	
+	/**
+	 * 
+	 * @param granularity the number of sample points
+	 */
 	public Path(int granularity) {
 		this.granularity = granularity;
 	}
 	
+	@Override
 	public void display(PApplet pa) {
 		if (granularity != -1) {
 			display(pa, granularity);
@@ -30,6 +36,13 @@ public abstract class Path implements IPath {
 		}
 	}
 	
+	@Override
+	public abstract void trace(Point pt, float amt);
+
+	/**
+	 * 
+	 * @return true, if the path is set to reversed and false otherwise
+	 */
 	public boolean isReversed() {
 		return reversed;
 	}
@@ -39,5 +52,6 @@ public abstract class Path implements IPath {
 		reversed = !reversed;
 	}
 	
+	@Override
 	public abstract Path clone();
 }

@@ -37,7 +37,9 @@ public interface IPath {
 	
 	/**
 	 * 
-	 * A continuous function from real values (floats) to Points,
+	 * A continuous function from real values (floats) to Points.
+	 * 
+	 * <br><br>
 	 * 
 	 * Maps a given floating point number from 0 to 1 to a given Point
 	 * along the perimeter of the Path.
@@ -48,7 +50,9 @@ public interface IPath {
 	public void trace(Point pt, float amt);
 	
 	/**
-	 * A continuous function from real values (floats) to Points,
+	 * A continuous function from real values (floats) to Points.
+	 * 
+	 * <br><br>
 	 * 
 	 * Maps a given floating point number from 0 to 1 to a Point
 	 * along the perimeter of the Path.
@@ -63,6 +67,7 @@ public interface IPath {
 	}
 
 	/**
+	 * Displays the path.
 	 * 
 	 * @param pa The PApplet to which the path is drawn.
 	 */
@@ -71,6 +76,8 @@ public interface IPath {
 	/**
 	 * Draws the path by approximating it with a given number of sample points,
 	 * and then connecting those points with lines.
+	 * 
+	 * <br><br>
 	 * 
 	 * This is a useful shortcut for classes that implement IPath to use.
 	 * It allows an IPath to define its proper display method in terms of this function.

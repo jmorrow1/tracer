@@ -13,11 +13,20 @@ import processing.data.JSONObject;
 public class Point {
 	public float x, y;
 	
+	/**
+	 * Copy constructor.
+	 * @param pt the point to copy
+	 */
 	public Point(Point pt) {
 		this.x = pt.x;
 		this.y = pt.y;
 	}
 	
+	/**
+	 * 
+	 * @param x the x-coordinate
+	 * @param y the y-coordinate
+	 */
 	public Point(float x, float y) {
 		this.x = x;
 		this.y = y;
@@ -43,7 +52,11 @@ public class Point {
 		pa.point(x, y);
 	}
 	
-	//convienent function if you want to get an array of points from an array of alternating x, y values
+	/**
+	 * Creates an array of points from a sequence or array of floating point values.
+	 * @param values the floating point values
+	 * @return the array of points
+	 */
 	public static Point[] points(float... values) {
 	    Point[] pts = new Point[values.length/2];
 	    for (int i=0; i<pts.length; i++) {
@@ -52,15 +65,36 @@ public class Point {
 	    return pts;
 	}
 	
+	/**
+	 * Interpolates a Point a and a Point b by a given amount between 0 and 1.
+	 * 
+	 * @param a Point a
+	 * @param b Point b
+	 * @param amt A value between 0 and 1 specifying the interpolation amount
+	 * @return the Point in between a and b
+	 */
 	public static Point lerp(Point a, Point b, float amt) {
 		return new Point(PApplet.lerp(a.x, a.y, amt), 
 						 PApplet.lerp(b.x, b.y, amt));
 	}
 
+	/**
+	 * Averages two points.
+	 * 
+	 * @param a point a
+	 * @param b point b
+	 * @return The Point halfway between a and b.
+	 */
 	public static Point avg(Point a, Point b) {
 		return new Point((a.x+b.x)/2f, (a.y+b.y)/2f);
 	}
 	
+	/**
+	 * Averages a sequence or array of points.
+	 * 
+	 * @param pts the points
+	 * @return the average
+	 */
 	public static Point avg(Point... pts) {
 		float xAvg = 0;
 		float yAvg = 0;
@@ -73,26 +107,45 @@ public class Point {
 		return new Point(xAvg, yAvg);
 	}
 	
+	/**
+	 * Computes the distance between two points.
+	 * 
+	 * @param a the first point
+	 * @param b the second point
+	 * @return the distance
+	 */
 	public static float dist(Point a, Point b) {
 		return PApplet.dist(a.x, a.y, b.x, b.y);
 	}
 	
+	/**
+	 * The slope between two points.
+	 * 
+	 * @param a the first point
+	 * @param b the second point
+	 * @return
+	 */
 	public static float slope(Point a, Point b) {
 		return (b.y - a.y)/(b.x - a.x);
 	}
 	
-	public static Point slopeVector(Point a, Point b) {
-		float x = (b.x - a.x);
-		float y = (b.y - a.y);
-		PVector pv = new PVector(x, y);
-		pv.normalize();
-		return new Point(pv.x, pv.y);
-	}
-	
+	/**
+	 * Adds two points.
+	 * 
+	 * @param a the first point
+	 * @param b the second point
+	 * @return the sum
+	 */
 	public static Point add(Point a, Point b) {
 		return new Point(a.x+b.x, a.y+b.y);
 	}
 	
+	/**
+	 * Adds a sequence or array of points.
+	 * 
+	 * @param pts a sequence or array of points
+	 * @return the sum of the points
+	 */
 	public static Point sum(Point... pts) {
 		Point sum = new Point(0, 0);
 		for (int i=0; i<pts.length; i++) {
@@ -102,13 +155,20 @@ public class Point {
 		return sum;
 	}
 	
+	/**
+	 * Subtracts two points.
+	 * 
+	 * @param a the first point
+	 * @param b the second point
+	 * @return a - b
+	 */
 	public static Point sub(Point a, Point b) {
 		return new Point(a.x-b.x, a.y-b.y);
 	}
 	
 	/**
 	 * Multiply this point by the given multiplier.
-	 * @param multiplier
+	 * @param multiplier the multiplier
 	 */
 	public void mult(float multiplier) {
 		x *= multiplier;
@@ -117,7 +177,7 @@ public class Point {
 	
 	/**
 	 * Add the given point to this point.
-	 * @param pt
+	 * @param pt the point to add
 	 */
 	public void add(Point pt) {
 		x += pt.x;

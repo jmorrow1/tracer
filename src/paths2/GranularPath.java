@@ -1,7 +1,6 @@
 package paths2;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import paths.IPath;
@@ -148,7 +147,7 @@ public class GranularPath implements IPath2 {
 			for (int i=1; i<vertices.size(); i++) {
 				float bx = vertices.get(i).x;
 				float by = vertices.get(i).y;
-				segLengths[i] += Line.getLength(ax, ay, bx, by);
+				segLengths[i] += PApplet.dist(ax, ay, bx, by);
 				this.perimeter += segLengths[i];
 				ax = bx;
 				ay = by;
@@ -229,7 +228,7 @@ public class GranularPath implements IPath2 {
 		reverse(vertices);
 	}
 	
-	public void update() {
+	private void update() {
 		computeDimensions();
 		computePerimeter();
 	}
