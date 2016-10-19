@@ -2,6 +2,7 @@ package paths2;
 
 import paths.Point;
 import processing.core.PApplet;
+import processing.core.PGraphics;
 import processing.data.JSONObject;
 
 /**
@@ -63,12 +64,25 @@ public class Line extends Path2 {
 	 **************************/
 	
 	@Override
-	public void display(PApplet pa) {
-		pa.line(a.x, a.y, b.x, b.y);
+	public void display(PGraphics g) {
+		g.line(a.x, a.y, b.x, b.y);
 	}
 
 	@Override
 	public void trace(Point pt, float amt) {
+		pt.x = PApplet.lerp(a.x, b.x, amt);
+		pt.y = PApplet.lerp(a.y, b.y, amt);
+	}
+	
+	/**
+	 * Interpolates between the line defined by (a.x, a.y) and (b.x, b.y) by the given amount (a value between 0 and 1)
+	 * and stores the result in the given point.
+	 * @param pt The point in which to store the result
+	 * @param a The first point
+	 * @param b The second point
+	 * @param amt The amount by which to interpolate (a value from 0 to 1)
+	 */
+	public static void trace(Point pt, Point a, Point b, float amt) {
 		pt.x = PApplet.lerp(a.x, b.x, amt);
 		pt.y = PApplet.lerp(a.y, b.y, amt);
 	}

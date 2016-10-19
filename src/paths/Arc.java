@@ -1,6 +1,7 @@
 package paths;
 
 import processing.core.PApplet;
+import processing.core.PGraphics;
 
 /**
  * 
@@ -74,9 +75,9 @@ public class Arc extends Path {
 	 *************************/
 	
 	@Override
-	public void display(PApplet pa) {
-		pa.ellipseMode(pa.RADIUS);
-		pa.arc(cenx, ceny, xRadius, yRadius, startAngle, endAngle);
+	public void display(PGraphics g) {
+		g.ellipseMode(g.RADIUS);
+		g.arc(cenx, ceny, xRadius, yRadius, startAngle, endAngle);
 	}
 
 	@Override

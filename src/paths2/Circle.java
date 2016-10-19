@@ -2,6 +2,7 @@ package paths2;
 
 import paths.Point;
 import processing.core.PApplet;
+import processing.core.PGraphics;
 import processing.data.JSONObject;
 
 /**
@@ -53,9 +54,9 @@ public class Circle extends Path2 {
 	}
 	
 	@Override
-	public void display(PApplet pa) {
-		pa.ellipseMode(pa.RADIUS);
-		pa.ellipse(x, y, radius, radius);
+	public void display(PGraphics g) {
+		g.ellipseMode(g.RADIUS);
+		g.ellipse(x, y, radius, radius);
 	}
 
 	@Override

@@ -1,6 +1,7 @@
 package paths;
 
 import processing.core.PApplet;
+import processing.core.PGraphics;
 
 /**
  * 
@@ -93,8 +94,8 @@ public class Supershape extends Path {
 	}
 
 	@Override
-	public void display(PApplet pa) {
-		display(pa, granularity);
+	public void display(PGraphics g) {
+		display(g, granularity);
 	}
 
 	@Override

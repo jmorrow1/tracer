@@ -1,6 +1,7 @@
 package paths;
 
 import processing.core.PApplet;
+import processing.core.PGraphics;
 
 /**
  * 
@@ -74,8 +75,8 @@ public class Flower extends Path {
         pt.y = PApplet.lerp(ceny, y, lerpAmt);
 	}
 
-	public void display(PApplet pa) {
-		display(pa, drawGranularity);
+	public void display(PGraphics g) {
+		display(g, drawGranularity);
 	}
 	
 	@Override

@@ -1,6 +1,6 @@
 package paths;
 
-import processing.core.PApplet;
+import processing.core.PGraphics;
 
 /**
  * A continuous sequence of points in 2D space.
@@ -27,9 +27,9 @@ public abstract class Path implements IPath {
 	}
 	
 	@Override
-	public void display(PApplet pa) {
+	public void display(PGraphics g) {
 		if (granularity != -1) {
-			display(pa, granularity);
+			display(g, granularity);
 		}
 		else {
 			System.err.println("Need to either override this Path's display method or set the granularity of this Path so it can be displayed automatically.");

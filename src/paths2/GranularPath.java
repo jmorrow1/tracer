@@ -6,6 +6,7 @@ import java.util.List;
 import paths.IPath;
 import paths.Point;
 import processing.core.PApplet;
+import processing.core.PGraphics;
 
 /**
  * 
@@ -171,13 +172,13 @@ public class GranularPath implements IPath2 {
 	 *************************/
 	
 	@Override
-	public void display(PApplet pa) {
-		pa.beginShape();
+	public void display(PGraphics g) {
+		g.beginShape();
 		for (int i=0; i<vertices.size(); i++) {
 			
-			pa.vertex(vertices.get(i).x, vertices.get(i).y);
+			g.vertex(vertices.get(i).x, vertices.get(i).y);
 		}
-		pa.endShape();
+		g.endShape();
 	}
 
 	@Override

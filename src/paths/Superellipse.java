@@ -1,10 +1,11 @@
 package paths;
 
 import processing.core.PApplet;
+import processing.core.PGraphics;
 
 /**
  * 
- * A more generalized version of the <a href="ellipse.html">ellipse</a>.
+ * A more generalized version of the <a href="Ellipse.html">ellipse</a>.
  * 
  * <br><br>
  * 
@@ -64,8 +65,8 @@ public class Superellipse extends Path {
 	}
 
 	@Override
-	public void display(PApplet pa) {
-		display(pa, granularity);
+	public void display(PGraphics g) {
+		display(g, granularity);
 	}
 
 	@Override

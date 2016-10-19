@@ -1,6 +1,7 @@
 package paths;
 
 import processing.core.PApplet;
+import processing.core.PGraphics;
 
 /**
  * 
@@ -53,9 +54,9 @@ public class Composite<T extends IPath, U extends IPath> extends Path {
 	}
 
 	@Override
-	public void display(PApplet pa) {
-		a.display(pa);
-		b.display(pa);
+	public void display(PGraphics g) {
+		a.display(g);
+		b.display(g);
 	}
 
 	@Override

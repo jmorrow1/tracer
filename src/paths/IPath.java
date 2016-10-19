@@ -1,6 +1,7 @@
 package paths;
 
 import processing.core.PApplet;
+import processing.core.PGraphics;
 
 /**
  * 
@@ -68,10 +69,9 @@ public interface IPath {
 
 	/**
 	 * Displays the path.
-	 * 
-	 * @param pa The PApplet to which the path is drawn.
+	 * @param g TODO
 	 */
-	public void display(PApplet pa);
+	public void display(PGraphics g);
 	
 	/**
 	 * Draws the path by approximating it with a given number of sample points,
@@ -85,16 +85,16 @@ public interface IPath {
 	 * @param pa The PApplet to which the path is drawn.
 	 * @param granularity The number of sample points.
 	 */
-	public default void display(PApplet pa, int granularity) {
+	public default void display(PGraphics g, int granularity) {
 		float amt = 0;
 		float dAmt = 1f/granularity;
-		pa.beginShape();
+		g.beginShape();
 		for (int i=0; i<granularity+1; i++) {
 			trace(pt, amt);
-			pa.vertex(pt.x, pt.y);
+			g.vertex(pt.x, pt.y);
 			amt += dAmt;
 		}
-		pa.endShape();
+		g.endShape();
 	}
 	/**
 	 * Shifts this Path dx units in the x-direction and dy units in the y-direction.

@@ -1,6 +1,7 @@
 package paths;
 
 import processing.core.PApplet;
+import processing.core.PGraphics;
 
 /**
  * An infinity symbol.
@@ -53,8 +54,8 @@ public class InfinitySymbol extends Path {
 	}
 
 	@Override
-	public void display(PApplet pa) {
-		display(pa, drawGranularity);
+	public void display(PGraphics g) {
+		display(g, drawGranularity);
 	}
 
 	@Override

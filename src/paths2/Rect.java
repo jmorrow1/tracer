@@ -2,6 +2,7 @@ package paths2;
 
 import paths.Point;
 import processing.core.PApplet;
+import processing.core.PGraphics;
 import processing.data.JSONObject;
 
 /**
@@ -99,9 +100,9 @@ public class Rect extends Path2 {
 	 *************************/
 	
 	@Override
-	public void display(PApplet pa) {
-		pa.rectMode(pa.CENTER);
-		pa.rect(cenx, ceny, width, height);
+	public void display(PGraphics g) {
+		g.rectMode(g.CENTER);
+		g.rect(cenx, ceny, width, height);
 	}
 
 	@Override

@@ -1,6 +1,7 @@
 package paths;
 
 import processing.core.PApplet;
+import processing.core.PGraphics;
 
 /**
  * A Bezier curve defined by two anchor points and two control points.
@@ -8,7 +9,7 @@ import processing.core.PApplet;
  * @author James Morrow
  *
  */
-public class Bezier extends Path {
+public class CubicBezier extends Path {
 	private float ax1, ay1, cx1, cy1, cx2, cy2, ax2, ay2;
 	
 	/**************************
@@ -19,7 +20,7 @@ public class Bezier extends Path {
 	 * Copy constructor
 	 * @param b The Bezier to copy
 	 */
-	public Bezier(Bezier b) {
+	public CubicBezier(CubicBezier b) {
 		this(b.ax1, b.ay1, b.cx1, b.cy1, b.cx2, b.cy2, b.ax2, b.ay2);
 	}
 	
@@ -34,7 +35,7 @@ public class Bezier extends Path {
 	 * @param ax2 the x-coordinate of the 2nd anchor point
 	 * @param ay2 the y-coordinate of the 2nd anchor point
 	 */
-	public Bezier(float ax1, float ay1, float cx1, float cy1, float cx2, float cy2, float ax2, float ay2) {
+	public CubicBezier(float ax1, float ay1, float cx1, float cy1, float cx2, float cy2, float ax2, float ay2) {
 		this.ax1 = ax1;
 		this.ay1 = ay1;
 		this.cx1 = cx1;
@@ -57,8 +58,8 @@ public class Bezier extends Path {
 	}
 
 	@Override
-	public void display(PApplet pa) {
-		pa.bezier(ax1, ay1, cx1, cy1, cx2, cy2, ax2, ay2);
+	public void display(PGraphics g) {
+		g.bezier(ax1, ay1, cx1, cy1, cx2, cy2, ax2, ay2);
 	}
 
 	@Override
@@ -212,7 +213,7 @@ public class Bezier extends Path {
 	}
 	
 	@Override
-	public Bezier clone() {
-		return new Bezier(this);
+	public CubicBezier clone() {
+		return new CubicBezier(this);
 	}
 }

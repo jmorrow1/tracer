@@ -2,6 +2,7 @@ package paths2;
 
 import paths.Point;
 import processing.core.PApplet;
+import processing.core.PGraphics;
 import processing.data.JSONObject;
 
 /**
@@ -86,9 +87,9 @@ public class Ellipse extends Path2 {
 	}
 	
 	@Override
-	public void display(PApplet pa) {
-		pa.ellipseMode(PApplet.RADIUS);
-		pa.ellipse(x, y, xRadius, yRadius);
+	public void display(PGraphics g) {
+		g.ellipseMode(PApplet.RADIUS);
+		g.ellipse(x, y, xRadius, yRadius);
 	}
 
 	@Override
