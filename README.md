@@ -1,8 +1,8 @@
 # Tracer
 Geometry library for Processing, currently in alpha.
 
-##Basics
-###Paths
+#Basics
+##Paths
 Paths are basically curves in 2-dimensional space.
 
 The main power of Paths is that they map a 1-dimensional coordinate to a 2-dimensional coordinate using the trace() method. The method trace() takes a single normal value (a value between 0 and 1) and returns a Point in 2-dimensional space.
@@ -20,15 +20,15 @@ Point pt = new Point(0, 0);
 path.trace(pt, x);
 ```
 
-###Tracers
+##Tracers
 A Tracer is like a Point that moves along a Path.
 
 Tracers provide a way of creating animations with tracer.
 
-###Easings
+##Easings
 Easings are tweening curves that control the speed of an animation over time. For an introduction to easing functions, try [this] (http://gizma.com/easing/).
 
-###Renders
+##Renders
 Renders provide a way of creating complex forms and animations with tracer.
 
 A Render stores a List of Tracers and draws them in some way.
@@ -40,5 +40,5 @@ PGraphics g = this.g;
 r.draw(g); //draws a polygonal form with the List of Tracers as vertices using Processing's beginShape() and endShape()
 ```
 
-## Documentation
+# Documentation
 [Javadoc](http://jamesmorrowdesign.com/tracer/doc/index.html)
