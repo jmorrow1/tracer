@@ -50,3 +50,12 @@ r.draw(g); //draws a polygonal form with the List of Tracers as vertices
 
 # Documentation
 [Javadoc](http://jamesmorrowdesign.com/tracer/doc/index.html)
+
+#Installation
+For use with the PDE: Add a folder called tracer to the libraries folder located in your sketchbook. Copy the folder called library from this repo to the tracer folder. After restarting Processing, tracer should be available to your sketch after adding an import statement.
+
+``` {.java}
+import tracer.*;
+```
+
+For use outside of the PDE, add tracer.jar along with the jar files associated with Processing 3 to your build path. 
