@@ -12,7 +12,7 @@ import tracer.Point;
  * 
  * <a href="http://paulbourke.net/geometry/supershape/"> More info on the supershape </a>
  * 
- * @author James Morrow
+ * @author James Morrow [jamesmorrowdesign.com]
  *
  */
 public class Supershape extends Path {

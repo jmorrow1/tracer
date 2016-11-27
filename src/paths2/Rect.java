@@ -7,9 +7,9 @@ import tracer.Point;
 
 /**
  * 
- * A rect.
+ * A rectangle, analgous to Processing's rect() function.
  * 
- * @author James Morrow
+ * @author James Morrow [jamesmorrowdesign.com]
  *
  */
 public class Rect extends Path2 {

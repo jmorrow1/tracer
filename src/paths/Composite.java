@@ -8,7 +8,7 @@ import tracer.Point;
  * 
  * A path that joins two aggregate paths.
  * 
- * @author James Morrow
+ * @author James Morrow [jamesmorrowdesign.com]
  *
  * @param <T> the type of the first path
  * @param <U> the type of the second path

@@ -5,10 +5,9 @@ import processing.core.PGraphics;
 import tracer.Point;
 
 /**
- * 
  * A path drawn along the perimeter of an ellipse.
  * 
- * @author James Morrow
+ * @author James Morrow [jamesmorrowdesign.com]
  *
  */
 public class Arc extends Path {

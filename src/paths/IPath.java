@@ -31,7 +31,7 @@ import tracer.Point;
  * 
  * To display an IPath p, use p.display(pa) where pa is a PApplet.
  * 
- * @author James Morrow
+ * @author James Morrow [jamesmorrowdesign.com]
  *
  */
 public interface IPath {

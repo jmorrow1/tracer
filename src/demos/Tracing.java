@@ -20,7 +20,7 @@ import tracer.Point;
 
 /**
  * 
- * @author James Morrow
+ * @author James Morrow [jamesmorrowdesign.com]
  *
  */
 public class Tracing extends PApplet {

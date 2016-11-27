@@ -8,7 +8,7 @@ import tracer.Point;
  * 
  * A flower-like pattern made from two sinusoidal motions of different frequencies.
  * 
- * @author James Morrow
+ * @author James Morrow [jamesmorrowdesign.com]
  *
  */
 public class Flower extends Path {

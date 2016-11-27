@@ -5,9 +5,10 @@ import processing.core.PGraphics;
 import tracer.Point;
 
 /**
+ * 
  * An infinity symbol.
  * 
- * @author James Morrow
+ * @author James Morrow [jamesmorrowdesign.com]
  *
  */
 public class InfinitySymbol extends Path {

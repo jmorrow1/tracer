@@ -12,7 +12,7 @@ import tracer.Point;
  * 
  * <a href="http://paulbourke.net/geometry/superellipse/"> More info on the superellipse </a>.
  * 
- * @author James Morrow
+ * @author James Morrow [jamesmorrowdesign.com]
  *
  */
 public class Superellipse extends Path {

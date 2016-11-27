@@ -9,7 +9,7 @@ import tracer.Point;
  * 
  * A circle.
  * 
- * @author James Morrow
+ * @author James Morrow [jamesmorrowdesign.com]
  *
  */
 public class Circle extends Path2 {

@@ -5,10 +5,12 @@ import processing.core.PGraphics;
 import processing.data.JSONObject;
 import tracer.Point;
 
+
 /**
- * A line.
  * 
- * @author James Morrow
+ * A line in 2-D space.
+ * 
+ * @author James Morrow [jamesmorrowdesign.com]
  *
  */
 public class Line extends Path2 {

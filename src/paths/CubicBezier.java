@@ -7,7 +7,7 @@ import tracer.Point;
 /**
  * A Bezier curve defined by two anchor points and two control points.
  * 
- * @author James Morrow
+ * @author James Morrow [jamesmorrowdesign.com]
  *
  */
 public class CubicBezier extends Path {

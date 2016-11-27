@@ -7,7 +7,7 @@ import tracer.Point;
  * 
  * Functions for creating polygonal paths.
  * 
- * @author James Morrow
+ * @author James Morrow [jamesmorrowdesign.com]
  *
  */
 public class Polygonize {

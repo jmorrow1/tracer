@@ -25,7 +25,7 @@ import tracer.Point;
  * <a href="../paths/IPath.html">IPath</a>, which will act as
  * the blueprint for a new Shape.
  * 
- * @author James Morrow
+ * @author James Morrow [jamesmorrowdesign.com]
  *
  */
 public class Shape implements IPath2 {

@@ -7,9 +7,9 @@ import tracer.Point;
 
 /**
  * 
- * An ellipse.
+ * An ellipse, analgous to Processing's ellipse() function.
  * 
- * @author James Morrow
+ * @author James Morrow [jamesmorrowdesign.com]
  *
  */
 public class Ellipse extends Path2 {

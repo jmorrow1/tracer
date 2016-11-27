@@ -4,13 +4,14 @@ import processing.core.PGraphics;
 import tracer.Point;
 
 /**
+ * 
  * A continuous sequence of points in 2D space.
  * 
  * <br><br>
  * 
  * <a href="IPath.html">More information on paths</a>
  * 
- * @author James Morrow
+ * @author James Morrow [jamesmorrowdesign.com]
  *
  */
 public abstract class Path implements IPath {

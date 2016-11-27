@@ -6,6 +6,11 @@ import paths2.Line;
 import processing.core.PApplet;
 import tracer.Point;
 
+/**
+ * 
+ * @author James Morrow [jamesmorrowdesign.com]
+ *
+ */
 public class BezierAnimation extends PApplet {
 	public static void main(String[] args) {
 		PApplet.main("demos.BezierAnimation");

@@ -9,6 +9,11 @@ import paths2.Ellipse;
 import processing.core.PApplet;
 import tracer.Point;
 
+/**
+ * 
+ * @author James Morrow [jamesmorrowdesign.com]
+ *
+ */
 public class Blending2D extends PApplet {
 	private Blender<Blender, Blender> p1;
 	private Path p2;

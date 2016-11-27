@@ -10,10 +10,9 @@ import tracer.Point;
 	//rather than interpolate between cached points.
 
 /**
- * 
  * A path that interpolates between two aggregate paths.
  * 
- * @author James Morrow
+ * @author James Morrow [jamesmorrowdesign.com]
  *
  * @param <T> the type of the first path
  * @param <U> the type of thes second path

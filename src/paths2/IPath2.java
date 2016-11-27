@@ -5,9 +5,10 @@ import processing.core.PApplet;
 import tracer.Point;
 
 /**
+ * 
  * An IPath with a known perimeter, position, and size.
  * 
- * @author James Morrow
+ * @author James Morrow [jamesmorrowdesign.com]
  *
  */
 public interface IPath2 extends IPath {	
