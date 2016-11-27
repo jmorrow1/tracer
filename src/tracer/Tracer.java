@@ -3,11 +3,18 @@ package tracer;
 import easing.Easing;
 import paths.IPath;
 
+/**
+ * A Point that moves along a Path at some rate of speed.
+ * 
+ * @author James Morrow [jamesmorrowdesign.com]
+ *
+ */
 public class Tracer {
-	protected Point pt; 
-	protected float x, dx;
-	protected IPath path;
-	protected Easing easing;
+	protected Point pt; //The Tracer's location in 2D space, accessible via the location() method 
+	protected float x; //The Tracer's location in 1D space, relative to the Tracer's easing curve.
+	protected float dx; //The Tracer's speed in 1D space, relative to the Tracer's easing curve.
+	protected IPath path; //The Path to which the Tracer is attached
+	protected Easing easing; //The easing curve determining how the Tracer moves in time.
 	
 	public Tracer(IPath path, float startx, float dx, Easing easing) {
 		this.x = startx % 1;

@@ -2,7 +2,6 @@ package demos;
 
 import java.util.ArrayList;
 
-import functions.Polygonize;
 import paths.Arc;
 import paths.CubicBezier;
 import paths.Blender;
@@ -15,6 +14,7 @@ import paths.Supershape;
 import paths2.Circle;
 import paths2.Ellipse;
 import paths2.Line;
+import paths2.Polygonize;
 import processing.core.PApplet;
 import tracer.Point;
 
