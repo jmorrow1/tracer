@@ -77,10 +77,10 @@ public class Polygonize {
 				theta += dTheta;
 			}
 			vertices[numVertices] = vertices[0].clone();
-			return new GranularPath(vertices);
+			return new Shape(vertices);
 		}
 		else {
-			return new GranularPath(new Point[] {});
+			return new Shape(new Point[] {});
 		}
 	}
 	
@@ -145,10 +145,10 @@ public class Polygonize {
 								        ceny + half_height*PApplet.sin(angles[i]));
 			}
 			vertices[i] = vertices[0].clone();
-			return new GranularPath(vertices);
+			return new Shape(vertices);
 		}
 		else {
-			return new GranularPath(new Point[] {});
+			return new Shape(new Point[] {});
 		}
 	}
 }

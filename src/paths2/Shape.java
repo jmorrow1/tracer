@@ -15,20 +15,20 @@ import tracer.Point;
  * <br><br>
  * 
  * Usage:<br>
- * The most direct way to construct a GranularPath is to pass
+ * The most direct way to construct a Shape is to pass
  * a sequence of Points to act as the path's vertices. This can be
  * done either with a List of points or an array of Points.
  * 
  * <br><br>
  * 
- * Another way to construct a GranularPath is to provide an
+ * Another way to construct a Shape is to provide an
  * <a href="../paths/IPath.html">IPath</a>, which will act as
- * the blueprint for a new GranularPath.
+ * the blueprint for a new Shape.
  * 
  * @author James Morrow
  *
  */
-public class GranularPath implements IPath2 {
+public class Shape implements IPath2 {
 	private List<Point> vertices;
 	private List<Float> segAmts;
 	private float cenx, ceny, width, height, perimeter;
@@ -42,7 +42,7 @@ public class GranularPath implements IPath2 {
 	 * 
 	 * @param vertices the vertex sequence
 	 */
-	public GranularPath(Point[] vertices) {
+	public Shape(Point[] vertices) {
 		this(listify(vertices));
 	}
 	
@@ -51,18 +51,18 @@ public class GranularPath implements IPath2 {
 	 * 
 	 * @param vertices the vertex sequence
 	 */
-	public GranularPath(List<Point> vertices) {
+	public Shape(List<Point> vertices) {
 		this.vertices = vertices;
 		update();
 	}
 	
 	/**
-	 * Construct a GranularPath by taking a snapshot of an IPath.
+	 * Construct a Shape by taking a snapshot of an IPath.
 	 * 
 	 * @param pathDef the IPath which will be read and then discarded.
 	 * @param numVertices the resolution of the snapshot.
 	 */
-	public GranularPath(IPath pathDef, int numVertices) {
+	public Shape(IPath pathDef, int numVertices) {
 		initVertices(pathDef, numVertices);
 	}
 	
@@ -71,7 +71,7 @@ public class GranularPath implements IPath2 {
 	 * 
 	 * @param path the path to copy
 	 */
-	private GranularPath(GranularPath path) {
+	private Shape(Shape path) {
 		this.cenx = path.getCenx();
 		this.ceny = path.getCeny();
 		this.width = path.getWidth();
@@ -215,8 +215,8 @@ public class GranularPath implements IPath2 {
 	}
 
 	@Override
-	public GranularPath clone() {
-		return new GranularPath(this);
+	public Shape clone() {
+		return new Shape(this);
 	}
 	
 	/*******************************
@@ -235,7 +235,7 @@ public class GranularPath implements IPath2 {
 	}
 	
 	/**
-	 * Reinitializes the GranularPath by taking a snapshot of an IPath.
+	 * Reinitializes the Shape by taking a snapshot of an IPath.
 	 * 
 	 * @param pathDef the IPath which will be read and then discarded
 	 * @param numVertices the resolution of the snapshot

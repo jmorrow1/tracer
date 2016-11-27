@@ -3,7 +3,7 @@ package ease;
 import processing.core.PApplet;
 
 /**
- * Represents an easing curve.
+ * Represents an easing curve (AKA a tweening curve) that controls the speed of an animation over time.
  * 
  * @author James Morrow [jamesmorrowdesign.com]
  *
