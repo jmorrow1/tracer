@@ -9,7 +9,7 @@ The main power of Paths is that they map a 1-dimensional coordinate to a 2-dimen
 
 ``` {.java}
 float x = 0.5f;
-Point pt = path.trace(x);
+Point pt = path.trace(x); //pt is set to the 2-D coordinate halfway along the path
 ```
 
 If you want to create an animation, for efficiency you may want to avoid allocating a new Point every time you trace a path. For this use case, there is another version of trace() that takes a Point and a 1-D value. Instead of returning a Point, this version of trace() stores the result of the computation in the given Point.
@@ -17,7 +17,14 @@ If you want to create an animation, for efficiency you may want to avoid allocat
 ``` {.java}
 float x = 0.5f;
 Point pt = new Point(0, 0);
-path.trace(pt, x);
+path.trace(pt, x); //pt is set to the same coordinate as in the previous example
+```
+
+To draw paths, use the draw() method.
+
+``` {.java}
+PGraphics g = this.g;
+path.draw(g); //draws the path to the PGraphics object
 ```
 
 ##Tracers
@@ -37,7 +44,8 @@ A Render stores a List of Tracers and draws them in some way.
 List<Tracer> ts = new ArrayList<Tracer>();
 Render r = new RenderShape(ts);
 PGraphics g = this.g;
-r.draw(g); //draws a polygonal form with the List of Tracers as vertices using Processing's beginShape() and endShape()
+r.draw(g); //draws a polygonal form with the List of Tracers as vertices
+           //using Processing's beginShape() and endShape()
 ```
 
 # Documentation
