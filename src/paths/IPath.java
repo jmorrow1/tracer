@@ -69,10 +69,10 @@ public interface IPath {
 	}
 
 	/**
-	 * Displays the path.
-	 * @param g TODO
+	 * Draws the path.
+	 * @param g A PGraphics object on which to draw the path
 	 */
-	public void display(PGraphics g);
+	public void draw(PGraphics g);
 	
 	/**
 	 * Draws the path by approximating it with a given number of sample points,
@@ -86,7 +86,7 @@ public interface IPath {
 	 * @param pa The PApplet to which the path is drawn.
 	 * @param granularity The number of sample points.
 	 */
-	public default void display(PGraphics g, int granularity) {
+	public default void draw(PGraphics g, int granularity) {
 		float amt = 0;
 		float dAmt = 1f/granularity;
 		g.beginShape();

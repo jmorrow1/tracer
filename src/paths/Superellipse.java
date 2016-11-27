@@ -66,8 +66,8 @@ public class Superellipse extends Path {
 	}
 
 	@Override
-	public void display(PGraphics g) {
-		display(g, granularity);
+	public void draw(PGraphics g) {
+		draw(g, granularity);
 	}
 
 	@Override

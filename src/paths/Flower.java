@@ -76,8 +76,8 @@ public class Flower extends Path {
         pt.y = PApplet.lerp(ceny, y, lerpAmt);
 	}
 
-	public void display(PGraphics g) {
-		display(g, drawGranularity);
+	public void draw(PGraphics g) {
+		draw(g, drawGranularity);
 	}
 	
 	@Override

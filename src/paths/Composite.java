@@ -55,9 +55,9 @@ public class Composite<T extends IPath, U extends IPath> extends Path {
 	}
 
 	@Override
-	public void display(PGraphics g) {
-		a.display(g);
-		b.display(g);
+	public void draw(PGraphics g) {
+		a.draw(g);
+		b.draw(g);
 	}
 
 	@Override

@@ -75,7 +75,7 @@ public class Arc extends Path {
 	 *************************/
 	
 	@Override
-	public void display(PGraphics g) {
+	public void draw(PGraphics g) {
 		g.ellipseMode(g.RADIUS);
 		g.arc(cenx, ceny, xRadius, yRadius, startAngle, endAngle);
 	}

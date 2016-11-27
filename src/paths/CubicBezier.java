@@ -59,7 +59,7 @@ public class CubicBezier extends Path {
 	}
 
 	@Override
-	public void display(PGraphics g) {
+	public void draw(PGraphics g) {
 		g.bezier(ax1, ay1, cx1, cy1, cx2, cy2, ax2, ay2);
 	}
 

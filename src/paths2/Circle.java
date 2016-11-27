@@ -54,7 +54,7 @@ public class Circle extends Path2 {
 	}
 	
 	@Override
-	public void display(PGraphics g) {
+	public void draw(PGraphics g) {
 		g.ellipseMode(g.RADIUS);
 		g.ellipse(x, y, radius, radius);
 	}

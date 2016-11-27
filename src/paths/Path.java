@@ -29,9 +29,9 @@ public abstract class Path implements IPath {
 	}
 	
 	@Override
-	public void display(PGraphics g) {
+	public void draw(PGraphics g) {
 		if (granularity != -1) {
-			display(g, granularity);
+			draw(g, granularity);
 		}
 		else {
 			System.err.println("Need to either override this Path's display method or set the granularity of this Path so it can be displayed automatically.");

@@ -56,8 +56,8 @@ public class InfinitySymbol extends Path {
 	}
 
 	@Override
-	public void display(PGraphics g) {
-		display(g, drawGranularity);
+	public void draw(PGraphics g) {
+		draw(g, drawGranularity);
 	}
 
 	@Override

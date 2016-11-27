@@ -98,7 +98,7 @@ public class Tracing extends PApplet {
 	private void drawPath(IPath t) {
 		noFill();
 		strokeWeight(2);
-		t.display(g);
+		t.draw(g);
 	
 		strokeWeight(6);
 		t.trace(pt, amt);

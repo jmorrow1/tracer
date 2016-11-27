@@ -66,7 +66,7 @@ public class Line extends Path2 {
 	 **************************/
 	
 	@Override
-	public void display(PGraphics g) {
+	public void draw(PGraphics g) {
 		g.line(a.x, a.y, b.x, b.y);
 	}
 

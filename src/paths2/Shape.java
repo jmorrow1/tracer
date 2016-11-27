@@ -172,7 +172,7 @@ public class Shape implements IPath2 {
 	 *************************/
 	
 	@Override
-	public void display(PGraphics g) {
+	public void draw(PGraphics g) {
 		g.beginShape();
 		for (int i=0; i<vertices.size(); i++) {
 			

@@ -65,8 +65,8 @@ public class Blender<T extends IPath, U extends IPath> extends Path {
 	}
 
 	@Override
-	public void display(PGraphics g) {
-		display(g, drawGranularity);
+	public void draw(PGraphics g) {
+		draw(g, drawGranularity);
 	}
 
 	@Override

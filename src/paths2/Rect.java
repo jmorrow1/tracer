@@ -100,7 +100,7 @@ public class Rect extends Path2 {
 	 *************************/
 	
 	@Override
-	public void display(PGraphics g) {
+	public void draw(PGraphics g) {
 		g.rectMode(g.CENTER);
 		g.rect(cenx, ceny, width, height);
 	}
