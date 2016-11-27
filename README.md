@@ -41,4 +41,4 @@ r.draw(g); //draws a polygonal form with the List of Tracers as vertices using P
 ```
 
 ## Documentation
-[Javadoc](http://jamesmorrowdesign.com/path-tracer/doc/index.html)
+[Javadoc](http://jamesmorrowdesign.com/tracer/doc/index.html)
