@@ -26,7 +26,7 @@ A Tracer is like a Point that moves along a Path.
 Tracers provide a way of creating animations with tracer.
 
 ###Easings
-Easings are tweening curves that control the speed of an animation over time. For an introduction to easing functions, try [this] (http://gizma.com/easing/).
+Easings are tweening curves that control the speed of an animation over time. For an introduction to easing functions, try <a href="http://gizma.com/easing/" target="_blank">this</a>
 
 ###Renders
 Renders provide a way of creating complex forms and animations with tracer. A Render stores a List of Tracers and draws them in some way.
@@ -39,4 +39,4 @@ r.draw(g); //draws a polygonal form with the List of Tracers as vertices using P
 ```
 
 ## Documentation
-[Javadoc](http://jamesmorrowdesign.com/path-tracer/doc/index.html)
+<a href="http://jamesmorrowdesign.com/path-tracer/doc/index.html" target="_blank">Javadocs</a>
