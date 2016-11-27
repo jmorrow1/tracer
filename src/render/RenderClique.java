@@ -26,7 +26,7 @@ public class RenderClique extends Render {
 	}
 
 	public RenderClique(List<Tracer> ts) {
-		this(ts, PApplet.ROUND, 0x000000ff, 2f);
+		this(ts, PApplet.ROUND, 0xff000000, 2f);
 	}
 
 	@Override

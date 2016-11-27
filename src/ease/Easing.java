@@ -19,6 +19,12 @@ public interface Easing {
 	 */
 	public float val(float t);
 	
+	public static class Linear implements Easing {
+		public float val(float t) {
+			return t;
+		}
+	}
+	
 	public static class QuadEaseIn implements Easing {
 	    public float val(float t) {
 	        return t*t;

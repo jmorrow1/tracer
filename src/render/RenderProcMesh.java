@@ -23,7 +23,7 @@ public class RenderProcMesh extends Render {
 	protected float strokeWeight;
 	
 	public RenderProcMesh(List<Tracer> ts, float minDist) {
-		this(ts, minDist, PApplet.ROUND, 0x000000ff, 2f);
+		this(ts, minDist, PApplet.ROUND, 0xff000000, 2f);
 	}
 
 	public RenderProcMesh(List<Tracer> ts, float minDist, int strokeCap, int strokeColor, float strokeWeight) {

@@ -29,7 +29,7 @@ public class RenderShape extends Render {
 	}
 
 	public RenderShape(List<Tracer> ts) {
-		this(ts, true, false, true, -1, 0x000000ff);
+		this(ts, true, false, true, -1, 0xff000000);
 	}
 	
 	@Override

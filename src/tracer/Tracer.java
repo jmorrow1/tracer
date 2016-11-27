@@ -1,6 +1,7 @@
 package tracer;
 
 import ease.Easing;
+import ease.Easing.Linear;
 import paths.IPath;
 
 /**
@@ -16,6 +17,10 @@ public class Tracer {
 	protected IPath path; //The Path to which the Tracer is attached
 	protected Easing easing; //The easing curve determining how the Tracer moves in time.
 	protected boolean upToDate = false; //Flag that indicates whether or not the location stored in pt is up to date.
+	
+	public Tracer(IPath path, float startx, float dx) {
+		this(path, startx, dx, new Linear());
+	}
 	
 	public Tracer(IPath path, float startx, float dx, Easing easing) {
 		this.x = startx % 1;

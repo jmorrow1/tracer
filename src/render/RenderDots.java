@@ -27,7 +27,7 @@ public class RenderDots extends Render {
 	}
 
 	public RenderDots(List<Tracer> ts) {
-		this(ts, 8f, 0x000000ff, PApplet.ROUND);
+		this(ts, 8f, 0xff000000, PApplet.ROUND);
 	}
 
 	@Override
