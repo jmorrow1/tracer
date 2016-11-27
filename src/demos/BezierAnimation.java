@@ -1,10 +1,11 @@
 package demos;
 
-import paths.Point;
+import java.util.ArrayList;
+
 import paths2.Line;
 import processing.core.PApplet;
+import tracer.Point;
 
-//TODO
 public class BezierAnimation extends PApplet {
 	public static void main(String[] args) {
 		PApplet.main("demos.BezierAnimation");
@@ -12,6 +13,7 @@ public class BezierAnimation extends PApplet {
 	
 
 	private Point[][] pts;
+//	private ArrayList<Point> bezierPoints = new ArrayList<Point>();
 	
 	private float amt;
 	
@@ -20,7 +22,7 @@ public class BezierAnimation extends PApplet {
 	}
 	
 	public void setup() {
-		pts = fromInput(regularPolygon(width/2, height/2, 10, 200));
+		pts = fromInput(regularPolygon(width/2, height/2, 20, 200));
 	}
 	
 	private static Point[] regularPolygon(float x, float y, int n, float r) {
@@ -60,6 +62,18 @@ public class BezierAnimation extends PApplet {
 				ellipse(pts[i+1][j].x, pts[i+1][j].y, 8, 8);
 			}
 		}
+		
+//		if (frameCount < 500) {
+//			bezierPoints.add(new Point(pts[pts.length-1][0]));
+//		}
+//		
+//		noFill();
+//		beginShape();
+//		for (int i=0; i<bezierPoints.size(); i++) {
+//			Point pt = bezierPoints.get(i);
+//			vertex(pt.x, pt.y);
+//		}
+//		endShape();
 		
 		amt = (amt + 0.005f) % 1f;
 	}

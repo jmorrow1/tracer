@@ -3,6 +3,7 @@ package paths;
 import paths2.IPath2;
 import processing.core.PApplet;
 import processing.core.PGraphics;
+import tracer.Point;
 
 //TODO Could add an (optional) optimization where, when getting points from the T path and the U path,
 	//the Blender has the T and U paths return their closest cached points which approximate the desired points

@@ -2,6 +2,7 @@ package paths;
 
 import processing.core.PApplet;
 import processing.core.PGraphics;
+import tracer.Point;
 
 /**
  * A Bezier curve defined by two anchor points and two control points.

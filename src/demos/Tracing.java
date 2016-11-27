@@ -10,13 +10,13 @@ import paths.Composite;
 import paths.Flower;
 import paths.IPath;
 import paths.InfinitySymbol;
-import paths.Point;
 import paths.Superellipse;
 import paths.Supershape;
 import paths2.Circle;
 import paths2.Ellipse;
 import paths2.Line;
 import processing.core.PApplet;
+import tracer.Point;
 
 /**
  * 

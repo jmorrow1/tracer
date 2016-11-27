@@ -4,9 +4,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import paths.IPath;
-import paths.Point;
 import processing.core.PApplet;
 import processing.core.PGraphics;
+import tracer.Point;
 
 /**
  * 

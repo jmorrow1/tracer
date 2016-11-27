@@ -1,11 +1,11 @@
 package functions;
 
-import paths.Point;
 import paths2.Circle;
 import paths2.Ellipse;
 import paths2.GranularPath;
 import paths2.IPath2;
 import processing.core.PApplet;
+import tracer.Point;
 
 /**
  * 

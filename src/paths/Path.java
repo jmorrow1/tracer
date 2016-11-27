@@ -1,6 +1,7 @@
 package paths;
 
 import processing.core.PGraphics;
+import tracer.Point;
 
 /**
  * A continuous sequence of points in 2D space.

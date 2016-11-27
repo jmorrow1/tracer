@@ -1,9 +1,9 @@
 package paths2;
 
-import paths.Point;
 import processing.core.PApplet;
 import processing.core.PGraphics;
 import processing.data.JSONObject;
+import tracer.Point;
 
 /**
  * A line.

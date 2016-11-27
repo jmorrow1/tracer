@@ -1,8 +1,8 @@
 package paths2;
 
 import paths.IPath;
-import paths.Point;
 import processing.core.PApplet;
+import tracer.Point;
 
 /**
  * An IPath with a known perimeter, position, and size.
