@@ -5,7 +5,7 @@ Geometry library for Processing, currently in alpha.
 ###Paths
 Paths are basically curves in 2-dimensional space.
 
-The main power of Paths are that they map a 1-dimensional coordinate to a 2-dimensional coordinate using the trace() method. The method trace() takes a single normal value (a value between 0 and 1) and returns a Point in 2-dimensional space.
+The main power of Paths is that they map a 1-dimensional coordinate to a 2-dimensional coordinate using the trace() method. The method trace() takes a single normal value (a value between 0 and 1) and returns a Point in 2-dimensional space.
 
 ``` {.java}
 float x = 0.5f;
