@@ -1,6 +1,6 @@
 package tracer;
 
-import easing.Easing;
+import ease.Easing;
 import paths.IPath;
 
 /**
@@ -15,6 +15,7 @@ public class Tracer {
 	protected float dx; //The Tracer's speed in 1D space, relative to the Tracer's easing curve.
 	protected IPath path; //The Path to which the Tracer is attached
 	protected Easing easing; //The easing curve determining how the Tracer moves in time.
+	protected boolean upToDate = false; //Flag that indicates whether or not the location stored in pt is up to date.
 	
 	public Tracer(IPath path, float startx, float dx, Easing easing) {
 		this.x = startx % 1;
@@ -22,15 +23,20 @@ public class Tracer {
 		this.path = path;
 		this.pt = new Point(0, 0);
 		this.easing = easing;
+		location();
 	}
 	
 	public void step() {
 		x = (x + dx) % 1;
+		upToDate = false;
 	}
 	
 	public Point location() {
-		float y = easing.val(x);
-		path.trace(pt, y);
+		if (!upToDate) {
+			float y = easing.val(x);
+			path.trace(pt, y);
+			upToDate = true;
+		}	
 		return pt;
 	}
 
@@ -40,6 +46,7 @@ public class Tracer {
 
 	public void setX(float x) {
 		this.x = x;
+		upToDate = false;
 	}
 
 	public float getDx() {
@@ -56,6 +63,7 @@ public class Tracer {
 
 	public void setPath(IPath path) {
 		this.path = path;
+		upToDate = false;
 	}
 
 	public Easing getEasing() {
@@ -64,5 +72,6 @@ public class Tracer {
 
 	public void setEasing(Easing easing) {
 		this.easing = easing;
+		upToDate = false;
 	}
 }
