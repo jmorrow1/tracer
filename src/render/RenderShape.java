@@ -32,6 +32,14 @@ public class RenderShape extends Render {
 		this(ts, true, false, true, -1, 0xff000000);
 	}
 	
+	public RenderShape(Tracer[] ts) {
+		this(listify(ts));
+	}
+	
+	public RenderShape(Tracer[] ts, boolean closeShape, boolean showFill, boolean showStroke, int fillColor, int strokeColor) {
+		this(listify(ts), closeShape, showFill, showStroke, fillColor, strokeColor);
+	}
+	
 	@Override
 	public void draw(PGraphics g) {
 		//stroke

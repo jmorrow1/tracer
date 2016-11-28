@@ -28,6 +28,14 @@ public class RenderClique extends Render {
 	public RenderClique(List<Tracer> ts) {
 		this(ts, PApplet.ROUND, 0xff000000, 2f);
 	}
+	
+	public RenderClique(Tracer[] ts, int strokeCap, int strokeColor, float strokeWeight) {
+		this(listify(ts), strokeCap, strokeColor, strokeWeight);
+	}
+	
+	public RenderClique(Tracer[] ts) {
+		this(listify(ts));
+	}
 
 	@Override
 	public void draw(PGraphics g) {

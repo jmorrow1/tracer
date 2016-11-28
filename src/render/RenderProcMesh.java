@@ -33,6 +33,14 @@ public class RenderProcMesh extends Render {
 		this.strokeColor = strokeColor;
 		this.strokeWeight = strokeWeight;
 	}
+	
+	public RenderProcMesh(Tracer[] ts, float minDist) {
+		this(listify(ts), minDist);
+	}
+	
+	public RenderProcMesh(Tracer[] ts, float minDist, int strokeCap, int strokeColor, float strokeWeight) {
+		this(listify(ts), minDist, strokeCap, strokeColor, strokeWeight);
+	}
 
 	@Override
 	public void draw(PGraphics g) {

@@ -29,7 +29,15 @@ public class RenderDots extends Render {
 	public RenderDots(List<Tracer> ts) {
 		this(ts, 8f, 0xff000000, PApplet.ROUND);
 	}
+	
+	public RenderDots(Tracer[] ts, float strokeWeight, int strokeColor, int strokeCap) {
+		this(listify(ts), strokeWeight, strokeColor, strokeCap);
+	}
 
+	public RenderDots(Tracer[] ts) {
+		this(listify(ts));
+	}
+	
 	@Override
 	public void draw(PGraphics g) {
 		//style

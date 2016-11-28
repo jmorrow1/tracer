@@ -16,10 +16,7 @@ public abstract class Render {
 	protected List<Tracer> ts;
 	
 	public Render(Tracer[] ts) {
-		this.ts = new ArrayList<Tracer>();
-		for (int i=0; i<ts.length; i++) {
-			this.ts.add(ts[i]);
-		}
+		this(listify(ts));
 	}
 	
 	public Render(List<Tracer> ts) {
@@ -27,4 +24,12 @@ public abstract class Render {
 	}
 	
 	public abstract void draw(PGraphics g);
+	
+	public static List<Tracer> listify(Tracer[] arr) {
+		List<Tracer> list = new ArrayList<Tracer>();
+		for (int i=0; i<arr.length; i++) {
+			list.add(arr[i]);
+		}
+		return list;
+	}
 }
