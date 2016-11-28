@@ -52,8 +52,8 @@ public class RenderProcMesh extends Render {
 		//analyze and draw
 		for (int i=0; i<ts.size(); i++) {
 			for (int j=i+1; j<ts.size(); j++) {
-				Point a = ts.get(i).location();
-				Point b = ts.get(j).location();
+				Point a = ts.get(i).getLocation();
+				Point b = ts.get(j).getLocation();
 				float term1 = (a.y - b.y);
 				float term2 = (a.x - b.x);
 				float sqDist = term1*term1 + term2*term2;

@@ -28,7 +28,7 @@ public class Tracer {
 		this.path = path;
 		this.pt = new Point(0, 0);
 		this.easing = easing;
-		location();
+		getLocation();
 	}
 	
 	public void step() {
@@ -36,15 +36,33 @@ public class Tracer {
 		upToDate = false;
 	}
 	
-	public Point location() {
+	private void update() {
+		float y = easing.val(u);
+		path.trace(pt, y);
+		upToDate = true;
+	}
+	
+	public Point getLocation() {
 		if (!upToDate) {
-			float y = easing.val(u);
-			path.trace(pt, y);
-			upToDate = true;
+			update();
 		}	
 		return pt;
 	}
 
+	public float getX() {
+		if (!upToDate) {
+			update();
+		}	
+		return pt.x;
+	}
+	
+	public float getY() {
+		if (!upToDate) {
+			update();
+		}
+		return pt.y;
+	}
+	
 	public float getU() {
 		return u;
 	}

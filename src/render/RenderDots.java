@@ -47,7 +47,7 @@ public class RenderDots extends Render {
 		
 		//dots
 		for (Tracer t : ts) {
-			Point pt = t.location();
+			Point pt = t.getLocation();
 			g.point(pt.x, pt.y);
 		}
 	}

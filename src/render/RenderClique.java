@@ -45,8 +45,8 @@ public class RenderClique extends Render {
 		
 		for (int i=0; i<ts.size(); i++) {
 			for (int j=i+1; j<ts.size(); j++) {
-				Point a = ts.get(i).location();
-				Point b = ts.get(j).location();
+				Point a = ts.get(i).getLocation();
+				Point b = ts.get(j).getLocation();
 				g.line(a.x, a.y, b.x, b.y);
 			}
 		}
