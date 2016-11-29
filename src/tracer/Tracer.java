@@ -18,8 +18,8 @@ public class Tracer {
 	protected Easing easing; //The easing curve determining how the Tracer moves in time.
 	protected boolean upToDate = false; //Flag that indicates whether or not the location stored in pt is up to date.
 	
-	public Tracer(IPath path, float startx, float dx) {
-		this(path, startx, dx, new Linear());
+	public Tracer(IPath path, float startu, float du) {
+		this(path, startu, du, new Linear());
 	}
 	
 	public Tracer(IPath path, float startu, float du, Easing easing) {
@@ -35,6 +35,7 @@ public class Tracer {
 		u = (u + du) % 1;
 		upToDate = false;
 	}
+
 	
 	private void update() {
 		float y = easing.val(u);

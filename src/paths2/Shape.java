@@ -184,8 +184,7 @@ public class Shape implements IPath2 {
 	@Override
 	public void trace(Point pt, float amt) {
 		amt = IPath2.remainder(amt, 1);
-		for (int i=1; i<segAmts.size(); i++) {
-//			
+		for (int i=1; i<segAmts.size(); i++) {		
 			if (amt < segAmts.get(i)) {
 				amt = PApplet.map(amt, segAmts.get(i-1), segAmts.get(i), 0, 1);
 				Point a = vertices.get(i-1);
