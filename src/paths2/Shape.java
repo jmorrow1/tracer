@@ -69,19 +69,19 @@ public class Shape implements IPath2 {
 	/**
 	 * Copy constructor.
 	 * 
-	 * @param path the path to copy
+	 * @param shape the path to copy
 	 */
-	private Shape(Shape path) {
-		this.cenx = path.getCenx();
-		this.ceny = path.getCeny();
-		this.width = path.getWidth();
-		this.height = path.getHeight();
-		this.perimeter = path.getPerimeter();
-		this.segAmts = new ArrayList<Float>(path.segAmts.size());
-		for (Float f : path.segAmts) {
+	private Shape(Shape shape) {
+		this.cenx = shape.getCenx();
+		this.ceny = shape.getCeny();
+		this.width = shape.getWidth();
+		this.height = shape.getHeight();
+		this.perimeter = shape.getPerimeter();
+		this.segAmts = new ArrayList<Float>(shape.segAmts.size());
+		for (Float f : shape.segAmts) {
 			this.segAmts.add(f.floatValue());
 		}
-		this.vertices = new ArrayList<Point>(path.vertices.size());
+		this.vertices = new ArrayList<Point>(shape.vertices.size());
 		for (Point vtx : vertices) {
 			this.vertices.add(new Point(vtx));
 		}

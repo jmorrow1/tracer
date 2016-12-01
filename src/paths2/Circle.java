@@ -37,22 +37,6 @@ public class Circle extends Path2 {
 		this(c.getCenx(), c.getCeny(), c.getRadius());
 	}
 	
-	public Circle(JSONObject j) {
-		x = j.getFloat("x");
-		y = j.getFloat("y");
-		radius = j.getFloat("radius");
-		angleOffset = j.getFloat("angleOffset");
-	}
-	
-	public JSONObject toJSON() {
-		JSONObject j = new JSONObject();
-		j.setFloat("x", x);
-		j.setFloat("y", y);
-		j.setFloat("radius", radius);
-		j.setFloat("angleOffset", angleOffset);
-		return j;
-	}
-	
 	@Override
 	public void draw(PGraphics g) {
 		g.ellipseMode(g.RADIUS);

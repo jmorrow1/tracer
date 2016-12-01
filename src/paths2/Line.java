@@ -43,18 +43,16 @@ public class Line extends Path2 {
 		this(line.getAx(), line.getAy(), line.getBx(), line.getBy());
 	}
 	
-	public Line(JSONObject j) {
-		a = new Point(j.getJSONObject("a"));
-		b = new Point(j.getJSONObject("b"));
-		length = j.getFloat("length");
-	}
-	
-	public JSONObject toJSON() {
-		JSONObject j = new JSONObject();
-		j.setJSONObject("a", a.toJSON());
-		j.setJSONObject("b", b.toJSON());
-		j.setFloat("length", length);
-		return j;
+	/**
+	 * Easy constructor.
+	 * 
+	 * @param x The x-coordinate of the path.
+	 * @param y The y-coordinate of the path.
+	 * @param r The radius of the path.
+	 */
+	public Line(float x, float y, float r) {
+		this(x - r*PApplet.cos(0.75f * PApplet.PI), y - r*PApplet.sin(0.75f * PApplet.PI),
+				x + r*PApplet.cos(1.75f * PApplet.PI), y + r*PApplet.sin(1.75f * PApplet.PI));
 	}
 	
 	private void recompute() {

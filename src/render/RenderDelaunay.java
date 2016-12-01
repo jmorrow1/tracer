@@ -2,6 +2,7 @@ package render;
 
 import java.util.List;
 
+import processing.core.PApplet;
 import processing.core.PGraphics;
 import tracer.Tracer;
 
@@ -19,7 +20,7 @@ public class RenderDelaunay extends Render {
 	protected boolean showStroke, showFill;
 
 	public RenderDelaunay(List<Tracer> ts) {
-		super(ts);
+		this(ts, PApplet.ROUND, 0xff000000, 1, true, false, -1);
 	}
 	
 	public RenderDelaunay(List<Tracer> ts, int strokeCap, int strokeColor, float strokeWeight,
@@ -34,7 +35,7 @@ public class RenderDelaunay extends Render {
 	}
 	
 	public RenderDelaunay(Tracer[] ts) {
-		super(ts);
+		this(ts, PApplet.ROUND, 0xff000000, 1, true, false, -1);
 	}
 	
 	public RenderDelaunay(Tracer[] ts, int strokeCap, int strokeColor, float strokeWeight,
@@ -118,11 +119,11 @@ public class RenderDelaunay extends Render {
 		this.strokeWeight = strokeWeight;
 	}
 
-	public void setShowStroke(boolean showStroke) {
+	public void showStroke(boolean showStroke) {
 		this.showStroke = showStroke;
 	}
 
-	public void setShowFill(boolean showFill) {
+	public void showFill(boolean showFill) {
 		this.showFill = showFill;
 	}
 }

@@ -47,6 +47,17 @@ public class CubicBezier extends Path {
 		this.ay2 = ay2;
 	}
 	
+	/**
+	 * Easy constructor.
+	 * 
+	 * @param x The x-coordinate of the path.
+	 * @param y The y-coordinate of the path.
+	 * @param r The radius of the path.
+	 */
+	public CubicBezier(float x, float y, float r) {
+		this(x - r, y, x, y - r, x, y - r, x + r, y);
+	}
+	
 	/*************************
 	 ***** Functionality *****
 	 *************************/

@@ -51,6 +51,17 @@ public class Superellipse extends Path {
 		this.twoOverN = 2f / n;
 	}
 	
+	/**
+	 * Easy constructor.
+	 * 
+	 * @param x The x-coordinate of the path.
+	 * @param y The y-coordinate of the path.
+	 * @param r The radius of the path.
+	 */
+	public Superellipse(float x, float y, float r) {
+		this(x, y, r, r, 1, 100);
+	}
+	
 	/*************************
 	 ***** Functionality *****
 	 *************************/

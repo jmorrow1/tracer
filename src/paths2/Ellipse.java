@@ -61,22 +61,15 @@ public class Ellipse extends Path2 {
 		this(ellipse.getCenx(), ellipse.getCeny(), ellipse.getWidth(), ellipse.getHeight(), PApplet.CENTER);
 	}
 	
-	public Ellipse(JSONObject j) {
-		x = j.getFloat("x");
-		y = j.getFloat("y");
-		xRadius = j.getFloat("xRadius");
-		yRadius = j.getFloat("yRadius");
-		perimeter = j.getFloat("perimeter");
-	}
-	
-	public JSONObject toJSON() {
-		JSONObject j = new JSONObject();
-		j.setFloat("x", x);
-		j.setFloat("y", y);
-		j.setFloat("xRadius", xRadius);
-		j.setFloat("yRadius", yRadius);
-		j.setFloat("perimeter", perimeter);
-		return j;
+	/**
+	 * Easy constructor.
+	 * 
+	 * @param x The x-coordinate of the path.
+	 * @param y The y-coordinate of the path.
+	 * @param r The radius of the path.
+	 */
+	public Ellipse(float x, float y, float r) {
+		this(x, y, r, r, PApplet.RADIUS);
 	}
 	
 	private void recomputePerimeter() {

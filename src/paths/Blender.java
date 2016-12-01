@@ -51,6 +51,17 @@ public class Blender<T extends IPath, U extends IPath> extends Path {
 		this.drawGranularity = drawGranularity;
 	}
 	
+//	/**
+//	 * Easy constructor.
+//	 * 
+//	 * @param x The x-coordinate of the path.
+//	 * @param y The y-coordinate of the path.
+//	 * @param r The radius of the path.
+//	 */
+//	public Blender(float x, float y, float r) {
+//		//TODO
+//	}
+	
 	/*************************
 	 ***** Functionality *****
 	 *************************/

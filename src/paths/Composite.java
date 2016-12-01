@@ -39,6 +39,17 @@ public class Composite<T extends IPath, U extends IPath> extends Path {
 		this.b = b;
 	}
 	
+//	/**
+//	 * Easy constructor.
+//	 * 
+//	 * @param x The x-coordinate of the path.
+//	 * @param y The y-coordinate of the path.
+//	 * @param r The radius of the path.
+//	 */
+//	public Composite(float x, float y, float r) {
+//		//TODO
+//	}
+	
 	/*************************
 	 ***** Functionality *****
 	 *************************/

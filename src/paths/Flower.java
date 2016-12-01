@@ -60,6 +60,17 @@ public class Flower extends Path {
         this.drawGranularity = drawGranularity;
 	}
 	
+	/**
+	 * Easy constructor.
+	 * 
+	 * @param x The x-coordinate of the path.
+	 * @param y The y-coordinate of the path.
+	 * @param r The radius of the path.
+	 */
+	public Flower(float x, float y, float r) {
+		this(x, y, r, r, 3, 5, 100);
+	}
+	
 	/*************************
 	 ***** Functionality *****
 	 *************************/

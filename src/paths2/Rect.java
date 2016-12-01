@@ -21,23 +21,6 @@ public class Rect extends Path2 {
 	 ***** Initialization *****
 	 **************************/
 	
-	public JSONObject toJSON() {
-		JSONObject j = new JSONObject();
-		j.setFloat("cenx", cenx);
-		j.setFloat("ceny", ceny);
-		j.setFloat("width", width);
-		j.setFloat("height", height);
-		return j;
-	}
-		
-	public Rect(JSONObject j) {
-		cenx = j.getFloat("cenx");
-		ceny = j.getFloat("ceny");
-		width = j.getFloat("width");
-		height = j.getFloat("height");
-		recompute();
-	}
-	
 	/**
 	 * 
 	 * @param a the 1st rect argument, whose meaning is determined by the given rectMode
@@ -80,6 +63,17 @@ public class Rect extends Path2 {
 	 */
 	public Rect(Rect r) {
 		this(r.cenx, r.ceny, r.width, r.height, PApplet.CENTER);
+	}
+	
+	/**
+	 * Easy constructor.
+	 * 
+	 * @param x The x-coordinate of the path.
+	 * @param y The y-coordinate of the path.
+	 * @param r The radius of the path.
+	 */
+	public Rect(float x, float y, float r) {
+		this(x, y, r, r, PApplet.RADIUS);
 	}
 	
 	@Override

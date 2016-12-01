@@ -70,6 +70,17 @@ public class Arc extends Path {
 		this.endAngle = endAngle;
 	}
 	
+	/**
+	 * Easy constructor.
+	 * 
+	 * @param x The x-coordinate of the path.
+	 * @param y The y-coordinate of the path.
+	 * @param r The radius of the path.
+	 */
+	public Arc(float x, float y, float r) {
+		this(x, y, r, r, 0, PApplet.PI, PApplet.RADIUS);
+	}
+	
 	/*************************
 	 ***** Functionality *****
 	 *************************/
