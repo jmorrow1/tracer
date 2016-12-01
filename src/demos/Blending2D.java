@@ -1,8 +1,8 @@
 package demos;
 
 import paths.Blender;
+import paths.Flower;
 import paths.InfinitySymbol;
-import paths.Lissajous;
 import paths.Path;
 import paths.Superellipse;
 import paths2.Ellipse;
@@ -58,7 +58,7 @@ public class Blending2D extends PApplet {
 		
 		p2.trace(pt, amt);
 		dot(pt.x, pt.y);
-		amt = (amt + 0.001f) % 1f;
+		amt = (amt + 0.004f) % 1f;
 
 		strokeWeight(2);
 		stroke(0);
