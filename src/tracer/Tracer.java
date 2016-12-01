@@ -32,15 +32,20 @@ public class Tracer {
 	}
 	
 	public void step() {
-		u = (u + du) % 1;
+		u = remainder(u + du, 1f);
 		upToDate = false;
 	}
 
-	
 	private void update() {
 		float y = easing.val(u);
 		path.trace(pt, y);
 		upToDate = true;
+	}
+	
+	public static float remainder(float num, float denom) {
+	    if (0 <= num && num < denom) return num;
+	    else if (num > 0) return num % denom;
+	    else return denom - ((-num) % denom);
 	}
 	
 	public Point getLocation() {
