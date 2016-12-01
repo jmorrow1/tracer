@@ -14,7 +14,7 @@ import tracer.Tracer;
  * @author James Morrow [jamesmorrowdesign.com]
  *
  */
-public class RenderProcMesh extends Render {
+public class RenderMesh extends Render {
 	//minimum distance squared between two Tracers for which a line will be drawn
 	protected float minSqDist;
 	
@@ -22,11 +22,11 @@ public class RenderProcMesh extends Render {
 	protected int strokeCap, strokeColor;
 	protected float strokeWeight;
 	
-	public RenderProcMesh(List<Tracer> ts, float minDist) {
+	public RenderMesh(List<Tracer> ts, float minDist) {
 		this(ts, minDist, PApplet.ROUND, 0xff000000, 2f);
 	}
 
-	public RenderProcMesh(List<Tracer> ts, float minDist, int strokeCap, int strokeColor, float strokeWeight) {
+	public RenderMesh(List<Tracer> ts, float minDist, int strokeCap, int strokeColor, float strokeWeight) {
 		super(ts);
 		this.minSqDist = minDist*minDist;
 		this.strokeCap = strokeCap;
@@ -34,11 +34,11 @@ public class RenderProcMesh extends Render {
 		this.strokeWeight = strokeWeight;
 	}
 	
-	public RenderProcMesh(Tracer[] ts, float minDist) {
+	public RenderMesh(Tracer[] ts, float minDist) {
 		this(listify(ts), minDist);
 	}
 	
-	public RenderProcMesh(Tracer[] ts, float minDist, int strokeCap, int strokeColor, float strokeWeight) {
+	public RenderMesh(Tracer[] ts, float minDist, int strokeCap, int strokeColor, float strokeWeight) {
 		this(listify(ts), minDist, strokeCap, strokeColor, strokeWeight);
 	}
 
