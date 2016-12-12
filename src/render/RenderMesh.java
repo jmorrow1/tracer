@@ -15,20 +15,24 @@ import tracer.Tracer;
  *
  */
 public class RenderMesh extends Render {
-	//minimum distance squared between two Tracers for which a line will be drawn
-	protected float minSqDist;
+	//the square of the minimum between two Tracers for them to be connected by a line
+	protected float sqMinDist;
+
+	//the square of the distance between two Tracers in which the stroke weight is increased
+	protected float sqStrokeRampDist;
 	
 	//style
 	protected int strokeCap, strokeColor;
 	protected float strokeWeight;
 	
 	public RenderMesh(List<Tracer> ts, float minDist) {
-		this(ts, minDist, PApplet.ROUND, 0xff000000, 2f);
+		this(ts, minDist, 0, PApplet.ROUND, 0xff000000, 2f);
 	}
 
-	public RenderMesh(List<Tracer> ts, float minDist, int strokeCap, int strokeColor, float strokeWeight) {
+	public RenderMesh(List<Tracer> ts, float minDist, float strokeRamp, int strokeCap, int strokeColor, float strokeWeight) {
 		super(ts);
-		this.minSqDist = minDist*minDist;
+		this.sqMinDist = minDist*minDist;
+		this.sqStrokeRampDist = strokeRamp*strokeRamp;
 		this.strokeCap = strokeCap;
 		this.strokeColor = strokeColor;
 		this.strokeWeight = strokeWeight;
@@ -38,8 +42,8 @@ public class RenderMesh extends Render {
 		this(listify(ts), minDist);
 	}
 	
-	public RenderMesh(Tracer[] ts, float minDist, int strokeCap, int strokeColor, float strokeWeight) {
-		this(listify(ts), minDist, strokeCap, strokeColor, strokeWeight);
+	public RenderMesh(Tracer[] ts, float minDist, float strokeRamp, int strokeCap, int strokeColor, float strokeWeight) {
+		this(listify(ts), minDist, strokeRamp, strokeCap, strokeColor, strokeWeight);
 	}
 
 	@Override
@@ -47,8 +51,7 @@ public class RenderMesh extends Render {
 		//style
 		g.strokeCap(strokeCap);
 		g.stroke(strokeColor);
-		g.strokeWeight(strokeWeight);
-		
+
 		//analyze and draw
 		for (int i=0; i<ts.size(); i++) {
 			for (int j=i+1; j<ts.size(); j++) {
@@ -57,9 +60,16 @@ public class RenderMesh extends Render {
 				float term1 = (a.y - b.y);
 				float term2 = (a.x - b.x);
 				float sqDist = term1*term1 + term2*term2;
-				if (sqDist <= minSqDist) {
+				if (sqDist <= sqMinDist) {
+					if (sqDist >= sqMinDist - sqStrokeRampDist) {
+						float sw = PApplet.constrain(PApplet.map(sqDist, sqMinDist, sqMinDist - sqStrokeRampDist, 0, strokeWeight), 0.00001f, strokeWeight);
+						g.strokeWeight(sw);
+					}
+					else {
+						g.strokeWeight(strokeWeight);
+					}
 					g.line(a.x, a.y, b.x, b.y);
-				}			
+				}
 			}
 		}
 	}
@@ -77,6 +87,10 @@ public class RenderMesh extends Render {
 	}
 	
 	public void setMinDist(float minDist) {
-		minSqDist = minDist*minDist;
+		sqMinDist = minDist*minDist;
+	}
+	
+	public void setStrokeRamp(float strokeRampDist) {
+		sqStrokeRampDist = strokeRampDist*strokeRampDist;
 	}
 }
