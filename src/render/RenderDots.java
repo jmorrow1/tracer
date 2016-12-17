@@ -18,9 +18,9 @@ public class RenderDots extends Render {
 	//style
 	protected float strokeWeight;
 	protected int strokeColor, strokeCap;
-	protected LabelScheme labelScheme;
-	protected boolean drawLabels;
-	protected float labelTextSize;
+	protected LabelScheme labelScheme = new Enumerate();
+	protected boolean drawLabels = false;
+	protected float labelTextSize = 6;
 	
 	public RenderDots(List<Tracer> ts, float strokeWeight, int strokeColor, int strokeCap) {
 		super(ts);
@@ -51,14 +51,14 @@ public class RenderDots extends Render {
 		//dots
 		if (drawLabels) {
 			g.textSize(labelTextSize);
-			g.textAlign(g.CENTER, g.CENTER);
+			g.textAlign(g.CENTER, g.BOTTOM);
 		}
 		for (int i=0; i<ts.size(); i++) {
 			Tracer t = ts.get(i);
 			Point pt = t.getLocation();
 			g.point(pt.x, pt.y);
 			if (drawLabels) {
-				g.text(labelScheme.nthLabel(i), pt.x, pt.y - labelTextSize);
+				g.text(labelScheme.nthLabel(i), pt.x, pt.y - 2);
 			}
 		}	
 	}
