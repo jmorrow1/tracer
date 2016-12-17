@@ -18,6 +18,9 @@ public class RenderDots extends Render {
 	//style
 	protected float strokeWeight;
 	protected int strokeColor, strokeCap;
+	protected LabelScheme labelScheme;
+	protected boolean drawLabels;
+	protected float labelTextSize;
 	
 	public RenderDots(List<Tracer> ts, float strokeWeight, int strokeColor, int strokeCap) {
 		super(ts);
@@ -46,10 +49,30 @@ public class RenderDots extends Render {
 		g.strokeCap(strokeCap);
 		
 		//dots
-		for (Tracer t : ts) {
+		if (drawLabels) {
+			g.textSize(labelTextSize);
+			g.textAlign(g.CENTER, g.CENTER);
+		}
+		for (int i=0; i<ts.size(); i++) {
+			Tracer t = ts.get(i);
 			Point pt = t.getLocation();
 			g.point(pt.x, pt.y);
-		}
+			if (drawLabels) {
+				g.text(labelScheme.nthLabel(i), pt.x, pt.y - labelTextSize);
+			}
+		}	
+	}
+
+	public void setLabelScheme(LabelScheme labelScheme) {
+		this.labelScheme = labelScheme;
+	}
+
+	public void setDrawLabels(boolean drawLabels) {
+		this.drawLabels = drawLabels;
+	}
+
+	public void setLabelTextSize(float labelTextSize) {
+		this.labelTextSize = labelTextSize;
 	}
 
 	public void setStrokeWeight(float strokeWeight) {
@@ -62,5 +85,38 @@ public class RenderDots extends Render {
 
 	public void setStrokeCap(int strokeCap) {
 		this.strokeCap = strokeCap;
+	}
+	
+	public static interface LabelScheme {
+		public String nthLabel(int n);
+	}
+	
+	public final static class Enumerate implements LabelScheme {
+		public String nthLabel(int n) {
+			return "" + n;
+		}
+	}
+	
+	public final static class Alphabet implements LabelScheme {
+		public String nthLabel(int n) {
+			String[] ss = convertBase(n, 26).split(" ");
+			String t = "";
+			for (int i=0; i<ss.length; i++) {
+				t += (char)(((int)'a') + Integer.valueOf(ss[i]));
+			}
+			return t;
+		}
+	}
+	
+	private static String convertBase(int n, int base) {
+		int q = n / base;
+		int r = n % base;
+		
+		if (q == 0) {
+			return Integer.toString(r);
+		}
+		else {
+			return convertBase(q, base) + " " + Integer.toString(r);
+		}
 	}
 }
