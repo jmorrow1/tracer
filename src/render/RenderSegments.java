@@ -29,6 +29,8 @@ public class RenderSegments extends Render {
 		if (startus.length != dus.length || dus.length != easings.length) {
 			throw new IllegalArgumentException("In RenderSegments constructor, the arguments startus, dus, and easings should all have the same length.");
 		}
+		this.strokeWeights = fillArray(1f, startus.length);
+		this.strokeColors = fillArray(0xff000000, startus.length);
 	}
 	
 	private static Easing[] fillArray(Easing e, int n) {
@@ -117,7 +119,11 @@ public class RenderSegments extends Render {
 		for (int i=0; i<strokeColors.length; i++) {
 			strokeColors[i] = strokeColor;
 		}
-	}	
+	}
+	
+	public void setStrokeColors(int[] strokeColors) {
+		this.strokeColors = strokeColors;
+	}
 	
 	public void setStrokeWeight(int i, float strokeWeight) {
 		strokeWeights[i] = strokeWeight;
@@ -127,6 +133,10 @@ public class RenderSegments extends Render {
 		for (int i=0; i<strokeWeights.length; i++) {
 			strokeWeights[i] = strokeWeight;
 		}
+	}
+	
+	public void setStrokeWeights(float[] strokeWeights) {
+		this.strokeWeights = strokeWeights;
 	}
 	
 	public void setAllPaths(IPath path) {
