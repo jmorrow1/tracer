@@ -12,26 +12,52 @@ import tracer.Tracer;
  *
  */
 public class RenderSegments extends Render {
+	protected float[] strokeWeights;
+	protected int[] strokeColors;
+	
+	public RenderSegments(IPath path, int n, float startu, float du) {
+		this(path, fillArray(startu, n), fillArray(du, n), fillArray(new Linear(), n));
+	}
 
 	public RenderSegments(IPath path, float[] startus, float[] dus) {
-		super(tracers(path, startus, dus));
+		this(path, startus, dus, fillArray(new Linear(), startus.length));
 	}
 	
 	public RenderSegments(IPath path, float[] startus, float[] dus, Easing[] easings) {
 		super(tracers(path, startus, dus, easings));
-	}
-	
-	private static Tracer[] tracers(IPath path, float[] startus, float[] dus) {
-		Easing[] easings = new Easing[startus.length];
-		for (int i=0; i<easings.length; i++) {
-			easings[i] = new Linear();
+		this.strokeColors = fillArray(0xff000000, startus.length);
+		if (startus.length != dus.length || dus.length != easings.length) {
+			throw new IllegalArgumentException("In RenderSegments constructor, the arguments startus, dus, and easings should all have the same length.");
 		}
-		return tracers(path, startus, dus, easings);
 	}
 	
+	private static Easing[] fillArray(Easing e, int n) {
+		Easing[] vals = new Easing[n];
+		for (int i=0; i<n; i++) {
+			vals[i] = e;
+		}
+		return vals;
+	}
+	
+	private static float[] fillArray(float val, int n) {
+		float[] vals = new float[n];
+		for (int i=0; i<n; i++) {
+			vals[i] = n;
+		}
+		return vals;
+	}
+	
+	private static int[] fillArray(int val, int n) {
+		int[] vals = new int[n];
+		for (int i=0; i<n; i++) {
+			vals[i] = n;
+		}
+		return vals;
+	}
+
 	private static Tracer[] tracers(IPath path, float[] startus, float[] dus, Easing[] easings) {
 		if (startus.length != dus.length) {
-			throw new IllegalArgumentException("In RenderSegments(startus, dus), startus and dus should have the same length.");
+			throw new IllegalArgumentException("In RenderSegments constructor, the arguments startus and dus should have the same length.");
 		}
 		Tracer[] ts = new Tracer[startus.length];
 		for (int i=0; i<ts.length; i++) {
@@ -41,10 +67,13 @@ public class RenderSegments extends Render {
 	}
 
 	@Override
-	public void draw(PGraphics g) {		
+	public void draw(PGraphics g) {	
 		for (int i=0; i<ts.size()-1; i+=2) {
 			Tracer a = ts.get(i);
 			Tracer b = ts.get(i+1);
+			
+			g.strokeWeight(strokeWeights[i]);
+			g.stroke(strokeColors[i]);
 			
 			a.getPath().draw(g, a.getU(), b.getU());
 		}
@@ -54,7 +83,7 @@ public class RenderSegments extends Render {
 		ts.get(i).setU(u);
 	}
 	
-	public void setU(float u) {
+	public void setAllUs(float u) {
 		for (Tracer t : ts) {
 			t.setU(u);;
 		}
@@ -64,7 +93,7 @@ public class RenderSegments extends Render {
 		ts.get(i).setDu(du);
 	}
 	
-	public void setDu(float du) {
+	public void setAllDus(float du) {
 		for (Tracer t : ts) {
 			t.setDu(du);
 		}
@@ -74,13 +103,33 @@ public class RenderSegments extends Render {
 		ts.get(i).setEasing(easing);
 	}
 	
-	public void setEasing(Easing easing) {
+	public void setAllEasings(Easing easing) {
 		for (Tracer t : ts) {
 			t.setEasing(easing);
 		}
 	}
+
+	public void setStrokeColor(int i, int strokeColor) {
+		strokeColors[i] = strokeColor;
+	}
 	
-	public void setPath(IPath path) {
+	public void setAllStrokeColors(int strokeColor) {
+		for (int i=0; i<strokeColors.length; i++) {
+			strokeColors[i] = strokeColor;
+		}
+	}	
+	
+	public void setStrokeWeight(int i, float strokeWeight) {
+		strokeWeights[i] = strokeWeight;
+	}
+	
+	public void setAllStrokeWeights(float strokeWeight) {
+		for (int i=0; i<strokeWeights.length; i++) {
+			strokeWeights[i] = strokeWeight;
+		}
+	}
+	
+	public void setAllPaths(IPath path) {
 		for (Tracer t : ts) {
 			t.setPath(path);
 		}
