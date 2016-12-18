@@ -1,5 +1,6 @@
 package paths;
 
+import processing.core.PApplet;
 import processing.core.PGraphics;
 import tracer.Point;
 
@@ -16,7 +17,7 @@ import tracer.Point;
  */
 public abstract class Path implements IPath {
 	protected boolean reversed;
-	protected int granularity = -1;
+	protected int granularity = 100;
 	
 	public Path() {}
 	
@@ -33,13 +34,37 @@ public abstract class Path implements IPath {
 		if (granularity != -1) {
 			draw(g, granularity);
 		}
+	}
+	
+	@Override
+	public void draw(PGraphics g, float u1, float u2) {
+		boolean inRange = (0 <= u1 && u1 <= 1 && 0 <= u2 && u2 <= 1);
+		if (!inRange) {
+			throw new IllegalArgumentException("draw(g, " + u1 + ", " + u2 + ") called with values outside the range 0 to 1.");
+		}
+	
+		if (u1 > u2) {
+			draw(g, u1, 1);
+			draw(g, 0, u2);
+		}
 		else {
-			System.err.println("Need to either override this Path's display method or set the granularity of this Path so it can be displayed automatically.");
+			float length = PApplet.abs(u1 - u2);
+			int n = (int)(granularity * length);
+			float du = length / n;
+					
+			g.beginShape();
+			float u = u1;
+			for (int i=0; i<n; i++) {
+				trace(pt, u);
+				g.vertex(pt.x, pt.y);
+				u = (u+du) % 1f;
+			}
+			g.endShape();
 		}
 	}
 	
 	@Override
-	public abstract void trace(Point pt, float amt);
+	public abstract void trace(Point pt, float u);
 
 	/**
 	 * 

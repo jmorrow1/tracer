@@ -59,12 +59,12 @@ public interface IPath {
 	 * Maps a given floating point number from 0 to 1 to a Point
 	 * along the perimeter of the Path.
 	 * 
-	 * @param amt A number from 0 to 1.
+	 * @param u A number from 0 to 1.
 	 * @return The resulting point.
 	 */
-	public default Point trace(float amt) {
+	public default Point trace(float u) {
 		Point pt = new Point(0, 0);
-		this.trace(pt, amt);
+		this.trace(pt, u);
 		return pt;
 	}
 
@@ -73,6 +73,14 @@ public interface IPath {
 	 * @param g A PGraphics object on which to draw the path
 	 */
 	public void draw(PGraphics g);
+	
+	/**
+	 * Draws a segment of the path starting at trace(u1) and ending at trace(u2).
+	 * @param g A PGraphics object on which to draw the path
+	 * @param u1 The 1D coordinate of the segment's start, a value between 0 and 1
+	 * @param u2 The 1D coordinate of the segment's end, a value between 0 and 1
+	 */
+	public void draw(PGraphics g, float u1, float u2);
 	
 	/**
 	 * Draws the path by approximating it with a given number of sample points,

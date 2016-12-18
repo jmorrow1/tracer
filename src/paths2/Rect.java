@@ -98,6 +98,43 @@ public class Rect extends Path2 {
 		g.rectMode(g.CENTER);
 		g.rect(cenx, ceny, width, height);
 	}
+	
+//	@Override
+//	public void draw(PGraphics g, float u1, float u2) {
+//		boolean inRange = (0 <= u1 && u1 <= 1 && 0 <= u2 && u2 <= 1);
+//		if (!inRange) {
+//			throw new IllegalArgumentException("draw(g, " + u1 + ", " + u2 + ") called with values outside the range 0 to 1.");
+//		}
+//		
+//		if (u1 > u2) {
+//			draw(g, u1, 1);
+//			draw(g, 0, u2);
+//		}
+//		else {
+//		
+//			g.beginShape();
+//			
+//			trace(pt, u1);
+//			g.vertex(pt.x, pt.y);
+//			for (int i=0; i<breaks.length; i++) {
+//				float amt = breaks[i];
+//				if (u1 < amt) {
+//					if (amt < u2) {
+//						trace(pt, amt);
+//						g.vertex(pt.x, pt.y);
+//					}
+//					else {
+//						break;
+//					}
+//				}
+//			}
+//			trace(pt, u2);
+//			g.vertex(pt.x, pt.y);
+//			
+//			g.endShape();
+//			
+//		}
+//	}
 
 	@Override
 	public void trace(Point pt, float amt) {

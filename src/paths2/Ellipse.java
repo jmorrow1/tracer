@@ -84,6 +84,18 @@ public class Ellipse extends Path2 {
 		g.ellipseMode(PApplet.RADIUS);
 		g.ellipse(x, y, xRadius, yRadius);
 	}
+	
+	@Override
+	public void draw(PGraphics g, float u1, float u2) {
+		boolean inRange = (0 <= u1 && u1 <= 1 && 0 <= u2 && u2 <= 1);
+		if (!inRange) {
+			throw new IllegalArgumentException("draw(g, " + u1 + ", " + u2 + ") called with values outside the range 0 to 1.");
+		}
+		
+		if (u1 > u2) u2++;
+		g.ellipseMode(g.RADIUS);
+		g.arc(x, y, xRadius, yRadius, u1*PApplet.TWO_PI, u2*PApplet.TWO_PI);
+	}
 
 	@Override
 	public void trace(Point pt, float amt) {
