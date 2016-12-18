@@ -29,8 +29,8 @@ public class RenderSegments extends Render {
 		if (startus.length != dus.length || dus.length != easings.length) {
 			throw new IllegalArgumentException("In RenderSegments constructor, the arguments startus, dus, and easings should all have the same length.");
 		}
-		this.strokeWeights = fillArray(1f, startus.length);
-		this.strokeColors = fillArray(0xff000000, startus.length);
+		this.strokeWeights = fillArray(1f, startus.length/2);
+		this.strokeColors = fillArray(0xff000000, startus.length/2);
 	}
 	
 	private static Easing[] fillArray(Easing e, int n) {
@@ -74,8 +74,8 @@ public class RenderSegments extends Render {
 			Tracer a = ts.get(i);
 			Tracer b = ts.get(i+1);
 			
-			g.strokeWeight(strokeWeights[i]);
-			g.stroke(strokeColors[i]);
+			g.strokeWeight(strokeWeights[i/2]);
+			g.stroke(strokeColors[i/2]);
 			
 			a.getPath().draw(g, a.getU(), b.getU());
 		}
@@ -143,5 +143,9 @@ public class RenderSegments extends Render {
 		for (Tracer t : ts) {
 			t.setPath(path);
 		}
+	}
+	
+	public int segmentCount() {
+		return strokeWeights.length;
 	}
 }

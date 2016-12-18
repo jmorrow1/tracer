@@ -60,7 +60,7 @@ public class RenderDots extends Render {
 			if (drawLabels) {
 				g.text(labelScheme.nthLabel(i), pt.x, pt.y - 2);
 			}
-		}	
+		}
 	}
 
 	public void setLabelScheme(LabelScheme labelScheme) {
