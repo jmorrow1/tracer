@@ -32,4 +32,8 @@ public abstract class Render {
 		}
 		return list;
 	}
+	
+	public int tracerCount() {
+		return ts.size();
+	}
 }
