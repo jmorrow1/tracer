@@ -2,7 +2,7 @@ package render;
 
 import ease.Easing;
 import ease.Easing.Linear;
-import paths.IPath;
+import paths.Path;
 import processing.core.PGraphics;
 import tracer.Tracer;
 
@@ -15,15 +15,15 @@ public class RenderSegments extends Render {
 	protected float[] strokeWeights;
 	protected int[] strokeColors;
 	
-	public RenderSegments(IPath path, int n, float startu, float du) {
+	public RenderSegments(Path path, int n, float startu, float du) {
 		this(path, fillArray(startu, n), fillArray(du, n), fillArray(new Linear(), n));
 	}
 
-	public RenderSegments(IPath path, float[] startus, float[] dus) {
+	public RenderSegments(Path path, float[] startus, float[] dus) {
 		this(path, startus, dus, fillArray(new Linear(), startus.length));
 	}
 	
-	public RenderSegments(IPath path, float[] startus, float[] dus, Easing[] easings) {
+	public RenderSegments(Path path, float[] startus, float[] dus, Easing[] easings) {
 		super(tracers(path, startus, dus, easings));
 		this.strokeColors = fillArray(0xff000000, startus.length);
 		if (startus.length != dus.length || dus.length != easings.length) {
@@ -57,7 +57,7 @@ public class RenderSegments extends Render {
 		return vals;
 	}
 
-	private static Tracer[] tracers(IPath path, float[] startus, float[] dus, Easing[] easings) {
+	private static Tracer[] tracers(Path path, float[] startus, float[] dus, Easing[] easings) {
 		if (startus.length != dus.length) {
 			throw new IllegalArgumentException("In RenderSegments constructor, the arguments startus and dus should have the same length.");
 		}
@@ -139,7 +139,7 @@ public class RenderSegments extends Render {
 		this.strokeWeights = strokeWeights;
 	}
 	
-	public void setAllPaths(IPath path) {
+	public void setAllPaths(Path path) {
 		for (Tracer t : ts) {
 			t.setPath(path);
 		}

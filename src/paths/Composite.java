@@ -13,7 +13,7 @@ import tracer.Point;
  * @param <T> the type of the first path
  * @param <U> the type of the second path
  */
-public class Composite<T extends IPath, U extends IPath> extends Path {
+public class Composite<T extends Path, U extends Path> extends Path {
 	private T a;
 	private U b;
 	

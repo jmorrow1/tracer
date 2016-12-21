@@ -2,7 +2,7 @@ package tracer;
 
 import ease.Easing;
 import ease.Easing.Linear;
-import paths.IPath;
+import paths.Path;
 
 /**
  * A Point that moves along a Path at some rate of speed.
@@ -14,15 +14,15 @@ public class Tracer {
 	protected Point pt; //The Tracer's location in 2D space, accessible via the location() method 
 	protected float u; //The Tracer's location in 1D space, relative to the Tracer's easing curve.
 	protected float du; //The Tracer's speed in 1D space, relative to the Tracer's easing curve.
-	protected IPath path; //The Path to which the Tracer is attached
+	protected Path path; //The Path to which the Tracer is attached
 	protected Easing easing; //The easing curve determining how the Tracer moves in time.
 	protected boolean upToDate = false; //Flag that indicates whether or not the location stored in pt is up to date.
 	
-	public Tracer(IPath path, float startu, float du) {
+	public Tracer(Path path, float startu, float du) {
 		this(path, startu, du, new Linear());
 	}
 	
-	public Tracer(IPath path, float startu, float du, Easing easing) {
+	public Tracer(Path path, float startu, float du, Easing easing) {
 		this.u = startu % 1;
 		this.du = du;
 		this.path = path;
@@ -86,11 +86,11 @@ public class Tracer {
 		this.du = du;
 	}
 
-	public IPath getPath() {
+	public Path getPath() {
 		return path;
 	}
 
-	public void setPath(IPath path) {
+	public void setPath(Path path) {
 		this.path = path;
 		upToDate = false;
 	}

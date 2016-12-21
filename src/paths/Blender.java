@@ -1,6 +1,6 @@
 package paths;
 
-import paths2.IPath2;
+import paths2.Path2;
 import processing.core.PApplet;
 import processing.core.PGraphics;
 import tracer.Point;
@@ -17,7 +17,7 @@ import tracer.Point;
  * @param <T> the type of the first path
  * @param <U> the type of thes second path
  */
-public class Blender<T extends IPath, U extends IPath> extends Path {
+public class Blender<T extends Path, U extends Path> extends Path {
 	private Point ptA = new Point(0, 0), ptB = new Point(0, 0);	
 	private float x, y;
 	private T a;
@@ -159,7 +159,7 @@ public class Blender<T extends IPath, U extends IPath> extends Path {
 	 * @param dAmt how much to change the blendAmt
 	 */
 	public void addToBlendAmt(float dAmt) {
-		this.blendAmt = IPath2.remainder(this.blendAmt + dAmt, 1);
+		this.blendAmt = Path2.remainder(this.blendAmt + dAmt, 1);
 	}
 	
 	@Override

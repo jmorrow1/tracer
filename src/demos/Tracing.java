@@ -7,7 +7,7 @@ import paths.CubicBezier;
 import paths.Blender;
 import paths.Composite;
 import paths.Flower;
-import paths.IPath;
+import paths.Path;
 import paths.InfinitySymbol;
 import paths.Superellipse;
 import paths.Supershape;
@@ -24,7 +24,7 @@ import tracer.Point;
  *
  */
 public class Tracing extends PApplet {
-	ArrayList<IPath> paths;
+	ArrayList<Path> paths;
 	Blender<InfinitySymbol, Superellipse> blender;
 	
 	Point pt = new Point(0, 0);
@@ -44,9 +44,9 @@ public class Tracing extends PApplet {
 		reposition(paths);
 	}
 	
-	private ArrayList<IPath> initList() {
+	private ArrayList<Path> initList() {
 		float r = 0.4f * cellSize;
-		ArrayList<IPath> paths = new ArrayList<IPath>();
+		ArrayList<Path> paths = new ArrayList<Path>();
 		paths.add(new Line(r*cos(0.25f*PI), r*sin(0.25f*PI), r*cos(1.25f*PI), r*sin(1.25f*PI)));
 		paths.add(new Circle(0, 0, r));
 		paths.add(new Ellipse(0, 0, 2*r, r, CENTER));
@@ -70,11 +70,11 @@ public class Tracing extends PApplet {
 		return paths;
 	}
 	
-	private void reposition(ArrayList<IPath> ts) {
+	private void reposition(ArrayList<Path> ts) {
 		int x = cellSize/2;
 		int y = cellSize/2;
 		
-		for (IPath t : ts) {
+		for (Path t : ts) {
 			t.translate(x, y);
 			
 			x += (t instanceof Composite) ? 2*cellSize : cellSize;
@@ -88,14 +88,14 @@ public class Tracing extends PApplet {
 	public void draw() {
 		background(255);
 
-		for (IPath p : paths) {
+		for (Path p : paths) {
 			drawPath(p);
 		}
 		
 		u = (u + 0.005f) % 1f;
 	}
 	
-	private void drawPath(IPath t) {
+	private void drawPath(Path t) {
 		noFill();
 		strokeWeight(2);
 		t.draw(g);

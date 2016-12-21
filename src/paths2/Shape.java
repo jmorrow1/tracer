@@ -3,7 +3,7 @@ package paths2;
 import java.util.ArrayList;
 import java.util.List;
 
-import paths.IPath;
+import paths.Path;
 import processing.core.PApplet;
 import processing.core.PGraphics;
 import tracer.Point;
@@ -28,7 +28,7 @@ import tracer.Point;
  * @author James Morrow [jamesmorrowdesign.com]
  *
  */
-public class Shape implements IPath2 {
+public class Shape extends Path2 {
 	private List<Point> vertices;
 	private List<Float> segAmts;
 	private float cenx, ceny, width, height, perimeter;
@@ -62,7 +62,7 @@ public class Shape implements IPath2 {
 	 * @param pathDef the IPath which will be read and then discarded.
 	 * @param numVertices the resolution of the snapshot.
 	 */
-	public Shape(IPath pathDef, int numVertices) {
+	public Shape(Path pathDef, int numVertices) {
 		initVertices(pathDef, numVertices);
 	}
 	
@@ -88,7 +88,7 @@ public class Shape implements IPath2 {
 		update();
 	}
 	
-	private void initVertices(IPath def, int numVertices) {
+	private void initVertices(Path def, int numVertices) {
 		if (vertices == null || vertices.size() != numVertices) {
 			vertices = new ArrayList<Point>(numVertices);
 		}
@@ -219,7 +219,7 @@ public class Shape implements IPath2 {
 
 	@Override
 	public void trace(Point pt, float amt) {
-		amt = IPath2.remainder(amt, 1);
+		amt = Path2.remainder(amt, 1);
 		for (int i=1; i<segAmts.size(); i++) {		
 			if (amt < segAmts.get(i)) {
 				amt = PApplet.map(amt, segAmts.get(i-1), segAmts.get(i), 0, 1);
@@ -275,7 +275,7 @@ public class Shape implements IPath2 {
 	 * @param pathDef the IPath which will be read and then discarded
 	 * @param numVertices the resolution of the snapshot
 	 */
-	public void set(IPath pathDef, int numVertices) {
+	public void set(Path pathDef, int numVertices) {
 		initVertices(pathDef, numVertices);
 		update();
 	}
