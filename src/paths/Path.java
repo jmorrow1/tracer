@@ -1,5 +1,8 @@
 package paths;
 
+import java.util.ArrayList;
+
+import paths2.Shape;
 import processing.core.PApplet;
 import processing.core.PGraphics;
 import tracer.Point;
@@ -49,12 +52,62 @@ public abstract class Path {
 		this.granularity = granularity;
 	}
 	
+	/**
+	 * Draws the path.
+	 * @param g A PGraphics object on which to draw the path
+	 */
 	public void draw(PGraphics g) {
 		if (granularity != -1) {
 			draw(g, granularity);
 		}
 	}
+	
+	/**
+	 * Creates a segment of the path starting at trace(u1) and ending at trace(u2);
+	 * @param u1 The 1D coordinate of the segment's start, a value between 0 and 1
+	 * @param u2 The 1D coordinate of the segment's end, a value between 0 and 1
+	 * @return The segment
+	 */
+	public Shape segment(float u1, float u2) {
+		boolean inRange = (0 <= u1 && u1 <= 1 && 0 <= u2 && u2 <= 1);
+		if (!inRange) {
+			throw new IllegalArgumentException("draw(g, " + u1 + ", " + u2 + ") called with values outside the range 0 to 1.");
+		}
+		
+		return new Shape(segmentPoints(u1, u2));
+	}
+	
+	private ArrayList<Point> segmentPoints(float u1, float u2) {
+		if (u1 > u2) {
+			ArrayList<Point> pts = new ArrayList<Point>();
+			pts.addAll(segmentPoints(u1, 1));
+			pts.addAll(segmentPoints(0, u2));
+			return pts;
+		}
+		else {
+			float length = PApplet.abs(u1 - u2);
+			int n = (int)(granularity * length);
+			float du = length / n;
+			
+			ArrayList<Point> pts = new ArrayList<Point>();
+					
+			float u = u1;
+			for (int i=0; i<n; i++) {
+				trace(pt, u);
+				pts.add(new Point(pt));
+				u = (u+du) % 1f;
+			}
+			
+			return pts;
+		}
+	}
 
+	/**
+	 * Draws a segment of the path starting at trace(u1) and ending at trace(u2).
+	 * @param g A PGraphics object on which to draw the path
+	 * @param u1 The 1D coordinate of the segment's start, a value between 0 and 1
+	 * @param u2 The 1D coordinate of the segment's end, a value between 0 and 1
+	 */
 	public void draw(PGraphics g, float u1, float u2) {
 		boolean inRange = (0 <= u1 && u1 <= 1 && 0 <= u2 && u2 <= 1);
 		if (!inRange) {
@@ -81,9 +134,22 @@ public abstract class Path {
 		}
 	}
 	
+	/**
+	 * 
+	 * Given a 1D coordinate, a float, maps the coordinate to a 2D coordinate and stores it in a given Point.
+	 * 
+	 * <br><br>
+	 * 
+	 * Maps a given floating point number from 0 to 1 to a given Point
+	 * along the perimeter of the Path.
+	 * 
+	 * @param pt The Point in which the result is stored.
+	 * @param u A number from 0 to 1.
+	 */
 	public abstract void trace(Point pt, float u);
 
 	/**
+	 * Tells whether or not the Path is reversed.
 	 * 
 	 * @return true, if the path is set to reversed and false otherwise
 	 */
@@ -91,10 +157,14 @@ public abstract class Path {
 		return reversed;
 	}
 	
+	/**
+	 * Reverses the orientation of the Path.
+	 */
 	public void reverse() {
 		reversed = !reversed;
 	}
 	
+	@Override
 	public abstract Path clone();
 	
 	/**
