@@ -35,6 +35,11 @@ public class Tracer {
 		u = remainder(u + du, 1f);
 		upToDate = false;
 	}
+	
+	public void step(int dt) {
+		u = remainder(u + du*dt, 1f);
+		upToDate = false;
+	}
 
 	private void update() {
 		float y = easing.val(u);

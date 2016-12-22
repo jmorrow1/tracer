@@ -29,6 +29,12 @@ public abstract class Render {
 		}
 	}
 	
+	public void step(int dt) {
+		for (Tracer t : ts) {
+			t.step(dt);
+		}
+	}
+	
 	public abstract void draw(PGraphics g);
 	
 	public static List<Tracer> listify(Tracer[] arr) {
