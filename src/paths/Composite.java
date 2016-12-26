@@ -117,4 +117,24 @@ public class Composite<T extends Path, U extends Path> extends Path {
 	public Composite<T, U> clone() {
 		return new Composite(this);
 	}
+
+	@Override
+	public int getGapCount() {
+		return a.getGapCount() + b.getGapCount() + 1;
+	}
+
+	@Override
+	public float getGap(int i) {
+		if (i < a.getGapCount()) {
+			return 0.5f*a.getGap(i);
+		}
+		else if (i == a.getGapCount()) {
+			return 0.5f;
+		}
+		else {
+			i -= a.getGapCount();
+			return 0.5f + 0.5f*b.getGap(i);
+			
+		}
+	}
 }

@@ -166,4 +166,16 @@ public class Blender<T extends Path, U extends Path> extends Path {
 	public Blender<T, U> clone() {
 		return new Blender(this);
 	}
+
+	@Override
+	public int getGapCount() {
+		// TODO I don't know how to do this
+		return 0;
+	}
+
+	@Override
+	public float getGap(int i) {
+		// TODO I don't know how to do this
+		return -1;
+	}
 }

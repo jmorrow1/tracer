@@ -187,4 +187,14 @@ public class Ellipse extends Path2 {
 		this.yRadius = height/2f;
 		perimeterOutOfSync = true;
 	}
+
+	@Override
+	public int getGapCount() {
+		return 0;
+	}
+
+	@Override
+	public float getGap(int i) {
+		return -1;
+	}
 }

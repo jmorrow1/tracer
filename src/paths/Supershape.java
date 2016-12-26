@@ -244,4 +244,14 @@ public class Supershape extends Path {
 	public Supershape clone() {
 		return new Supershape(this);
 	}
+	
+	@Override
+	public int getGapCount() {
+		return 0;
+	}
+
+	@Override
+	public float getGap(int i) {
+		return -1;
+	}
 }

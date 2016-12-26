@@ -305,6 +305,30 @@ public class Shape extends Path2 {
 		return height;
 	}
 	
+	public boolean isClosed() {
+		return vertices.size() == 0 || vertices.get(0).equals(vertices.get(vertices.size()-1));
+	}
+	
+	@Override
+	public int getGapCount() {
+		if (isClosed()) {
+			return 0;
+		}
+		else {
+			return 1;
+		}
+	}
+
+	@Override
+	public float getGap(int i) {
+		if (!isClosed() && i == 0) {
+			return 0;
+		}
+		else {
+			return -1;
+		}
+	}
+	
 	/****************************
 	 ***** Static Functions *****
 	 ****************************/

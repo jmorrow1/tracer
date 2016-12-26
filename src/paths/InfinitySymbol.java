@@ -165,4 +165,14 @@ public class InfinitySymbol extends Path {
 	public InfinitySymbol clone() {
 		return new InfinitySymbol(this);
 	}
+
+	@Override
+	public int getGapCount() {
+		return 0;
+	}
+
+	@Override
+	public float getGap(int i) {
+		return -1;
+	}
 }

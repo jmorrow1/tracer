@@ -223,4 +223,14 @@ public class Flower extends Path {
 	public Flower clone() {
 		return new Flower(this);
 	}
+
+	@Override
+	public int getGapCount() {
+		return 0;
+	}
+
+	@Override
+	public float getGap(int i) {
+		return -1;
+	}
 }

@@ -145,4 +145,14 @@ public class Circle extends Path2 {
 	public void setRadius(float radius) {
 		this.radius = radius;
 	}
+
+	@Override
+	public int getGapCount() {
+		return 0;
+	}
+
+	@Override
+	public float getGap(int i) {
+		return -1;
+	}
 }

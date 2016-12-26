@@ -228,4 +228,24 @@ public class CubicBezier extends Path {
 	public CubicBezier clone() {
 		return new CubicBezier(this);
 	}
+
+	@Override
+	public int getGapCount() {
+		if (ax1 == ax2 && ay1 == ay2) {
+			return 0;
+		}
+		else {
+			return 1;
+		}
+	}
+
+	@Override
+	public float getGap(int i) {
+		if (getGapCount() == 1 && i == 0) {
+			return 0;
+		}
+		else {
+			return -1;
+		}
+	}
 }

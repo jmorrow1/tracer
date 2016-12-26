@@ -211,6 +211,26 @@ public class Arc extends Path {
 	}
 	
 	@Override
+	public int getGapCount() {
+		if (PApplet.abs((endAngle - startAngle) - TWO_PI) <= 0.01f) {
+			return 0;
+		}
+		else {
+			return 1;
+		}
+	}
+	
+	@Override
+	public float getGap(int i) {
+		if (getGapCount() == 1 && i == 0) {
+			return (endAngle - startAngle) / TWO_PI;
+		}
+		else {
+			return -1;
+		}
+	}
+	
+	@Override
 	public Arc clone() {
 		return new Arc(this);
 	}

@@ -303,4 +303,14 @@ public class Rect extends Path2 {
 		return "Rect [cenx=" + cenx + ", ceny=" + ceny + ", width=" + width
 				+ ", height=" + height + "]";
 	}
+
+	@Override
+	public int getGapCount() {
+		return 0;
+	}
+
+	@Override
+	public float getGap(int i) {
+		return -1;
+	}
 }

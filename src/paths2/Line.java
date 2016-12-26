@@ -296,4 +296,14 @@ public class Line extends Path2 {
 		b.y = by;
 		recompute();
 	}
+
+	@Override
+	public int getGapCount() {
+		return 1;
+	}
+
+	@Override
+	public float getGap(int i) {
+		return 0;
+	}
 }

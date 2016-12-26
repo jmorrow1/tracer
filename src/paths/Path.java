@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import paths2.Shape;
 import processing.core.PApplet;
+import processing.core.PConstants;
 import processing.core.PGraphics;
 import tracer.Point;
 
@@ -37,11 +38,11 @@ import tracer.Point;
  * @author James Morrow [jamesmorrowdesign.com]
  *
  */
-public abstract class Path {
+public abstract class Path implements PConstants {
 	private final static Point pt = new Point(0, 0);
 	protected boolean reversed;
 	protected int granularity = 100;
-	
+
 	public Path() {}
 	
 	/**
@@ -234,4 +235,22 @@ public abstract class Path {
 			return Point.slope(a, b);
 		}
 	}
+	
+	/**
+	 * Returns the number of discontinuities in the Path.
+	 * 
+	 * @return The number of discontinuities in the Path
+	 */
+	public abstract int getGapCount();
+	
+	/**
+	 * 
+	 * Gives the ith discontinuity in the Path as a 1D coordinate.
+	 * 
+	 * Gives -1 if the index is valid.
+	 * 
+	 * @param i The index
+	 * @return The ith discontinuity as a value between 0 and 1
+	 */
+	public abstract float getGap(int i);
 }

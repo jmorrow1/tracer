@@ -198,4 +198,14 @@ public class Superellipse extends Path {
 	public Superellipse clone() {
 		return new Superellipse(this);
 	}
+
+	@Override
+	public int getGapCount() {
+		return 0;
+	}
+
+	@Override
+	public float getGap(int i) {
+		return -1;
+	}
 }
