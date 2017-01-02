@@ -12,167 +12,183 @@ import tracer.Point;
  *
  */
 public class InfinitySymbol extends Path {
-	private float cenx, ceny, xRadius, yRadius;
-	private int drawGranularity;
-	
-	/**************************
-	 ***** Initialization *****
-	 **************************/
+    private float cenx, ceny, xRadius, yRadius;
+    private int drawGranularity;
 
-	/**
-	 * Copy constructor.
-	 * @param s The infinity symbol to copy
-	 */
-	public InfinitySymbol(InfinitySymbol s) {
-		this(s.cenx, s.ceny, s.xRadius, s.yRadius, s.drawGranularity);
-	}
-	
-	/**
-	 * 
-	 * @param cenx the center x-coordinate
-	 * @param ceny the center y-coordinate
-	 * @param xRadius half the width
-	 * @param yRadius half the height
-	 * @param drawGranularity the number of sample points
-	 */
-	public InfinitySymbol(float cenx, float ceny, float xRadius, float yRadius, int drawGranularity) {
-		this.cenx = cenx;
-		this.ceny = ceny;
-		this.xRadius = xRadius;
-		this.yRadius = yRadius;
-		this.drawGranularity = drawGranularity;
-	}
-	
-	/**
-	 * Easy constructor.
-	 * 
-	 * @param x The x-coordinate of the path.
-	 * @param y The y-coordinate of the path.
-	 * @param r The radius of the path.
-	 */
-	public InfinitySymbol(float x, float y, float r) {
-		this(x, y, r, r, 100);
-	}
-	
-	/*************************
-	 ***** Functionality *****
-	 *************************/
+    /**************************
+     ***** Initialization *****
+     **************************/
 
-	@Override
-	public void trace(Point pt, float amt) {
-		float radians = amt * PApplet.TWO_PI;
-		if (reversed) radians *= -1;
-		pt.x = cenx + xRadius * PApplet.sin(radians);
-		pt.y = ceny + yRadius * PApplet.cos(radians) * PApplet.sin(radians);
-	}
+    /**
+     * Copy constructor.
+     * 
+     * @param s
+     *            The infinity symbol to copy
+     */
+    public InfinitySymbol(InfinitySymbol s) {
+        this(s.cenx, s.ceny, s.xRadius, s.yRadius, s.drawGranularity);
+    }
 
-	@Override
-	public void draw(PGraphics g) {
-		draw(g, drawGranularity);
-	}
+    /**
+     * 
+     * @param cenx
+     *            the center x-coordinate
+     * @param ceny
+     *            the center y-coordinate
+     * @param xRadius
+     *            half the width
+     * @param yRadius
+     *            half the height
+     * @param drawGranularity
+     *            the number of sample points
+     */
+    public InfinitySymbol(float cenx, float ceny, float xRadius, float yRadius, int drawGranularity) {
+        this.cenx = cenx;
+        this.ceny = ceny;
+        this.xRadius = xRadius;
+        this.yRadius = yRadius;
+        this.drawGranularity = drawGranularity;
+    }
 
-	@Override
-	public void translate(float dx, float dy) {
-		cenx += dx;
-		ceny += dy;
-	}
-	
-	/*******************************
-	 ***** Getters and Setters *****
-	 *******************************/
-	
-	/**
-	 * 
-	 * @return the center x-coordinate
-	 */
-	public float getCenx() {
-		return cenx;
-	}
+    /**
+     * Easy constructor.
+     * 
+     * @param x
+     *            The x-coordinate of the path.
+     * @param y
+     *            The y-coordinate of the path.
+     * @param r
+     *            The radius of the path.
+     */
+    public InfinitySymbol(float x, float y, float r) {
+        this(x, y, r, r, 100);
+    }
 
-	/**
-	 * 
-	 * @param cenx the center x-coordinate
-	 */
-	public void setCenx(float cenx) {
-		this.cenx = cenx;
-	}
+    /*************************
+     ***** Functionality *****
+     *************************/
 
-	/**
-	 * 
-	 * @return the center y-coordinate
-	 */
-	public float getCeny() {
-		return ceny;
-	}
+    @Override
+    public void trace(Point pt, float amt) {
+        float radians = amt * PApplet.TWO_PI;
+        if (reversed)
+            radians *= -1;
+        pt.x = cenx + xRadius * PApplet.sin(radians);
+        pt.y = ceny + yRadius * PApplet.cos(radians) * PApplet.sin(radians);
+    }
 
-	/**
-	 * 
-	 * @param ceny the center y-coordinate
-	 */
-	public void setCeny(float ceny) {
-		this.ceny = ceny;
-	}
+    @Override
+    public void draw(PGraphics g) {
+        draw(g, drawGranularity);
+    }
 
-	/**
-	 * 
-	 * @return half the width
-	 */
-	public float getXRadius() {
-		return xRadius;
-	}
+    @Override
+    public void translate(float dx, float dy) {
+        cenx += dx;
+        ceny += dy;
+    }
 
-	/**
-	 * 
-	 * @param xRadius half the width
-	 */
-	public void setXRadius(float xRadius) {
-		this.xRadius = xRadius;
-	}
+    /*******************************
+     ***** Getters and Setters *****
+     *******************************/
 
-	/**
-	 * 
-	 * @return half the height
-	 */
-	public float getYRadius() {
-		return yRadius;
-	}
+    /**
+     * 
+     * @return the center x-coordinate
+     */
+    public float getCenx() {
+        return cenx;
+    }
 
-	/**
-	 * 
-	 * @param yRadius half the height
-	 */
-	public void setYRadius(float yRadius) {
-		this.yRadius = yRadius;
-	}
+    /**
+     * 
+     * @param cenx
+     *            the center x-coordinate
+     */
+    public void setCenx(float cenx) {
+        this.cenx = cenx;
+    }
 
-	/**
-	 * 
-	 * @return the number of sample points
-	 */
-	public int getDrawGranulariy() {
-		return drawGranularity;
-	}
+    /**
+     * 
+     * @return the center y-coordinate
+     */
+    public float getCeny() {
+        return ceny;
+    }
 
-	/**
-	 * 
-	 * @param drawGranularity the number of sample points
-	 */
-	public void setDrawGranularity(int drawGranularity) {
-		this.drawGranularity = drawGranularity;
-	}
-	
-	@Override
-	public InfinitySymbol clone() {
-		return new InfinitySymbol(this);
-	}
+    /**
+     * 
+     * @param ceny
+     *            the center y-coordinate
+     */
+    public void setCeny(float ceny) {
+        this.ceny = ceny;
+    }
 
-	@Override
-	public int getGapCount() {
-		return 0;
-	}
+    /**
+     * 
+     * @return half the width
+     */
+    public float getXRadius() {
+        return xRadius;
+    }
 
-	@Override
-	public float getGap(int i) {
-		return -1;
-	}
+    /**
+     * 
+     * @param xRadius
+     *            half the width
+     */
+    public void setXRadius(float xRadius) {
+        this.xRadius = xRadius;
+    }
+
+    /**
+     * 
+     * @return half the height
+     */
+    public float getYRadius() {
+        return yRadius;
+    }
+
+    /**
+     * 
+     * @param yRadius
+     *            half the height
+     */
+    public void setYRadius(float yRadius) {
+        this.yRadius = yRadius;
+    }
+
+    /**
+     * 
+     * @return the number of sample points
+     */
+    public int getDrawGranulariy() {
+        return drawGranularity;
+    }
+
+    /**
+     * 
+     * @param drawGranularity
+     *            the number of sample points
+     */
+    public void setDrawGranularity(int drawGranularity) {
+        this.drawGranularity = drawGranularity;
+    }
+
+    @Override
+    public InfinitySymbol clone() {
+        return new InfinitySymbol(this);
+    }
+
+    @Override
+    public int getGapCount() {
+        return 0;
+    }
+
+    @Override
+    public float getGap(int i) {
+        return -1;
+    }
 }
