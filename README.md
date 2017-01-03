@@ -56,7 +56,6 @@ For use with the PDE: Add a folder called tracer to the libraries folder located
 
 ``` {.java}
 import paths.*;
-import paths2.*;
 import tracer.*;
 import ease.*;
 import render.*;
