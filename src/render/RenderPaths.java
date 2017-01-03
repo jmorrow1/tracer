@@ -34,7 +34,7 @@ public class RenderPaths extends Render {
         for (int i = 0; i < ts.size(); i++) {
             List<Point> p = paths.get(i);
             Tracer t = ts.get(i);
-            p.add(new Point(t.getX(), t.getY()));
+            p.add(new Point(t.x, t.y));
             if (p.size() == ptCount) {
                 p.remove(0);
             }

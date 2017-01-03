@@ -61,7 +61,7 @@ public class RenderShape extends Render {
         // shape
         g.beginShape();
         for (int i = 0; i < ts.size(); i++) {
-            Point pt = ts.get(i).getLocation();
+            Point pt = ts.get(i);
             g.vertex(pt.x, pt.y);
         }
         if (closeShape) {

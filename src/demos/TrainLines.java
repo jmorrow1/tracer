@@ -67,8 +67,7 @@ public class TrainLines extends PApplet {
         stroke(color);
         for (Tracer t : tracers) {
             t.step();
-            Point pt = t.getLocation();
-            point(pt.x, pt.y);
+            point(t.x, t.y);
         }
     }
 

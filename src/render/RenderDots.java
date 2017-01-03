@@ -54,8 +54,7 @@ public class RenderDots extends Render {
             g.textAlign(g.CENTER, g.BOTTOM);
         }
         for (int i = 0; i < ts.size(); i++) {
-            Tracer t = ts.get(i);
-            Point pt = t.getLocation();
+            Tracer pt = ts.get(i);
             g.point(pt.x, pt.y);
             if (drawLabels) {
                 g.text(labelScheme.nthLabel(i), pt.x, pt.y - 2);

@@ -46,7 +46,7 @@ public class RenderMetaBalls extends Render {
             for (int x = 0; x < g.width; x++) {
                 float val = 0;
                 for (Tracer t : ts) {
-                    float dist = PApplet.dist(t.getX(), t.getY(), x, y);
+                    float dist = PApplet.dist(t.x, t.y, x, y);
                     val += 50 * maxDist / dist;
                 }
                 float amt = PApplet.constrain(PApplet.map(val, 0, maxDist, 0, 1), 0, 1);

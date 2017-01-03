@@ -10,9 +10,7 @@ import paths.Path;
  * @author James Morrow [jamesmorrowdesign.com]
  *
  */
-public class Tracer {
-    protected Point pt; // The Tracer's location in 2D space, accessible via the
-                        // location() method
+public class Tracer extends Point {
     protected float u; // The Tracer's location in 1D space, relative to the
                        // Tracer's easing curve.
     protected float du; // The Tracer's speed in 1D space, relative to the
@@ -20,37 +18,32 @@ public class Tracer {
     protected Path path; // The Path to which the Tracer is attached
     protected Easing easing; // The easing curve determining how the Tracer
                              // moves in time.
-    protected boolean upToDate = false; // Flag that indicates whether or not
-                                        // the location stored in pt is up to
-                                        // date.
 
     public Tracer(Path path, float startu, float du) {
         this(path, startu, du, new Linear());
     }
 
     public Tracer(Path path, float startu, float du, Easing easing) {
+        super(path.trace(startu));
         this.u = startu % 1;
         this.du = du;
         this.path = path;
-        this.pt = new Point(0, 0);
         this.easing = easing;
-        getLocation();
     }
 
     public void step() {
         u = remainder(u + du, 1f);
-        upToDate = false;
+        update();
     }
 
     public void step(int dt) {
         u = remainder(u + du * dt, 1f);
-        upToDate = false;
+        update();
     }
 
     private void update() {
         float y = easing.val(u);
-        path.trace(pt, y);
-        upToDate = true;
+        path.trace(this, y);
     }
 
     public static float remainder(float num, float denom) {
@@ -61,35 +54,14 @@ public class Tracer {
         else
             return denom - ((-num) % denom);
     }
-
-    public Point getLocation() {
-        if (!upToDate) {
-            update();
-        }
-        return pt;
-    }
-
-    public float getX() {
-        if (!upToDate) {
-            update();
-        }
-        return pt.x;
-    }
-
-    public float getY() {
-        if (!upToDate) {
-            update();
-        }
-        return pt.y;
-    }
-
+    
     public float getU() {
         return u;
     }
 
     public void setU(float u) {
         this.u = u;
-        upToDate = false;
+        update();
     }
 
     public float getDu() {
@@ -106,7 +78,7 @@ public class Tracer {
 
     public void setPath(Path path) {
         this.path = path;
-        upToDate = false;
+        update();
     }
 
     public Easing getEasing() {
@@ -115,6 +87,6 @@ public class Tracer {
 
     public void setEasing(Easing easing) {
         this.easing = easing;
-        upToDate = false;
+        update();
     }
 }

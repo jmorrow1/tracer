@@ -16,8 +16,7 @@ public class Point {
     /**
      * Copy constructor.
      * 
-     * @param pt
-     *            the point to copy
+     * @param pt the point to copy
      */
     public Point(Point pt) {
         this.x = pt.x;
@@ -26,10 +25,8 @@ public class Point {
 
     /**
      * 
-     * @param x
-     *            the x-coordinate
-     * @param y
-     *            the y-coordinate
+     * @param x the x-coordinate
+     * @param y the y-coordinate
      */
     public Point(float x, float y) {
         this.x = x;
@@ -49,8 +46,7 @@ public class Point {
      * Creates an array of points from a sequence or array of floating point
      * values.
      * 
-     * @param values
-     *            the floating point values
+     * @param values the floating point values
      * @return the array of points
      */
     public static Point[] points(float... values) {
@@ -64,12 +60,9 @@ public class Point {
     /**
      * Interpolates a Point a and a Point b by a given amount between 0 and 1.
      * 
-     * @param a
-     *            Point a
-     * @param b
-     *            Point b
-     * @param amt
-     *            A value between 0 and 1 specifying the interpolation amount
+     * @param a Point a
+     * @param b Point b
+     * @param amt A value between 0 and 1 specifying the interpolation amount
      * @return the Point in between a and b
      */
     public static Point lerp(Point a, Point b, float amt) {
@@ -79,10 +72,8 @@ public class Point {
     /**
      * Averages two points.
      * 
-     * @param a
-     *            point a
-     * @param b
-     *            point b
+     * @param a point a
+     * @param b point b
      * @return The Point halfway between a and b.
      */
     public static Point avg(Point a, Point b) {
@@ -92,8 +83,7 @@ public class Point {
     /**
      * Averages a sequence or array of points.
      * 
-     * @param pts
-     *            the points
+     * @param pts the points
      * @return the average
      */
     public static Point avg(Point... pts) {
@@ -111,10 +101,8 @@ public class Point {
     /**
      * Computes the distance between two points.
      * 
-     * @param a
-     *            the first point
-     * @param b
-     *            the second point
+     * @param a the first point
+     * @param b the second point
      * @return the distance
      */
     public static float dist(Point a, Point b) {
@@ -124,10 +112,8 @@ public class Point {
     /**
      * The slope between two points.
      * 
-     * @param a
-     *            the first point
-     * @param b
-     *            the second point
+     * @param a the first point
+     * @param b the second point
      * @return
      */
     public static float slope(Point a, Point b) {
@@ -137,10 +123,8 @@ public class Point {
     /**
      * Adds two points.
      * 
-     * @param a
-     *            the first point
-     * @param b
-     *            the second point
+     * @param a the first point
+     * @param b the second point
      * @return the sum
      */
     public static Point add(Point a, Point b) {
@@ -150,8 +134,7 @@ public class Point {
     /**
      * Adds a sequence or array of points.
      * 
-     * @param pts
-     *            a sequence or array of points
+     * @param pts a sequence or array of points
      * @return the sum of the points
      */
     public static Point sum(Point... pts) {
@@ -166,10 +149,8 @@ public class Point {
     /**
      * Subtracts two points.
      * 
-     * @param a
-     *            the first point
-     * @param b
-     *            the second point
+     * @param a  the first point
+     * @param b  the second point
      * @return a - b
      */
     public static Point sub(Point a, Point b) {
@@ -179,8 +160,7 @@ public class Point {
     /**
      * Multiply this point by the given multiplier.
      * 
-     * @param multiplier
-     *            the multiplier
+     * @param multiplier the multiplier
      */
     public void mult(float multiplier) {
         x *= multiplier;
@@ -190,8 +170,7 @@ public class Point {
     /**
      * Add the given point to this point.
      * 
-     * @param pt
-     *            the point to add
+     * @param pt the point to add
      */
     public void add(Point pt) {
         x += pt.x;
@@ -211,10 +190,8 @@ public class Point {
     /**
      * Divide a point by a divisor and return the result.
      * 
-     * @param pt
-     *            the point to divide
-     * @param divisor
-     *            the divisor
+     * @param pt the point to divide
+     * @param divisor the divisor
      * @return a new point which is the point divided by the divisor
      */
     public static Point div(Point pt, float divisor) {
@@ -224,10 +201,8 @@ public class Point {
     /**
      * Multiply a point by a multiplier and return the result.
      * 
-     * @param pt
-     *            the point to multiply
-     * @param multiplier
-     *            the multiplier
+     * @param pt the point to multiply
+     * @param multiplier the multiplier
      * @return a new point which is the product of pt and multiplier
      */
     public static Point mult(Point pt, float multiplier) {
