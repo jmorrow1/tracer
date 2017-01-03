@@ -13,8 +13,8 @@ import tracer.Point;
  *
  */
 public class Flower extends Path {
-    private float cenx, ceny, xRadius, yRadius, freq1, freq2;
-    private int drawGranularity;
+    private Point cen;
+    private float xRadius, yRadius, freq1, freq2;
 
     /**************************
      ***** Initialization *****
@@ -26,7 +26,7 @@ public class Flower extends Path {
      * @param f the flower to copy
      */
     public Flower(Flower f) {
-        this(f.cenx, f.ceny, f.xRadius, f.yRadius, f.freq1, f.freq2, f.drawGranularity);
+        this(f.cen.clone(), f.xRadius, f.yRadius, f.freq1, f.freq2, f.granularity);
     }
 
     /**
@@ -39,7 +39,19 @@ public class Flower extends Path {
      * @param drawGranularity the number of sample points
      */
     public Flower(float cenx, float ceny, float radius, float freq1, float freq2, int drawGranularity) {
-        this(cenx, ceny, radius, radius, freq1, freq2, drawGranularity);
+        this(new Point(cenx, ceny), radius, radius, freq1, freq2, drawGranularity);
+    }
+    
+    /**
+     * 
+     * @param cen the center of the path
+     * @param radius the radius
+     * @param freq1 the first frequency
+     * @param freq2 the second frequency
+     * @param drawGranularity the number of sample points
+     */
+    public Flower(Point cen, float radius, float freq1, float freq2, int drawGranularity) {
+        this(cen, radius, radius, freq1, freq2, drawGranularity);
     }
 
     /**
@@ -52,15 +64,14 @@ public class Flower extends Path {
      * @param freq2 the second frequency
      * @param drawGranularity the number of sample points
      */
-    public Flower(float cenx, float ceny, float xRadius, float yRadius, float freq1, float freq2, int drawGranularity) {
-        this.cenx = cenx;
-        this.ceny = ceny;
+    public Flower(Point cen, float xRadius, float yRadius, float freq1, float freq2, int drawGranularity) {
+        super(drawGranularity);
+        this.cen = cen;
         this.xRadius = xRadius;
         this.yRadius = yRadius;
         this.freq1 = freq1;
         this.freq2 = freq2;
-        this.drawGranularity = drawGranularity;
-    }
+    } 
 
     /**
      * Easy constructor.
@@ -70,7 +81,17 @@ public class Flower extends Path {
      * @param r The radius of the path.
      */
     public Flower(float x, float y, float r) {
-        this(x, y, r, r, 3, 5, 100);
+        this(new Point(x, y), r);
+    }
+    
+    /**
+     * Easy constructor.
+     * 
+     * @param center the center of the path
+     * @param r the ratius of the path
+     */
+    public Flower(Point center, float r) {
+        this(center, r, r, 3, 5, 100);
     }
 
     /*************************
@@ -83,39 +104,50 @@ public class Flower extends Path {
             amt *= -1;
         float alpha = amt * PApplet.TWO_PI * freq1;
         float beta = amt * PApplet.TWO_PI * freq2;
-        float x = cenx + xRadius * PApplet.cos(alpha);
-        float y = ceny + yRadius * PApplet.sin(alpha);
+        float x = cen.x + xRadius * PApplet.cos(alpha);
+        float y = cen.y + yRadius * PApplet.sin(alpha);
         float lerpAmt = PApplet.map(PApplet.sin(beta), -1, 1, 0, 1);
-        pt.x = PApplet.lerp(cenx, x, lerpAmt);
-        pt.y = PApplet.lerp(ceny, y, lerpAmt);
-    }
-
-    public void draw(PGraphics g) {
-        draw(g, drawGranularity);
+        pt.x = PApplet.lerp(cen.x, x, lerpAmt);
+        pt.y = PApplet.lerp(cen.y, y, lerpAmt);
     }
 
     @Override
     public void translate(float dx, float dy) {
-        cenx += dx;
-        ceny += dy;
+        cen.translate(dx, dy);
     }
 
     @Override
     public String toString() {
-        return "Flower [cenx=" + cenx + ", ceny=" + ceny + ", xRadius=" + xRadius + ", yRadius= " + yRadius + ", freq1="
+        return "Flower [cen=" + cen + ", xRadius=" + xRadius + ", yRadius= " + yRadius + ", freq1="
                 + freq1 + ", freq2=" + freq2 + "]";
     }
 
     /*******************************
      ***** Getters and Setters *****
      *******************************/
+    
+    /**
+     * 
+     * @return the center of the path
+     */
+    public Point getCenter() {
+        return cen;
+    }
+    
+    /**
+     * 
+     * @param cen the center of the path
+     */
+    public void setCenter(Point cen) {
+        this.cen = cen;
+    }
 
     /**
      * 
      * @return the center x-coordinate
      */
     public float getCenx() {
-        return cenx;
+        return cen.x;
     }
 
     /**
@@ -123,7 +155,7 @@ public class Flower extends Path {
      * @param cenx the center x-coordinate
      */
     public void setCenx(float cenx) {
-        this.cenx = cenx;
+        this.cen.x = cenx;
     }
 
     /**
@@ -131,7 +163,7 @@ public class Flower extends Path {
      * @return the center y-coordinate
      */
     public float getCeny() {
-        return ceny;
+        return cen.y;
     }
 
     /**
@@ -139,7 +171,7 @@ public class Flower extends Path {
      * @param ceny the center y-coordinate
      */
     public void setCeny(float ceny) {
-        this.ceny = ceny;
+        this.cen.y = ceny;
     }
 
     /**
@@ -204,22 +236,6 @@ public class Flower extends Path {
      */
     public void setFreq2(float freq2) {
         this.freq2 = freq2;
-    }
-
-    /**
-     * 
-     * @return the number of sample points
-     */
-    public int getDrawGranularity() {
-        return drawGranularity;
-    }
-
-    /**
-     * 
-     * @param drawGranularity the number of sample points
-     */
-    public void setDrawGranularity(int drawGranularity) {
-        this.drawGranularity = drawGranularity;
     }
 
     @Override

@@ -1,7 +1,6 @@
 package paths;
 
 import processing.core.PApplet;
-import processing.core.PGraphics;
 import tracer.Point;
 
 /**
@@ -12,8 +11,8 @@ import tracer.Point;
  *
  */
 public class InfinitySymbol extends Path {
-    private float cenx, ceny, xRadius, yRadius;
-    private int drawGranularity;
+    private Point cen;
+    private float xRadius, yRadius;
 
     /**************************
      ***** Initialization *****
@@ -25,7 +24,7 @@ public class InfinitySymbol extends Path {
      * @param s The infinity symbol to copy
      */
     public InfinitySymbol(InfinitySymbol s) {
-        this(s.cenx, s.ceny, s.xRadius, s.yRadius, s.drawGranularity);
+        this(s.cen.clone(), s.xRadius, s.yRadius, s.granularity);
     }
 
     /**
@@ -37,11 +36,21 @@ public class InfinitySymbol extends Path {
      * @param drawGranularity the number of sample points
      */
     public InfinitySymbol(float cenx, float ceny, float xRadius, float yRadius, int drawGranularity) {
-        this.cenx = cenx;
-        this.ceny = ceny;
+        this(new Point(cenx, ceny), xRadius, yRadius, drawGranularity);
+    }
+    
+    /**
+     * 
+     * @param cen the center of the path
+     * @param xRadius half the width
+     * @param yRadius half the height
+     * @param drawGranularity the number of sample points
+     */
+    public InfinitySymbol(Point cen, float xRadius, float yRadius, int drawGranularity) {
+        super(drawGranularity);
+        this.cen = cen;
         this.xRadius = xRadius;
         this.yRadius = yRadius;
-        this.drawGranularity = drawGranularity;
     }
 
     /**
@@ -54,6 +63,16 @@ public class InfinitySymbol extends Path {
     public InfinitySymbol(float x, float y, float r) {
         this(x, y, r, r, 100);
     }
+    
+    /**
+     * Easy constructor.
+     * 
+     * @param cen The center of the path
+     * @param r The radius of the path.
+     */
+    public InfinitySymbol(Point cen, float r) {
+        this(cen, r, r, 100);
+    }
 
     /*************************
      ***** Functionality *****
@@ -62,33 +81,44 @@ public class InfinitySymbol extends Path {
     @Override
     public void trace(Point pt, float amt) {
         float radians = amt * PApplet.TWO_PI;
-        if (reversed)
+        if (reversed) {
             radians *= -1;
-        pt.x = cenx + xRadius * PApplet.sin(radians);
-        pt.y = ceny + yRadius * PApplet.cos(radians) * PApplet.sin(radians);
-    }
-
-    @Override
-    public void draw(PGraphics g) {
-        draw(g, drawGranularity);
+        }
+        pt.x = cen.x + xRadius * PApplet.sin(radians);
+        pt.y = cen.y + yRadius * PApplet.cos(radians) * PApplet.sin(radians);
     }
 
     @Override
     public void translate(float dx, float dy) {
-        cenx += dx;
-        ceny += dy;
+        cen.translate(dx, dy);
     }
 
     /*******************************
      ***** Getters and Setters *****
      *******************************/
+    
+    /**
+     * 
+     * @return the center of the path
+     */
+    public Point getCenter() {
+        return cen;
+    }
+    
+    /**
+     * 
+     * @param cen the center of the path
+     */
+    public void setCenter(Point cen) {
+        this.cen = cen;
+    }
 
     /**
      * 
      * @return the center x-coordinate
      */
     public float getCenx() {
-        return cenx;
+        return cen.x;
     }
 
     /**
@@ -96,7 +126,7 @@ public class InfinitySymbol extends Path {
      * @param cenx the center x-coordinate
      */
     public void setCenx(float cenx) {
-        this.cenx = cenx;
+        this.cen.x = cenx;
     }
 
     /**
@@ -104,7 +134,7 @@ public class InfinitySymbol extends Path {
      * @return the center y-coordinate
      */
     public float getCeny() {
-        return ceny;
+        return cen.y;
     }
 
     /**
@@ -112,7 +142,7 @@ public class InfinitySymbol extends Path {
      * @param ceny the center y-coordinate
      */
     public void setCeny(float ceny) {
-        this.ceny = ceny;
+        this.cen.y = ceny;
     }
 
     /**
@@ -145,22 +175,6 @@ public class InfinitySymbol extends Path {
      */
     public void setYRadius(float yRadius) {
         this.yRadius = yRadius;
-    }
-
-    /**
-     * 
-     * @return the number of sample points
-     */
-    public int getDrawGranulariy() {
-        return drawGranularity;
-    }
-
-    /**
-     * 
-     * @param drawGranularity the number of sample points
-     */
-    public void setDrawGranularity(int drawGranularity) {
-        this.drawGranularity = drawGranularity;
     }
 
     @Override

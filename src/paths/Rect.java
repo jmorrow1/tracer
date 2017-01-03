@@ -167,7 +167,7 @@ public class Rect extends Path {
     }
 
     private boolean amtsEqual(float a, float b) {
-        return amtsEqual(a, b, getPerimeter());
+        return amtsEqual(a, b, getTotalDistance());
     }
 
     private boolean amtsEqual(float a, float b, float perimeter) {
@@ -194,7 +194,7 @@ public class Rect extends Path {
      *******************************/
 
     @Override
-    public float getPerimeter() {
+    public float getTotalDistance() {
         return perimeter;
     }
 

@@ -19,7 +19,8 @@ import tracer.Point;
  *
  */
 public class Supershape extends Path {
-    private float cenx, ceny, xRadius, yRadius, m, n1, n2, n3;
+    private Point cen;
+    private float xRadius, yRadius, m, n1, n2, n3;
 
     private float mOver4, n1Inverted;
 
@@ -33,7 +34,7 @@ public class Supershape extends Path {
      * @param s the supershape to copy
      */
     public Supershape(Supershape s) {
-        this(s.cenx, s.ceny, s.xRadius, s.yRadius, s.m, s.n1, s.n2, s.n3, s.granularity);
+        this(s.cen.clone(), s.xRadius, s.yRadius, s.m, s.n1, s.n2, s.n3, s.granularity);
     }
 
     /**
@@ -51,15 +52,31 @@ public class Supershape extends Path {
      */
     public Supershape(float cenx, float ceny, float xRadius, float yRadius, float m, float n1, float n2, float n3,
             int granularity) {
-        this.cenx = cenx;
-        this.ceny = ceny;
+        this(new Point(cenx, ceny), xRadius, yRadius, m, n1, n2, n3, granularity);
+    }
+    
+    /**
+     * 
+     * @param cen the center of the path
+     * @param xRadius half the width
+     * @param yRadius half the height
+     * @param m controls the number of rotational symmetries
+     * @param n1 controls the amount of pinching (lesser values of n1 give more
+     *            pinching)
+     * @param n2
+     * @param n3
+     * @param granularity the number of sample points
+     */
+    public Supershape(Point cen, float xRadius, float yRadius, float m, float n1, float n2, float n3,
+            int granularity) {
+        super(granularity);
+        this.cen  = cen;
         this.xRadius = xRadius;
         this.yRadius = yRadius;
         this.m = m;
         this.n1 = n1;
         this.n2 = n2;
         this.n3 = n3;
-        this.granularity = granularity;
         this.mOver4 = m / 4f;
         this.n1Inverted = 1f / n1;
     }
@@ -78,6 +95,18 @@ public class Supershape extends Path {
     }
 
     /**
+     * 
+     * @param cen the center of the path
+     * @param xRadius half the width
+     * @param yRadius half the height
+     * @param m controls the number of rotational symmetries
+     * @param granularity The number of sample points
+     */
+    public Supershape(Point cen, float xRadius, float yRadius, float m, int granularity) {
+        this(cen, xRadius, yRadius, m, 1, 1, 1, granularity);
+    }
+    
+    /**
      * Easy constructor.
      * 
      * @param x The x-coordinate of the path.
@@ -86,6 +115,16 @@ public class Supershape extends Path {
      */
     public Supershape(float x, float y, float r) {
         this(x, y, r, r, 3, 100);
+    }
+    
+    /**
+     * Easy constructor.
+     * 
+     * @param cen The center of the path.
+     * @param r The radius of the path.
+     */
+    public Supershape(Point cen, float r) {
+        this(cen, r, r, 3, 100);
     }
 
     /*************************
@@ -98,8 +137,8 @@ public class Supershape extends Path {
         if (reversed)
             theta *= -1;
         float r = radius(theta);
-        pt.x = cenx + xRadius * r * PApplet.cos(theta);
-        pt.y = ceny + yRadius * r * PApplet.sin(theta);
+        pt.x = cen.x + xRadius * r * PApplet.cos(theta);
+        pt.y = cen.y + yRadius * r * PApplet.sin(theta);
     }
 
     private float radius(float theta) {
@@ -118,8 +157,7 @@ public class Supershape extends Path {
 
     @Override
     public void translate(float dx, float dy) {
-        cenx += dx;
-        ceny += dy;
+        cen.translate(dx, dy);
     }
 
     private static int sgn(float x) {
@@ -133,13 +171,29 @@ public class Supershape extends Path {
     /*******************************
      ***** Getters and Setters *****
      *******************************/
+    
+    /**
+     * 
+     * @return the center of the path
+     */
+    public Point getCenter() {
+        return cen;
+    }
+    
+    /**
+     * 
+     * @param cen the center of the path
+     */
+    public void setCenter(Point cen) {
+        this.cen = cen;
+    }
 
     /**
      * 
      * @return the center x-coordinate
      */
     public float getCenx() {
-        return cenx;
+        return cen.x;
     }
 
     /**
@@ -147,7 +201,7 @@ public class Supershape extends Path {
      * @param cenx the center x-coordinate
      */
     public void setCenx(float cenx) {
-        this.cenx = cenx;
+        this.cen.x = cenx;
     }
 
     /**
@@ -155,7 +209,7 @@ public class Supershape extends Path {
      * @return the center y-coordinate
      */
     public float getCeny() {
-        return ceny;
+        return cen.y;
     }
 
     /**
@@ -163,7 +217,7 @@ public class Supershape extends Path {
      * @param ceny the center y-coordinate
      */
     public void setCeny(float ceny) {
-        this.ceny = ceny;
+        this.cen.y = ceny;
     }
 
     /**
@@ -233,22 +287,6 @@ public class Supershape extends Path {
      */
     public void setN3(float n3) {
         this.n3 = n3;
-    }
-
-    /**
-     * 
-     * @return the number of sample points
-     */
-    public int getGranularity() {
-        return granularity;
-    }
-
-    /**
-     * 
-     * @param granularity the number of sample points
-     */
-    public void setGranularity(int granularity) {
-        this.granularity = granularity;
     }
 
     @Override

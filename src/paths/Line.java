@@ -13,7 +13,6 @@ import tracer.Point;
  */
 public class Line extends Path {
     private Point a, b;
-    private float length;
     public final static int DEFAULT_INTERSECT_RADIUS = 8;
 
     /**************************
@@ -28,9 +27,17 @@ public class Line extends Path {
      * @param by the y-coordinate of the second point
      */
     public Line(float ax, float ay, float bx, float by) {
-        a = new Point(ax, ay);
-        b = new Point(bx, by);
-        recompute();
+        this(new Point(ax, ay), new Point(bx, by));
+    }
+    
+    /**
+     * 
+     * @param a the start point
+     * @param b the end point
+     */
+    public Line(Point a, Point b) {
+        this.a = a;
+        this.b = b;
     }
 
     /**
@@ -53,11 +60,7 @@ public class Line extends Path {
         this(x - r * PApplet.cos(0.75f * PApplet.PI), y - r * PApplet.sin(0.75f * PApplet.PI),
                 x + r * PApplet.cos(1.75f * PApplet.PI), y + r * PApplet.sin(1.75f * PApplet.PI));
     }
-
-    private void recompute() {
-        length = PApplet.dist(a.x, a.y, b.x, b.y);
-    }
-
+    
     /**************************
      ***** Functionality *****
      **************************/
@@ -226,8 +229,8 @@ public class Line extends Path {
      *******************************/
 
     @Override
-    public float getPerimeter() {
-        return length;
+    public float getTotalDistance() {
+        return PApplet.dist(a.x, a.y, b.x, b.y);
     }
 
     public float getCenx() {
@@ -243,7 +246,7 @@ public class Line extends Path {
      * @return the length of the line
      */
     public float getLength() {
-        return length;
+        return getTotalDistance();
     }
 
     public float getWidth() {
@@ -252,6 +255,22 @@ public class Line extends Path {
 
     public float getHeight() {
         return PApplet.max(a.y, b.y) - PApplet.min(a.y, b.y);
+    }
+    
+    /**
+     * 
+     * @return the line's start point
+     */
+    public Point getA() {
+        return a;
+    }
+    
+    /**
+     * 
+     * @param a the line's start point
+     */
+    public void setA(Point a) {
+        this.a = a;
     }
 
     /**
@@ -269,17 +288,21 @@ public class Line extends Path {
     public float getAy() {
         return a.y;
     }
-
+    
     /**
-     * Set the start point of the line.
      * 
-     * @param x1
-     * @param y1
+     * @return the line's end point
      */
-    public void setStartPoint(float ax, float ay) {
-        a.x = ax;
-        a.y = ay;
-        recompute();
+    public Point getB() {
+        return b;
+    }
+    
+    /**
+     * 
+     * @param b the line's end point
+     */
+    public void setB(Point b) {
+        this.b = b;
     }
 
     /**
@@ -296,18 +319,6 @@ public class Line extends Path {
      */
     public float getBy() {
         return b.y;
-    }
-
-    /**
-     * Set the line's end point.
-     * 
-     * @param x1 the x-coordinate of the point
-     * @param y1 the y-coordinate of the point
-     */
-    public void setEndPoint(float bx, float by) {
-        b.x = bx;
-        b.y = by;
-        recompute();
     }
 
     @Override

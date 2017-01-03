@@ -18,7 +18,6 @@ import tracer.Point;
  */
 public class Blender<T extends Path, U extends Path> extends Path {
     private Point ptA = new Point(0, 0), ptB = new Point(0, 0);
-    private float x, y;
     private T a;
     private U b;
     private int drawGranularity;

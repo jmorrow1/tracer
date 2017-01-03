@@ -6,6 +6,11 @@ import paths.Path;
 import processing.core.PApplet;
 import tracer.Tracer;
 
+/**
+ * 
+ * @author James Morrow [jamesmorrowdesign.com]
+ *
+ */
 public class MetaPathDemo extends PApplet {
     public static void main(String[] args) {
         PApplet.main("demos.MetaPathDemo");

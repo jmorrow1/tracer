@@ -18,7 +18,8 @@ import tracer.Point;
  *
  */
 public class Superellipse extends Path {
-    private float cenx, ceny, xRadius, yRadius;
+    private Point cen;
+    private float xRadius, yRadius;
     private float n;
     private float twoOverN;
 
@@ -32,9 +33,9 @@ public class Superellipse extends Path {
      * @param e the superellipse to copy
      */
     public Superellipse(Superellipse e) {
-        this(e.cenx, e.ceny, e.xRadius, e.yRadius, e.n, e.granularity);
+        this(e.cen.clone(), e.xRadius, e.yRadius, e.n, e.granularity);
     }
-
+    
     /**
      * 
      * @param cenx the center x-coordinate
@@ -46,15 +47,27 @@ public class Superellipse extends Path {
      * @param granularity the number of sample points
      */
     public Superellipse(float cenx, float ceny, float xRadius, float yRadius, float n, int granularity) {
+        this(new Point(cenx, ceny), xRadius, yRadius, n, granularity);
+    }
+
+    /**
+     * 
+     * @param cen the center of the path
+     * @param xRadius half the width
+     * @param yRadius half the height
+     * @param n controls the amount of pinching (smaller values give more
+     *            pinching)
+     * @param granularity the number of sample points
+     */
+    public Superellipse(Point cen, float xRadius, float yRadius, float n, int granularity) {
         super(granularity);
-        this.cenx = cenx;
-        this.ceny = ceny;
+        this.cen = cen;
         this.xRadius = xRadius;
         this.yRadius = yRadius;
         this.n = n;
         this.twoOverN = 2f / n;
     }
-
+    
     /**
      * Easy constructor.
      * 
@@ -66,6 +79,16 @@ public class Superellipse extends Path {
         this(x, y, r, r, 1, 100);
     }
 
+    /**
+     * Easy constructor.
+     * 
+     * @param cen The center of the path.
+     * @param r The radius of the path.
+     */
+    public Superellipse(Point cen, float r) {
+        this(cen, r, r, 1, 100);
+    }
+    
     /*************************
      ***** Functionality *****
      *************************/
@@ -76,9 +99,9 @@ public class Superellipse extends Path {
         if (reversed)
             theta *= -1;
         float cosTheta = PApplet.cos(theta);
-        pt.x = cenx + PApplet.pow(PApplet.abs(cosTheta), twoOverN) * xRadius * sgn(cosTheta);
+        pt.x = cen.x + PApplet.pow(PApplet.abs(cosTheta), twoOverN) * xRadius * sgn(cosTheta);
         float sinTheta = PApplet.sin(theta);
-        pt.y = ceny + PApplet.pow(PApplet.abs(sinTheta), twoOverN) * yRadius * sgn(sinTheta);
+        pt.y = cen.y + PApplet.pow(PApplet.abs(sinTheta), twoOverN) * yRadius * sgn(sinTheta);
     }
 
     @Override
@@ -88,8 +111,7 @@ public class Superellipse extends Path {
 
     @Override
     public void translate(float dx, float dy) {
-        cenx += dx;
-        ceny += dy;
+        cen.translate(dx, dy);
     }
 
     private static int sgn(float x) {
@@ -103,13 +125,29 @@ public class Superellipse extends Path {
     /*******************************
      ***** Getters and Setters *****
      *******************************/
+    
+    /**
+     * 
+     * @return the center of the path
+     */
+    public Point getCenter() {
+        return cen;
+    }
+    
+    /**
+     * 
+     * @param cen the center of the path
+     */
+    public void setCenter(Point cen) {
+        this.cen = cen;
+    }
 
     /**
      * 
      * @return the center x-coordinate
      */
     public float getCenx() {
-        return cenx;
+        return cen.x;
     }
 
     /**
@@ -117,7 +155,7 @@ public class Superellipse extends Path {
      * @param cenx the center x-coordinate
      */
     public void setCenx(float cenx) {
-        this.cenx = cenx;
+        this.cen.x = cenx;
     }
 
     /**
@@ -125,7 +163,7 @@ public class Superellipse extends Path {
      * @return the center y-coordinate
      */
     public float getCeny() {
-        return ceny;
+        return cen.y;
     }
 
     /**
@@ -133,7 +171,7 @@ public class Superellipse extends Path {
      * @param ceny the center y-coordinate
      */
     public void setCeny(float ceny) {
-        this.ceny = ceny;
+        this.cen.y = ceny;
     }
 
     /**
@@ -183,22 +221,6 @@ public class Superellipse extends Path {
     public void setN(float n) {
         this.n = n;
         this.twoOverN = 2f / n;
-    }
-
-    /**
-     * 
-     * @return the number of sample points
-     */
-    public int getGranularity() {
-        return granularity;
-    }
-
-    /**
-     * 
-     * @param granularity the number of sample points
-     */
-    public void setGranularity(int granularity) {
-        this.granularity = granularity;
     }
 
     @Override

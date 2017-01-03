@@ -42,7 +42,7 @@ public class Circle extends Path {
      * @param c the circle to copy
      */
     public Circle(Circle c) {
-        this(c.center, c.radius);
+        this(c.center.clone(), c.radius);
     }
 
     @Override
@@ -95,7 +95,7 @@ public class Circle extends Path {
      *******************************/
 
     @Override
-    public float getPerimeter() {
+    public float getTotalDistance() {
         return PApplet.TWO_PI * radius;
     }
     

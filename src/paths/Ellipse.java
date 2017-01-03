@@ -142,7 +142,7 @@ public class Ellipse extends Path {
      *******************************/
 
     @Override
-    public float getPerimeter() {
+    public float getTotalDistance() {
         if (perimeterOutOfSync) {
             recomputePerimeter();
         }

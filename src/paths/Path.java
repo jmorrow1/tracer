@@ -233,7 +233,7 @@ public abstract class Path implements PConstants {
      */
 
     // TODO Work in progress --- Need to incorporate gaps
-    public float getPerimeter() {
+    public float getTotalDistance() {
         trace(pt, 0);
         float x = pt.x;
         float y = pt.y;
@@ -307,6 +307,14 @@ public abstract class Path implements PConstants {
             Point b = this.trace(u);
             return Point.slope(a, b);
         }
+    }
+    
+    public void setGranularity(int granularity) {
+        this.granularity = granularity;
+    }
+    
+    public int getGranularity() {
+        return granularity;
     }
 
     /**

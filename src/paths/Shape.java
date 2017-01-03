@@ -60,7 +60,7 @@ public class Shape extends Path {
     /**
      * Construct a Shape by taking a snapshot of an IPath.
      * 
-     * @param pathDef the IPath which will be read and then discarded.
+     * @param pathDef the Path which will be read and then discarded.
      * @param numVertices the resolution of the snapshot.
      */
     public Shape(Path pathDef, int numVertices) {
@@ -77,7 +77,7 @@ public class Shape extends Path {
         this.ceny = shape.getCeny();
         this.width = shape.getWidth();
         this.height = shape.getHeight();
-        this.perimeter = shape.getPerimeter();
+        this.perimeter = shape.getTotalDistance();
         this.segAmts = new ArrayList<Float>(shape.segAmts.size());
         for (Float f : shape.segAmts) {
             this.segAmts.add(f.floatValue());
@@ -279,7 +279,7 @@ public class Shape extends Path {
     }
 
     @Override
-    public float getPerimeter() {
+    public float getTotalDistance() {
         return perimeter;
     }
 

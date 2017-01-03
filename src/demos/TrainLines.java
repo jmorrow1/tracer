@@ -55,7 +55,7 @@ public class TrainLines extends PApplet {
                     tracks.add(track);
                     currTrack = new ArrayList<Point>();
                     
-                    float du = 1f / track.getPerimeter();
+                    float du = 1f / track.getTotalDistance();
                     Tracer tracer = new Tracer(track, 0, du);
                     
                     tracers.add(tracer);
