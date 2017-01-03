@@ -18,12 +18,9 @@ public class Circle extends Path {
 
     /**
      * 
-     * @param x
-     *            the center x-coordinate
-     * @param y
-     *            the center y-coordinate
-     * @param radius
-     *            the radius
+     * @param x the center x-coordinate
+     * @param y the center y-coordinate
+     * @param radius the radius
      */
     public Circle(float x, float y, float radius) {
         this.x = x;
@@ -34,8 +31,7 @@ public class Circle extends Path {
     /**
      * Copy constructor.
      * 
-     * @param c
-     *            the circle to copy
+     * @param c the circle to copy
      */
     public Circle(Circle c) {
         this(c.getCenx(), c.getCeny(), c.getRadius());
@@ -58,7 +54,7 @@ public class Circle extends Path {
         if (u1 > u2) {
             u2++;
         }
-     
+
         g.ellipseMode(RADIUS);
         g.arc(x, y, radius, radius, u1 * PApplet.TWO_PI, u2 * PApplet.TWO_PI);
     }
@@ -146,8 +142,7 @@ public class Circle extends Path {
     /**
      * Set the radius.
      * 
-     * @param radius
-     *            the radius
+     * @param radius the radius
      */
     public void setRadius(float radius) {
         this.radius = radius;

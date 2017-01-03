@@ -30,8 +30,7 @@ public class Supershape extends Path {
     /**
      * Copy constructor.
      * 
-     * @param s
-     *            the supershape to copy
+     * @param s the supershape to copy
      */
     public Supershape(Supershape s) {
         this(s.cenx, s.ceny, s.xRadius, s.yRadius, s.m, s.n1, s.n2, s.n3, s.granularity);
@@ -39,23 +38,16 @@ public class Supershape extends Path {
 
     /**
      * 
-     * @param cenx
-     *            the center x-coordinate
-     * @param ceny
-     *            the center y-coordinate
-     * @param xRadius
-     *            half the width
-     * @param yRadius
-     *            half the height
-     * @param m
-     *            controls the number of rotational symmetries
-     * @param n1
-     *            controls the amount of pinching (lesser values of n1 give more
+     * @param cenx the center x-coordinate
+     * @param ceny the center y-coordinate
+     * @param xRadius half the width
+     * @param yRadius half the height
+     * @param m controls the number of rotational symmetries
+     * @param n1 controls the amount of pinching (lesser values of n1 give more
      *            pinching)
      * @param n2
      * @param n3
-     * @param granularity
-     *            the number of sample points
+     * @param granularity the number of sample points
      */
     public Supershape(float cenx, float ceny, float xRadius, float yRadius, float m, float n1, float n2, float n3,
             int granularity) {
@@ -74,18 +66,12 @@ public class Supershape extends Path {
 
     /**
      * 
-     * @param cenx
-     *            the center x-coordinate
-     * @param ceny
-     *            the center y-coordinate
-     * @param xRadius
-     *            half the width
-     * @param yRadius
-     *            half the height
-     * @param m
-     *            controls the number of rotational symmetries
-     * @param granularity
-     *            The number of sample points
+     * @param cenx the center x-coordinate
+     * @param ceny the center y-coordinate
+     * @param xRadius half the width
+     * @param yRadius half the height
+     * @param m controls the number of rotational symmetries
+     * @param granularity The number of sample points
      */
     public Supershape(float cenx, float ceny, float xRadius, float yRadius, float m, int granularity) {
         this(cenx, ceny, xRadius, yRadius, m, 1, 1, 1, granularity);
@@ -94,12 +80,9 @@ public class Supershape extends Path {
     /**
      * Easy constructor.
      * 
-     * @param x
-     *            The x-coordinate of the path.
-     * @param y
-     *            The y-coordinate of the path.
-     * @param r
-     *            The radius of the path.
+     * @param x The x-coordinate of the path.
+     * @param y The y-coordinate of the path.
+     * @param r The radius of the path.
      */
     public Supershape(float x, float y, float r) {
         this(x, y, r, r, 3, 100);
@@ -161,8 +144,7 @@ public class Supershape extends Path {
 
     /**
      * 
-     * @param cenx
-     *            the center x-coordinate
+     * @param cenx the center x-coordinate
      */
     public void setCenx(float cenx) {
         this.cenx = cenx;
@@ -178,8 +160,7 @@ public class Supershape extends Path {
 
     /**
      * 
-     * @param ceny
-     *            the center y-coordinate
+     * @param ceny the center y-coordinate
      */
     public void setCeny(float ceny) {
         this.ceny = ceny;
@@ -195,8 +176,7 @@ public class Supershape extends Path {
 
     /**
      * 
-     * @param m
-     *            a variable that controls the number of rotational symmetries
+     * @param m a variable that controls the number of rotational symmetries
      */
     public void setM(float m) {
         this.m = m;
@@ -214,8 +194,7 @@ public class Supershape extends Path {
 
     /**
      * 
-     * @param n1
-     *            the amount of pinching (smaller amounts of n1 give greater
+     * @param n1 the amount of pinching (smaller amounts of n1 give greater
      *            amounts of pinching)
      */
     public void setN1(float n1) {
@@ -266,8 +245,7 @@ public class Supershape extends Path {
 
     /**
      * 
-     * @param granularity
-     *            the number of sample points
+     * @param granularity the number of sample points
      */
     public void setGranularity(int granularity) {
         this.granularity = granularity;

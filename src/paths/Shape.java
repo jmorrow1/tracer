@@ -41,8 +41,7 @@ public class Shape extends Path {
     /**
      * Makes a path from the given sequence of vertices.
      * 
-     * @param vertices
-     *            the vertex sequence
+     * @param vertices the vertex sequence
      */
     public Shape(Point[] vertices) {
         this(listify(vertices));
@@ -51,8 +50,7 @@ public class Shape extends Path {
     /**
      * Makes a path from the given sequence of vertices.
      * 
-     * @param vertices
-     *            the vertex sequence
+     * @param vertices the vertex sequence
      */
     public Shape(List<Point> vertices) {
         this.vertices = vertices;
@@ -62,10 +60,8 @@ public class Shape extends Path {
     /**
      * Construct a Shape by taking a snapshot of an IPath.
      * 
-     * @param pathDef
-     *            the IPath which will be read and then discarded.
-     * @param numVertices
-     *            the resolution of the snapshot.
+     * @param pathDef the IPath which will be read and then discarded.
+     * @param numVertices the resolution of the snapshot.
      */
     public Shape(Path pathDef, int numVertices) {
         initVertices(pathDef, numVertices);
@@ -74,8 +70,7 @@ public class Shape extends Path {
     /**
      * Copy constructor.
      * 
-     * @param shape
-     *            the path to copy
+     * @param shape the path to copy
      */
     private Shape(Shape shape) {
         this.cenx = shape.getCenx();
@@ -275,10 +270,8 @@ public class Shape extends Path {
     /**
      * Reinitializes the Shape by taking a snapshot of an IPath.
      * 
-     * @param pathDef
-     *            the IPath which will be read and then discarded
-     * @param numVertices
-     *            the resolution of the snapshot
+     * @param pathDef the IPath which will be read and then discarded
+     * @param numVertices the resolution of the snapshot
      */
     public void set(Path pathDef, int numVertices) {
         initVertices(pathDef, numVertices);

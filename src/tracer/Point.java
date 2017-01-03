@@ -149,8 +149,8 @@ public class Point {
     /**
      * Subtracts two points.
      * 
-     * @param a  the first point
-     * @param b  the second point
+     * @param a the first point
+     * @param b the second point
      * @return a - b
      */
     public static Point sub(Point a, Point b) {

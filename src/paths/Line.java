@@ -22,14 +22,10 @@ public class Line extends Path {
 
     /**
      * 
-     * @param ax
-     *            the x-coordinate of the first point
-     * @param ay
-     *            the y-coordinate of the first point
-     * @param bx
-     *            the x-ccoordinate of the second point
-     * @param by
-     *            the y-coordinate of the second point
+     * @param ax the x-coordinate of the first point
+     * @param ay the y-coordinate of the first point
+     * @param bx the x-ccoordinate of the second point
+     * @param by the y-coordinate of the second point
      */
     public Line(float ax, float ay, float bx, float by) {
         a = new Point(ax, ay);
@@ -40,8 +36,7 @@ public class Line extends Path {
     /**
      * Copy constructor.
      * 
-     * @param line
-     *            the line to copy
+     * @param line the line to copy
      */
     public Line(Line line) {
         this(line.getAx(), line.getAy(), line.getBx(), line.getBy());
@@ -50,12 +45,9 @@ public class Line extends Path {
     /**
      * Easy constructor.
      * 
-     * @param x
-     *            The x-coordinate of the path.
-     * @param y
-     *            The y-coordinate of the path.
-     * @param r
-     *            The radius of the path.
+     * @param x The x-coordinate of the path.
+     * @param y The y-coordinate of the path.
+     * @param r The radius of the path.
      */
     public Line(float x, float y, float r) {
         this(x - r * PApplet.cos(0.75f * PApplet.PI), y - r * PApplet.sin(0.75f * PApplet.PI),
@@ -86,14 +78,10 @@ public class Line extends Path {
      * given amount (a value between 0 and 1) and stores the result in the given
      * point.
      * 
-     * @param pt
-     *            The point in which to store the result
-     * @param a
-     *            The first point
-     * @param b
-     *            The second point
-     * @param amt
-     *            The amount by which to interpolate (a value from 0 to 1)
+     * @param pt The point in which to store the result
+     * @param a The first point
+     * @param b The second point
+     * @param amt The amount by which to interpolate (a value from 0 to 1)
      */
     public static void trace(Point pt, Point a, Point b, float amt) {
         pt.x = PApplet.lerp(a.x, b.x, amt);
@@ -105,18 +93,12 @@ public class Line extends Path {
      * given amount (a value between 0 and 1) and stores the result in the given
      * point.
      * 
-     * @param pt
-     *            the point
-     * @param ax
-     *            the x-coordinate of the first point
-     * @param ay
-     *            the y-coordinate of the first point
-     * @param bx
-     *            the x-coordinate of the second point
-     * @param by
-     *            the y-coordinate of the second point
-     * @param amt
-     *            the amount by which to interpolate (a value from 0 to 1)
+     * @param pt the point
+     * @param ax the x-coordinate of the first point
+     * @param ay the y-coordinate of the first point
+     * @param bx the x-coordinate of the second point
+     * @param by the y-coordinate of the second point
+     * @param amt the amount by which to interpolate (a value from 0 to 1)
      */
     public static void trace(Point pt, float ax, float ay, float bx, float by, float amt) {
         pt.x = PApplet.lerp(ax, bx, amt);
@@ -131,12 +113,10 @@ public class Line extends Path {
      * Returns true if the given point comes within the given radius to any
      * point in the line.
      * 
-     * @param x
-     *            the x of the point
-     * @param y
-     *            the y of the point
-     * @param intersectRadius
-     *            the maximum distance that can be considered touching
+     * @param x the x of the point
+     * @param y the y of the point
+     * @param intersectRadius the maximum distance that can be considered
+     *            touching
      * @return true if the point touches the line and false otherwise
      */
     public boolean touches(float x, float y, float intersectRadius) {
@@ -147,10 +127,8 @@ public class Line extends Path {
      * Returns true if the given point comes in close enough contact with the
      * line.
      * 
-     * @param x
-     *            the x of the point
-     * @param y
-     *            the y of the point
+     * @param x the x of the point
+     * @param y the y of the point
      * @return true if the point touches the line and false otherwise
      */
     public boolean touches(float x, float y) {
@@ -161,18 +139,12 @@ public class Line extends Path {
      * Returns true if the given point comes in close enough contact with the
      * line.
      * 
-     * @param ax
-     *            the x-coordinate of the first point
-     * @param ay
-     *            the y-coordinate of the first point
-     * @param bx
-     *            the x-coordinate of the second point
-     * @param by
-     *            the y-coordinate of the second point
-     * @param x
-     *            the x of the point
-     * @param y
-     *            the y of the point
+     * @param ax the x-coordinate of the first point
+     * @param ay the y-coordinate of the first point
+     * @param bx the x-coordinate of the second point
+     * @param by the y-coordinate of the second point
+     * @param x the x of the point
+     * @param y the y of the point
      * @return true if the point touches the line and false otherwise
      */
     public static boolean touches(float ax, float ay, float bx, float by, float x, float y) {
@@ -183,20 +155,14 @@ public class Line extends Path {
      * Returns true if the line defined by (ax, ay) and (bx, by) comes within
      * the given radius to any point in the line.
      * 
-     * @param ax
-     *            the x-coordinate of the first point
-     * @param ay
-     *            the y-coordinate of the second point
-     * @param bx
-     *            the x-coordinate of the first point
-     * @param by
-     *            the y-coordinate of the second point
-     * @param x
-     *            the x of the point
-     * @param y
-     *            the y of the point
-     * @param intersectRadius
-     *            the maximum distance that can be considered touching
+     * @param ax the x-coordinate of the first point
+     * @param ay the y-coordinate of the second point
+     * @param bx the x-coordinate of the first point
+     * @param by the y-coordinate of the second point
+     * @param x the x of the point
+     * @param y the y of the point
+     * @param intersectRadius the maximum distance that can be considered
+     *            touching
      * @return true if the point touches the line and false otherwise
      */
     public static boolean touches(float ax, float ay, float bx, float by, float x, float y, float intersectRadius) {
@@ -335,10 +301,8 @@ public class Line extends Path {
     /**
      * Set the line's end point.
      * 
-     * @param x1
-     *            the x-coordinate of the point
-     * @param y1
-     *            the y-coordinate of the point
+     * @param x1 the x-coordinate of the point
+     * @param y1 the y-coordinate of the point
      */
     public void setEndPoint(float bx, float by) {
         b.x = bx;

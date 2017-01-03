@@ -54,7 +54,7 @@ public class Tracer extends Point {
         else
             return denom - ((-num) % denom);
     }
-    
+
     public float getU() {
         return u;
     }

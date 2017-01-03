@@ -15,8 +15,7 @@ public interface Easing {
      * 
      * Behavior is undefined for input values outside of 0 to 1.
      * 
-     * @param t
-     *            A normal value
+     * @param t A normal value
      * @return A normal value (assuming t is a normal value)
      */
     public float val(float t);

@@ -73,7 +73,8 @@ public abstract class Path implements PConstants {
      * Creates a segment of the path starting at trace(u1) and ending at
      * trace(u2);
      * 
-     * @param u1 The 1D coordinate of the segment's start, a value between 0 and 1
+     * @param u1 The 1D coordinate of the segment's start, a value between 0 and
+     *            1
      * @param u2 The 1D coordinate of the segment's end, a value between 0 and 1
      * @return The segment
      */
@@ -132,7 +133,8 @@ public abstract class Path implements PConstants {
      * trace(u2).
      * 
      * @param g A PGraphics object on which to draw the path
-     * @param u1 The 1D coordinate of the segment's start, a value between 0 and 1
+     * @param u1 The 1D coordinate of the segment's start, a value between 0 and
+     *            1
      * @param u2 The 1D coordinate of the segment's end, a value between 0 and 1
      */
     public void draw(PGraphics g, float u1, float u2) {
@@ -223,34 +225,34 @@ public abstract class Path implements PConstants {
         this.trace(pt, u);
         return pt;
     }
-    
+
     /**
      * Returns the length of the Path.
      * 
      * @return the perimeter
      */
-    
-    //TODO Work in progress --- Need to incorporate gaps
-    public float getPerimeter() {      
+
+    // TODO Work in progress --- Need to incorporate gaps
+    public float getPerimeter() {
         trace(pt, 0);
         float x = pt.x;
         float y = pt.y;
-        
+
         float du = 1f / granularity;
         float u = du;
-        
+
         float perimeter = 0;
-        
-        for (int i=0; i<granularity; i++) {
+
+        for (int i = 0; i < granularity; i++) {
             trace(pt, u);
-            
+
             perimeter += PApplet.dist(x, y, pt.x, pt.y);
-            
+
             x = pt.x;
             y = pt.y;
             u += du;
         }
-        
+
         return perimeter;
     }
 
@@ -324,7 +326,7 @@ public abstract class Path implements PConstants {
      * @return The ith discontinuity as a value between 0 and 1
      */
     public abstract float getGap(int i);
-    
+
     /**
      * Returns the remainder of num / denom.
      * 

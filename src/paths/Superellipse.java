@@ -29,8 +29,7 @@ public class Superellipse extends Path {
     /**
      * Copy constructor.
      * 
-     * @param e
-     *            the superellipse to copy
+     * @param e the superellipse to copy
      */
     public Superellipse(Superellipse e) {
         this(e.cenx, e.ceny, e.xRadius, e.yRadius, e.n, e.granularity);
@@ -38,19 +37,13 @@ public class Superellipse extends Path {
 
     /**
      * 
-     * @param cenx
-     *            the center x-coordinate
-     * @param ceny
-     *            the center y-coordinate
-     * @param xRadius
-     *            half the width
-     * @param yRadius
-     *            half the height
-     * @param n
-     *            controls the amount of pinching (smaller values give more
+     * @param cenx the center x-coordinate
+     * @param ceny the center y-coordinate
+     * @param xRadius half the width
+     * @param yRadius half the height
+     * @param n controls the amount of pinching (smaller values give more
      *            pinching)
-     * @param granularity
-     *            the number of sample points
+     * @param granularity the number of sample points
      */
     public Superellipse(float cenx, float ceny, float xRadius, float yRadius, float n, int granularity) {
         super(granularity);
@@ -65,12 +58,9 @@ public class Superellipse extends Path {
     /**
      * Easy constructor.
      * 
-     * @param x
-     *            The x-coordinate of the path.
-     * @param y
-     *            The y-coordinate of the path.
-     * @param r
-     *            The radius of the path.
+     * @param x The x-coordinate of the path.
+     * @param y The y-coordinate of the path.
+     * @param r The radius of the path.
      */
     public Superellipse(float x, float y, float r) {
         this(x, y, r, r, 1, 100);
@@ -124,8 +114,7 @@ public class Superellipse extends Path {
 
     /**
      * 
-     * @param cenx
-     *            the center x-coordinate
+     * @param cenx the center x-coordinate
      */
     public void setCenx(float cenx) {
         this.cenx = cenx;
@@ -141,8 +130,7 @@ public class Superellipse extends Path {
 
     /**
      * 
-     * @param ceny
-     *            the center y-coordinate
+     * @param ceny the center y-coordinate
      */
     public void setCeny(float ceny) {
         this.ceny = ceny;
@@ -158,8 +146,7 @@ public class Superellipse extends Path {
 
     /**
      * 
-     * @param xRadius
-     *            half the width
+     * @param xRadius half the width
      */
     public void setXRadius(float xRadius) {
         this.xRadius = xRadius;
@@ -175,8 +162,7 @@ public class Superellipse extends Path {
 
     /**
      * 
-     * @param yRadius
-     *            half the height
+     * @param yRadius half the height
      */
     public void setYRadius(float yRadius) {
         this.yRadius = yRadius;
@@ -192,9 +178,7 @@ public class Superellipse extends Path {
 
     /**
      * 
-     * @param n
-     *            the amount of pinching (smaller amounts of n give more
-     *            pinching)
+     * @param n the amount of pinching (smaller amounts of n give more pinching)
      */
     public void setN(float n) {
         this.n = n;
@@ -211,8 +195,7 @@ public class Superellipse extends Path {
 
     /**
      * 
-     * @param granularity
-     *            the number of sample points
+     * @param granularity the number of sample points
      */
     public void setGranularity(int granularity) {
         this.granularity = granularity;

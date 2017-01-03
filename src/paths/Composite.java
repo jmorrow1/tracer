@@ -92,8 +92,7 @@ public class Composite<T extends Path, U extends Path> extends Path {
 
     /**
      * 
-     * @param a
-     *            the first path
+     * @param a the first path
      */
     public void setA(T a) {
         this.a = a;
@@ -109,8 +108,7 @@ public class Composite<T extends Path, U extends Path> extends Path {
 
     /**
      * 
-     * @param b
-     *            the second path
+     * @param b the second path
      */
     public void setB(U b) {
         this.b = b;

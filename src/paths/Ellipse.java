@@ -22,21 +22,16 @@ public class Ellipse extends Path {
      * <a href="https://processing.org/reference/ellipse_.html">Processing
      * documentation</a> for more information.
      * 
-     * @param a
-     *            the 1st ellipse argument, whose meaning is determined by the
+     * @param a the 1st ellipse argument, whose meaning is determined by the
      *            given ellipseMode
-     * @param b
-     *            the 2nd ellipse argument, whose meaning is determined by the
+     * @param b the 2nd ellipse argument, whose meaning is determined by the
      *            given ellipseMode
-     * @param c
-     *            the 3rd ellipse argument, whose meaning is determined by the
+     * @param c the 3rd ellipse argument, whose meaning is determined by the
      *            given ellipseMode
-     * @param d
-     *            the 4th ellipse argument, whose meaning is determined by the
+     * @param d the 4th ellipse argument, whose meaning is determined by the
      *            given ellipseMode
-     * @param ellipseMode
-     *            Determines the meaning of a, b, c, and d. The ellipseMode can
-     *            be CENTER, RADIUS, CORNER, or CORNERS.
+     * @param ellipseMode Determines the meaning of a, b, c, and d. The
+     *            ellipseMode can be CENTER, RADIUS, CORNER, or CORNERS.
      */
     public Ellipse(float a, float b, float c, float d, int ellipseMode) {
         switch (ellipseMode) {
@@ -75,12 +70,9 @@ public class Ellipse extends Path {
     /**
      * Easy constructor.
      * 
-     * @param x
-     *            The x-coordinate of the path.
-     * @param y
-     *            The y-coordinate of the path.
-     * @param r
-     *            The radius of the path.
+     * @param x The x-coordinate of the path.
+     * @param y The y-coordinate of the path.
+     * @param r The radius of the path.
      */
     public Ellipse(float x, float y, float r) {
         this(x, y, r, r, PApplet.RADIUS);
@@ -161,8 +153,7 @@ public class Ellipse extends Path {
      * Gives the radius of the ellipse (the length of a line drawn from the
      * ellipse's center to its circumference with the given angle)
      * 
-     * @param radians
-     *            the angle in terms of radians
+     * @param radians the angle in terms of radians
      * @return the radius of the ellipse given the angle
      */
     public float getRadiusAt(float radians) {

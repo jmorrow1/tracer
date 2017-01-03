@@ -22,8 +22,7 @@ public class InfinitySymbol extends Path {
     /**
      * Copy constructor.
      * 
-     * @param s
-     *            The infinity symbol to copy
+     * @param s The infinity symbol to copy
      */
     public InfinitySymbol(InfinitySymbol s) {
         this(s.cenx, s.ceny, s.xRadius, s.yRadius, s.drawGranularity);
@@ -31,16 +30,11 @@ public class InfinitySymbol extends Path {
 
     /**
      * 
-     * @param cenx
-     *            the center x-coordinate
-     * @param ceny
-     *            the center y-coordinate
-     * @param xRadius
-     *            half the width
-     * @param yRadius
-     *            half the height
-     * @param drawGranularity
-     *            the number of sample points
+     * @param cenx the center x-coordinate
+     * @param ceny the center y-coordinate
+     * @param xRadius half the width
+     * @param yRadius half the height
+     * @param drawGranularity the number of sample points
      */
     public InfinitySymbol(float cenx, float ceny, float xRadius, float yRadius, int drawGranularity) {
         this.cenx = cenx;
@@ -53,12 +47,9 @@ public class InfinitySymbol extends Path {
     /**
      * Easy constructor.
      * 
-     * @param x
-     *            The x-coordinate of the path.
-     * @param y
-     *            The y-coordinate of the path.
-     * @param r
-     *            The radius of the path.
+     * @param x The x-coordinate of the path.
+     * @param y The y-coordinate of the path.
+     * @param r The radius of the path.
      */
     public InfinitySymbol(float x, float y, float r) {
         this(x, y, r, r, 100);
@@ -102,8 +93,7 @@ public class InfinitySymbol extends Path {
 
     /**
      * 
-     * @param cenx
-     *            the center x-coordinate
+     * @param cenx the center x-coordinate
      */
     public void setCenx(float cenx) {
         this.cenx = cenx;
@@ -119,8 +109,7 @@ public class InfinitySymbol extends Path {
 
     /**
      * 
-     * @param ceny
-     *            the center y-coordinate
+     * @param ceny the center y-coordinate
      */
     public void setCeny(float ceny) {
         this.ceny = ceny;
@@ -136,8 +125,7 @@ public class InfinitySymbol extends Path {
 
     /**
      * 
-     * @param xRadius
-     *            half the width
+     * @param xRadius half the width
      */
     public void setXRadius(float xRadius) {
         this.xRadius = xRadius;
@@ -153,8 +141,7 @@ public class InfinitySymbol extends Path {
 
     /**
      * 
-     * @param yRadius
-     *            half the height
+     * @param yRadius half the height
      */
     public void setYRadius(float yRadius) {
         this.yRadius = yRadius;
@@ -170,8 +157,7 @@ public class InfinitySymbol extends Path {
 
     /**
      * 
-     * @param drawGranularity
-     *            the number of sample points
+     * @param drawGranularity the number of sample points
      */
     public void setDrawGranularity(int drawGranularity) {
         this.drawGranularity = drawGranularity;

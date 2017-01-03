@@ -32,13 +32,18 @@ public class Arc extends Path {
      * See the <a href="https://processing.org/reference/arc_.html">Processing
      * documentation</a> for more information.
      * 
-     * @param a the 1st ellipse argument, whose meaning is determined by the given ellipseMode
-     * @param b the 2nd ellipse argument, whose meaning is determined by the given ellipseMode
-     * @param c the 3rd ellipse argument, whose meaning is determined by the given ellipseMode
-     * @param d the 4th ellipse argument, whose meaning is determined by the given ellipseMode
+     * @param a the 1st ellipse argument, whose meaning is determined by the
+     *            given ellipseMode
+     * @param b the 2nd ellipse argument, whose meaning is determined by the
+     *            given ellipseMode
+     * @param c the 3rd ellipse argument, whose meaning is determined by the
+     *            given ellipseMode
+     * @param d the 4th ellipse argument, whose meaning is determined by the
+     *            given ellipseMode
      * @param startAngle the angle at which to start the arc
      * @param endAngle the angle at which to start the arc
-     * @param ellipseMode determines the meaning of a,b,c, and d and can be of value RADIUS, CENTER, CORNER, or CORNERS
+     * @param ellipseMode determines the meaning of a,b,c, and d and can be of
+     *            value RADIUS, CENTER, CORNER, or CORNERS
      */
     public Arc(float a, float b, float c, float d, float startAngle, float endAngle, int ellipseMode) {
         switch (ellipseMode) {
@@ -116,16 +121,16 @@ public class Arc extends Path {
     /*******************************
      ***** Getters and Setters *****
      *******************************/
-    
-//    @Override
-//    public float getPerimeter() {
-//        if (xRadius == yRadius) {
-//            return ((endAngle - startAngle) / TWO_PI) * (PI * xRadius*xRadius);
-//        }
-//        else {
-//            return super.getPerimeter();
-//        }
-//    }
+
+    // @Override
+    // public float getPerimeter() {
+    // if (xRadius == yRadius) {
+    // return ((endAngle - startAngle) / TWO_PI) * (PI * xRadius*xRadius);
+    // }
+    // else {
+    // return super.getPerimeter();
+    // }
+    // }
 
     /**
      * 
@@ -136,8 +141,7 @@ public class Arc extends Path {
     }
 
     /**
-     * @param cenx
-     *            the center x-coordinate
+     * @param cenx the center x-coordinate
      */
     public void setCenx(float cenx) {
         this.cenx = cenx;
@@ -153,8 +157,7 @@ public class Arc extends Path {
 
     /**
      * 
-     * @param ceny
-     *            the center y-coordinate
+     * @param ceny the center y-coordinate
      */
     public void setCeny(float ceny) {
         this.ceny = ceny;
@@ -170,8 +173,7 @@ public class Arc extends Path {
 
     /**
      * 
-     * @param width
-     *            the width of the ellipse
+     * @param width the width of the ellipse
      */
     public void setWidth(float width) {
         this.xRadius = width / 2f;
@@ -187,8 +189,7 @@ public class Arc extends Path {
 
     /**
      * 
-     * @param height
-     *            the height of the ellipse
+     * @param height the height of the ellipse
      */
     public void setHeight(float height) {
         this.yRadius = height / 2f;
@@ -204,8 +205,7 @@ public class Arc extends Path {
 
     /**
      * 
-     * @param startAngle
-     *            the angle where the arc starts
+     * @param startAngle the angle where the arc starts
      */
     public void setStartAngle(float startAngle) {
         this.startAngle = startAngle;
@@ -221,8 +221,7 @@ public class Arc extends Path {
 
     /**
      * 
-     * @param endAngle
-     *            the angle where the arc ends
+     * @param endAngle the angle where the arc ends
      */
     public void setEndAngle(float endAngle) {
         this.endAngle = endAngle;

@@ -13,10 +13,8 @@ import tracer.Point;
  * 
  * @author James Morrow [jamesmorrowdesign.com]
  *
- * @param <T>
- *            the type of the first path
- * @param <U>
- *            the type of thes second path
+ * @param <T> the type of the first path
+ * @param <U> the type of thes second path
  */
 public class Blender<T extends Path, U extends Path> extends Path {
     private Point ptA = new Point(0, 0), ptB = new Point(0, 0);
@@ -33,8 +31,7 @@ public class Blender<T extends Path, U extends Path> extends Path {
     /**
      * Copy constructor.
      * 
-     * @param blender
-     *            the blender to copy
+     * @param blender the blender to copy
      */
     public Blender(Blender<T, U> blender) {
         this(blender.a, blender.b, blender.blendAmt, blender.drawGranularity);
@@ -42,15 +39,11 @@ public class Blender<T extends Path, U extends Path> extends Path {
 
     /**
      * 
-     * @param a
-     *            the first path
-     * @param b
-     *            the second path
-     * @param blendAmt
-     *            a value between 0 and 1 specifying how much to blend between a
-     *            and b
-     * @param drawGranularity
-     *            the number of sample points
+     * @param a the first path
+     * @param b the second path
+     * @param blendAmt a value between 0 and 1 specifying how much to blend
+     *            between a and b
+     * @param drawGranularity the number of sample points
      */
     public Blender(T a, U b, float blendAmt, int drawGranularity) {
         this.a = a;
@@ -109,8 +102,7 @@ public class Blender<T extends Path, U extends Path> extends Path {
 
     /**
      * 
-     * @param a
-     *            the first path
+     * @param a the first path
      */
     public void setA(T a) {
         this.a = a;
@@ -126,8 +118,7 @@ public class Blender<T extends Path, U extends Path> extends Path {
 
     /**
      * 
-     * @param b
-     *            the second path
+     * @param b the second path
      */
     public void setB(U b) {
         this.b = b;
@@ -143,8 +134,7 @@ public class Blender<T extends Path, U extends Path> extends Path {
 
     /**
      * 
-     * @param drawGranularity
-     *            the number of sample points
+     * @param drawGranularity the number of sample points
      */
     public void setDrawGranularity(int drawGranularity) {
         this.drawGranularity = drawGranularity;
@@ -161,9 +151,8 @@ public class Blender<T extends Path, U extends Path> extends Path {
 
     /**
      * 
-     * @param blendAmt
-     *            a value between 0 and 1 specifying how much to blend between
-     *            the first and second paths
+     * @param blendAmt a value between 0 and 1 specifying how much to blend
+     *            between the first and second paths
      */
     public void setBlendAmt(float blendAmt) {
         this.blendAmt = blendAmt;

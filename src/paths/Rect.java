@@ -22,21 +22,16 @@ public class Rect extends Path {
 
     /**
      * 
-     * @param a
-     *            the 1st rect argument, whose meaning is determined by the
-     *            given rectMode
-     * @param b
-     *            the 2nd rect argument, whose meaning is determined by the
-     *            given rectMode
-     * @param c
-     *            the 3rd rect argument, whose meaning is determined by the
-     *            given rectMode
-     * @param d
-     *            the 4th rect argument, whose meaning is determined by the
-     *            given rectMode
-     * @param rectMode
-     *            Determines the meaning of a, b, c, and d. The rectMode can be
-     *            CENTER, RADIUS, CORNER, or CORNERS.
+     * @param a the 1st rect argument, whose meaning is determined by the given
+     *            rectMode
+     * @param b the 2nd rect argument, whose meaning is determined by the given
+     *            rectMode
+     * @param c the 3rd rect argument, whose meaning is determined by the given
+     *            rectMode
+     * @param d the 4th rect argument, whose meaning is determined by the given
+     *            rectMode
+     * @param rectMode Determines the meaning of a, b, c, and d. The rectMode
+     *            can be CENTER, RADIUS, CORNER, or CORNERS.
      */
     public Rect(float a, float b, float c, float d, int rectMode) {
         if (rectMode == PApplet.CENTER) {
@@ -66,8 +61,7 @@ public class Rect extends Path {
     /**
      * Copy constructor.
      * 
-     * @param r
-     *            the Rect to copy
+     * @param r the Rect to copy
      */
     public Rect(Rect r) {
         this(r.cenx, r.ceny, r.width, r.height, PApplet.CENTER);
@@ -76,12 +70,9 @@ public class Rect extends Path {
     /**
      * Easy constructor.
      * 
-     * @param x
-     *            The x-coordinate of the path.
-     * @param y
-     *            The y-coordinate of the path.
-     * @param r
-     *            The radius of the path.
+     * @param x The x-coordinate of the path.
+     * @param y The y-coordinate of the path.
+     * @param r The radius of the path.
      */
     public Rect(float x, float y, float r) {
         this(x, y, r, r, PApplet.RADIUS);
@@ -282,8 +273,7 @@ public class Rect extends Path {
     /**
      * Set the width of the rectangle to the given float
      * 
-     * @param width
-     *            the width
+     * @param width the width
      */
     public void setWidth(float width) {
         this.width = width;
@@ -293,8 +283,7 @@ public class Rect extends Path {
     /**
      * Set the height of the rectangle to the given float
      * 
-     * @param height
-     *            the height
+     * @param height the height
      */
     public void setHeight(float height) {
         this.height = height;
