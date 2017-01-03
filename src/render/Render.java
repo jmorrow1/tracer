@@ -3,6 +3,7 @@ package render;
 import java.util.ArrayList;
 import java.util.List;
 
+import processing.core.PConstants;
 import processing.core.PGraphics;
 import tracer.Tracer;
 
@@ -13,7 +14,7 @@ import tracer.Tracer;
  * @author James Morrow [jamesmorrowdesign.com]
  *
  */
-public abstract class Render {
+public abstract class Render implements PConstants {
     protected List<Tracer> ts;
 
     public Render(Tracer[] ts) {

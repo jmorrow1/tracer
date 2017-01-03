@@ -51,7 +51,7 @@ public class RenderDots extends Render {
         // dots
         if (drawLabels) {
             g.textSize(labelTextSize);
-            g.textAlign(g.CENTER, g.BOTTOM);
+            g.textAlign(CENTER, BOTTOM);
         }
         for (int i = 0; i < ts.size(); i++) {
             Tracer pt = ts.get(i);

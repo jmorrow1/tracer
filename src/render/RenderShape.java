@@ -65,7 +65,7 @@ public class RenderShape extends Render {
             g.vertex(pt.x, pt.y);
         }
         if (closeShape) {
-            g.endShape(g.CLOSE);
+            g.endShape(CLOSE);
         } else {
             g.endShape();
         }
