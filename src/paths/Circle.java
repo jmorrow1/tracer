@@ -12,10 +12,10 @@ import tracer.Point;
  *
  */
 public class Circle extends Path {
-    private float x, y;
+    private Point center;
     private float radius;
     private float angleOffset;
-
+    
     /**
      * 
      * @param x the center x-coordinate
@@ -23,8 +23,16 @@ public class Circle extends Path {
      * @param radius the radius
      */
     public Circle(float x, float y, float radius) {
-        this.x = x;
-        this.y = y;
+        this(new Point(x, y), radius);
+    }
+
+    /**
+     * 
+     * @param center the center
+     * @param radius the radius
+     */
+    public Circle(Point center, float radius) {
+        this.center = center;
         this.radius = radius;
     }
 
@@ -34,21 +42,20 @@ public class Circle extends Path {
      * @param c the circle to copy
      */
     public Circle(Circle c) {
-        this(c.getCenx(), c.getCeny(), c.getRadius());
+        this(c.center, c.radius);
     }
 
     @Override
     public void draw(PGraphics g) {
         g.ellipseMode(RADIUS);
-        g.ellipse(x, y, radius, radius);
+        g.ellipse(center.x, center.y, radius, radius);
     }
 
     @Override
     public void draw(PGraphics g, float u1, float u2) {
         boolean inRange = (0 <= u1 && u1 <= 1 && 0 <= u2 && u2 <= 1);
         if (!inRange) {
-            throw new IllegalArgumentException(
-                    "draw(g, " + u1 + ", " + u2 + ") called with values outside the range 0 to 1.");
+            throw new IllegalArgumentException("draw(g, " + u1 + ", " + u2 + ") called with values outside the range 0 to 1.");
         }
 
         if (u1 > u2) {
@@ -56,7 +63,7 @@ public class Circle extends Path {
         }
 
         g.ellipseMode(RADIUS);
-        g.arc(x, y, radius, radius, u1 * PApplet.TWO_PI, u2 * PApplet.TWO_PI);
+        g.arc(center.x, center.y, radius, radius, u1 * PApplet.TWO_PI, u2 * PApplet.TWO_PI);
     }
 
     @Override
@@ -65,8 +72,8 @@ public class Circle extends Path {
         if (reversed) {
             radians *= -1;
         }
-        pt.x = x + radius * PApplet.cos(angleOffset + radians);
-        pt.y = y + radius * PApplet.sin(angleOffset + radians);
+        pt.x = center.x + radius * PApplet.cos(angleOffset + radians);
+        pt.y = center.y + radius * PApplet.sin(angleOffset + radians);
     }
 
     public boolean inside(float x, float y) {
@@ -75,8 +82,7 @@ public class Circle extends Path {
 
     @Override
     public void translate(float dx, float dy) {
-        x += dx;
-        y += dy;
+        center.translate(dx, dy);
     }
 
     @Override
@@ -92,13 +98,21 @@ public class Circle extends Path {
     public float getPerimeter() {
         return PApplet.TWO_PI * radius;
     }
+    
+    public void setCenter(Point center) {
+        this.center = center;
+    }
+    
+    public Point getCenter() {
+        return center;
+    }
 
     public float getCenx() {
-        return x;
+        return center.x;
     }
 
     public float getCeny() {
-        return y;
+        return center.y;
     }
 
     public float getWidth() {
@@ -110,8 +124,7 @@ public class Circle extends Path {
     }
 
     public void setCenter(float x, float y) {
-        this.x = x;
-        this.y = y;
+        this.center = new Point(x, y);
     }
 
     /**

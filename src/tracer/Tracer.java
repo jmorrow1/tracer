@@ -18,6 +18,10 @@ public class Tracer extends Point {
     protected Path path; // The Path to which the Tracer is attached
     protected Easing easing; // The easing curve determining how the Tracer
                              // moves in time.
+    
+    public Tracer(Tracer t) {
+        this(t.path, t.u, t.du, t.easing);
+    }
 
     public Tracer(Path path, float startu, float du) {
         this(path, startu, du, new Linear());
@@ -88,5 +92,10 @@ public class Tracer extends Point {
     public void setEasing(Easing easing) {
         this.easing = easing;
         update();
+    }
+    
+    @Override
+    public Tracer clone() {
+        return new Tracer(this);
     }
 }
