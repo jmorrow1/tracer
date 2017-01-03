@@ -4,17 +4,17 @@ import java.util.ArrayList;
 
 import paths.Arc;
 import paths.CubicBezier;
+import paths.Ellipse;
 import paths.Blender;
+import paths.Circle;
 import paths.Composite;
 import paths.Flower;
 import paths.Path;
+import paths.Polygonize;
 import paths.InfinitySymbol;
+import paths.Line;
 import paths.Superellipse;
 import paths.Supershape;
-import paths2.Circle;
-import paths2.Ellipse;
-import paths2.Line;
-import paths2.Polygonize;
 import processing.core.PApplet;
 import tracer.Point;
 

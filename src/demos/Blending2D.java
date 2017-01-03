@@ -1,11 +1,11 @@
 package demos;
 
 import paths.Blender;
+import paths.Ellipse;
 import paths.Flower;
 import paths.InfinitySymbol;
 import paths.Path;
 import paths.Superellipse;
-import paths2.Ellipse;
 import processing.core.PApplet;
 import tracer.Point;
 

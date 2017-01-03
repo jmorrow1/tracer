@@ -2,7 +2,6 @@ package paths;
 
 import java.util.ArrayList;
 
-import paths2.Shape;
 import processing.core.PApplet;
 import processing.core.PConstants;
 import processing.core.PGraphics;
@@ -53,8 +52,7 @@ public abstract class Path implements PConstants {
 
     /**
      * 
-     * @param granularity
-     *            the number of sample points
+     * @param granularity the number of sample points
      */
     public Path(int granularity) {
         this.granularity = granularity;
@@ -63,8 +61,7 @@ public abstract class Path implements PConstants {
     /**
      * Draws the path.
      * 
-     * @param g
-     *            A PGraphics object on which to draw the path
+     * @param g A PGraphics object on which to draw the path
      */
     public void draw(PGraphics g) {
         if (granularity != -1) {
@@ -76,12 +73,8 @@ public abstract class Path implements PConstants {
      * Creates a segment of the path starting at trace(u1) and ending at
      * trace(u2);
      * 
-     * @param u1
-     *            The 1D coordinate of the segment's start, a value between 0
-     *            and 1
-     * @param u2
-     *            The 1D coordinate of the segment's end, a value between 0 and
-     *            1
+     * @param u1 The 1D coordinate of the segment's start, a value between 0 and 1
+     * @param u2 The 1D coordinate of the segment's end, a value between 0 and 1
      * @return The segment
      */
     public Shape segment(float u1, float u2) {
@@ -118,7 +111,7 @@ public abstract class Path implements PConstants {
         }
     }
 
-    // TODO WORK IN PROGRESS:
+    // TODO WORK IN PROGRESS --- Need to incorporate gaps:
     private void continuousDraw(PGraphics g, float u1, float u2) {
         float length = PApplet.abs(u1 - u2);
         int n = (int) (granularity * length);
@@ -138,14 +131,9 @@ public abstract class Path implements PConstants {
      * Draws a segment of the path starting at trace(u1) and ending at
      * trace(u2).
      * 
-     * @param g
-     *            A PGraphics object on which to draw the path
-     * @param u1
-     *            The 1D coordinate of the segment's start, a value between 0
-     *            and 1
-     * @param u2
-     *            The 1D coordinate of the segment's end, a value between 0 and
-     *            1
+     * @param g A PGraphics object on which to draw the path
+     * @param u1 The 1D coordinate of the segment's start, a value between 0 and 1
+     * @param u2 The 1D coordinate of the segment's end, a value between 0 and 1
      */
     public void draw(PGraphics g, float u1, float u2) {
         boolean inRange = (0 <= u1 && u1 <= 1 && 0 <= u2 && u2 <= 1);
@@ -194,10 +182,8 @@ public abstract class Path implements PConstants {
      * Maps a given floating point number from 0 to 1 to a given Point along the
      * perimeter of the Path.
      * 
-     * @param pt
-     *            The Point in which the result is stored.
-     * @param u
-     *            A number from 0 to 1.
+     * @param pt The Point in which the result is stored.
+     * @param u A number from 0 to 1.
      */
     public abstract void trace(Point pt, float u);
 
@@ -229,14 +215,43 @@ public abstract class Path implements PConstants {
      * Maps a given floating point number from 0 to 1 to a Point along the
      * perimeter of the Path.
      * 
-     * @param u
-     *            A number from 0 to 1.
+     * @param u A number from 0 to 1.
      * @return The resulting point.
      */
     public Point trace(float u) {
         Point pt = new Point(0, 0);
         this.trace(pt, u);
         return pt;
+    }
+    
+    /**
+     * Returns the length of the Path.
+     * 
+     * @return the perimeter
+     */
+    
+    //TODO Work in progress --- Need to incorporate gaps
+    public float getPerimeter() {      
+        trace(pt, 0);
+        float x = pt.x;
+        float y = pt.y;
+        
+        float du = 1f / granularity;
+        float u = du;
+        
+        float perimeter = 0;
+        
+        for (int i=0; i<granularity; i++) {
+            trace(pt, u);
+            
+            perimeter += PApplet.dist(x, y, pt.x, pt.y);
+            
+            x = pt.x;
+            y = pt.y;
+            u += du;
+        }
+        
+        return perimeter;
     }
 
     /**
@@ -250,10 +265,8 @@ public abstract class Path implements PConstants {
      * allows an IPath to define its proper display method in terms of this
      * function.
      * 
-     * @param pa
-     *            The PApplet to which the path is drawn.
-     * @param granularity
-     *            The number of sample points.
+     * @param pa The PApplet to which the path is drawn.
+     * @param granularity The number of sample points.
      */
     public void draw(PGraphics g, int granularity) {
         float amt = 0;
@@ -271,28 +284,25 @@ public abstract class Path implements PConstants {
      * Shifts this Path dx units in the x-direction and dy units in the
      * y-direction.
      * 
-     * @param dx
-     *            The number of pixels to shift the path right.
-     * @param dy
-     *            THe number of pixels to shift the path down.
+     * @param dx The number of pixels to shift the path right.
+     * @param dy The number of pixels to shift the path down.
      */
     public abstract void translate(float dx, float dy);
 
     /**
-     * Returns the slope of the Point on the Path at trace(amt).
+     * Returns the slope of the Point on the Path at trace(u).
      * 
-     * @param amt
-     *            The amount.
-     * @return The slope at trace(amt).
+     * @param u The 1D coordinate of the Path
+     * @return The slope at trace(u)
      */
-    public float slope(float amt) {
-        if (amt >= 0.001f) {
-            Point a = this.trace(amt - 0.001f);
-            Point b = this.trace(amt);
+    public float slope(float u) {
+        if (u >= 0.001f) {
+            Point a = this.trace(u - 0.001f);
+            Point b = this.trace(u);
             return Point.slope(a, b);
         } else {
-            Point a = this.trace(amt + 0.001f);
-            Point b = this.trace(amt);
+            Point a = this.trace(u + 0.001f);
+            Point b = this.trace(u);
             return Point.slope(a, b);
         }
     }
@@ -310,9 +320,23 @@ public abstract class Path implements PConstants {
      * 
      * Gives -1 if the index is valid.
      * 
-     * @param i
-     *            The index
+     * @param i The index
      * @return The ith discontinuity as a value between 0 and 1
      */
     public abstract float getGap(int i);
+    
+    /**
+     * Returns the remainder of num / denom.
+     * 
+     * @param num the numerator
+     * @param denom the denominator
+     * @return The remainder of num / denom
+     */
+    public static float remainder(float num, float denom) {
+        if (num % denom >= 0)
+            return num % denom;
+        else
+            return denom - ((-num) % denom);
+    }
+
 }

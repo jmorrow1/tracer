@@ -1,8 +1,7 @@
-package paths2;
+package paths;
 
 import processing.core.PApplet;
 import processing.core.PGraphics;
-import processing.data.JSONObject;
 import tracer.Point;
 
 /**
@@ -12,7 +11,7 @@ import tracer.Point;
  * @author James Morrow [jamesmorrowdesign.com]
  *
  */
-public class Ellipse extends Path2 {
+public class Ellipse extends Path {
     private float x, y, xRadius, yRadius;
     private float perimeter;
     private boolean perimeterOutOfSync;
@@ -110,7 +109,7 @@ public class Ellipse extends Path2 {
 
         if (u1 > u2)
             u2++;
-        g.ellipseMode(g.RADIUS);
+        g.ellipseMode(RADIUS);
         g.arc(x, y, xRadius, yRadius, u1 * PApplet.TWO_PI, u2 * PApplet.TWO_PI);
     }
 
@@ -123,7 +122,6 @@ public class Ellipse extends Path2 {
         pt.y = y + yRadius * PApplet.sin(radians);
     }
 
-    @Override
     public boolean inside(float x, float y) {
         float dx = x - this.x;
         float dy = y - this.y;
@@ -171,17 +169,14 @@ public class Ellipse extends Path2 {
         return PApplet.dist(x, y, x + xRadius * PApplet.cos(radians), y + yRadius * PApplet.sin(radians));
     }
 
-    @Override
     public float getCenx() {
         return x;
     }
 
-    @Override
     public float getCeny() {
         return y;
     }
 
-    @Override
     public float getWidth() {
         return 2 * xRadius;
     }
@@ -196,7 +191,6 @@ public class Ellipse extends Path2 {
         perimeterOutOfSync = true;
     }
 
-    @Override
     public float getHeight() {
         return 2 * yRadius;
     }

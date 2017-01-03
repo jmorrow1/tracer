@@ -2,7 +2,7 @@ package demos;
 
 import java.util.ArrayList;
 
-import paths2.Shape;
+import paths.Shape;
 import processing.core.PApplet;
 import tracer.Point;
 import tracer.Tracer;

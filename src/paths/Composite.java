@@ -10,10 +10,8 @@ import tracer.Point;
  * 
  * @author James Morrow [jamesmorrowdesign.com]
  *
- * @param <T>
- *            the type of the first path
- * @param <U>
- *            the type of the second path
+ * @param <T> the type of the first path
+ * @param <U> the type of the second path
  */
 public class Composite<T extends Path, U extends Path> extends Path {
     private T a;
@@ -26,8 +24,7 @@ public class Composite<T extends Path, U extends Path> extends Path {
     /**
      * Copy constructor.
      * 
-     * @param c
-     *            The composite to copy
+     * @param c The composite to copy
      */
     public Composite(Composite<T, U> c) {
         this(c.a, c.b);
@@ -35,10 +32,8 @@ public class Composite<T extends Path, U extends Path> extends Path {
 
     /**
      * 
-     * @param a
-     *            the first path
-     * @param b
-     *            the second path
+     * @param a the first path
+     * @param b the second path
      */
     public Composite(T a, U b) {
         this.a = a;

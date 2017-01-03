@@ -1,8 +1,7 @@
-package paths2;
+package paths;
 
 import processing.core.PApplet;
 import processing.core.PGraphics;
-import processing.data.JSONObject;
 import tracer.Point;
 
 /**
@@ -12,7 +11,7 @@ import tracer.Point;
  * @author James Morrow [jamesmorrowdesign.com]
  *
  */
-public class Rect extends Path2 {
+public class Rect extends Path {
     private float cenx, ceny, width, height;
     private float perimeter;
     private float[] breaks = new float[4];
@@ -107,7 +106,7 @@ public class Rect extends Path2 {
 
     @Override
     public void draw(PGraphics g) {
-        g.rectMode(g.CENTER);
+        g.rectMode(CENTER);
         g.rect(cenx, ceny, width, height);
     }
 
@@ -195,7 +194,6 @@ public class Rect extends Path2 {
         ceny += dy;
     }
 
-    @Override
     public boolean inside(float x, float y) {
         return this.getX1() <= x && x <= this.getX2() && this.getY1() <= y && y <= this.getY2();
     }
@@ -209,22 +207,18 @@ public class Rect extends Path2 {
         return perimeter;
     }
 
-    @Override
     public float getCenx() {
         return cenx;
     }
 
-    @Override
     public float getCeny() {
         return ceny;
     }
 
-    @Override
     public float getWidth() {
         return width;
     }
 
-    @Override
     public float getHeight() {
         return height;
     }
@@ -307,7 +301,6 @@ public class Rect extends Path2 {
         recompute();
     }
 
-    @Override
     public void setCenter(float cenx, float ceny) {
         this.cenx = cenx;
         this.ceny = ceny;

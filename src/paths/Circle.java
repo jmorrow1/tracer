@@ -1,8 +1,7 @@
-package paths2;
+package paths;
 
 import processing.core.PApplet;
 import processing.core.PGraphics;
-import processing.data.JSONObject;
 import tracer.Point;
 
 /**
@@ -12,7 +11,7 @@ import tracer.Point;
  * @author James Morrow [jamesmorrowdesign.com]
  *
  */
-public class Circle extends Path2 {
+public class Circle extends Path {
     private float x, y;
     private float radius;
     private float angleOffset;
@@ -44,7 +43,7 @@ public class Circle extends Path2 {
 
     @Override
     public void draw(PGraphics g) {
-        g.ellipseMode(g.RADIUS);
+        g.ellipseMode(RADIUS);
         g.ellipse(x, y, radius, radius);
     }
 
@@ -56,22 +55,24 @@ public class Circle extends Path2 {
                     "draw(g, " + u1 + ", " + u2 + ") called with values outside the range 0 to 1.");
         }
 
-        if (u1 > u2)
+        if (u1 > u2) {
             u2++;
-        g.ellipseMode(g.RADIUS);
+        }
+     
+        g.ellipseMode(RADIUS);
         g.arc(x, y, radius, radius, u1 * PApplet.TWO_PI, u2 * PApplet.TWO_PI);
     }
 
     @Override
     public void trace(Point pt, float amt) {
         float radians = amt * PApplet.TWO_PI;
-        if (reversed)
+        if (reversed) {
             radians *= -1;
+        }
         pt.x = x + radius * PApplet.cos(angleOffset + radians);
         pt.y = y + radius * PApplet.sin(angleOffset + radians);
     }
 
-    @Override
     public boolean inside(float x, float y) {
         return PApplet.dist(x, y, x, y) <= radius;
     }
@@ -96,27 +97,22 @@ public class Circle extends Path2 {
         return PApplet.TWO_PI * radius;
     }
 
-    @Override
     public float getCenx() {
         return x;
     }
 
-    @Override
     public float getCeny() {
         return y;
     }
 
-    @Override
     public float getWidth() {
         return this.getDiameter();
     }
 
-    @Override
     public float getHeight() {
         return this.getDiameter();
     }
 
-    @Override
     public void setCenter(float x, float y) {
         this.x = x;
         this.y = y;

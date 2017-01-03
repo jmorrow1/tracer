@@ -1,8 +1,7 @@
-package paths2;
+package paths;
 
 import processing.core.PApplet;
 import processing.core.PGraphics;
-import processing.data.JSONObject;
 import tracer.Point;
 
 /**
@@ -12,7 +11,7 @@ import tracer.Point;
  * @author James Morrow [jamesmorrowdesign.com]
  *
  */
-public class Line extends Path2 {
+public class Line extends Path {
     private Point a, b;
     private float length;
     public final static int DEFAULT_INTERSECT_RADIUS = 8;
@@ -124,7 +123,6 @@ public class Line extends Path2 {
         pt.y = PApplet.lerp(ay, by, amt);
     }
 
-    @Override
     public boolean inside(float x, float y) {
         return false;
     }
@@ -266,12 +264,10 @@ public class Line extends Path2 {
         return length;
     }
 
-    @Override
     public float getCenx() {
         return PApplet.lerp(a.x, b.x, 0.5f);
     }
 
-    @Override
     public float getCeny() {
         return PApplet.lerp(a.y, b.y, 0.5f);
     }
@@ -284,12 +280,10 @@ public class Line extends Path2 {
         return length;
     }
 
-    @Override
     public float getWidth() {
         return PApplet.max(a.x, b.x) - PApplet.min(a.x, b.x);
     }
 
-    @Override
     public float getHeight() {
         return PApplet.max(a.y, b.y) - PApplet.min(a.y, b.y);
     }

@@ -20,8 +20,7 @@ public class Arc extends Path {
     /**
      * Copy constructor.
      * 
-     * @param arc
-     *            the arc to copy
+     * @param arc the arc to copy
      */
     public Arc(Arc arc) {
         this(arc.cenx, arc.ceny, arc.xRadius, arc.yRadius, arc.startAngle, arc.endAngle, PApplet.RADIUS);
@@ -33,25 +32,13 @@ public class Arc extends Path {
      * See the <a href="https://processing.org/reference/arc_.html">Processing
      * documentation</a> for more information.
      * 
-     * @param a
-     *            the 1st ellipse argument, whose meaning is determined by the
-     *            given ellipseMode
-     * @param b
-     *            the 2nd ellipse argument, whose meaning is determined by the
-     *            given ellipseMode
-     * @param c
-     *            the 3rd ellipse argument, whose meaning is determined by the
-     *            given ellipseMode
-     * @param d
-     *            the 4th ellipse argument, whose meaning is determined by the
-     *            given ellipseMode
-     * @param startAngle
-     *            the angle at which to start the arc
-     * @param endAngle
-     *            the angle at which to start the arc
-     * @param ellipseMode
-     *            determines the meaning of a,b,c, and d and can be of value
-     *            RADIUS, CENTER, CORNER, or CORNERS
+     * @param a the 1st ellipse argument, whose meaning is determined by the given ellipseMode
+     * @param b the 2nd ellipse argument, whose meaning is determined by the given ellipseMode
+     * @param c the 3rd ellipse argument, whose meaning is determined by the given ellipseMode
+     * @param d the 4th ellipse argument, whose meaning is determined by the given ellipseMode
+     * @param startAngle the angle at which to start the arc
+     * @param endAngle the angle at which to start the arc
+     * @param ellipseMode determines the meaning of a,b,c, and d and can be of value RADIUS, CENTER, CORNER, or CORNERS
      */
     public Arc(float a, float b, float c, float d, float startAngle, float endAngle, int ellipseMode) {
         switch (ellipseMode) {
@@ -87,12 +74,9 @@ public class Arc extends Path {
     /**
      * Easy constructor.
      * 
-     * @param x
-     *            The x-coordinate of the path.
-     * @param y
-     *            The y-coordinate of the path.
-     * @param r
-     *            The radius of the path.
+     * @param x The x-coordinate of the path.
+     * @param y The y-coordinate of the path.
+     * @param r The radius of the path.
      */
     public Arc(float x, float y, float r) {
         this(x, y, r, r, 0, PApplet.PI, PApplet.RADIUS);
@@ -104,7 +88,7 @@ public class Arc extends Path {
 
     @Override
     public void draw(PGraphics g) {
-        g.ellipseMode(g.RADIUS);
+        g.ellipseMode(RADIUS);
         g.arc(cenx, ceny, xRadius, yRadius, startAngle, endAngle);
     }
 
@@ -132,6 +116,16 @@ public class Arc extends Path {
     /*******************************
      ***** Getters and Setters *****
      *******************************/
+    
+//    @Override
+//    public float getPerimeter() {
+//        if (xRadius == yRadius) {
+//            return ((endAngle - startAngle) / TWO_PI) * (PI * xRadius*xRadius);
+//        }
+//        else {
+//            return super.getPerimeter();
+//        }
+//    }
 
     /**
      * 

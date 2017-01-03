@@ -20,8 +20,7 @@ public class CubicBezier extends Path {
     /**
      * Copy constructor
      * 
-     * @param b
-     *            The Bezier to copy
+     * @param b The Bezier to copy
      */
     public CubicBezier(CubicBezier b) {
         this(b.ax1, b.ay1, b.cx1, b.cy1, b.cx2, b.cy2, b.ax2, b.ay2);
@@ -29,22 +28,14 @@ public class CubicBezier extends Path {
 
     /**
      * 
-     * @param ax1
-     *            the x-coordinate of the 1st anchor point
-     * @param ay1
-     *            the y-coordinate of the 1st anchor point
-     * @param cx1
-     *            the x-coordinate of the 1st control point
-     * @param cy1
-     *            the y-coordinate of the 1st control point
-     * @param cx2
-     *            the x-coordinate of the 2nd control point
-     * @param cy2
-     *            the y-coordinate of the 2nd control point
-     * @param ax2
-     *            the x-coordinate of the 2nd anchor point
-     * @param ay2
-     *            the y-coordinate of the 2nd anchor point
+     * @param ax1 the x-coordinate of the 1st anchor point
+     * @param ay1 the y-coordinate of the 1st anchor point
+     * @param cx1 the x-coordinate of the 1st control point
+     * @param cy1 the y-coordinate of the 1st control point
+     * @param cx2 the x-coordinate of the 2nd control point
+     * @param cy2 the y-coordinate of the 2nd control point
+     * @param ax2 the x-coordinate of the 2nd anchor point
+     * @param ay2 the y-coordinate of the 2nd anchor point
      */
     public CubicBezier(float ax1, float ay1, float cx1, float cy1, float cx2, float cy2, float ax2, float ay2) {
         this.ax1 = ax1;
@@ -60,12 +51,9 @@ public class CubicBezier extends Path {
     /**
      * Easy constructor.
      * 
-     * @param x
-     *            The x-coordinate of the path.
-     * @param y
-     *            The y-coordinate of the path.
-     * @param r
-     *            The radius of the path.
+     * @param x The x-coordinate of the path.
+     * @param y The y-coordinate of the path.
+     * @param r The radius of the path.
      */
     public CubicBezier(float x, float y, float r) {
         this(x - r, y, x, y - r, x, y - r, x + r, y);
@@ -120,8 +108,7 @@ public class CubicBezier extends Path {
 
     /**
      * 
-     * @param ax1
-     *            the x-coordinate of the 1st anchor point
+     * @param ax1 the x-coordinate of the 1st anchor point
      */
     public void setAnchorX1(float ax1) {
         this.ax1 = ax1;
@@ -137,8 +124,7 @@ public class CubicBezier extends Path {
 
     /**
      * 
-     * @param ay1
-     *            the y-coordinate of the 2nd anchor point
+     * @param ay1 the y-coordinate of the 2nd anchor point
      */
     public void setAnchorY1(float ay1) {
         this.ay1 = ay1;
@@ -154,8 +140,7 @@ public class CubicBezier extends Path {
 
     /**
      * 
-     * @param cx1
-     *            the x-coordinate of the 1st anchor point
+     * @param cx1 the x-coordinate of the 1st anchor point
      */
     public void setControlX1(float cx1) {
         this.cx1 = cx1;
@@ -171,8 +156,7 @@ public class CubicBezier extends Path {
 
     /**
      * 
-     * @param cy1
-     *            the y-coordinate of the 1st control point
+     * @param cy1 the y-coordinate of the 1st control point
      */
     public void setControlY1(float cy1) {
         this.cy1 = cy1;
@@ -188,8 +172,7 @@ public class CubicBezier extends Path {
 
     /**
      * 
-     * @param cx2
-     *            the x-coordinate of the 2nd control point
+     * @param cx2 the x-coordinate of the 2nd control point
      */
     public void setControlX2(float cx2) {
         this.cx2 = cx2;
@@ -205,8 +188,7 @@ public class CubicBezier extends Path {
 
     /**
      * 
-     * @param cy2
-     *            the y-coordinate of the 2nd control point
+     * @param cy2 the y-coordinate of the 2nd control point
      */
     public void setControlY2(float cy2) {
         this.cy2 = cy2;
@@ -222,8 +204,7 @@ public class CubicBezier extends Path {
 
     /**
      * 
-     * @param ax2
-     *            the x-coordinate of the 2nd anchor point
+     * @param ax2 the x-coordinate of the 2nd anchor point
      */
     public void setAnchorX2(float ax2) {
         this.ax2 = ax2;
@@ -239,8 +220,7 @@ public class CubicBezier extends Path {
 
     /**
      * 
-     * @param ay2
-     *            the y-coordinate of the 2nd anchor point
+     * @param ay2 the y-coordinate of the 2nd anchor point
      */
     public void setAnchorY2(float ay2) {
         this.ay2 = ay2;

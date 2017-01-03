@@ -1,6 +1,5 @@
 package paths;
 
-import paths2.Path2;
 import processing.core.PApplet;
 import processing.core.PGraphics;
 import tracer.Point;
@@ -172,11 +171,10 @@ public class Blender<T extends Path, U extends Path> extends Path {
 
     /**
      * 
-     * @param dAmt
-     *            how much to change the blendAmt
+     * @param dAmt how much to change the blendAmt
      */
     public void addToBlendAmt(float dAmt) {
-        this.blendAmt = Path2.remainder(this.blendAmt + dAmt, 1);
+        this.blendAmt = Path.remainder(this.blendAmt + dAmt, 1);
     }
 
     @Override

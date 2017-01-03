@@ -1,9 +1,8 @@
-package paths2;
+package paths;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import paths.Path;
 import processing.core.PApplet;
 import processing.core.PGraphics;
 import tracer.Point;
@@ -30,7 +29,7 @@ import tracer.Point;
  * @author James Morrow [jamesmorrowdesign.com]
  *
  */
-public class Shape extends Path2 {
+public class Shape extends Path {
     private List<Point> vertices;
     private List<Float> segAmts;
     private float cenx, ceny, width, height, perimeter;
@@ -224,7 +223,7 @@ public class Shape extends Path2 {
 
     @Override
     public void trace(Point pt, float amt) {
-        amt = Path2.remainder(amt, 1);
+        amt = Path.remainder(amt, 1);
         for (int i = 1; i < segAmts.size(); i++) {
             if (amt < segAmts.get(i)) {
                 amt = PApplet.map(amt, segAmts.get(i - 1), segAmts.get(i), 0, 1);
@@ -236,7 +235,6 @@ public class Shape extends Path2 {
         }
     }
 
-    @Override
     public boolean inside(float x, float y) {
         // TODO Implement https://en.wikipedia.org/wiki/Point_in_polygon.
         return false;
@@ -292,22 +290,18 @@ public class Shape extends Path2 {
         return perimeter;
     }
 
-    @Override
     public float getCenx() {
         return cenx;
     }
 
-    @Override
     public float getCeny() {
         return ceny;
     }
 
-    @Override
     public float getWidth() {
         return width;
     }
 
-    @Override
     public float getHeight() {
         return height;
     }
