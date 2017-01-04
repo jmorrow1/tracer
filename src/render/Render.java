@@ -22,10 +22,12 @@ public abstract class Render implements PConstants {
 
     public Render(Tracer[] ts) {
         this(listify(ts));
+        style = new RStyle();
     }
     
     public Render(List<Tracer> ts) {
         this.ts = ts;
+        style = new RStyle();
     }
     
     public void step() {
