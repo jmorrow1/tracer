@@ -11,8 +11,6 @@ public class RenderPaths extends Render {
     public final static int INFINITY = -1;
     private int ptCount = INFINITY;
     private List<List<Point>> paths = new ArrayList<List<Point>>();
-    private float strokeWeight;
-    private int strokeColor;
 
     public RenderPaths(List<Tracer> ts) {
         super(ts);
@@ -43,9 +41,23 @@ public class RenderPaths extends Render {
 
     @Override
     public void draw(PGraphics g) {
-        g.strokeWeight(strokeWeight);
-        g.stroke(strokeColor);
-        g.noFill();
+        if (style.stroke) {
+            g.strokeWeight(style.strokeWeight);
+            g.stroke(style.strokeColor);
+            g.strokeCap(style.strokeCap);
+            g.strokeJoin(style.strokeJoin);
+        }
+        else {
+            g.noStroke();
+        }
+        
+        if (style.fill) {
+            g.fill(style.fillColor);
+        }
+        else {
+            g.noFill();
+        }
+
         for (List<Point> p : paths) {
             g.beginShape();
             for (int i = 0; i < p.size(); i++) {
@@ -67,13 +79,5 @@ public class RenderPaths extends Render {
             }
         }
         this.ptCount = ptCount;
-    }
-
-    public void setStrokeColor(int strokeColor) {
-        this.strokeColor = strokeColor;
-    }
-
-    public void setStrokeWeight(float strokeWeight) {
-        this.strokeWeight = strokeWeight;
     }
 }

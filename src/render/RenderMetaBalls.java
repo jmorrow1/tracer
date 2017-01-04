@@ -14,9 +14,11 @@ import tracer.Tracer;
  *
  */
 public class RenderMetaBalls extends Render {
-    protected float maxDist;
-    protected int bgColor, fgColor;
+    protected float maxDist;   
     protected float ballRadius;
+    
+    //style
+    protected int bgColor, fgColor;
 
     public RenderMetaBalls(List<Tracer> ts) {
         this(ts, 10, 100, 0xff000000, 0xffffffff);

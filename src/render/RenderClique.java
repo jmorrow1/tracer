@@ -15,34 +15,19 @@ import tracer.Tracer;
  *
  */
 public class RenderClique extends Render {
-    // style
-    protected int strokeCap, strokeColor;
-    protected float strokeWeight;
-
-    public RenderClique(List<Tracer> ts, int strokeCap, int strokeColor, float strokeWeight) {
-        super(ts);
-        this.strokeCap = strokeCap;
-        this.strokeColor = strokeColor;
-        this.strokeWeight = strokeWeight;
-    }
-
     public RenderClique(List<Tracer> ts) {
-        this(ts, PApplet.ROUND, 0xff000000, 2f);
-    }
-
-    public RenderClique(Tracer[] ts, int strokeCap, int strokeColor, float strokeWeight) {
-        this(listify(ts), strokeCap, strokeColor, strokeWeight);
+        super(ts);
     }
 
     public RenderClique(Tracer[] ts) {
-        this(listify(ts));
+        super(ts);
     }
 
     @Override
     public void draw(PGraphics g) {
-        g.strokeCap(strokeCap);
-        g.stroke(strokeColor);
-        g.strokeWeight(strokeWeight);
+        g.strokeCap(style.strokeCap);
+        g.stroke(style.strokeColor);
+        g.strokeWeight(style.strokeWeight);
 
         for (int i = 0; i < ts.size(); i++) {
             for (int j = i + 1; j < ts.size(); j++) {
@@ -51,17 +36,5 @@ public class RenderClique extends Render {
                 g.line(a.x, a.y, b.x, b.y);
             }
         }
-    }
-
-    public void setStrokeCap(int strokeCap) {
-        this.strokeCap = strokeCap;
-    }
-
-    public void setStrokeColor(int strokeColor) {
-        this.strokeColor = strokeColor;
-    }
-
-    public void setStrokeWeight(float strokeWeight) {
-        this.strokeWeight = strokeWeight;
     }
 }

@@ -16,37 +16,23 @@ import tracer.Tracer;
  */
 public class RenderDots extends Render {
     // style
-    protected float strokeWeight;
-    protected int strokeColor, strokeCap;
     protected LabelScheme labelScheme = new Enumerate();
     protected boolean drawLabels = false;
     protected float labelTextSize = 6;
 
-    public RenderDots(List<Tracer> ts, float strokeWeight, int strokeColor, int strokeCap) {
-        super(ts);
-        this.strokeWeight = strokeWeight;
-        this.strokeColor = strokeColor;
-        this.strokeCap = strokeCap;
-    }
-
     public RenderDots(List<Tracer> ts) {
-        this(ts, 8f, 0xff000000, PApplet.ROUND);
+        super(ts);
     }
-
-    public RenderDots(Tracer[] ts, float strokeWeight, int strokeColor, int strokeCap) {
-        this(listify(ts), strokeWeight, strokeColor, strokeCap);
-    }
-
     public RenderDots(Tracer[] ts) {
-        this(listify(ts));
+        super(ts);
     }
 
     @Override
     public void draw(PGraphics g) {
         // style
-        g.strokeWeight(strokeWeight);
-        g.stroke(strokeColor);
-        g.strokeCap(strokeCap);
+        g.strokeWeight(style.strokeWeight);
+        g.stroke(style.strokeColor);
+        g.strokeCap(style.strokeCap);
 
         // dots
         if (drawLabels) {
@@ -72,18 +58,6 @@ public class RenderDots extends Render {
 
     public void setLabelTextSize(float labelTextSize) {
         this.labelTextSize = labelTextSize;
-    }
-
-    public void setStrokeWeight(float strokeWeight) {
-        this.strokeWeight = strokeWeight;
-    }
-
-    public void setStrokeColor(int strokeColor) {
-        this.strokeColor = strokeColor;
-    }
-
-    public void setStrokeCap(int strokeCap) {
-        this.strokeCap = strokeCap;
     }
 
     public static interface LabelScheme {
