@@ -330,4 +330,8 @@ public class Line extends Path {
     public float getGap(int i) {
         return 1;
     }
+    
+    public static float dist(Point a, Point b) {
+        return PApplet.dist(a.x, a.y, b.x, b.y);
+    }
 }
