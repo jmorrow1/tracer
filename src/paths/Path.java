@@ -6,6 +6,7 @@ import processing.core.PApplet;
 import processing.core.PConstants;
 import processing.core.PGraphics;
 import tracer.Point;
+import tracer.Tracer;
 
 /**
  * 
@@ -56,6 +57,25 @@ public abstract class Path implements PConstants {
      */
     public Path(int granularity) {
         this.granularity = granularity;
+    }
+    
+    /**
+     * Derive a Path by connecting a sequence of points located on a source Path with lines.
+     * @param src The source path
+     * @param us 1-dimensional coordinates of the sequence of points
+     * @return The derivative path
+     */
+    public static Shape derivePath(Path src, float[] us) {
+        if (us.length == 0) {
+            return new Shape(new Point[] {});
+        }
+        else {
+            Point[] pts = new Point[us.length];
+            for (int i=0; i<us.length; i++) {
+                pts[i] = src.trace(us[i]);
+            }
+            return new Shape(pts);
+        }
     }
 
     /**
