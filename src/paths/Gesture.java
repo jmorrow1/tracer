@@ -57,6 +57,13 @@ public class Gesture extends Path {
     }
     
     /**
+     * An empty gesture.
+     */
+    public Gesture() {
+        this.vertices = new ArrayList<GesturePoint>();
+    }
+    
+    /**
      * 
      * @param vertices The vertices / time coordinates of the Path
      */
@@ -66,13 +73,13 @@ public class Gesture extends Path {
 
     @Override
     public void trace(Point pt, float u) {
-        float totalTime = u * getRelativeDuration();
+        float t1 = getStartTime() + u * getTotalTime();
         
         for (int i=1; i<vertices.size(); i++) {
-            float time = vertices.get(i).t;
-            if (time < totalTime) {
-                float prevTime = vertices.get(i-1).t;
-                float v = PApplet.map(time, prevTime, time, 0, 1);
+            float t2 = vertices.get(i).t;
+            if (t1 < t2) {
+                float t0 = vertices.get(i-1).t;
+                float v = PApplet.map(t1, t0, t2, 0, 1);
                 
                 Point a = vertices.get(i-1).pt;
                 Point b = vertices.get(i).pt;
@@ -124,8 +131,52 @@ public class Gesture extends Path {
         return vertices.size() == 0 || vertices.get(vertices.size()-1).equals(vertices.get(0));
     }
     
-    private float getRelativeDuration() {
-        return vertices.size() == 0 ? 0 : vertices.get(vertices.size()-1).t;
+    private float getStartTime() {
+        return (vertices.size() > 0) ? vertices.get(0).t : 0;
+    }
+    
+    private float getEndTime() {
+        return (vertices.size() > 0) ? vertices.get(vertices.size()-1).t : 0;
+    }
+    
+    private float getTotalTime() {
+        return getEndTime() - getStartTime();
+    }
+    
+    /**
+     * Gives the number of vertices in the Path.
+     * @return The number of vertices in the Path.
+     */
+    public int getVertexCount() {
+        return vertices.size();
+    }
+    
+    /**
+     * Gives the ith vertex in the Path, a GesturePoint,
+     * which is a combination of a spatial coordinate and a temporal coordinate.
+     * @param i The index
+     * @return The vertex
+     */
+    public GesturePoint getVertex(int i) {
+        return vertices.get(i);
+    }
+    
+    /**
+     * Gives the ith spatial vertex in the Path, which is just a Point.
+     * @param i The index
+     * @return The vertex
+     */
+    public Point getSpatialCoordinate(int i) {
+        return vertices.get(i).pt;
+    }
+    
+    /**
+     * Gives the ith temporal vertex in the Path, which is a float.
+     * @param i The index
+     * @return The float representing a coordinate in time
+     */
+    public float getTemporalCoordinate(int i) {
+        return vertices.get(i).t;
     }
     
     /**
@@ -134,17 +185,58 @@ public class Gesture extends Path {
      * @param t The time
      */
     public void addVertex(Point pt, float t) {
-        for (int i=0; i<vertices.size(); i++) {
-            GesturePoint g = vertices.get(i);
-            if (t == g.t) {
-                vertices.set(i, new GesturePoint(pt, t));
-                break;
-            }
-            else if (t > g.t) {
-                vertices.set(i+1, new GesturePoint(pt, t));
-                break;
+        if (t < getStartTime()) {
+            vertices.add(0, new GesturePoint(pt, t));
+        }
+        else if (t < getEndTime()) {
+            for (int i=0; i<vertices.size(); i++) {
+                GesturePoint g = vertices.get(i);
+                if (t == g.t) {
+                    vertices.set(i, new GesturePoint(pt, t));
+                    break;
+                }
+                else if (t > g.t) {
+                    vertices.add(i+1, new GesturePoint(pt, t));
+                    break;
+                }
             }
         }
+        else if (t == getEndTime() && vertices.size() > 0) {
+            vertices.set(vertices.size()-1, new GesturePoint(pt, t));
+        }
+        else {
+            vertices.add(new GesturePoint(pt, t));
+        }
+    }
+    
+    /**
+     * Adds a vertex / time coordinate to the Path.
+     * @param g The vertex / time coordinate
+     */
+    public void addVertex(GesturePoint g) {
+        if (g.t < getStartTime()) {
+            vertices.add(0, g);
+        }
+        else if (g.t < getEndTime()) {
+            for (int i=0; i<vertices.size(); i++) {
+                GesturePoint h = vertices.get(i);
+                if (g.t == h.t) {
+                    vertices.set(i, g);
+                    break;
+                }
+                else if (g.t > h.t) {
+                    vertices.add(i+1, g);
+                    break;
+                }
+            }
+        }
+        else if (g.t == getEndTime() && vertices.size() > 0) {
+            vertices.set(vertices.size()-1, g);
+        }
+        else {
+            vertices.add(g);
+        }
+       
     }
     
     /**
@@ -183,6 +275,11 @@ public class Gesture extends Path {
         @Override
         public GesturePoint clone() {
             return new GesturePoint(pt.clone(), t);
+        }
+
+        @Override
+        public String toString() {
+            return "GesturePoint [pt=" + pt + ", t=" + t + "]";
         }
     }
 

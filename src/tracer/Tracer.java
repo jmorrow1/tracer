@@ -98,4 +98,11 @@ public class Tracer extends Point {
     public Tracer clone() {
         return new Tracer(this);
     }
+
+    @Override
+    public String toString() {
+        return "Tracer [u=" + u + ", du=" + du + ", path=" + path + "]";
+    }
+    
+    
 }
