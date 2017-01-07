@@ -33,7 +33,7 @@ public class Superellipse extends Path {
      * @param e the superellipse to copy
      */
     public Superellipse(Superellipse e) {
-        this(e.cen.clone(), e.xRadius, e.yRadius, e.n, e.granularity);
+        this(e.cen.clone(), e.xRadius, e.yRadius, e.n, e.sampleCount);
     }
     
     /**
@@ -44,10 +44,10 @@ public class Superellipse extends Path {
      * @param yRadius half the height
      * @param n controls the amount of pinching (smaller values give more
      *            pinching)
-     * @param granularity the number of sample points
+     * @param sampleCount the number of sample points
      */
-    public Superellipse(float cenx, float ceny, float xRadius, float yRadius, float n, int granularity) {
-        this(new Point(cenx, ceny), xRadius, yRadius, n, granularity);
+    public Superellipse(float cenx, float ceny, float xRadius, float yRadius, float n, int sampleCount) {
+        this(new Point(cenx, ceny), xRadius, yRadius, n, sampleCount);
     }
 
     /**
@@ -57,10 +57,10 @@ public class Superellipse extends Path {
      * @param yRadius half the height
      * @param n controls the amount of pinching (smaller values give more
      *            pinching)
-     * @param granularity the number of sample points
+     * @param sampleCount the number of sample points
      */
-    public Superellipse(Point cen, float xRadius, float yRadius, float n, int granularity) {
-        super(granularity);
+    public Superellipse(Point cen, float xRadius, float yRadius, float n, int sampleCount) {
+        super(sampleCount);
         this.cen = cen;
         this.xRadius = xRadius;
         this.yRadius = yRadius;
@@ -106,7 +106,7 @@ public class Superellipse extends Path {
 
     @Override
     public void draw(PGraphics g) {
-        draw(g, granularity);
+        draw(g, sampleCount);
     }
 
     @Override

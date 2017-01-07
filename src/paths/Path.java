@@ -45,7 +45,7 @@ import tracer.Tracer;
 public abstract class Path implements PConstants {
     private final static Point pt = new Point(0, 0);
     protected boolean reversed;
-    protected int granularity;
+    protected int sampleCount;
 
     public Path() {
         this(100);
@@ -56,7 +56,7 @@ public abstract class Path implements PConstants {
      * @param granularity the number of sample points
      */
     public Path(int granularity) {
-        this.granularity = granularity;
+        this.sampleCount = granularity;
     }
     
     /**
@@ -84,8 +84,8 @@ public abstract class Path implements PConstants {
      * @param g A PGraphics object on which to draw the path
      */
     public void draw(PGraphics g) {
-        if (granularity != -1) {
-            draw(g, granularity);
+        if (sampleCount != -1) {
+            draw(g, sampleCount);
         }
     }
 
@@ -116,7 +116,7 @@ public abstract class Path implements PConstants {
             return pts;
         } else {
             float length = PApplet.abs(u1 - u2);
-            int n = (int) (granularity * length);
+            int n = (int) (sampleCount * length);
             float du = length / n;
 
             ArrayList<Point> pts = new ArrayList<Point>();
@@ -135,7 +135,7 @@ public abstract class Path implements PConstants {
     // TODO WORK IN PROGRESS --- Need to incorporate gaps:
     private void continuousDraw(PGraphics g, float u1, float u2) {
         float length = PApplet.abs(u1 - u2);
-        int n = (int) (granularity * length);
+        int n = (int) (sampleCount * length);
         float du = length / n;
 
         g.beginShape();
@@ -179,7 +179,7 @@ public abstract class Path implements PConstants {
             draw(g, 0, u2);
         } else {
             float length = PApplet.abs(u1 - u2);
-            int n = (int) (granularity * length);
+            int n = (int) (sampleCount * length);
             float du = length / n;
 
             g.beginShape();
@@ -258,12 +258,12 @@ public abstract class Path implements PConstants {
         float x = pt.x;
         float y = pt.y;
 
-        float du = 1f / granularity;
+        float du = 1f / sampleCount;
         float u = du;
 
         float perimeter = 0;
 
-        for (int i = 0; i < granularity; i++) {
+        for (int i = 0; i < sampleCount; i++) {
             trace(pt, u);
 
             perimeter += PApplet.dist(x, y, pt.x, pt.y);
@@ -329,12 +329,20 @@ public abstract class Path implements PConstants {
         }
     }
     
-    public void setGranularity(int granularity) {
-        this.granularity = granularity;
+    /**
+     * Sets the number of sample points the Path uses for various computations
+     * @param sampleCount The number of sample points
+     */
+    public void setSampleCount(int sampleCount) {
+        this.sampleCount = sampleCount;
     }
     
-    public int getGranularity() {
-        return granularity;
+    /**
+     * Gives the number of sample points the Path uses for various computations.
+     * @return The number of samples points.
+     */
+    public int getSampleCount() {
+        return sampleCount;
     }
 
     /**

@@ -26,7 +26,7 @@ public class Flower extends Path {
      * @param f the flower to copy
      */
     public Flower(Flower f) {
-        this(f.cen.clone(), f.xRadius, f.yRadius, f.freq1, f.freq2, f.granularity);
+        this(f.cen.clone(), f.xRadius, f.yRadius, f.freq1, f.freq2, f.sampleCount);
     }
 
     /**

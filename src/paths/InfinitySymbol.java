@@ -24,7 +24,7 @@ public class InfinitySymbol extends Path {
      * @param s The infinity symbol to copy
      */
     public InfinitySymbol(InfinitySymbol s) {
-        this(s.cen.clone(), s.xRadius, s.yRadius, s.granularity);
+        this(s.cen.clone(), s.xRadius, s.yRadius, s.sampleCount);
     }
 
     /**

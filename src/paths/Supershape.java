@@ -34,7 +34,7 @@ public class Supershape extends Path {
      * @param s the supershape to copy
      */
     public Supershape(Supershape s) {
-        this(s.cen.clone(), s.xRadius, s.yRadius, s.m, s.n1, s.n2, s.n3, s.granularity);
+        this(s.cen.clone(), s.xRadius, s.yRadius, s.m, s.n1, s.n2, s.n3, s.sampleCount);
     }
 
     /**
@@ -48,11 +48,10 @@ public class Supershape extends Path {
      *            pinching)
      * @param n2
      * @param n3
-     * @param granularity the number of sample points
+     * @param sampleCount the number of sample points
      */
-    public Supershape(float cenx, float ceny, float xRadius, float yRadius, float m, float n1, float n2, float n3,
-            int granularity) {
-        this(new Point(cenx, ceny), xRadius, yRadius, m, n1, n2, n3, granularity);
+    public Supershape(float cenx, float ceny, float xRadius, float yRadius, float m, float n1, float n2, float n3, int sampleCount) {
+        this(new Point(cenx, ceny), xRadius, yRadius, m, n1, n2, n3, sampleCount);
     }
     
     /**
@@ -65,11 +64,10 @@ public class Supershape extends Path {
      *            pinching)
      * @param n2
      * @param n3
-     * @param granularity the number of sample points
+     * @param sampleCount the number of sample points
      */
-    public Supershape(Point cen, float xRadius, float yRadius, float m, float n1, float n2, float n3,
-            int granularity) {
-        super(granularity);
+    public Supershape(Point cen, float xRadius, float yRadius, float m, float n1, float n2, float n3, int sampleCount) {
+        super(sampleCount);
         this.cen  = cen;
         this.xRadius = xRadius;
         this.yRadius = yRadius;
@@ -88,10 +86,10 @@ public class Supershape extends Path {
      * @param xRadius half the width
      * @param yRadius half the height
      * @param m controls the number of rotational symmetries
-     * @param granularity The number of sample points
+     * @param sampleCount The number of sample points
      */
-    public Supershape(float cenx, float ceny, float xRadius, float yRadius, float m, int granularity) {
-        this(cenx, ceny, xRadius, yRadius, m, 1, 1, 1, granularity);
+    public Supershape(float cenx, float ceny, float xRadius, float yRadius, float m, int sampleCount) {
+        this(cenx, ceny, xRadius, yRadius, m, 1, 1, 1, sampleCount);
     }
 
     /**
@@ -100,10 +98,10 @@ public class Supershape extends Path {
      * @param xRadius half the width
      * @param yRadius half the height
      * @param m controls the number of rotational symmetries
-     * @param granularity The number of sample points
+     * @param sampleCount The number of sample points
      */
-    public Supershape(Point cen, float xRadius, float yRadius, float m, int granularity) {
-        this(cen, xRadius, yRadius, m, 1, 1, 1, granularity);
+    public Supershape(Point cen, float xRadius, float yRadius, float m, int sampleCount) {
+        this(cen, xRadius, yRadius, m, 1, 1, 1, sampleCount);
     }
     
     /**
@@ -152,7 +150,7 @@ public class Supershape extends Path {
 
     @Override
     public void draw(PGraphics g) {
-        draw(g, granularity);
+        draw(g, sampleCount);
     }
 
     @Override

@@ -18,7 +18,13 @@ public interface Easing {
      * @param t A normal value
      * @return A normal value (assuming t is a normal value)
      */
-    public float val(float t);
+    public float val(float t); 
+
+    public static class Linear implements Easing {
+        public float val(float t) {
+            return t;
+        }
+    }
     
     public static class BackAndForth implements Easing {
         public float val(float t) {
@@ -28,12 +34,6 @@ public interface Easing {
             else {
                 return 2f * (1f - t);
             }
-        }
-    }
-
-    public static class Linear implements Easing {
-        public float val(float t) {
-            return t;
         }
     }
 

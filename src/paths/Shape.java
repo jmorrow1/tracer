@@ -132,7 +132,7 @@ public class Shape extends Path {
 
     @Override
     public float getGap(int i) {
-        if (isClosed()) {
+        if (isClosed() || i != 0) {
             return -1;
         }
         else {
