@@ -108,10 +108,6 @@ public class Line extends Path {
         pt.y = PApplet.lerp(ay, by, amt);
     }
 
-    public boolean inside(float x, float y) {
-        return false;
-    }
-
     /**
      * Returns true if the given point comes within the given radius to any
      * point in the line.
@@ -331,6 +327,12 @@ public class Line extends Path {
         return 1;
     }
     
+    /**
+     * Computes the distance between a and b.
+     * @param a Point a
+     * @param b Point b
+     * @return The distance
+     */
     public static float dist(Point a, Point b) {
         return PApplet.dist(a.x, a.y, b.x, b.y);
     }

@@ -16,13 +16,17 @@ public class Shape extends Path {
     protected List<Point> vertices2D = new ArrayList<Point>();
     protected List<Float> vertices1D = new ArrayList<Float>();
     
+    /**
+     * 
+     * @param vertices The vertices of the Shape
+     */
     public Shape(Point[] vertices) {
         this(listify(vertices));
     }
     
     /**
      * 
-     * @param vertices 
+     * @param vertices The vertices of the Shape
      */
     public Shape(List<Point> vertices) {
         this.vertices2D = vertices;    
@@ -148,8 +152,57 @@ public class Shape extends Path {
         return dist;
     }
     
+    /**
+     * Adds a vertex to the Shape.
+     * @param i The index
+     * @param pt The Point to add
+     */
+    public void addVertex(int i, Point pt) {
+        vertices2D.add(i, pt);
+        computeVertices1D();
+    }
+    
+    /**
+     * Adds a vertex to the Shape.
+     * @param pt The Point to add
+     */
+    public void addVertex(Point pt) {
+        vertices2D.add(pt);
+        computeVertices1D();
+    }
+    
+    /**
+     * Remove the vertex at index i.
+     * @param i The index
+     */
+    public void removeVertex(int i) {
+        vertices2D.remove(i);
+        computeVertices1D();
+    }
+    
+    /**
+     * Sets the vertex at index i to the given Point.
+     * @param i The index
+     * @param pt The new vertex
+     */
+    public void setVertex(int i, Point pt) {
+        vertices2D.set(i, pt);
+        computeVertices1D();
+    }
+    
+    /**
+     * Returns the number of vertices in the Shape.
+     * @return The number of vertices in the Shape
+     */
+    public int getVertexCount() {
+        return vertices2D.size();
+    }
+    
+    /**
+     * Tells whether or not the Path is closed.
+     * @return True if the path is closed, false otherwise
+     */
     public boolean isClosed() {
         return vertices2D.size() == 0 || vertices2D.get(vertices2D.size()-1).equals(vertices2D.get(0));
     }
-
 }

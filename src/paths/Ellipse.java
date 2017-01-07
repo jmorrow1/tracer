@@ -12,6 +12,8 @@ import tracer.Point;
  *
  */
 public class Ellipse extends Path {
+    
+    
     private float x, y, xRadius, yRadius;
     private float perimeter;
     private boolean perimeterOutOfSync;

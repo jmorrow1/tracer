@@ -19,6 +19,17 @@ public interface Easing {
      * @return A normal value (assuming t is a normal value)
      */
     public float val(float t);
+    
+    public static class BackAndForth implements Easing {
+        public float val(float t) {
+            if (t < 0.5f) {
+                return 2f * t;
+            }
+            else {
+                return 2f * (1f - t);
+            }
+        }
+    }
 
     public static class Linear implements Easing {
         public float val(float t) {
