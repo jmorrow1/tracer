@@ -35,8 +35,8 @@ public class Lissajous extends Path {
         this(sampleCount, new Point(x, y), xRadius, yRadius, freqX, freqY, phi);
     }
     
-    public Lissajous(int granularity, Point center, float xRadius, float yRadius, float freqX, float freqY, float phi) {
-        super(granularity);
+    public Lissajous(int sampleCount, Point center, float xRadius, float yRadius, float freqX, float freqY, float phi) {
+        super(sampleCount);
         this.cen = center;
         this.xRadius = xRadius;
         this.yRadius = yRadius;
@@ -54,6 +54,16 @@ public class Lissajous extends Path {
      */
     public Lissajous(float x, float y, float r) {
         this(200, x, y, r, r, 3, 5, PApplet.QUARTER_PI);
+    }
+    
+    /**
+     * Easy constructor
+     * 
+     * @param cen The center of the path
+     * @param r The radius of the path
+     */
+    public Lissajous(Point cen, float r) {
+        this(200, cen, r, r, 3, 5, PApplet.QUARTER_PI);
     }
 
     @Override

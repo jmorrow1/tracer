@@ -71,7 +71,7 @@ public class Shape extends Path {
         return ys;
     }
     
-    private void computeVertices1D() {
+    protected void computeVertices1D() {
         vertices1D.clear();
         
         float totalDistance = getTotalDistance();

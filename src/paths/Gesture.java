@@ -58,7 +58,7 @@ public class Gesture extends Path {
     
     /**
      * 
-     * @param vertices The vertices / time coordintaes of the Path
+     * @param vertices The vertices / time coordinates of the Path
      */
     public Gesture(List<GesturePoint> vertices) {
         this.vertices = vertices;
