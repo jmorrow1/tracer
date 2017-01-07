@@ -67,6 +67,7 @@ public class Ellipse extends Path {
 
     public Ellipse(Ellipse ellipse) {
         this(ellipse.getCenx(), ellipse.getCeny(), ellipse.getWidth(), ellipse.getHeight(), PApplet.CENTER);
+        setSampleCount(ellipse.sampleCount);
     }
 
     /**

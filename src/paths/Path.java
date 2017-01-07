@@ -53,10 +53,10 @@ public abstract class Path implements PConstants {
 
     /**
      * 
-     * @param granularity the number of sample points
+     * @param sampleCount the number of sample points
      */
-    public Path(int granularity) {
-        this.sampleCount = granularity;
+    public Path(int sampleCount) {
+        this.sampleCount = sampleCount;
     }
     
     /**

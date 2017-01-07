@@ -35,6 +35,7 @@ public class Supershape extends Path {
      */
     public Supershape(Supershape s) {
         this(s.cen.clone(), s.xRadius, s.yRadius, s.m, s.n1, s.n2, s.n3, s.sampleCount);
+        setSampleCount(s.sampleCount);
     }
 
     /**

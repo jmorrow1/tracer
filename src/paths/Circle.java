@@ -43,6 +43,7 @@ public class Circle extends Path {
      */
     public Circle(Circle c) {
         this(c.center.clone(), c.radius);
+        setSampleCount(c.sampleCount);
     }
 
     @Override

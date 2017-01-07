@@ -24,6 +24,7 @@ public class Arc extends Path {
      */
     public Arc(Arc arc) {
         this(arc.cenx, arc.ceny, arc.xRadius, arc.yRadius, arc.startAngle, arc.endAngle, PApplet.RADIUS);
+        setSampleCount(arc.sampleCount);
     }
 
     /**

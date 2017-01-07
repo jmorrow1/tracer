@@ -20,7 +20,6 @@ public class Blender<T extends Path, U extends Path> extends Path {
     private Point ptA = new Point(0, 0), ptB = new Point(0, 0);
     private T a;
     private U b;
-    private int drawGranularity;
     private float blendAmt;
 
     /**************************
@@ -33,22 +32,21 @@ public class Blender<T extends Path, U extends Path> extends Path {
      * @param blender the blender to copy
      */
     public Blender(Blender<T, U> blender) {
-        this(blender.a, blender.b, blender.blendAmt, blender.drawGranularity);
+        this(blender.a, blender.b, blender.blendAmt, blender.sampleCount);
     }
 
     /**
      * 
      * @param a the first path
      * @param b the second path
-     * @param blendAmt a value between 0 and 1 specifying how much to blend
-     *            between a and b
-     * @param drawGranularity the number of sample points
+     * @param blendAmt a value between 0 and 1 specifying how much to blend between a and b
+     * @param sampleCount the number of sample points
      */
-    public Blender(T a, U b, float blendAmt, int drawGranularity) {
+    public Blender(T a, U b, float blendAmt, int sampleCount) {
+        super(sampleCount);
         this.a = a;
         this.b = b;
         this.blendAmt = blendAmt;
-        this.drawGranularity = drawGranularity;
     }
 
     // /**
@@ -74,11 +72,6 @@ public class Blender<T extends Path, U extends Path> extends Path {
         b.trace(ptB, amt);
         pt.x = PApplet.lerp(ptA.x, ptB.x, blendAmt);
         pt.y = PApplet.lerp(ptA.y, ptB.y, blendAmt);
-    }
-
-    @Override
-    public void draw(PGraphics g) {
-        draw(g, drawGranularity);
     }
 
     @Override
@@ -121,22 +114,6 @@ public class Blender<T extends Path, U extends Path> extends Path {
      */
     public void setB(U b) {
         this.b = b;
-    }
-
-    /**
-     * 
-     * @return the number of sample points
-     */
-    public int getDrawGranularity() {
-        return drawGranularity;
-    }
-
-    /**
-     * 
-     * @param drawGranularity the number of sample points
-     */
-    public void setDrawGranularity(int drawGranularity) {
-        this.drawGranularity = drawGranularity;
     }
 
     /**

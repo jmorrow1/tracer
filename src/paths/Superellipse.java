@@ -34,6 +34,7 @@ public class Superellipse extends Path {
      */
     public Superellipse(Superellipse e) {
         this(e.cen.clone(), e.xRadius, e.yRadius, e.n, e.sampleCount);
+        setSampleCount(e.sampleCount);
     }
     
     /**

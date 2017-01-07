@@ -65,6 +65,7 @@ public class Rect extends Path {
      */
     public Rect(Rect r) {
         this(r.cenx, r.ceny, r.width, r.height, PApplet.CENTER);
+        setSampleCount(r.sampleCount);
     }
 
     /**

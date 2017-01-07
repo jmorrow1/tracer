@@ -47,6 +47,7 @@ public class Line extends Path {
      */
     public Line(Line line) {
         this(line.getAx(), line.getAy(), line.getBx(), line.getBy());
+        setSampleCount(line.sampleCount);
     }
 
     /**

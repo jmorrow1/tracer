@@ -25,6 +25,7 @@ public class InfinitySymbol extends Path {
      */
     public InfinitySymbol(InfinitySymbol s) {
         this(s.cen.clone(), s.xRadius, s.yRadius, s.sampleCount);
+        setSampleCount(s.sampleCount);
     }
 
     /**
@@ -33,10 +34,10 @@ public class InfinitySymbol extends Path {
      * @param ceny the center y-coordinate
      * @param xRadius half the width
      * @param yRadius half the height
-     * @param drawGranularity the number of sample points
+     * @param sampleCount the number of sample points
      */
-    public InfinitySymbol(float cenx, float ceny, float xRadius, float yRadius, int drawGranularity) {
-        this(new Point(cenx, ceny), xRadius, yRadius, drawGranularity);
+    public InfinitySymbol(float cenx, float ceny, float xRadius, float yRadius, int sampleCount) {
+        this(new Point(cenx, ceny), xRadius, yRadius, sampleCount);
     }
     
     /**

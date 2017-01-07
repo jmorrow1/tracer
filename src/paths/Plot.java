@@ -24,6 +24,7 @@ public class Plot extends Path {
         this.rect = plot.rect;
         this.xs = plot.xs;
         this.ys = plot.ys;
+        setSampleCount(plot.sampleCount);
     }
     
     /**

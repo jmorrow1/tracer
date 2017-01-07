@@ -28,6 +28,7 @@ public class Composite<T extends Path, U extends Path> extends Path {
      */
     public Composite(Composite<T, U> c) {
         this(c.a, c.b);
+        setSampleCount(c.sampleCount);
     }
 
     /**

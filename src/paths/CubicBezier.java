@@ -38,6 +38,7 @@ public class CubicBezier extends Path {
      */
     public CubicBezier(CubicBezier b) {
         this(b.a1.clone(), b.c1.clone(), b.c2.clone(), b.a2.clone());
+        setSampleCount(b.sampleCount);
     }
 
     /**

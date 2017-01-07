@@ -33,6 +33,36 @@ public class Shape extends Path {
         computeVertices1D();
     }
     
+    /**
+     * Copy constructor
+     * @param s The shape to copy
+     */
+    public Shape(Shape s) {
+        super(s.sampleCount);
+        for (int i=0; i<s.vertices2D.size(); i++) {
+            this.vertices2D.add(s.vertices2D.get(i).clone());
+            this.vertices1D.add(new Float(s.vertices1D.get(i)));
+        } 
+    }
+    
+    /**
+     * Easy constructor
+     * 
+     * @param x The x-coordinate of the center of the Path
+     * @param y The y-coordinate of the center of the Path
+     * @param r The radius of the Path
+     */
+    public Shape(float x, float y, float r) {        
+        int n = 5;
+        float dTheta = TWO_PI / n;
+        for (int i=0; i<n; i++) {
+            float theta = dTheta * i;
+            vertices2D.add(new Point(x + r*PApplet.cos(theta), y + r*PApplet.sin(theta)));
+        }
+        
+        computeVertices1D();
+    }
+    
     private static ArrayList<Point> listify(Point[] xs) {
         ArrayList<Point> ys = new ArrayList<Point>();
         for (int i=0; i<xs.length; i++) {

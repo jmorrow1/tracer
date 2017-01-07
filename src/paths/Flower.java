@@ -27,6 +27,7 @@ public class Flower extends Path {
      */
     public Flower(Flower f) {
         this(f.cen.clone(), f.xRadius, f.yRadius, f.freq1, f.freq2, f.sampleCount);
+        setSampleCount(f.sampleCount);
     }
 
     /**
@@ -36,10 +37,10 @@ public class Flower extends Path {
      * @param radius the radius
      * @param freq1 the first frequency
      * @param freq2 the second frequency
-     * @param drawGranularity the number of sample points
+     * @param sampleCount the number of sample points
      */
-    public Flower(float cenx, float ceny, float radius, float freq1, float freq2, int drawGranularity) {
-        this(new Point(cenx, ceny), radius, radius, freq1, freq2, drawGranularity);
+    public Flower(float cenx, float ceny, float radius, float freq1, float freq2, int sampleCount) {
+        this(new Point(cenx, ceny), radius, radius, freq1, freq2, sampleCount);
     }
     
     /**
