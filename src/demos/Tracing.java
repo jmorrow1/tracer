@@ -12,6 +12,7 @@ import paths.Ellipse;
 import paths.Flower;
 import paths.InfinitySymbol;
 import paths.Line;
+import paths.Lissajous;
 import paths.Path;
 import paths.Plot;
 import paths.Polygonize;
@@ -70,6 +71,7 @@ public class Tracing extends PApplet {
         paths.add(new Composite(a, b));
         paths.add(new Supershape(0, 0, 0.5f * r, r, 5, 1, 1, 1, 300));
         paths.add(new Plot(new Rect(0, 0, r, r, RADIUS), new Easing.CubicEaseInOut(), 20));
+        paths.add(new Lissajous(0, 0, r));
 
         return paths;
     }
