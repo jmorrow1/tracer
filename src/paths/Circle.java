@@ -79,7 +79,7 @@ public class Circle extends Path {
     }
 
     public boolean inside(float x, float y) {
-        return PApplet.dist(x, y, x, y) <= radius;
+        return PApplet.dist(this.getCenx(), this.getCeny(), x, y) <= radius;
     }
 
     @Override
