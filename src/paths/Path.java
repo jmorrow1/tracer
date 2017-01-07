@@ -5,8 +5,9 @@ import java.util.ArrayList;
 import processing.core.PApplet;
 import processing.core.PConstants;
 import processing.core.PGraphics;
+import processing.core.PStyle;
 import tracer.Point;
-import tracer.Tracer;
+import tracer.TStyle;
 
 /**
  * 
@@ -46,6 +47,7 @@ public abstract class Path implements PConstants {
     private final static Point pt = new Point(0, 0);
     protected boolean reversed;
     protected int sampleCount;
+    protected TStyle style;
 
     public Path() {
         this(100);
@@ -57,6 +59,7 @@ public abstract class Path implements PConstants {
      */
     public Path(int sampleCount) {
         this.sampleCount = sampleCount;
+        this.style = new TStyle();
     }
     
     /**
@@ -85,6 +88,7 @@ public abstract class Path implements PConstants {
      */
     public void draw(PGraphics g) {
         if (sampleCount != -1) {
+            style.apply(g);
             draw(g, sampleCount);
         }
     }
@@ -101,8 +105,7 @@ public abstract class Path implements PConstants {
     public Shape segment(float u1, float u2) {
         boolean inRange = (0 <= u1 && u1 <= 1 && 0 <= u2 && u2 <= 1);
         if (!inRange) {
-            throw new IllegalArgumentException(
-                    "draw(g, " + u1 + ", " + u2 + ") called with values outside the range 0 to 1.");
+            throw new IllegalArgumentException("draw(g, " + u1 + ", " + u2 + ") called with values outside the range 0 to 1.");
         }
 
         return new Shape(segmentPoints(u1, u2));
@@ -153,15 +156,13 @@ public abstract class Path implements PConstants {
      * trace(u2).
      * 
      * @param g A PGraphics object on which to draw the path
-     * @param u1 The 1D coordinate of the segment's start, a value between 0 and
-     *            1
+     * @param u1 The 1D coordinate of the segment's start, a value between 0 and 1
      * @param u2 The 1D coordinate of the segment's end, a value between 0 and 1
      */
     public void draw(PGraphics g, float u1, float u2) {
         boolean inRange = (0 <= u1 && u1 <= 1 && 0 <= u2 && u2 <= 1);
         if (!inRange) {
-            throw new IllegalArgumentException(
-                    "draw(g, " + u1 + ", " + u2 + ") called with values outside the range 0 to 1.");
+            throw new IllegalArgumentException("draw(g, " + u1 + ", " + u2 + ") called with values outside the range 0 to 1.");
         }
 
         // TODO WORK IN PROGRESS:
@@ -174,6 +175,7 @@ public abstract class Path implements PConstants {
         // }
         // continuousDraw(g, u1 + 0.001f, u2 - 0.001f);
 
+        style.apply(g);
         if (u1 > u2) {
             draw(g, u1, 1);
             draw(g, 0, u2);
@@ -291,6 +293,7 @@ public abstract class Path implements PConstants {
      * @param granularity The number of sample points.
      */
     public void draw(PGraphics g, int granularity) {
+        style.apply(g);
         float amt = 0;
         float dAmt = 1f / granularity;
         g.beginShape();
@@ -362,6 +365,86 @@ public abstract class Path implements PConstants {
      * @return The ith discontinuity as a value between 0 and 1
      */
     public abstract float getGap(int i);
+    
+    /**
+     * Sets the style of the Path.
+     * @param style the style
+     */
+    public void setStyle(PStyle style) {
+        this.style = new TStyle(style);
+    }
+    
+    /**
+     * Sets the style of the Path.
+     * @param style the style
+     */
+    public void setStyle(TStyle style) {
+        this.style = style;
+    }
+    
+    /**
+     * Sets the style of the Path to the current style of the PApplet.
+     * @param pa the PApplet
+     */
+    public void setStyle(PApplet pa) {
+        this.style = new TStyle(pa.getGraphics().getStyle());
+    }
+    
+    /**
+     * 
+     * @param strokeCap
+     */
+    public void setStrokeCap(int strokeCap) {
+        style.strokeCap = strokeCap;
+    }
+    
+    /**
+     * 
+     * @param strokeJoin
+     */
+    public void setStrokeJoin(int strokeJoin) {
+        style.strokeJoin = strokeJoin;
+    }
+    
+    /**
+     * 
+     * @param strokeWeight
+     */
+    public void setStrokeWeight(float strokeWeight) {
+        style.strokeWeight = strokeWeight;
+    }
+    
+    /**
+     * 
+     * @param fillColor
+     */
+    public void setFillColor(int fillColor) {
+        style.fillColor = fillColor;
+    }
+    
+    /**
+     * 
+     * @param strokeColor
+     */
+    public void setStrokeColor(int strokeColor) {
+        style.strokeColor = strokeColor;
+    }
+    
+    /**
+     * 
+     * @param stroke
+     */
+    public void setStroke(boolean stroke) {
+        style.stroke = stroke;
+    }
+    
+    /**
+     * 
+     * @param fill
+     */
+    public void setFill(boolean fill) {
+        style.fill = fill;
+    }
 
     /**
      * Returns the remainder of num / denom.
@@ -371,10 +454,11 @@ public abstract class Path implements PConstants {
      * @return The remainder of num / denom
      */
     public static float remainder(float num, float denom) {
-        if (num % denom >= 0)
+        if (num % denom >= 0) {
             return num % denom;
-        else
+        }           
+        else {
             return denom - ((-num) % denom);
+        }   
     }
-
 }

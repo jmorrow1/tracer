@@ -91,6 +91,7 @@ public class Shape extends Path {
     
     @Override
     public void draw(PGraphics g) {
+        style.apply(g);
         g.beginShape();
         for (int i=0; i<vertices2D.size(); i++) {
             Point pt = vertices2D.get(i);

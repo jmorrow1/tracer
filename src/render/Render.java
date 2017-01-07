@@ -7,6 +7,7 @@ import processing.core.PApplet;
 import processing.core.PConstants;
 import processing.core.PGraphics;
 import processing.core.PStyle;
+import tracer.TStyle;
 import tracer.Tracer;
 
 /**
@@ -18,16 +19,17 @@ import tracer.Tracer;
  */
 public abstract class Render implements PConstants {
     protected List<Tracer> ts;
-    protected RStyle style;
+    protected TStyle style;
 
     public Render(Tracer[] ts) {
         this(listify(ts));
-        style = new RStyle();
+        style = new TStyle();
+        PApplet pa = null;
     }
     
     public Render(List<Tracer> ts) {
         this.ts = ts;
-        style = new RStyle();
+        style = new TStyle();
     }
     
     public void step() {
@@ -56,42 +58,82 @@ public abstract class Render implements PConstants {
         return ts.size();
     }
     
+    /**
+     * Sets the style of the Render.
+     * @param style the style
+     */
     public void setStyle(PStyle style) {
-        this.style = new RStyle(style);
+        this.style = new TStyle(style);
     }
     
-    public void setStyle(RStyle style) {
+    /**
+     * Sets the style of the Render.
+     * @param style the style
+     */
+    public void setStyle(TStyle style) {
         this.style = style;
     }
     
+    /**
+     * Sets the style of the Render to the current style of the PApplet.
+     * @param pa the PApplet
+     */
     public void setStyle(PApplet pa) {
-        this.style = new RStyle(pa.getGraphics().getStyle());
+        this.style = new TStyle(pa.getGraphics().getStyle());
     }
 
+    /**
+     * 
+     * @param strokeCap
+     */
     public void setStrokeCap(int strokeCap) {
         style.strokeCap = strokeCap;
     }
     
+    /**
+     * 
+     * @param strokeJoin
+     */
     public void setStrokeJoin(int strokeJoin) {
         style.strokeJoin = strokeJoin;
     }
     
+    /**
+     * 
+     * @param strokeWeight
+     */
     public void setStrokeWeight(float strokeWeight) {
         style.strokeWeight = strokeWeight;
     }
     
+    /**
+     * 
+     * @param fillColor
+     */
     public void setFillColor(int fillColor) {
         style.fillColor = fillColor;
     }
     
+    /**
+     * 
+     * @param strokeColor
+     */
     public void setStrokeColor(int strokeColor) {
         style.strokeColor = strokeColor;
     }
     
+    /**
+     * 
+     * @param stroke
+     */
     public void setStroke(boolean stroke) {
         style.stroke = stroke;
     }
     
+    /**
+     * 
+     * @param fill
+     */
     public void setFill(boolean fill) {
         style.fill = fill;
     }

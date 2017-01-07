@@ -1,5 +1,6 @@
-package render;
+package tracer;
 
+import processing.core.PGraphics;
 import processing.core.PStyle;
 
 /**
@@ -7,13 +8,17 @@ import processing.core.PStyle;
  * @author James Morrow [jamesmorrowdesign.com]
  *
  */
-public class RStyle {
+public class TStyle {
     public int strokeCap, strokeJoin;
     public float strokeWeight;
     public int fillColor, strokeColor;
     public boolean stroke, fill;
     
-    public RStyle(PStyle style) {
+    /**
+     * 
+     * @param style The style
+     */
+    public TStyle(PStyle style) {
         this.strokeCap = style.strokeCap;
         this.strokeJoin = style.strokeJoin;
         this.strokeWeight = style.strokeWeight;
@@ -23,7 +28,17 @@ public class RStyle {
         this.fill = style.fill;
     }
     
-    public RStyle(int strokeCap, int strokeJoin, float strokeWeight, int fillColor, int strokeColor, boolean stroke, boolean fill) {
+    /**
+     * 
+     * @param strokeCap
+     * @param strokeJoin
+     * @param strokeWeight
+     * @param fillColor
+     * @param strokeColor
+     * @param stroke
+     * @param fill
+     */
+    public TStyle(int strokeCap, int strokeJoin, float strokeWeight, int fillColor, int strokeColor, boolean stroke, boolean fill) {
         this.strokeCap = strokeCap;
         this.strokeJoin = strokeJoin;
         this.strokeWeight = strokeWeight;
@@ -33,14 +48,40 @@ public class RStyle {
         this.fill = fill;
     }
     
-    public RStyle() {
+    /**
+     * 
+     */
+    public TStyle() {
         this(2, 8, 1.0f, -1, -16777216, true, true);
-
+    }
+    
+    /**
+     * Applies this style to the given PGraphics instance.
+     * @param g The PGraphics instance
+     */
+    public void apply(PGraphics g) {
+        g.strokeCap(strokeCap);
+        g.strokeJoin(strokeJoin);
+        g.strokeWeight(strokeWeight);
+        
+        if (fill) {
+            g.fill(fillColor);
+        }
+        else {
+            g.noFill();
+        }
+        
+        if (stroke) {
+            g.stroke(strokeColor);
+        }
+        else {
+            g.noStroke();
+        }      
     }
 
     @Override
     public String toString() {
-        return "RStyle [strokeCap=" + strokeCap + ", strokeJoin=" + strokeJoin + ", strokeWeight=" + strokeWeight
+        return "Style [strokeCap=" + strokeCap + ", strokeJoin=" + strokeJoin + ", strokeWeight=" + strokeWeight
                 + ", fillColor=" + fillColor + ", strokeColor=" + strokeColor + ", stroke=" + stroke + ", fill=" + fill
                 + "]";
     }

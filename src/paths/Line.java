@@ -68,6 +68,11 @@ public class Line extends Path {
 
     @Override
     public void draw(PGraphics g) {
+        if (style.stroke) {
+            g.strokeCap(style.strokeCap);
+            g.stroke(style.strokeColor);
+            g.strokeWeight(style.strokeWeight);
+        }
         g.line(a.x, a.y, b.x, b.y);
     }
 

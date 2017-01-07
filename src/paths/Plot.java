@@ -101,6 +101,7 @@ public class Plot extends Path {
     
     @Override
     public void draw(PGraphics g) {
+        style.apply(g);
         g.beginShape();
         for (int i=0; i<xs.length; i++) {
             g.vertex(rect.getX1() + xs[i] * rect.getWidth(), PApplet.map(ys[i], 0, 1, rect.getY2(), rect.getY1()));

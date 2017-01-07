@@ -107,6 +107,7 @@ public class Superellipse extends Path {
 
     @Override
     public void draw(PGraphics g) {
+        style.apply(g);
         draw(g, sampleCount);
     }
 

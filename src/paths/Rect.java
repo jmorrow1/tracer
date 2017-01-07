@@ -98,6 +98,7 @@ public class Rect extends Path {
 
     @Override
     public void draw(PGraphics g) {
+        style.apply(g);
         g.rectMode(CENTER);
         g.rect(cenx, ceny, width, height);
     }

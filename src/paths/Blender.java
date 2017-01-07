@@ -66,8 +66,9 @@ public class Blender<T extends Path, U extends Path> extends Path {
 
     @Override
     public void trace(Point pt, float amt) {
-        if (reversed)
+        if (reversed) {
             amt = PApplet.map(amt, 0, 1, 1, 0);
+        }
         a.trace(ptA, amt);
         b.trace(ptB, amt);
         pt.x = PApplet.lerp(ptA.x, ptB.x, blendAmt);

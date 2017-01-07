@@ -11,9 +11,7 @@ import tracer.Point;
  * @author James Morrow [jamesmorrowdesign.com]
  *
  */
-public class Ellipse extends Path {
-    
-    
+public class Ellipse extends Path { 
     private float x, y, xRadius, yRadius;
     private float perimeter;
     private boolean perimeterOutOfSync;
@@ -90,6 +88,7 @@ public class Ellipse extends Path {
 
     @Override
     public void draw(PGraphics g) {
+        style.apply(g);
         g.ellipseMode(PApplet.RADIUS);
         g.ellipse(x, y, xRadius, yRadius);
     }

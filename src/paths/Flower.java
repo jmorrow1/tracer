@@ -101,8 +101,9 @@ public class Flower extends Path {
 
     @Override
     public void trace(Point pt, float amt) {
-        if (reversed)
+        if (reversed) {
             amt *= -1;
+        }
         float alpha = amt * PApplet.TWO_PI * freq1;
         float beta = amt * PApplet.TWO_PI * freq2;
         float x = cen.x + xRadius * PApplet.cos(alpha);
@@ -119,8 +120,7 @@ public class Flower extends Path {
 
     @Override
     public String toString() {
-        return "Flower [cen=" + cen + ", xRadius=" + xRadius + ", yRadius= " + yRadius + ", freq1="
-                + freq1 + ", freq2=" + freq2 + "]";
+        return "Flower [cen=" + cen + ", xRadius=" + xRadius + ", yRadius= " + yRadius + ", freq1=" + freq1 + ", freq2=" + freq2 + "]";
     }
 
     /*******************************

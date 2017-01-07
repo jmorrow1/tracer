@@ -58,8 +58,10 @@ public class Composite<T extends Path, U extends Path> extends Path {
 
     @Override
     public void trace(Point pt, float amt) {
-        if (reversed)
+        if (reversed) {
             amt = PApplet.map(amt, 0, 1, 1, 0);
+        }
+           
         if (amt < 0.5f) {
             a.trace(pt, 2f * amt);
         } else {

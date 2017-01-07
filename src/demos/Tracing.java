@@ -45,6 +45,9 @@ public class Tracing extends PApplet {
 
     public void setup() {
         paths = initList();
+        for (Path p : paths) {
+            p.setStrokeWeight(2);
+        }
         reposition(paths);
     }
 
@@ -103,7 +106,6 @@ public class Tracing extends PApplet {
 
     private void drawPath(Path t) {
         noFill();
-        strokeWeight(2);
         t.draw(g);
 
         strokeWeight(6);
