@@ -2,7 +2,9 @@ package paths;
 
 import processing.core.PApplet;
 import processing.core.PGraphics;
+import processing.core.PStyle;
 import tracer.Point;
+import tracer.TStyle;
 
 /**
  * 
@@ -138,5 +140,96 @@ public class Composite<T extends Path, U extends Path> extends Path {
             return 0.5f + 0.5f * b.getGap(i);
 
         }
+    }
+    
+    @Override
+    public void setStyle(TStyle style) {
+        super.setStyle(style);
+        a.setStyle(style);
+        b.setStyle(style);
+    }
+    
+    @Override
+    public void setStyle(PStyle style) {
+        super.setStyle(style);
+        a.setStyle(style);
+        b.setStyle(style);
+    }
+    
+    @Override
+    public void setStyle(PApplet pa) {
+        super.setStyle(pa);
+        a.setStyle(pa);
+        b.setStyle(pa);
+    }
+    
+    /**
+     * 
+     * @param strokeCap
+     */
+    public void setStrokeCap(int strokeCap) {
+        style.strokeCap = strokeCap;
+        a.setStrokeCap(strokeCap);
+        b.setStrokeCap(strokeCap);
+    }
+    
+    /**
+     * 
+     * @param strokeJoin
+     */
+    public void setStrokeJoin(int strokeJoin) {
+        style.strokeJoin = strokeJoin;
+        a.setStrokeJoin(strokeJoin);
+        b.setStrokeJoin(strokeJoin);
+    }
+    
+    /**
+     * 
+     * @param strokeWeight
+     */
+    public void setStrokeWeight(float strokeWeight) {
+        style.strokeWeight = strokeWeight;
+        a.setStrokeWeight(strokeWeight);
+        b.setStrokeWeight(strokeWeight);
+    }
+    
+    /**
+     * 
+     * @param fillColor
+     */
+    public void setFillColor(int fillColor) {
+        style.fillColor = fillColor;
+        a.setFillColor(fillColor);
+        b.setFillColor(fillColor);
+    }
+    
+    /**
+     * 
+     * @param strokeColor
+     */
+    public void setStrokeColor(int strokeColor) {
+        style.strokeColor = strokeColor;
+        a.setStrokeColor(strokeColor);
+        b.setStrokeColor(strokeColor);
+    }
+    
+    /**
+     * 
+     * @param stroke
+     */
+    public void setStroke(boolean stroke) {
+        style.stroke = stroke;
+        a.setStroke(stroke);
+        b.setStroke(stroke);
+    }
+    
+    /**
+     * 
+     * @param fill
+     */
+    public void setFill(boolean fill) {
+        style.fill = fill;
+        a.setFill(fill);
+        b.setFill(fill);
     }
 }

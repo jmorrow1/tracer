@@ -40,7 +40,7 @@ public class Tracing extends PApplet {
     }
 
     public void settings() {
-        size(600, 600, P2D);
+        size(600, 600);
     }
 
     public void setup() {
@@ -102,6 +102,8 @@ public class Tracing extends PApplet {
         }
 
         u = (u + 0.005f) % 1f;
+        
+        println(frameRate);
     }
 
     private void drawPath(Path t) {
