@@ -236,4 +236,53 @@ public class Shape extends Path {
     public boolean isClosed() {
         return vertices2D.size() == 0 || vertices2D.get(vertices2D.size()-1).equals(vertices2D.get(0));
     }
+    
+    /**
+     * Converts an arbitrary type of Path into a Shape, using the sampleCount from the Path.
+     * @param path The path
+     * @return The Shape
+     */
+    public static Shape toShape(Path path) {
+        return toShape(path, path.getSampleCount());
+    }
+    
+    /**
+     * Converts an arbitrary type of Path into a Shape, using a given sampleCount.
+     * @param path The Path
+     * @param sampleCount The number of sample points to use
+     * @return The Shape
+     */
+    public static Shape toShape(Path path, int sampleCount) {
+        ArrayList<Point> pts = new ArrayList<Point>();
+        float u = 0;
+        float du = 1f / sampleCount;
+        for (int i=0; i<sampleCount; i++) {
+            pts.add(path.trace(u));
+            u += du;
+        }
+        return new Shape(pts);
+    }
+    
+    /**
+     * Blends two Paths and makes a Shape.
+     * @param a The first Path
+     * @param b The second Path
+     * @param amt A value from 0 to 1, determining how much to weight Path b over Path a.
+     * @param sampleCount The number of sample points to use
+     * @return The Shape
+     */
+    public static Shape blend(Path a, Path b, float amt, int sampleCount) {
+        ArrayList<Point> pts = new ArrayList<Point>();
+        float u = 0;
+        float du = 1f / sampleCount;
+        Point ptA = new Point(0, 0);
+        Point ptB = new Point(0, 0);
+        for (int i=0; i<sampleCount; i++) {
+            a.trace(ptA, amt);
+            b.trace(ptB, amt);
+            pts.add(Point.lerp(ptA, ptB, amt));
+            u += du;
+        }
+        return new Shape(pts);
+    }
 }

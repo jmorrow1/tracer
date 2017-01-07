@@ -159,4 +159,16 @@ public class Blender<T extends Path, U extends Path> extends Path {
         // TODO I don't know how to do this
         return -1;
     }
+    
+    /**
+     * Blends two Paths and makes a Shape.
+     * @param a The first Path
+     * @param b The second Path
+     * @param amt A value from 0 to 1, determining how much to weight Path b over Path a.
+     * @param sampleCount The number of sample points to use
+     * @return The Shape
+     */
+    public static Shape blend(Path a, Path b, float amt, int sampleCount) {
+        return Shape.blend(a, b, amt, sampleCount);
+    }
 }
