@@ -5,6 +5,7 @@ import java.util.Comparator;
 import java.util.List;
 
 import processing.core.PApplet;
+import processing.core.PGraphics;
 import tracer.Point;
 
 /**
@@ -72,6 +73,16 @@ public class Gesture extends Path {
      */
     public Gesture(List<SpaceTimePoint> vertices) {
         this.vertices = vertices;
+    }
+    
+    @Override
+    public void draw(PGraphics g) {
+        g.beginShape();
+        for (int i=0; i<vertices.size(); i++) {
+            SpaceTimePoint pt = vertices.get(i);
+            g.vertex(pt.pt.x, pt.pt.y);
+        }
+        g.endShape();
     }
 
     @Override
