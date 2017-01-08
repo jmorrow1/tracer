@@ -246,6 +246,11 @@ public class Arc extends Path {
             return -1;
         }
     }
+    
+    @Override
+    public boolean isGap(float u) {
+        return u == 0 || u == 1;
+    }
 
     @Override
     public Arc clone() {

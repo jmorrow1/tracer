@@ -172,4 +172,9 @@ public class Circle extends Path {
     public float getGap(int i) {
         return -1;
     }
+    
+    @Override
+    public boolean isGap(float u) {
+        return false;
+    }
 }

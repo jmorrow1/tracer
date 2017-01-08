@@ -44,7 +44,7 @@ import tracer.TStyle;
  *
  */
 public abstract class Path implements PConstants {
-    private final static Point pt = new Point(0, 0);
+    protected final static Point pt = new Point(0, 0);
     protected boolean reversed;
     protected int sampleCount;
     protected TStyle style;
@@ -366,6 +366,23 @@ public abstract class Path implements PConstants {
      */
     public abstract float getGap(int i);
     
+    /**
+     * Indicates whether or not there is a gap at the 1D coordinate u.
+     * @param u The 1D coordinate.
+     * @return True, if there is a gap and false otherwise.
+     */
+    public boolean isGap(float u) {
+        float u2 = (u == 0) ? 1
+                            : (u == 1) ? 0 
+                                       : u;
+        for (int i=0; i<getGapCount(); i++) {
+            if (u == getGap(i) || u2 == getGap(i)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
     /**
      * Sets the style of the Path.
      * @param style the style

@@ -11,7 +11,7 @@ import tracer.Point;
  *
  */
 public class CubicBezier extends Path {
-    private Point a1, c1, c2, a2; //anchor and control points
+    protected Point a1, c1, c2, a2; //anchor and control points
 
     /**************************
      ***** Initialization *****
@@ -72,11 +72,13 @@ public class CubicBezier extends Path {
      *************************/
 
     @Override
-    public void trace(Point pt, float amt) {
-        if (reversed)
-            amt = PApplet.map(amt, 0, 1, 1, 0);
-        pt.x = bezierPoint(a1.x, c1.x, c2.x, a2.x, amt);
-        pt.y = bezierPoint(a1.y, c1.y, c2.y, a2.y, amt);
+    public void trace(Point pt, float u) {
+        if (reversed) {
+            u = PApplet.map(u, 0, 1, 1, 0);
+        }
+            
+        pt.x = bezierPoint(a1.x, c1.x, c2.x, a2.x, u);
+        pt.y = bezierPoint(a1.y, c1.y, c2.y, a2.y, u);
     }
 
     @Override
@@ -100,7 +102,12 @@ public class CubicBezier extends Path {
 
     private static float bezierPoint(float a, float b, float c, float d, float t) {
         float t1 = 1.0f - t;
-        return a * t1 * t1 * t1 + 3 * b * t * t1 * t1 + 3 * c * t * t * t1 + d * t * t * t;
+        float t1Sq = t1 * t1;
+        float tSq = t * t;
+        return a * t1Sq * t1 +
+               3 * b * t * t1Sq +
+               3 * c * tSq * t1 +
+               d * tSq * t;
     }
 
     /*******************************

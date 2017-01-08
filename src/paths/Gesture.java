@@ -77,6 +77,7 @@ public class Gesture extends Path {
     
     @Override
     public void draw(PGraphics g) {
+        style.apply(g);
         g.beginShape();
         for (int i=0; i<vertices.size(); i++) {
             SpaceTimePoint pt = vertices.get(i);

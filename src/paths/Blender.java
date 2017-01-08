@@ -160,6 +160,12 @@ public class Blender<T extends Path, U extends Path> extends Path {
         return -1;
     }
     
+    @Override
+    public boolean isGap(float u) {
+        // TODO I don't know how to do this
+        return false;
+    }
+    
     /**
      * Blends two Paths and makes a Shape.
      * @param a The first Path
