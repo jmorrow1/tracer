@@ -5,6 +5,8 @@ import tracer.Point;
 
 /**
  * 
+ * A complex form created by two sinusoidal motions.
+ * 
  * @author James Morrow [jamesmorrowdesign.com]
  *
  */

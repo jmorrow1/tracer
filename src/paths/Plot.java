@@ -9,6 +9,8 @@ import tracer.Point;
 
 /**
  * 
+ * An x/y plot of data.
+ * 
  * @author James Morrow [jamesmorrowdesign.com]
  *
  */

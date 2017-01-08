@@ -9,11 +9,14 @@ import tracer.Point;
 
 /**
  * 
+ * Like a Shape but with temporal information attached to each vertex.
+ * Ideal for creating paths out of mouse motions.
+ * 
  * @author James Morrow [jamesmorrowdesign.com]
  *
  */
 public class Gesture extends Path {
-    protected List<GesturePoint> vertices = new ArrayList<GesturePoint>();
+    protected List<SpaceTimePoint> vertices = new ArrayList<SpaceTimePoint>();
     
     
     /**
@@ -35,7 +38,7 @@ public class Gesture extends Path {
         int n = PApplet.min(vertices.size(), ts.size());
         
         for (int i=0; i<n; i++) {
-            this.vertices.add(new GesturePoint(vertices.get(i), ts.get(i)));
+            this.vertices.add(new SpaceTimePoint(vertices.get(i), ts.get(i)));
         }    
         
         this.vertices.sort(GesturePointComparator.instance);
@@ -50,7 +53,7 @@ public class Gesture extends Path {
         int n = PApplet.min(vertices.length, ts.length);
         
         for (int i=0; i<n; i++) {
-            this.vertices.add(new GesturePoint(vertices[i], ts[i]));
+            this.vertices.add(new SpaceTimePoint(vertices[i], ts[i]));
         }
         
         this.vertices.sort(GesturePointComparator.instance);
@@ -60,14 +63,14 @@ public class Gesture extends Path {
      * An empty gesture.
      */
     public Gesture() {
-        this.vertices = new ArrayList<GesturePoint>();
+        this.vertices = new ArrayList<SpaceTimePoint>();
     }
     
     /**
      * 
      * @param vertices The vertices / time coordinates of the Path
      */
-    public Gesture(List<GesturePoint> vertices) {
+    public Gesture(List<SpaceTimePoint> vertices) {
         this.vertices = vertices;
     }
 
@@ -97,7 +100,7 @@ public class Gesture extends Path {
 
     @Override
     public void translate(float dx, float dy) {
-        for (GesturePoint g : vertices) {
+        for (SpaceTimePoint g : vertices) {
             g.pt.x += dx;
             g.pt.y += dy;
         }
@@ -131,15 +134,27 @@ public class Gesture extends Path {
         return vertices.size() == 0 || vertices.get(vertices.size()-1).equals(vertices.get(0));
     }
     
-    private float getStartTime() {
+    /**
+     * Gives the first time coordinate of the Gesture.
+     * @return The first time coordinate
+     */
+    public float getStartTime() {
         return (vertices.size() > 0) ? vertices.get(0).t : 0;
     }
     
-    private float getEndTime() {
+    /**
+     * Gives the final time coordinate of the Gesture.
+     * @return The final time coordinate
+     */
+    public float getEndTime() {
         return (vertices.size() > 0) ? vertices.get(vertices.size()-1).t : 0;
     }
     
-    private float getTotalTime() {
+    /**
+     * Gives the total time of the Gesture
+     * @return The total time of the Gesture
+     */
+    public float getTotalTime() {
         return getEndTime() - getStartTime();
     }
     
@@ -157,7 +172,7 @@ public class Gesture extends Path {
      * @param i The index
      * @return The vertex
      */
-    public GesturePoint getVertex(int i) {
+    public SpaceTimePoint getVertex(int i) {
         return vertices.get(i);
     }
     
@@ -186,26 +201,26 @@ public class Gesture extends Path {
      */
     public void addVertex(Point pt, float t) {
         if (t < getStartTime()) {
-            vertices.add(0, new GesturePoint(pt, t));
+            vertices.add(0, new SpaceTimePoint(pt, t));
         }
         else if (t < getEndTime()) {
             for (int i=0; i<vertices.size(); i++) {
-                GesturePoint g = vertices.get(i);
+                SpaceTimePoint g = vertices.get(i);
                 if (t == g.t) {
-                    vertices.set(i, new GesturePoint(pt, t));
+                    vertices.set(i, new SpaceTimePoint(pt, t));
                     break;
                 }
                 else if (t > g.t) {
-                    vertices.add(i+1, new GesturePoint(pt, t));
+                    vertices.add(i+1, new SpaceTimePoint(pt, t));
                     break;
                 }
             }
         }
         else if (t == getEndTime() && vertices.size() > 0) {
-            vertices.set(vertices.size()-1, new GesturePoint(pt, t));
+            vertices.set(vertices.size()-1, new SpaceTimePoint(pt, t));
         }
         else {
-            vertices.add(new GesturePoint(pt, t));
+            vertices.add(new SpaceTimePoint(pt, t));
         }
     }
     
@@ -213,13 +228,13 @@ public class Gesture extends Path {
      * Adds a vertex / time coordinate to the Path.
      * @param g The vertex / time coordinate
      */
-    public void addVertex(GesturePoint g) {
+    public void addVertex(SpaceTimePoint g) {
         if (g.t < getStartTime()) {
             vertices.add(0, g);
         }
         else if (g.t < getEndTime()) {
             for (int i=0; i<vertices.size(); i++) {
-                GesturePoint h = vertices.get(i);
+                SpaceTimePoint h = vertices.get(i);
                 if (g.t == h.t) {
                     vertices.set(i, g);
                     break;
@@ -255,7 +270,7 @@ public class Gesture extends Path {
      */
     public void removeVertex(float t) {
         for (int i=0; i<vertices.size(); i++) {
-            GesturePoint g = vertices.get(i);
+            SpaceTimePoint g = vertices.get(i);
             if (t == g.t) {
                 vertices.remove(i);
                 break;
@@ -263,18 +278,24 @@ public class Gesture extends Path {
         }
     }
 
-    public static class GesturePoint {
+    /**
+     * A coordinate in space and in time.
+     * 
+     * @author James Morrow [jamesmorrowdesign.com]
+     *
+     */
+    public static class SpaceTimePoint {
         public Point pt;
         public float t;
         
-        public GesturePoint(Point pt, float t) {
+        public SpaceTimePoint(Point pt, float t) {
             this.pt = pt;
             this.t = t;
         }
         
         @Override
-        public GesturePoint clone() {
-            return new GesturePoint(pt.clone(), t);
+        public SpaceTimePoint clone() {
+            return new SpaceTimePoint(pt.clone(), t);
         }
 
         @Override
@@ -283,13 +304,13 @@ public class Gesture extends Path {
         }
     }
 
-    public static class GesturePointComparator implements Comparator<GesturePoint> {
+    private static class GesturePointComparator implements Comparator<SpaceTimePoint> {
         public static GesturePointComparator instance = new GesturePointComparator();
         
         private GesturePointComparator() {}
         
         @Override
-        public int compare(GesturePoint a, GesturePoint b) {
+        public int compare(SpaceTimePoint a, SpaceTimePoint b) {
             if (a.t < b.t) {
                 return -1;
             }

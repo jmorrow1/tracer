@@ -9,6 +9,8 @@ import tracer.Point;
 
 /**
  * 
+ * A sequence of vertices attached by lines, analogous to using Processing's beginShape(), vertex(), and endShape() functions.
+ * 
  * @author James Morrow [jamesmorrowdesign.com]
  *
  */
