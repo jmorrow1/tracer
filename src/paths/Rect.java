@@ -12,13 +12,10 @@ import tracer.Point;
  *
  */
 public class Rect extends Path {
-    private float cenx, ceny, width, height;
-    private float perimeter;
-    private float[] breaks = new float[4];
-
-    /**************************
-     ***** Initialization *****
-     **************************/
+    protected Point ab, cd;
+    protected int rectMode;
+    protected float[] vertices = new float[4]; // one-dimensional coordinates
+    protected float perimeter;
 
     /**
      * 
@@ -34,272 +31,169 @@ public class Rect extends Path {
      *            can be CENTER, RADIUS, CORNER, or CORNERS.
      */
     public Rect(float a, float b, float c, float d, int rectMode) {
-        if (rectMode == PApplet.CENTER) {
-            this.cenx = a;
-            this.ceny = b;
-            this.width = c;
-            this.height = d;
-        } else if (rectMode == PApplet.RADIUS) {
-            this.cenx = a;
-            this.ceny = b;
-            this.width = 2 * c;
-            this.height = 2 * d;
-        } else if (rectMode == PApplet.CORNER) {
-            this.width = c;
-            this.height = d;
-            this.cenx = a + 0.5f * width;
-            this.ceny = b + 0.5f * height;
-        } else if (rectMode == PApplet.CORNERS) {
-            this.width = c - a;
-            this.height = d - b;
-            this.cenx = a + 0.5f * width;
-            this.ceny = b + 0.5f * height;
-        }
-        recompute();
+        set(a, b, c, d, rectMode);
+    }
+
+    /**
+     * 
+     * @param ab the 1st and 2nd rect arguments, whose meaning is determined by
+     *            the given rectMode
+     * @param c the 3rd rect argument, whose meaning is determined by the given
+     *            rectMode
+     * @param d the 4th rect argument, whose meaning is determined by the given
+     *            rectMode
+     * @param rectMode Determines the meaning of a, b, c, and d. The rectMode
+     *            can be CENTER, RADIUS, CORNER, or CORNERS.
+     */
+    public Rect(Point ab, float c, float d, int rectMode) {
+        set(ab, c, d, rectMode);
+    }
+
+    /**
+     * 
+     * @param ab the 1st and 2nd rect arguments, whose meaning is determined by
+     *            the given rectMode
+     * @param cd the 3rd and 4th rect argument, whose meaning is determined by
+     *            the given rectMode
+     * @param rectMode Determines the meaning of a, b, c, and d. The rectMode
+     *            can be CENTER, RADIUS, CORNER, or CORNERS.
+     */
+    public Rect(Point ab, Point cd, int rectMode) {
+        set(ab, cd, rectMode);
     }
 
     /**
      * Copy constructor.
      * 
-     * @param r the Rect to copy
+     * @param rect The rectangle to copy
      */
-    public Rect(Rect r) {
-        this(r.cenx, r.ceny, r.width, r.height, PApplet.CENTER);
-        setSampleCount(r.sampleCount);
+    public Rect(Rect rect) {
+        set(new Point(rect.ab), new Point(rect.cd), rect.rectMode);
+        setSampleCount(rect.sampleCount);
     }
 
     /**
      * Easy constructor.
      * 
-     * @param x The x-coordinate of the path.
-     * @param y The y-coordinate of the path.
-     * @param r The radius of the path.
+     * @param x The x-coordinate of the Path
+     * @param y The y-coordinate of the Path
+     * @param r The maximum radius of the Path
      */
     public Rect(float x, float y, float r) {
-        this(x, y, r, r, PApplet.RADIUS);
+        set(x, y, r, r, RADIUS);
     }
 
-    @Override
-    public Rect clone() {
-        return new Rect(this);
+    /**
+     * 
+     * Sets the position and size of the rectangle.
+     * 
+     * @param ab the 1st and 2nd rect arguments, whose meaning is determined by
+     *            the given rectMode
+     * @param cd the 3rd and 4th rect argument, whose meaning is determined by
+     *            the given rectMode
+     * @param rectMode Determines the meaning of a, b, c, and d. The rectMode
+     *            can be CENTER, RADIUS, CORNER, or CORNERS.
+     */
+    public void set(Point ab, Point cd, int rectMode) {
+        switch (rectMode) {
+        case CORNERS:
+            this.ab = ab;
+            this.cd = cd;
+            break;
+        case CORNER:
+        case CENTER:
+        case RADIUS:
+            this.ab = ab;
+            this.cd = new Point(cd);
+            break;
+        default:
+            System.err.println("Invalid rectMode. Use CORNERS, CORNER, CENTER, or RADIUS.");
+            set(ab, cd, CORNER);
+            break;
+        }
+        this.rectMode = rectMode;
+
+        setHelperFields();
     }
 
-    private void recompute() {
-        perimeter = width * 2 + height * 2;
-        breaks[0] = width / perimeter;
-        breaks[1] = 0.5f;
-        breaks[2] = 0.5f + breaks[0];
-        breaks[3] = 1;
+    /**
+     * 
+     * Sets the position and size of the rectangle.
+     * 
+     * @param ab the 1st and 2nd rect arguments, whose meaning is determined by
+     *            the given rectMode
+     * @param c the 3rd rect argument, whose meaning is determined by the given
+     *            rectMode
+     * @param d the 4th rect argument, whose meaning is determined by the given
+     *            rectMode
+     * @param rectMode Determines the meaning of a, b, c, and d. The rectMode
+     *            can be CENTER, RADIUS, CORNER, or CORNERS.
+     */
+    public void set(Point ab, float c, float d, int rectMode) {
+        set(ab, new Point(c, d), rectMode);
     }
 
-    /*************************
-     ***** Functionality *****
-     *************************/
+    /**
+     * 
+     * Sets the position and size of the rectangle.
+     * 
+     * @param a the 1st rect argument, whose meaning is determined by the given
+     *            rectMode
+     * @param b the 2nd rect argument, whose meaning is determined by the given
+     *            rectMode
+     * @param c the 3rd rect argument, whose meaning is determined by the given
+     *            rectMode
+     * @param d the 4th rect argument, whose meaning is determined by the given
+     *            rectMode
+     * @param rectMode Determines the meaning of a, b, c, and d. The rectMode
+     *            can be CENTER, RADIUS, CORNER, or CORNERS.
+     */
+    public void set(float a, float b, float c, float d, int rectMode) {
+        set(new Point(a, b), new Point(c, d), rectMode);
+    }
 
     @Override
     public void draw(PGraphics g) {
-        style.apply(g);
-        g.rectMode(CENTER);
-        g.rect(cenx, ceny, width, height);
+        g.rectMode(rectMode);
+        g.rect(ab.x, ab.y, cd.x, cd.y);
     }
 
-    // @Override
-    // public void draw(PGraphics g, float u1, float u2) {
-    // boolean inRange = (0 <= u1 && u1 <= 1 && 0 <= u2 && u2 <= 1);
-    // if (!inRange) {
-    // throw new IllegalArgumentException("draw(g, " + u1 + ", " + u2 + ")
-    // called with values outside the range 0 to 1.");
-    // }
-    //
-    // if (u1 > u2) {
-    // draw(g, u1, 1);
-    // draw(g, 0, u2);
-    // }
-    // else {
-    //
-    // g.beginShape();
-    //
-    // trace(pt, u1);
-    // g.vertex(pt.x, pt.y);
-    // for (int i=0; i<breaks.length; i++) {
-    // float amt = breaks[i];
-    // if (u1 < amt) {
-    // if (amt < u2) {
-    // trace(pt, amt);
-    // g.vertex(pt.x, pt.y);
-    // }
-    // else {
-    // break;
-    // }
-    // }
-    // }
-    // trace(pt, u2);
-    // g.vertex(pt.x, pt.y);
-    //
-    // g.endShape();
-    //
-    // }
-    // }
-
     @Override
-    public void trace(Point pt, float amt) {
-        if (reversed)
-            amt = PApplet.map(amt, 0, 1, 1, 0);
-        if (amt < breaks[0]) {
-            amt = PApplet.map(amt, 0, breaks[0], 0, 1);
-            float x = PApplet.lerp(getX1(), getX2(), amt);
-            pt.x = x;
+    public void trace(Point pt, float u) {
+        if (reversed) {
+            u = PApplet.map(u, 0, 1, 1, 0);
+        }
+
+        if (0 <= u && u < vertices[1]) {
+            u = PApplet.map(u, 0, vertices[1], 0, 1);
+            pt.x = getX1() + u * getWidth();
             pt.y = getY1();
-        } else if (amt < breaks[1]) {
-            amt = PApplet.map(amt, breaks[0], breaks[1], 0, 1);
-            float y = PApplet.lerp(getY1(), getY2(), amt);
+        } else if (u < vertices[2]) {
+            u = PApplet.map(u, vertices[1], vertices[2], 0, 1);
             pt.x = getX2();
-            pt.y = y;
-        } else if (amt < breaks[2]) {
-            amt = PApplet.map(amt, breaks[1], breaks[2], 0, 1);
-            float x = PApplet.lerp(getX2(), getX1(), amt);
-            pt.x = x;
+            pt.y = getY1() + u * getHeight();
+        } else if (u < vertices[3]) {
+            u = PApplet.map(u, vertices[2], vertices[3], 0, 1);
+            pt.x = getX2() - u * getWidth();
             pt.y = getY2();
-        } else {
-            amt = PApplet.map(amt, breaks[2], breaks[3], 0, 1);
-            float y = PApplet.lerp(getY2(), getY1(), amt);
+        } else if (u < 1) {
+            u = PApplet.map(u, vertices[3], 1, 0, 1);
             pt.x = getX1();
-            pt.y = y;
+            pt.y = getY2() - u * getHeight();
         }
     }
 
-    private boolean amtsEqual(float a, float b) {
-        return amtsEqual(a, b, getTotalDistance());
-    }
-
-    private boolean amtsEqual(float a, float b, float perimeter) {
-        return PApplet.abs(a - b) <= (2f / perimeter);
-    }
-
-    public boolean isVertexLocation(float amt) {
-        return amtsEqual(amt, breaks[0]) || amtsEqual(amt, breaks[1]) || amtsEqual(amt, breaks[2])
-                || amtsEqual(amt, breaks[3]);
+    @Override
+    public Path clone() {
+        return new Rect(this);
     }
 
     @Override
     public void translate(float dx, float dy) {
-        cenx += dx;
-        ceny += dy;
-    }
-
-    public boolean inside(float x, float y) {
-        return this.getX1() <= x && x <= this.getX2() && this.getY1() <= y && y <= this.getY2();
-    }
-
-    /*******************************
-     ***** Getters and Setters *****
-     *******************************/
-
-    @Override
-    public float getTotalDistance() {
-        return perimeter;
-    }
-
-    public float getCenx() {
-        return cenx;
-    }
-
-    public float getCeny() {
-        return ceny;
-    }
-
-    public float getWidth() {
-        return width;
-    }
-
-    public float getHeight() {
-        return height;
-    }
-
-    /**
-     * 
-     * @return the center x-coordinate of the rectangle
-     */
-    public float setCenx() {
-        return cenx;
-    }
-
-    /**
-     * 
-     * @return the center y-coordinate of the rectangle
-     */
-    public float setCeny() {
-        return ceny;
-    }
-
-    /**
-     * 
-     * @return the rectangle's leftmost x-coordinate
-     */
-    public float getX1() {
-        return cenx - 0.5f * width;
-    }
-
-    /**
-     * 
-     * @return the rectangle's uppermost y-coordinate
-     */
-    public float getY1() {
-        return ceny - 0.5f * height;
-    }
-
-    public void setX1(float x1) {
-        this.cenx = x1 + width / 2;
-    }
-
-    public void setY1(float y1) {
-        this.ceny = y1 + height / 2;
-    }
-
-    /**
-     * 
-     * @return the rectangle's rightmost x-coordinate
-     */
-    public float getX2() {
-        return cenx + 0.5f * width;
-    }
-
-    /**
-     * 
-     * @return the rectangle's lowermost y-coordinate
-     */
-    public float getY2() {
-        return ceny + 0.5f * height;
-    }
-
-    /**
-     * Set the width of the rectangle to the given float
-     * 
-     * @param width the width
-     */
-    public void setWidth(float width) {
-        this.width = width;
-        recompute();
-    }
-
-    /**
-     * Set the height of the rectangle to the given float
-     * 
-     * @param height the height
-     */
-    public void setHeight(float height) {
-        this.height = height;
-        recompute();
-    }
-
-    public void setCenter(float cenx, float ceny) {
-        this.cenx = cenx;
-        this.ceny = ceny;
-    }
-
-    @Override
-    public String toString() {
-        return "Rect [cenx=" + cenx + ", ceny=" + ceny + ", width=" + width + ", height=" + height + "]";
+        ab.translate(dx, dy);
+        if (rectMode == CORNERS) {
+            cd.translate(dx, dy);
+        }
     }
 
     @Override
@@ -311,4 +205,182 @@ public class Rect extends Path {
     public float getGap(int i) {
         return -1;
     }
+
+    /**
+     * Gives the center x-coordinate of the rectangle.
+     * 
+     * @return The center x-coordinate of the rectangle
+     */
+    public float getCenx() {
+        switch (rectMode) {
+            case CENTER:
+            case RADIUS:
+                return ab.x;
+            case CORNER:
+                return ab.x + 0.5f * cd.x;
+            case CORNERS:
+                return ab.x + 0.5f * (cd.x - ab.x);
+            default:
+                return -1;
+        }
+    }
+
+    /**
+     * Gives the center y-coordinate of the rectangle
+     * 
+     * @return The center y-coordinate of the rectangle
+     */
+    public float getCeny() {
+        switch (rectMode) {
+            case CENTER:
+            case RADIUS:
+                return ab.y;
+            case CORNER:
+                return ab.y + 0.5f * cd.y;
+            case CORNERS:
+                return ab.y + 0.5f * (cd.y - ab.y);
+            default:
+                return -1;
+        }
+    }
+
+    /**
+     * Gives the minimum x-value of the rectangle.
+     * 
+     * @return The minimum x-value of the rectangle
+     */
+    public float getX1() {
+        switch (rectMode) {
+            case CENTER:
+                return ab.x - 0.5f * cd.x;
+            case RADIUS:
+                return ab.x - cd.x;
+            case CORNER:
+            case CORNERS:
+                return ab.x;
+            default:
+                return -1;
+        }
+    }
+
+    /**
+     * Gives the minimum y-value of the rectangle
+     * 
+     * @return The minimum y-value of the rectangle
+     */
+    public float getY1() {
+        switch (rectMode) {
+            case CENTER:
+                return ab.y - 0.5f * cd.y;
+            case RADIUS:
+                return ab.y - cd.y;
+            case CORNER:
+            case CORNERS:
+                return ab.y;
+            default:
+                return -1;
+        }
+    }
+
+    /**
+     * Gives the maximum x-value of the rectangle.
+     * 
+     * @return The maximum x-value of the rectangle
+     */
+    public float getX2() {
+        switch (rectMode) {
+            case CENTER:
+                return ab.x + 0.5f * cd.x;
+            case RADIUS:
+                return ab.x + cd.x;
+            case CORNER:
+                return ab.x + cd.x;
+            case CORNERS:
+                return cd.x;
+            default:
+                return -1;
+        }
+    }
+
+    /**
+     * Gives the maximum y-value of the rectangle.
+     * 
+     * @return The maximum y-value of the rectangle
+     */
+    public float getY2() {
+        switch (rectMode) {
+            case CENTER:
+                return ab.y + 0.5f * cd.y;
+            case RADIUS:
+                return ab.y + cd.y;
+            case CORNER:
+                return ab.y + cd.y;
+            case CORNERS:
+                return cd.y;
+            default:
+                return -1;
+        }
+    }
+
+    /**
+     * Gives the width of the rectangle
+     * 
+     * @return The width of the rectangle
+     */
+    public float getWidth() {
+        switch (rectMode) {
+            case CENTER:
+            case CORNER:
+                return cd.x;
+            case RADIUS:
+                return 2f * cd.x;
+            case CORNERS:
+                return cd.x - ab.x;
+            default:
+                return -1;
+        }
+    }
+
+    /**
+     * Gives the height of the rectangle.
+     * 
+     * @return The height of the rectangle
+     */
+    public float getHeight() {
+        switch (rectMode) {
+            case CENTER:
+            case CORNER:
+                return cd.y;
+            case RADIUS:
+                return 2f * cd.y;
+            case CORNERS:
+                return cd.y - ab.y;
+            default:
+                return -1;
+        }
+    }
+
+    private void setHelperFields() {
+        perimeter = 2f * (getX2() - getX1()) + 2f * (getY2() - getY1());
+        
+        if (vertices == null) {
+            vertices = new float[4];
+        }
+
+        vertices[0] = 0;
+        vertices[1] = (getX2() - getX1()) / perimeter;
+        vertices[2] = 0.5f;
+        vertices[3] = 0.5f + vertices[1];
+    }
+
+    @Override
+    public float getTotalDistance() {
+        return perimeter;
+    }
+
+    @Override
+    public String toString() {
+        return "Rect [x1=" + getX1() + ", y1=" + getY1() + ", width=" + getWidth() + ", height=" + getHeight() + "]";
+    }
+
 }

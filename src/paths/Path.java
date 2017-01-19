@@ -367,7 +367,7 @@ public abstract class Path implements PConstants {
     public abstract float getGap(int i);
     
     /**
-     * Indicates whether or not there is a gap at the 1D coordinate u.
+     * Indicates whether or not there is a gap exactly at the 1D coordinate u.
      * @param u The 1D coordinate.
      * @return True, if there is a gap and false otherwise.
      */
@@ -382,6 +382,57 @@ public abstract class Path implements PConstants {
         }
         return false;
     }
+    
+    /**
+     * Indicates whether or not there is a gap between the 1D coordinates u1 and u2
+     * @param u1 The first 1D coordinate
+     * @param u2 The second 1D coordinate
+     * @return True, if there is a gap and false otherwise
+     */
+    public boolean isGap(float u1, float u2) {
+        for (int i=0; i<getGapCount(); i++) {
+            float gap = getGap(i);
+            if (u1 < gap && gap < u2) {
+                return true;
+            }
+        }
+        return false;
+    }
+    
+//    /**
+//     * Gives the number of vertices in the Path.
+//     * @return The number of vertices in the Path
+//     */
+//    public int getVertexCount() {
+//        return sampleCount;
+//    }
+//    
+//    /**
+//     * Returns the 1D coordinate of the ith vertex in the Path.
+//     * @param i The index
+//     * @return The 1D coordinate of the ith vertex
+//     */
+//    public float getVertex(int i) {
+//        
+//    }
+//    
+//    /**
+//     * Indicates whether or not there is a vertex between the 1D coordinates u1 and u2
+//     * @param u1 The first 1D coordinate
+//     * @param u2 The second 1D coordinate
+//     * @return True, if there is a vertex and false otherwise
+//     */
+//    public boolean isVertex(float u) {
+//        float u2 = (u == 0) ? 1
+//                            : (u == 1) ? 0 
+//                                       : u;
+//        for (int i=0; i<getVertexCount(); i++) {
+//            if (u == getVertex(i) || u2 == getVertex(i)) {
+//                return true;
+//            }
+//        }
+//        return false;
+//    }
 
     /**
      * Sets the style of the Path.

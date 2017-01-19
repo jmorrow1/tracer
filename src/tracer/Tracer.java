@@ -3,6 +3,7 @@ package tracer;
 import ease.Easing;
 import ease.Easing.Linear;
 import paths.Path;
+import processing.core.PApplet;
 
 /**
  * A Point that moves along a Path at some rate of speed.
@@ -29,7 +30,7 @@ public class Tracer extends Point {
 
     public Tracer(Path path, float startu, float du, Easing easing) {
         super(path.trace(startu));
-        this.u = startu % 1;
+        this.u = Path.remainder(startu, 1f);
         this.du = du;
         this.path = path;
         this.easing = easing;
