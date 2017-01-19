@@ -133,7 +133,16 @@ public class Rect extends Path {
      *            can be CENTER, RADIUS, CORNER, or CORNERS.
      */
     public void set(Point ab, float c, float d, int rectMode) {
-        set(ab, new Point(c, d), rectMode);
+        if (cd == null) {
+            set(ab, new Point(c, d), rectMode);
+        }
+        else {
+            this.ab = ab;
+            cd.x = c;
+            cd.y = d;
+            this.rectMode = rectMode;
+            setHelperFields();
+        }
     }
 
     /**
@@ -152,7 +161,17 @@ public class Rect extends Path {
      *            can be CENTER, RADIUS, CORNER, or CORNERS.
      */
     public void set(float a, float b, float c, float d, int rectMode) {
-        set(new Point(a, b), new Point(c, d), rectMode);
+        if (ab == null || cd == null) {
+            set(new Point(a, b), new Point(c, d), rectMode);
+        }
+        else {
+            ab.x = a;
+            ab.y = b;
+            cd.x = c;
+            cd.y = d;
+            this.rectMode = rectMode;
+            setHelperFields();
+        }
     }
 
     @Override

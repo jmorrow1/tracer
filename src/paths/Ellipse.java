@@ -93,21 +93,30 @@ public class Ellipse extends Path {
      * 
      * Sets the position and size of the ellipse.
      * 
-     * @param ab the 1st and 2nd rect arguments, whose meaning is determined by the given ellipseMode
-     * @param c the 3rd rect argument, whose meaning is determined by the given ellipseMode
-     * @param d the 4th rect argument, whose meaning is determined by the given ellipseMode
+     * @param ab the 1st and 2nd ellipse arguments, whose meaning is determined by the given ellipseMode
+     * @param c the 3rd ellipse argument, whose meaning is determined by the given ellipseMode
+     * @param d the 4th ellipse argument, whose meaning is determined by the given ellipseMode
      * @param ellipseMode Determines the meaning of a, b, c, and d. The ellipseMode can be CENTER, RADIUS, CORNER, or CORNERS.
      */
     public void set(Point ab, float c, float d, int ellipseMode) {
-        set(ab, new Point(c, d), ellipseMode);
+        if (ab == null || cd == null) {
+            set(ab, new Point(c, d), ellipseMode);
+        }
+        else {
+            this.ab = ab;
+            cd.x = c;
+            cd.y = d;
+            this.ellipseMode = ellipseMode;
+            setHelperFields();
+        }
     }
     
     /**
      * 
      * Sets the position and size of the ellipse.
      * 
-     * @param ab the 1st and 2nd rect arguments, whose meaning is determined by the given ellipseMode
-     * @param cd the 3rd and 4th rect argument, whose meaning is determined by the given ellipseMode
+     * @param ab the 1st and 2nd ellipse arguments, whose meaning is determined by the given ellipseMode
+     * @param cd the 3rd and 4th ellipse argument, whose meaning is determined by the given ellipseMode
      * @param ellipseMode Determines the meaning of a, b, c, and d. The ellipseMode can be CENTER, RADIUS, CORNER, or CORNERS.
      */
     public void set(Point ab, Point cd, int ellipseMode) {
