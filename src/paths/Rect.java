@@ -12,8 +12,11 @@ import tracer.Point;
  *
  */
 public class Rect extends Path {
+    //definition
     protected Point ab, cd;
     protected int rectMode;
+    
+    //helper fields
     protected float[] vertices = new float[4]; // one-dimensional coordinates
     protected float perimeter;
 
@@ -96,20 +99,20 @@ public class Rect extends Path {
      */
     public void set(Point ab, Point cd, int rectMode) {
         switch (rectMode) {
-        case CORNERS:
-            this.ab = ab;
-            this.cd = cd;
-            break;
-        case CORNER:
-        case CENTER:
-        case RADIUS:
-            this.ab = ab;
-            this.cd = new Point(cd);
-            break;
-        default:
-            System.err.println("Invalid rectMode. Use CORNERS, CORNER, CENTER, or RADIUS.");
-            set(ab, cd, CORNER);
-            break;
+            case CORNERS:
+                this.ab = ab;
+                this.cd = cd;
+                break;
+            case CORNER:
+            case CENTER:
+            case RADIUS:
+                this.ab = ab;
+                this.cd = new Point(cd);
+                break;
+            default:
+                System.err.println("Invalid rectMode. Use CORNERS, CORNER, CENTER, or RADIUS.");
+                set(ab, cd, CORNER);
+                break;
         }
         this.rectMode = rectMode;
 
@@ -154,6 +157,7 @@ public class Rect extends Path {
 
     @Override
     public void draw(PGraphics g) {
+        style.apply(g);
         g.rectMode(rectMode);
         g.rect(ab.x, ab.y, cd.x, cd.y);
     }

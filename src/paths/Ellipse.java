@@ -12,9 +12,13 @@ import tracer.Point;
  *
  */
 public class Ellipse extends Path { 
-    private float x, y, xRadius, yRadius;
-    private float perimeter;
-    private boolean perimeterOutOfSync;
+    //definition
+    protected Point ab, cd;
+    protected int ellipseMode;
+    
+    //helper fields
+    protected float perimeter;
+    protected boolean perimeterOutOfSync; //flag
 
     /**
      * Constructs an Ellipse analogously to Processing's native ellipse()
@@ -22,47 +26,29 @@ public class Ellipse extends Path {
      * <a href="https://processing.org/reference/ellipse_.html">Processing
      * documentation</a> for more information.
      * 
-     * @param a the 1st ellipse argument, whose meaning is determined by the
-     *            given ellipseMode
-     * @param b the 2nd ellipse argument, whose meaning is determined by the
-     *            given ellipseMode
-     * @param c the 3rd ellipse argument, whose meaning is determined by the
-     *            given ellipseMode
-     * @param d the 4th ellipse argument, whose meaning is determined by the
-     *            given ellipseMode
-     * @param ellipseMode Determines the meaning of a, b, c, and d. The
-     *            ellipseMode can be CENTER, RADIUS, CORNER, or CORNERS.
+     * @param a the 1st ellipse argument, whose meaning is determined by the given ellipseMode
+     * @param b the 2nd ellipse argument, whose meaning is determined by the given ellipseMode
+     * @param c the 3rd ellipse argument, whose meaning is determined by the given ellipseMode
+     * @param d the 4th ellipse argument, whose meaning is determined by the given ellipseMode
+     * @param ellipseMode Determines the meaning of a, b, c, and d. The ellipseMode can be CENTER, RADIUS, CORNER, or CORNERS
      */
     public Ellipse(float a, float b, float c, float d, int ellipseMode) {
-        switch (ellipseMode) {
-        case PApplet.RADIUS:
-            this.x = a;
-            this.y = b;
-            this.xRadius = c;
-            this.yRadius = d;
-            break;
-        case PApplet.CENTER:
-            this.x = a;
-            this.y = b;
-            this.xRadius = c / 2f;
-            this.yRadius = d / 2f;
-            break;
-        case PApplet.CORNER:
-            this.xRadius = c / 2f;
-            this.yRadius = d / 2f;
-            this.x = a + xRadius;
-            this.y = b + yRadius;
-            break;
-        case PApplet.CORNERS:
-            this.xRadius = (c - a) / 2f;
-            this.yRadius = (d - b) / 2f;
-            this.x = a + xRadius;
-            this.y = b + yRadius;
-            break;
-        }
-        recomputePerimeter();
+        set(a, b, c, d, ellipseMode);
+    }
+    
+    public Ellipse(Point ab, float c, float d, int ellipseMode) {
+        
+    }
+    
+    public Ellipse(Point ab, Point cd, int ellipseMode) {
+        
     }
 
+    /**
+     * Copy constructor.
+     * 
+     * @param ellipse The ellipse to copy
+     */
     public Ellipse(Ellipse ellipse) {
         this(ellipse.getCenx(), ellipse.getCeny(), ellipse.getWidth(), ellipse.getHeight(), PApplet.CENTER);
         setSampleCount(ellipse.sampleCount);
@@ -76,21 +62,80 @@ public class Ellipse extends Path {
      * @param r The radius of the path.
      */
     public Ellipse(float x, float y, float r) {
-        this(x, y, r, r, PApplet.RADIUS);
+        set(x, y, r, r, PApplet.RADIUS);
     }
-
-    private void recomputePerimeter() {
-        float a = PApplet.max(xRadius, yRadius);
-        float b = PApplet.min(xRadius, yRadius);
-        perimeter = PApplet.PI * (3 * (a + b) - PApplet.sqrt((3 * a + b) * (a + 3 * b)));
-        perimeterOutOfSync = false;
+    
+    /**
+     * 
+     * Sets the position and size of the Ellipse.
+     * 
+     * @param a the 1st ellipse argument, whose meaning is determined by the given ellipseMode
+     * @param b the 2nd ellipse argument, whose meaning is determined by the given ellipseMode
+     * @param c the 3rd ellipse argument, whose meaning is determined by the given ellipseMode
+     * @param d the 4th ellipse argument, whose meaning is determined by the given ellipseMode
+     * @param ellipseMode Determines the meaning of a, b, c, and d. The ellipseMode can be CENTER, RADIUS, CORNER, or CORNERS
+     */
+    public void set(float a, float b, float c, float d, int ellipseMode) {
+        if (ab == null || cd == null) {
+            set(new Point(a, b), new Point(c, d), ellipseMode);
+        }
+        else {
+            ab.x = a;
+            ab.y = b;
+            cd.x = c;
+            cd.y = d;
+            this.ellipseMode = ellipseMode;
+            setHelperFields();
+        }
+    }
+    
+    /**
+     * 
+     * Sets the position and size of the ellipse.
+     * 
+     * @param ab the 1st and 2nd rect arguments, whose meaning is determined by the given ellipseMode
+     * @param c the 3rd rect argument, whose meaning is determined by the given ellipseMode
+     * @param d the 4th rect argument, whose meaning is determined by the given ellipseMode
+     * @param ellipseMode Determines the meaning of a, b, c, and d. The ellipseMode can be CENTER, RADIUS, CORNER, or CORNERS.
+     */
+    public void set(Point ab, float c, float d, int ellipseMode) {
+        set(ab, new Point(c, d), ellipseMode);
+    }
+    
+    /**
+     * 
+     * Sets the position and size of the ellipse.
+     * 
+     * @param ab the 1st and 2nd rect arguments, whose meaning is determined by the given ellipseMode
+     * @param cd the 3rd and 4th rect argument, whose meaning is determined by the given ellipseMode
+     * @param ellipseMode Determines the meaning of a, b, c, and d. The ellipseMode can be CENTER, RADIUS, CORNER, or CORNERS.
+     */
+    public void set(Point ab, Point cd, int ellipseMode) {
+        switch (ellipseMode) {
+            case CORNERS:
+                this.ab = ab;
+                this.cd = cd;
+                break;
+            case CORNER:
+            case CENTER:
+            case RADIUS:
+                this.ab = ab;
+                this.cd = new Point(cd);
+                break;
+            default:
+                System.err.println("Invalid ellipseMode. Use CORNERS, CORNER, CENTER, or RADIUS.");
+                set(ab, cd, CORNER);
+                break;
+        }
+        this.ellipseMode = ellipseMode;
+        setHelperFields();
     }
 
     @Override
     public void draw(PGraphics g) {
         style.apply(g);
-        g.ellipseMode(PApplet.RADIUS);
-        g.ellipse(x, y, xRadius, yRadius);
+        g.ellipseMode(ellipseMode);
+        g.ellipse(ab.x, ab.y, cd.x, cd.y);
     }
 
     @Override
@@ -103,34 +148,38 @@ public class Ellipse extends Path {
 
         if (u1 > u2)
             u2++;
-        g.ellipseMode(RADIUS);
-        g.arc(x, y, xRadius, yRadius, u1 * PApplet.TWO_PI, u2 * PApplet.TWO_PI);
+        g.ellipseMode(ellipseMode);
+        g.arc(ab.x, ab.y, cd.x, cd.y, u1 * PApplet.TWO_PI, u2 * PApplet.TWO_PI);
     }
 
     @Override
     public void trace(Point pt, float amt) {
         float radians = amt * PApplet.TWO_PI;
-        if (reversed)
+        if (reversed) {
             radians *= -1;
-        pt.x = x + xRadius * PApplet.cos(radians);
-        pt.y = y + yRadius * PApplet.sin(radians);
+        }
+        pt.x = getCenx() + getXRadius() * PApplet.cos(radians);
+        pt.y = getCeny() + getYRadius() * PApplet.sin(radians);
     }
 
     public boolean inside(float x, float y) {
-        float dx = x - this.x;
-        float dy = y - this.y;
+        float dx = x - this.getCenx();
+        float dy = y - this.getCeny();
+        float xRadius = getXRadius();
+        float yRadius = getYRadius();
         return (dx * dx) / (xRadius * xRadius) + (dy * dy) / (yRadius * yRadius) <= 1;
     }
 
     @Override
     public void translate(float dx, float dy) {
-        x += dx;
-        y += dy;
+        ab.translate(dx, dy);
+        if (ellipseMode == CORNERS) {
+            cd.translate(dx, dy);
+        }
     }
 
     public void scale(float s) {
-        xRadius *= s;
-        yRadius *= s;
+        set(getCenx(), getCeny(), s * getXRadius(), s * getYRadius(), RADIUS);
         perimeterOutOfSync = true;
     }
 
@@ -146,9 +195,16 @@ public class Ellipse extends Path {
     @Override
     public float getTotalDistance() {
         if (perimeterOutOfSync) {
-            recomputePerimeter();
+            setHelperFields();
         }
         return perimeter;
+    }
+    
+    private void setHelperFields() {
+        float a = PApplet.max(getXRadius(), getYRadius());
+        float b = PApplet.min(getXRadius(), getYRadius());
+        perimeter = PApplet.PI * (3 * (a + b) - PApplet.sqrt((3 * a + b) * (a + 3 * b)));
+        perimeterOutOfSync = false;
     }
 
     /**
@@ -159,43 +215,201 @@ public class Ellipse extends Path {
      * @return the radius of the ellipse given the angle
      */
     public float getRadiusAt(float radians) {
-        return PApplet.dist(x, y, x + xRadius * PApplet.cos(radians), y + yRadius * PApplet.sin(radians));
+        return PApplet.dist(getCenx(), getCeny(),
+                getCenx() + getXRadius() * PApplet.cos(radians),
+                getCeny() + getYRadius() * PApplet.sin(radians));
     }
-
+    
+    /**
+     * Gives the center x-coordinate of the ellipse.
+     * 
+     * @return The center x-coordinate of the ellipse
+     */
     public float getCenx() {
-        return x;
+        switch (ellipseMode) {
+            case CENTER:
+            case RADIUS:
+                return ab.x;
+            case CORNER:
+                return ab.x + 0.5f * cd.x;
+            case CORNERS:
+                return ab.x + 0.5f * (cd.x - ab.x);
+            default:
+                return -1;
+        }
     }
 
+    /**
+     * Gives the center y-coordinate of the ellipse
+     * 
+     * @return The center y-coordinate of the ellipse
+     */
     public float getCeny() {
-        return y;
+        switch (ellipseMode) {
+            case CENTER:
+            case RADIUS:
+                return ab.y;
+            case CORNER:
+                return ab.y + 0.5f * cd.y;
+            case CORNERS:
+                return ab.y + 0.5f * (cd.y - ab.y);
+            default:
+                return -1;
+        }
     }
 
+    /**
+     * Gives the minimum x-value of the ellipse.
+     * 
+     * @return The minimum x-value of the ellipse
+     */
+    public float getX1() {
+        switch (ellipseMode) {
+            case CENTER:
+                return ab.x - 0.5f * cd.x;
+            case RADIUS:
+                return ab.x - cd.x;
+            case CORNER:
+            case CORNERS:
+                return ab.x;
+            default:
+                return -1;
+        }
+    }
+
+    /**
+     * Gives the minimum y-value of the ellipse
+     * 
+     * @return The minimum y-value of the ellipse
+     */
+    public float getY1() {
+        switch (ellipseMode) {
+            case CENTER:
+                return ab.y - 0.5f * cd.y;
+            case RADIUS:
+                return ab.y - cd.y;
+            case CORNER:
+            case CORNERS:
+                return ab.y;
+            default:
+                return -1;
+        }
+    }
+
+    /**
+     * Gives the maximum x-value of the ellipse.
+     * 
+     * @return The maximum x-value of the ellipse
+     */
+    public float getX2() {
+        switch (ellipseMode) {
+            case CENTER:
+                return ab.x + 0.5f * cd.x;
+            case RADIUS:
+                return ab.x + cd.x;
+            case CORNER:
+                return ab.x + cd.x;
+            case CORNERS:
+                return cd.x;
+            default:
+                return -1;
+        }
+    }
+
+    /**
+     * Gives the maximum y-value of the ellipse.
+     * 
+     * @return The maximum y-value of the ellipse
+     */
+    public float getY2() {
+        switch (ellipseMode) {
+            case CENTER:
+                return ab.y + 0.5f * cd.y;
+            case RADIUS:
+                return ab.y + cd.y;
+            case CORNER:
+                return ab.y + cd.y;
+            case CORNERS:
+                return cd.y;
+            default:
+                return -1;
+        }
+    }
+
+    /**
+     * Gives the width of the ellipse
+     * 
+     * @return The width of the ellipse
+     */
     public float getWidth() {
-        return 2 * xRadius;
+        switch (ellipseMode) {
+            case CENTER:
+            case CORNER:
+                return cd.x;
+            case RADIUS:
+                return 2f * cd.x;
+            case CORNERS:
+                return cd.x - ab.x;
+            default:
+                return -1;
+        }
     }
 
     /**
-     * Set the width of the ellipse.
+     * Gives the height of the ellipse.
      * 
-     * @param width
+     * @return The height of the ellipse
      */
-    public void setWidth(float width) {
-        this.xRadius = width / 2f;
-        perimeterOutOfSync = true;
-    }
-
     public float getHeight() {
-        return 2 * yRadius;
+        switch (ellipseMode) {
+            case CENTER:
+            case CORNER:
+                return cd.y;
+            case RADIUS:
+                return 2f * cd.y;
+            case CORNERS:
+                return cd.y - ab.y;
+            default:
+                return -1;
+        }
+    }
+    
+    /**
+     * Gives half the width of the ellipse.
+     * 
+     * @return Half the width of the ellipse
+     */
+    public float getXRadius() {
+        switch (ellipseMode) {
+            case CENTER:
+            case CORNER:
+                return 0.5f * cd.x;
+            case RADIUS:
+                return cd.x;
+            case CORNERS:
+                return 0.5f * (cd.x - ab.x);
+            default:
+                return -1;
+        }
     }
 
     /**
-     * Set the height of the ellipse.
+     * Gives half the height of the ellipse.
      * 
-     * @param height
+     * @return Half the height of the ellipse
      */
-    public void setHeight(float height) {
-        this.yRadius = height / 2f;
-        perimeterOutOfSync = true;
+    public float getYRadius() {
+        switch (ellipseMode) {
+            case CENTER:
+            case CORNER:
+                return 0.5f * cd.y;
+            case RADIUS:
+                return cd.y;
+            case CORNERS:
+                return 0.5f * (cd.y - ab.y);
+            default:
+                return -1;
+        }
     }
 
     @Override
