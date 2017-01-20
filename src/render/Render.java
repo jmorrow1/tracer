@@ -8,46 +8,46 @@ import processing.core.PConstants;
 import processing.core.PGraphics;
 import processing.core.PStyle;
 import tracer.TStyle;
-import tracer.Tracer;
+import tracer.Point;
 
 /**
- * Draws a list of Tracer objects in some way using the PGraphics class from
+ * Draws a list of Point objects in some way using the PGraphics class from
  * Processing.
  * 
  * @author James Morrow [jamesmorrowdesign.com]
  *
  */
 public abstract class Render implements PConstants {
-    protected List<Tracer> ts;
+    protected List<Point> pts;
     protected TStyle style;
 
-    public Render(Tracer[] ts) {
+    public Render(Point[] ts) {
         this(listify(ts));
         style = new TStyle();
         PApplet pa = null;
     }
     
-    public Render(List<Tracer> ts) {
-        this.ts = ts;
+    public Render(List<Point> ts) {
+        this.pts = ts;
         style = new TStyle();
     }
     
     public void step() {
-        for (Tracer t : ts) {
+        for (Point t : pts) {
             t.step();
         }
     }
 
     public void step(int dt) {
-        for (Tracer t : ts) {
+        for (Point t : pts) {
             t.step(dt);
         }
     }
 
     public abstract void draw(PGraphics g);
 
-    public static List<Tracer> listify(Tracer[] arr) {
-        List<Tracer> list = new ArrayList<Tracer>();
+    public static List<Point> listify(Point[] arr) {
+        List<Point> list = new ArrayList<Point>();
         for (int i = 0; i < arr.length; i++) {
             list.add(arr[i]);
         }
@@ -55,7 +55,7 @@ public abstract class Render implements PConstants {
     }
 
     public int tracerCount() {
-        return ts.size();
+        return pts.size();
     }
     
     /**

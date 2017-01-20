@@ -5,47 +5,47 @@ import java.util.List;
 import processing.core.PApplet;
 import processing.core.PGraphics;
 import tracer.Point;
-import tracer.Tracer;
+import tracer.Point;
 
 /**
- * Draws a list of Tracer objects as a procedural mesh. When two Tracers get
+ * Draws a list of Point objects as a procedural mesh. When two Points get
  * within a certain distance of each other, a line is drawn between them.
  * 
  * @author James Morrow [jamesmorrowdesign.com]
  *
  */
 public class RenderMesh extends Render {
-    // the square of the minimum between two Tracers for them to be connected by
+    // the square of the minimum between two Points for them to be connected by
     // a line
     protected float sqMinDist;
 
-    // the square of the distance between two Tracers in which the stroke weight
+    // the square of the distance between two Points in which the stroke weight
     // is increased
     protected float sqStrokeRampDist;
     
-    public RenderMesh(List<Tracer> ts) {
+    public RenderMesh(List<Point> ts) {
         this(ts, 100, 0);
     }
 
-    public RenderMesh(List<Tracer> ts, float minDist) {
+    public RenderMesh(List<Point> ts, float minDist) {
         this(ts, minDist, 0);
     }
 
-    public RenderMesh(List<Tracer> ts, float minDist, float strokeRamp) {
+    public RenderMesh(List<Point> ts, float minDist, float strokeRamp) {
         super(ts);
         this.sqMinDist = minDist * minDist;
         this.sqStrokeRampDist = strokeRamp * strokeRamp;
     }
     
-    public RenderMesh(Tracer[] ts) {
+    public RenderMesh(Point[] ts) {
         this(ts, 100, 0);
     }
 
-    public RenderMesh(Tracer[] ts, float minDist) {
+    public RenderMesh(Point[] ts, float minDist) {
         this(listify(ts), minDist);
     }
 
-    public RenderMesh(Tracer[] ts, float minDist, float strokeRamp) {
+    public RenderMesh(Point[] ts, float minDist, float strokeRamp) {
         this(listify(ts), minDist, strokeRamp);
     }
 
@@ -56,10 +56,10 @@ public class RenderMesh extends Render {
         g.stroke(style.strokeColor);
 
         // analyze and draw
-        for (int i = 0; i < ts.size(); i++) {
-            for (int j = i + 1; j < ts.size(); j++) {
-                Point a = ts.get(i);
-                Point b = ts.get(j);
+        for (int i = 0; i < pts.size(); i++) {
+            for (int j = i + 1; j < pts.size(); j++) {
+                Point a = pts.get(i);
+                Point b = pts.get(j);
                 float term1 = (a.y - b.y);
                 float term2 = (a.x - b.x);
                 float sqDist = term1 * term1 + term2 * term2;

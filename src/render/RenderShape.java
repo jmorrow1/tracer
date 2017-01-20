@@ -4,10 +4,10 @@ import java.util.List;
 
 import processing.core.PGraphics;
 import tracer.Point;
-import tracer.Tracer;
+import tracer.Point;
 
 /**
- * Draws a list of Tracer objects as a shape using Processing's beginShape() and
+ * Draws a list of Point objects as a shape using Processing's beginShape() and
  * endShape() method.
  * 
  * @author James Morrow [jamesmorrowdesign.com]
@@ -17,11 +17,11 @@ public class RenderShape extends Render {
     // style
     protected boolean closeShape = true;
 
-    public RenderShape(List<Tracer> ts) {
+    public RenderShape(List<Point> ts) {
         super(ts);
     }
 
-    public RenderShape(Tracer[] ts) {
+    public RenderShape(Point[] ts) {
         this(listify(ts));
     }
 
@@ -46,8 +46,8 @@ public class RenderShape extends Render {
 
         // shape
         g.beginShape();
-        for (int i = 0; i < ts.size(); i++) {
-            Point pt = ts.get(i);
+        for (int i = 0; i < pts.size(); i++) {
+            Point pt = pts.get(i);
             g.vertex(pt.x, pt.y);
         }
         if (closeShape) {

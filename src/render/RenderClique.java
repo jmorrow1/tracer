@@ -15,11 +15,11 @@ import tracer.Tracer;
  *
  */
 public class RenderClique extends Render {
-    public RenderClique(List<Tracer> ts) {
+    public RenderClique(List<Point> ts) {
         super(ts);
     }
 
-    public RenderClique(Tracer[] ts) {
+    public RenderClique(Point[] ts) {
         super(ts);
     }
 
@@ -29,10 +29,10 @@ public class RenderClique extends Render {
         g.stroke(style.strokeColor);
         g.strokeWeight(style.strokeWeight);
 
-        for (int i = 0; i < ts.size(); i++) {
-            for (int j = i + 1; j < ts.size(); j++) {
-                Point a = ts.get(i);
-                Point b = ts.get(j);
+        for (int i = 0; i < pts.size(); i++) {
+            for (int j = i + 1; j < pts.size(); j++) {
+                Point a = pts.get(i);
+                Point b = pts.get(j);
                 g.line(a.x, a.y, b.x, b.y);
             }
         }

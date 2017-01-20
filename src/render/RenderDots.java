@@ -5,11 +5,11 @@ import java.util.List;
 import processing.core.PApplet;
 import processing.core.PGraphics;
 import tracer.Point;
-import tracer.Tracer;
+import tracer.Point;
 
 /**
  * 
- * Draws a list of Tracers as dots using Processing's point() function.
+ * Draws a list of Points as dots using Processing's point() function.
  * 
  * @author James Morrow [jamesmorrowdesign.com]
  *
@@ -20,10 +20,10 @@ public class RenderDots extends Render {
     protected boolean drawLabels = false;
     protected float labelTextSize = 6;
 
-    public RenderDots(List<Tracer> ts) {
+    public RenderDots(List<Point> ts) {
         super(ts);
     }
-    public RenderDots(Tracer[] ts) {
+    public RenderDots(Point[] ts) {
         super(ts);
     }
 
@@ -39,8 +39,8 @@ public class RenderDots extends Render {
             g.textSize(labelTextSize);
             g.textAlign(CENTER, BOTTOM);
         }
-        for (int i = 0; i < ts.size(); i++) {
-            Tracer pt = ts.get(i);
+        for (int i = 0; i < pts.size(); i++) {
+            Point pt = pts.get(i);
             g.point(pt.x, pt.y);
             if (drawLabels) {
                 g.text(labelScheme.nthLabel(i), pt.x, pt.y - 2);

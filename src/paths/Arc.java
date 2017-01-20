@@ -420,9 +420,10 @@ public class Arc extends Path {
 
     @Override
     public int getGapCount() {
-        if (PApplet.abs((endAngle - startAngle) - TWO_PI) <= 0.01f) {
+        if (endAngle - startAngle >= TWO_PI - 0.001f) {
             return 0;
-        } else {
+        }
+        else {
             return 1;
         }
     }

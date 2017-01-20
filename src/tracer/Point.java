@@ -32,6 +32,17 @@ public class Point {
         this.x = x;
         this.y = y;
     }
+    
+    /**
+     * 
+     */
+    public void step() {}
+    
+    /**
+     * 
+     * @param dt
+     */
+    public void step(int dt) {}
 
     /**
      * Displays the point.
