@@ -15,12 +15,10 @@ import tracer.Point;
  *
  */
 public class RenderMesh extends Render {
-    // the square of the minimum between two Points for them to be connected by
-    // a line
+    // the square of the minimum between two Points for them to be connected by a line
     protected float sqMinDist;
 
-    // the square of the distance between two Points in which the stroke weight
-    // is increased
+    // the square of the distance between two Points in which the stroke weight is increased
     protected float sqStrokeRampDist;
     
     public RenderMesh(List<Point> ts) {

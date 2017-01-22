@@ -1,9 +1,10 @@
 package tracer;
 
+import java.util.ArrayList;
+
 import ease.Easing;
 import ease.Easing.Linear;
 import paths.Path;
-import processing.core.PApplet;
 
 /**
  * A Point that moves along a Path at some rate of speed.
@@ -36,11 +37,13 @@ public class Tracer extends Point {
         this.easing = easing;
     }
 
+    @Override
     public void step() {
         u = remainder(u + du, 1f);
         update();
     }
 
+    @Override
     public void step(int dt) {
         u = remainder(u + du * dt, 1f);
         update();

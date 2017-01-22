@@ -1,8 +1,9 @@
 package tracer;
 
+import java.util.ArrayList;
+
 import processing.core.PApplet;
-import processing.core.PVector;
-import processing.data.JSONObject;
+import processing.core.PGraphics;
 
 /**
  * A point in 2D space.
@@ -34,13 +35,34 @@ public class Point {
     }
     
     /**
-     * 
+     * Calls step on every Point in the ArrayList
+     * @param pts The Points
+     */
+    public static void step(ArrayList<? extends Point> pts) {
+        for (Point pt : pts) {
+            pt.step();
+        }
+    }
+    
+    /**
+     * Calls step(dt) on every Point in the ArrayList
+     * @param pts The Points
+     * @param dt The change in time
+     */
+    public static void step(ArrayList<? extends Point> pts, int dt) {
+        for (Point pt : pts) {
+            pt.step(dt);
+        }
+    }
+    
+    /**
+     * Updates the Point.
      */
     public void step() {}
     
     /**
-     * 
-     * @param dt
+     * Updates the Point.
+     * @param dt The change in time
      */
     public void step(int dt) {}
 
