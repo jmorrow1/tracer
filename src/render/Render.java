@@ -4,11 +4,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 import processing.core.PApplet;
-import processing.core.PConstants;
 import processing.core.PGraphics;
 import processing.core.PStyle;
-import tracer.TStyle;
+import tracer.Drawable;
 import tracer.Point;
+import tracer.TStyle;
 
 /**
  * Draws a list of Point objects in some way using the PGraphics class from
@@ -17,7 +17,7 @@ import tracer.Point;
  * @author James Morrow [jamesmorrowdesign.com]
  *
  */
-public abstract class Render implements PConstants {
+public abstract class Render implements Drawable {
     protected List<Point> pts;
     protected TStyle style;
 

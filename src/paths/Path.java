@@ -3,9 +3,9 @@ package paths;
 import java.util.ArrayList;
 
 import processing.core.PApplet;
-import processing.core.PConstants;
 import processing.core.PGraphics;
 import processing.core.PStyle;
+import tracer.Drawable;
 import tracer.Point;
 import tracer.TStyle;
 
@@ -43,7 +43,7 @@ import tracer.TStyle;
  * @author James Morrow [jamesmorrowdesign.com]
  *
  */
-public abstract class Path implements PConstants {
+public abstract class Path implements Drawable {
     protected final static Point pt = new Point(0, 0);
     protected boolean reversed;
     protected int sampleCount;

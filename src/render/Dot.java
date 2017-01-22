@@ -3,6 +3,7 @@ package render;
 import processing.core.PApplet;
 import processing.core.PGraphics;
 import processing.core.PStyle;
+import tracer.Drawable;
 import tracer.Point;
 import tracer.TStyle;
 
@@ -11,7 +12,7 @@ import tracer.TStyle;
  * @author James Morrow [jamesmorrowdesign.com]
  *
  */
-public class Dot {
+public class Dot implements Drawable {
     //style
     protected int strokeCap;
     protected int strokeColor;
