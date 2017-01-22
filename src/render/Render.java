@@ -21,40 +21,68 @@ public abstract class Render implements PConstants {
     protected List<Point> pts;
     protected TStyle style;
 
-    public Render(Point[] ts) {
-        this(listify(ts));
+    /**
+     * Constructs a Render containing the array of Points.
+     * @param pts The array of Points
+     */
+    public Render(Point[] pts) {
+        this(listify(pts));
         style = new TStyle();
         PApplet pa = null;
     }
     
-    public Render(List<Point> ts) {
-        this.pts = ts;
+    /**
+     * Constructs a Render containing the list of Points.
+     * @param pts The list of Points
+     */
+    public Render(List<Point> pts) {
+        this.pts = pts;
         style = new TStyle();
     }
     
+    /**
+     * Steps every Point in the list.
+     */
     public void step() {
-        for (Point t : pts) {
-            t.step();
+        for (Point pt : pts) {
+            pt.step();
         }
     }
 
+    /**
+     * Steps every Point in the list.
+     * @param dt The change in time
+     */
     public void step(int dt) {
-        for (Point t : pts) {
-            t.step(dt);
+        for (Point pt : pts) {
+            pt.step(dt);
         }
     }
 
+    /**
+     * Draws something based on the Points in the Render.
+     * @param g The PGraphics to draw to
+     */
     public abstract void draw(PGraphics g);
 
-    public static List<Point> listify(Point[] arr) {
-        List<Point> list = new ArrayList<Point>();
+    /**
+     * Converts an array of Points into an ArrayList of points.
+     * @param arr The array of Points
+     * @return The ArrayList of Points.
+     */
+    public static ArrayList<Point> listify(Point[] arr) {
+        ArrayList<Point> list = new ArrayList<Point>();
         for (int i = 0; i < arr.length; i++) {
             list.add(arr[i]);
         }
         return list;
     }
 
-    public int tracerCount() {
+    /**
+     * Gives the number of points stored by the Render.
+     * @return The number of points
+     */
+    public int getPointCount() {
         return pts.size();
     }
     
@@ -81,9 +109,17 @@ public abstract class Render implements PConstants {
     public void setStyle(PApplet pa) {
         this.style = new TStyle(pa.getGraphics().getStyle());
     }
-
+    
     /**
-     * 
+     * Sets the style of the Render to the current style of the PGraphics.
+     * @param g The PGraphics
+     */
+    public void setStyle(PGraphics g) {
+        this.style = new TStyle(g.getStyle());
+    }
+   
+    /**
+     * Sets the stroke cap.
      * @param strokeCap
      */
     public void setStrokeCap(int strokeCap) {
@@ -91,7 +127,7 @@ public abstract class Render implements PConstants {
     }
     
     /**
-     * 
+     * Sets the stroke join.
      * @param strokeJoin
      */
     public void setStrokeJoin(int strokeJoin) {
@@ -99,7 +135,7 @@ public abstract class Render implements PConstants {
     }
     
     /**
-     * 
+     * Sets the stroke weight.
      * @param strokeWeight
      */
     public void setStrokeWeight(float strokeWeight) {
@@ -107,7 +143,7 @@ public abstract class Render implements PConstants {
     }
     
     /**
-     * 
+     * Sets the fill color.
      * @param fillColor
      */
     public void setFillColor(int fillColor) {
@@ -115,7 +151,7 @@ public abstract class Render implements PConstants {
     }
     
     /**
-     * 
+     * Sets the stroke color.
      * @param strokeColor
      */
     public void setStrokeColor(int strokeColor) {
@@ -123,7 +159,7 @@ public abstract class Render implements PConstants {
     }
     
     /**
-     * 
+     * Sets a boolean that, if true, sets a stroke color, but, if false, turns off the stroke color.
      * @param stroke
      */
     public void setStroke(boolean stroke) {
@@ -131,7 +167,7 @@ public abstract class Render implements PConstants {
     }
     
     /**
-     * 
+     * Sets a boolean that, if true, sets a fill color, but, if false, turns off the fill color.
      * @param fill
      */
     public void setFill(boolean fill) {

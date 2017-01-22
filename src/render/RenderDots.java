@@ -23,6 +23,7 @@ public class RenderDots extends Render {
     public RenderDots(List<Point> ts) {
         super(ts);
     }
+    
     public RenderDots(Point[] ts) {
         super(ts);
     }
