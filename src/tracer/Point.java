@@ -286,6 +286,23 @@ public class Point {
         x += vx;
         y += vy;
     }
+    
+    /**
+     * Takes two float arrays, xs and ys, to make a Point array, pts,
+     * such that pts[i] == new Point(xs[i], ys[i])
+     * 
+     * @param xs The array of x-values
+     * @param ys The array of y-values
+     * @return The array of Points
+     */
+    public static Point[] zip(float[] xs, float[] ys) {
+        int n = PApplet.min(xs.length, ys.length);
+        Point[] pts = new Point[n];
+        for (int i=0; i<n; i++) {
+            pts[i] = new Point(xs[i], ys[i]);
+        }
+        return pts;
+    }
 
     @Override
     public Point clone() {

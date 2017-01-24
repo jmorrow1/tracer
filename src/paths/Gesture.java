@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 
+import ease.Easing;
 import processing.core.PApplet;
 import processing.core.PGraphics;
 import tracer.Point;
@@ -19,6 +20,25 @@ import tracer.Point;
 public class Gesture extends Path {
     protected List<SpaceTimePoint> vertices = new ArrayList<SpaceTimePoint>();
     
+    /**
+     * Constructs a gesture by combining the spatial
+     * information of a Shape with the temporal
+     * information of an Easing.
+     * @param shape The Shape
+     * @param easing The Easing
+     */
+    public Gesture(Shape shape, Easing easing) {
+        float u = 0;
+        float du = 1.0f / shape.getSampleCount();
+        for (int i=0; i<shape.getSampleCount(); i++) {
+            Point pt = shape.trace(u);
+            float t = easing.val(u);
+            
+            vertices.add(new SpaceTimePoint(pt, t));
+            
+            u += du;
+        }
+    }
     
     /**
      * Copy constructor
@@ -289,6 +309,53 @@ public class Gesture extends Path {
             }
         }
     }
+    
+    /**
+     * Flattens the Gesture, which has 3 dimensions (2 spatial dimensions and 1 temporal dimension), 
+     * to create an Easing, which has 2 dimensions (1 spatial dimension and 1 temporal dimension),
+     * and returns the Easing.
+     * 
+     * @return The Easing
+     */
+    public Easing easing() {
+        float[] xs = new float[vertices.size()]; //time coordinate
+        float[] ys = new float[vertices.size()]; //space coordinate
+        
+        if (vertices.size() > 0) {
+            Point prev = vertices.get(0).pt;
+            xs[0] = vertices.get(0).t;
+            ys[0] = 0;
+            for (int i=1; i<vertices.size(); i++) {
+                Point curr = vertices.get(i).pt;
+                xs[i] = vertices.get(i).t;
+                ys[i] = Line.dist(prev, curr);
+            }
+            
+            normalize(xs);
+            normalize(ys);
+        }
+        
+        return new CustomEasing(Point.zip(xs, ys));
+    }
+    
+    private static class CustomEasing implements Easing {
+        private Point[] pts;
+        
+        private CustomEasing(Point[] pts) {
+            this.pts = pts;
+        }
+        
+        @Override
+        public float val(float t) {
+            for (int i=1; i<pts.length; i++) {
+                if (t < pts[i].x) {
+                    float u = PApplet.map(t, pts[i-1].x, pts[i].x, 0, 1);
+                    return PApplet.lerp(pts[i-1].y, pts[i].y, u);
+                }
+            }
+            return 0;
+        }
+    }
 
     /**
      * A coordinate in space and in time.
@@ -334,4 +401,36 @@ public class Gesture extends Path {
             }
         }
     }
+    
+    /**
+     * Normalizes an array of floats (maps them to [0,1])
+     * @param xs The array of floats
+     */
+    public static void normalize(float[] xs) {
+        if (xs.length == 0) {
+            return;
+        } else {
+            float min = xs[0];
+            float max = xs[0];
+            for (int i = 1; i < xs.length; i++) {
+                if (xs[i] < min) {
+                    min = xs[i];
+                } else if (xs[i] > max) {
+                    max = xs[i];
+                }
+            }
+
+            if (min == max) {
+                for (int i = 0; i < xs.length; i++) {
+                    xs[i] = 0;
+                }
+            } else {
+                for (int i = 0; i < xs.length; i++) {
+                    xs[i] = PApplet.map(xs[i], min, max, 0, 1);
+                }
+            }
+        }
+    }
+    
+    
 }

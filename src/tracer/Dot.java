@@ -1,11 +1,10 @@
-package render;
+package tracer;
+
+import java.util.ArrayList;
 
 import processing.core.PApplet;
 import processing.core.PGraphics;
 import processing.core.PStyle;
-import tracer.Drawable;
-import tracer.Point;
-import tracer.TStyle;
 
 /**
  * 
@@ -27,6 +26,17 @@ public class Dot implements Drawable {
      */
     public Dot(Point pt) {
         this.pt = pt;
+    }
+    
+    /**
+     * Draws a list of Points as dots using the style settings of the given PGraphics
+     * @param pts The list of Points
+     * @param g The PGraphics to draw to
+     */
+    public static void draw(ArrayList<Point> pts, PGraphics g) {        
+        for (Point pt : pts) {
+            g.point(pt.x, pt.y);
+        }
     }
     
     /**
