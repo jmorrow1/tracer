@@ -251,31 +251,46 @@ public abstract class Path implements Drawable {
     /**
      * Returns the length of the Path.
      * 
-     * @return the perimeter
-     */
-
-    // TODO Work in progress --- Need to incorporate gaps
+     * @return The length of the Path
+     */    
     public float getTotalDistance() {
         trace(pt, 0);
         float x = pt.x;
         float y = pt.y;
-
-        float du = 1f / sampleCount;
+        
+        float du = 1.0f / sampleCount;
         float u = du;
-
-        float perimeter = 0;
-
-        for (int i = 0; i < sampleCount; i++) {
-            trace(pt, u);
-
-            perimeter += PApplet.dist(x, y, pt.x, pt.y);
-
+        
+        float total = 0;
+        
+        int gapIndex = 0;
+        
+        for (int i=0; i<sampleCount; i++) {
+            float gap = getGap(gapIndex);
+            if (gapIndex < getGapCount() && gap != 0 && gap < u) {
+                trace(pt, gap);
+                total += PApplet.dist(x, y, pt.x, pt.y);
+                trace(pt, gap+0.001f);
+                x = pt.x;
+                y = pt.y;
+                trace(pt, u);
+                total += PApplet.dist(x, y, pt.x, pt.y);
+                gapIndex++;
+            }
+            else if (gap == 0) {
+                gapIndex++;
+            }
+            else {
+                trace(pt, u);
+                total += PApplet.dist(x, y, pt.x, pt.y);
+            }
+            
             x = pt.x;
             y = pt.y;
             u += du;
         }
-
-        return perimeter;
+        
+        return total;
     }
 
     /**

@@ -92,6 +92,11 @@ public class Shape extends Path {
     }
     
     @Override
+    public void draw(PGraphics g, float u1, float u2) {
+        
+    }
+    
+    @Override
     public void draw(PGraphics g) {
         style.apply(g);
         g.beginShape();

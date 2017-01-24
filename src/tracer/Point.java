@@ -289,7 +289,7 @@ public class Point {
     
     /**
      * Takes two float arrays, xs and ys, to make a Point array, pts,
-     * such that pts[i] == new Point(xs[i], ys[i])
+     * such that pts[i] == new Point(xs[i], ys[i]), as i varies from 0 to min(xs.length, ys.length)-1
      * 
      * @param xs The array of x-values
      * @param ys The array of y-values
