@@ -135,7 +135,7 @@ public abstract class Path implements Drawable {
         }
     }
 
-    // TODO WORK IN PROGRESS --- Need to incorporate gaps:
+    
     private void continuousDraw(PGraphics g, float u1, float u2) {
         float length = PApplet.abs(u1 - u2);
         int n = (int) (sampleCount * length);
@@ -159,38 +159,46 @@ public abstract class Path implements Drawable {
      * @param u1 The 1D coordinate of the segment's start, a value between 0 and 1
      * @param u2 The 1D coordinate of the segment's end, a value between 0 and 1
      */
-    public void draw(PGraphics g, float u1, float u2) {
-        boolean inRange = (0 <= u1 && u1 <= 1 && 0 <= u2 && u2 <= 1);
+    // TODO WORK IN PROGRESS
+    public void draw(PGraphics g, float u1, float u2) {        
+        boolean inRange = (0 <= u1 && u1 < 1 && 0 <= u2 && u2 < 1);
         if (!inRange) {
             throw new IllegalArgumentException("draw(g, " + u1 + ", " + u2 + ") called with values outside the range 0 to 1.");
         }
-
-        // TODO WORK IN PROGRESS:
-        // for (int i=0; i<getGapCount(); i++) {
-        // float gap = getGap(i);
-        // if (u1 < gap && gap < u2) {
-        // continuousDraw(g, u1 + 0.001f, gap - 0.001f);
-        // u1 = gap;
-        // }
-        // }
-        // continuousDraw(g, u1 + 0.001f, u2 - 0.001f);
-
         style.apply(g);
+        drawHelper(g, u1, u2);
+    }
+    
+    private void drawHelper(PGraphics g, float u1, float u2) {
         if (u1 > u2) {
-            draw(g, u1, 1);
-            draw(g, 0, u2);
-        } else {
+            float u12 = PApplet.max(0.999f, u1 + 0.5f * (1f - u1));
+            drawHelper(g, u1, u12);
+            drawHelper(g, 0, u2);
+        }
+        else {
+            int gapCount = getGapCount();
+            for (int i=0; i<gapCount; i++) {
+                float gap = getGap(i);
+                if (u1 < gap && gap < u2) {
+                    float u12 = PApplet.max(gap - 0.001f, u1 + 0.5f * (gap - u1));
+                    drawHelper(g, u1, u12);
+                    u1 = gap + 0.001f;
+                }
+            }
+            
             float length = PApplet.abs(u1 - u2);
             int n = (int) (sampleCount * length);
             float du = length / n;
-
+    
             g.beginShape();
             float u = u1;
-            for (int i = 0; i < n; i++) {
+            for (int i = 0; i <= n; i++) {
                 trace(pt, u);
                 g.vertex(pt.x, pt.y);
                 u = (u + du) % 1f;
             }
+            trace(pt, u2);
+            g.vertex(pt.x, pt.y);
             g.endShape();
         }
     }

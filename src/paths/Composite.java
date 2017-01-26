@@ -126,19 +126,23 @@ public class Composite<T extends Path, U extends Path> extends Path {
 
     @Override
     public int getGapCount() {
-        return a.getGapCount() + b.getGapCount() + 1;
+        return a.getGapCount() + b.getGapCount() + 2;
     }
 
     @Override
     public float getGap(int i) {
-        if (i < a.getGapCount()) {
+        if (i == 0) {
+            return 0;
+        }
+        if (i < a.getGapCount()+1) {
             return 0.5f * a.getGap(i);
-        } else if (i == a.getGapCount()) {
+        }
+        else if (i == a.getGapCount()+1) {
             return 0.5f;
-        } else {
+        }
+        else {
             i -= a.getGapCount();
             return 0.5f + 0.5f * b.getGap(i);
-
         }
     }
     
