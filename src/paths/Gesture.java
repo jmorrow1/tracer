@@ -435,6 +435,9 @@ public class Gesture extends Path {
             }
         }
     }
-    
-    
+
+    @Override
+    public String toString() {
+        return "Gesture [vertices=" + vertices + "]";
+    }
 }

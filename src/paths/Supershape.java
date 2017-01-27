@@ -309,4 +309,10 @@ public class Supershape extends Path {
     public float getGap(int i) {
         return -1;
     }
+
+    @Override
+    public String toString() {
+        return "Supershape [cen=" + cen + ", xRadius=" + xRadius + ", yRadius=" + yRadius + ", m=" + m + ", n1=" + n1
+                + ", n2=" + n2 + ", n3=" + n3 + ", mOver4=" + mOver4 + "]";
+    }
 }

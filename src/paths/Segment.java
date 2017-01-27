@@ -171,4 +171,9 @@ public class Segment extends Path {
         parent.trace(pt, u2);
         return pt.y;
     }
+
+    @Override
+    public String toString() {
+        return "Segment [u1=" + u1 + ", u2=" + u2 + ", parent=" + parent + "]";
+    }
 }

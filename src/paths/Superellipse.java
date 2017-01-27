@@ -244,4 +244,9 @@ public class Superellipse extends Path {
     public float getGap(int i) {
         return -1;
     }
+
+    @Override
+    public String toString() {
+        return "Superellipse [cen=" + cen + ", xRadius=" + xRadius + ", yRadius=" + yRadius + ", n=" + n + "]";
+    }
 }

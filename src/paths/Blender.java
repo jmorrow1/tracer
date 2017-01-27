@@ -225,4 +225,9 @@ public class Blender<T extends Path, U extends Path> extends Path {
     public static Shape blend(Path a, Path b, float amt, int sampleCount) {
         return Shape.blend(a, b, amt, sampleCount);
     }
+
+    @Override
+    public String toString() {
+        return "Blender [a=" + a.toString() + ", b=" + b.toString() + ", blendAmt=" + blendAmt + "]";
+    }
 }

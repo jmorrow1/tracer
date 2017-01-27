@@ -17,7 +17,7 @@ public class Rect extends Path {
     protected int rectMode;
     
     //helper fields
-    protected float[] vertices = new float[4]; // one-dimensional coordinates
+    protected float[] vertices1D = new float[4]; // one-dimensional coordinates
     protected float perimeter;
 
     /**
@@ -191,20 +191,20 @@ public class Rect extends Path {
             u = PApplet.map(u, 0, 1, 1, 0);
         }
 
-        if (0 <= u && u < vertices[1]) {
-            u = PApplet.map(u, 0, vertices[1], 0, 1);
+        if (0 <= u && u < vertices1D[1]) {
+            u = PApplet.map(u, 0, vertices1D[1], 0, 1);
             pt.x = getX1() + u * getWidth();
             pt.y = getY1();
-        } else if (u < vertices[2]) {
-            u = PApplet.map(u, vertices[1], vertices[2], 0, 1);
+        } else if (u < vertices1D[2]) {
+            u = PApplet.map(u, vertices1D[1], vertices1D[2], 0, 1);
             pt.x = getX2();
             pt.y = getY1() + u * getHeight();
-        } else if (u < vertices[3]) {
-            u = PApplet.map(u, vertices[2], vertices[3], 0, 1);
+        } else if (u < vertices1D[3]) {
+            u = PApplet.map(u, vertices1D[2], vertices1D[3], 0, 1);
             pt.x = getX2() - u * getWidth();
             pt.y = getY2();
         } else if (u < 1) {
-            u = PApplet.map(u, vertices[3], 1, 0, 1);
+            u = PApplet.map(u, vertices1D[3], 1, 0, 1);
             pt.x = getX1();
             pt.y = getY2() - u * getHeight();
         }
@@ -390,14 +390,14 @@ public class Rect extends Path {
     private void setHelperFields() {
         perimeter = 2f * (getX2() - getX1()) + 2f * (getY2() - getY1());
         
-        if (vertices == null) {
-            vertices = new float[4];
+        if (vertices1D == null) {
+            vertices1D = new float[4];
         }
 
-        vertices[0] = 0;
-        vertices[1] = (getX2() - getX1()) / perimeter;
-        vertices[2] = 0.5f;
-        vertices[3] = 0.5f + vertices[1];
+        vertices1D[0] = 0;
+        vertices1D[1] = (getX2() - getX1()) / perimeter;
+        vertices1D[2] = 0.5f;
+        vertices1D[3] = 0.5f + vertices1D[1];
     }
 
     @Override
@@ -407,7 +407,6 @@ public class Rect extends Path {
 
     @Override
     public String toString() {
-        return "Rect [x1=" + getX1() + ", y1=" + getY1() + ", width=" + getWidth() + ", height=" + getHeight() + "]";
+        return "Rect [ab=" + ab + ", cd=" + cd + ", rectMode=" + rectMode + "]";
     }
-
 }

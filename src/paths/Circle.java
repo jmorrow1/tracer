@@ -200,4 +200,9 @@ public class Circle extends Path {
     public boolean isGap(float u) {
         return false;
     }
+
+    @Override
+    public String toString() {
+        return "Circle [center=" + center + ", radius=" + radius + "]";
+    }
 }

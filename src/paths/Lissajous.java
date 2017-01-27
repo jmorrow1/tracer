@@ -241,4 +241,10 @@ public class Lissajous extends Path {
     public boolean isClosed() {
         return (int)freqX == freqX && (int)freqY == freqY;
     }
+
+    @Override
+    public String toString() {
+        return "Lissajous [cen=" + cen + ", xRadius=" + xRadius + ", yRadius=" + yRadius + ", freqX=" + freqX
+                + ", freqY=" + freqY + ", phi=" + phi + "]";
+    }
 }

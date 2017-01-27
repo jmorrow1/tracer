@@ -168,5 +168,9 @@ public class Plot extends Path {
         
         return dist;
     }
-    
+
+    @Override
+    public String toString() {
+        return "Plot [rect=" + rect + ", xs=" + Arrays.toString(xs) + ", ys=" + Arrays.toString(ys) + "]";
+    }  
 }

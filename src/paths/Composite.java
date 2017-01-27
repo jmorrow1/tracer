@@ -208,4 +208,9 @@ public class Composite<T extends Path, U extends Path> extends Path {
         a.setFill(fill);
         b.setFill(fill);
     }
+
+    @Override
+    public String toString() {
+        return "Composite [a=" + a + ", b=" + b + "]";
+    }
 }

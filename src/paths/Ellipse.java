@@ -436,4 +436,9 @@ public class Ellipse extends Path {
     public float getGap(int i) {
         return -1;
     }
+
+    @Override
+    public String toString() {
+        return "Ellipse [ab=" + ab + ", cd=" + cd + ", ellipseMode=" + ellipseMode + "]";
+    }
 }

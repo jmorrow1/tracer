@@ -292,4 +292,9 @@ public class Shape extends Path {
         }
         return new Shape(pts);
     }
+
+    @Override
+    public String toString() {
+        return "Shape [vertices=" + vertices2D + "]";
+    }
 }

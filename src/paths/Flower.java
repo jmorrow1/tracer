@@ -122,11 +122,6 @@ public class Flower extends Path {
         cen.translate(dx, dy);
     }
 
-    @Override
-    public String toString() {
-        return "Flower [cen=" + cen + ", xRadius=" + xRadius + ", yRadius= " + yRadius + ", freq1=" + freq1 + ", freq2=" + freq2 + "]";
-    }
-
     /*******************************
      ***** Getters and Setters *****
      *******************************/
@@ -256,5 +251,10 @@ public class Flower extends Path {
     @Override
     public float getGap(int i) {
         return -1;
+    }
+    
+    @Override
+    public String toString() {
+        return "Flower [cen=" + cen + ", xRadius=" + xRadius + ", yRadius= " + yRadius + ", freq1=" + freq1 + ", freq2=" + freq2 + "]";
     }
 }

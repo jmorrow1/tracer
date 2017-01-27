@@ -196,4 +196,9 @@ public class InfinitySymbol extends Path {
     public float getGap(int i) {
         return -1;
     }
+
+    @Override
+    public String toString() {
+        return "InfinitySymbol [cen=" + cen + ", xRadius=" + xRadius + ", yRadius=" + yRadius + "]";
+    }
 }

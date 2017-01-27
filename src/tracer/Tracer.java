@@ -107,6 +107,4 @@ public class Tracer extends Point {
     public String toString() {
         return "Tracer [u=" + u + ", du=" + du + ", path=" + path + "]";
     }
-    
-    
 }

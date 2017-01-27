@@ -332,4 +332,9 @@ public class CubicBezier extends Path {
             return -1;
         }
     }
+
+    @Override
+    public String toString() {
+        return "CubicBezier [a1=" + a1 + ", c1=" + c1 + ", c2=" + c2 + ", a2=" + a2 + "]";
+    }
 }

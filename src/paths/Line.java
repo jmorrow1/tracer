@@ -355,4 +355,9 @@ public class Line extends Path {
     public static float dist(Point a, Point b) {
         return PApplet.dist(a.x, a.y, b.x, b.y);
     }
+
+    @Override
+    public String toString() {
+        return "Line [a=" + a + ", b=" + b + "]";
+    }
 }
