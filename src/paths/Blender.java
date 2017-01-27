@@ -32,14 +32,14 @@ public class Blender<T extends Path, U extends Path> extends Path {
      * @param blender the blender to copy
      */
     public Blender(Blender<T, U> blender) {
-        this(blender.a, blender.b, blender.blendAmt, blender.sampleCount);
+        this((T)blender.a.clone(), (U)blender.b.clone(), blender.blendAmt, blender.sampleCount);
     }
 
     /**
      * 
      * @param a the first path
      * @param b the second path
-     * @param blendAmt a value between 0 and 1 specifying how much to blend between a and b
+     * @param blendAmt a value between within [0, 1) specifying how much to blend between a and b
      * @param sampleCount the number of sample points
      */
     public Blender(T a, U b, float blendAmt, int sampleCount) {
@@ -48,29 +48,21 @@ public class Blender<T extends Path, U extends Path> extends Path {
         this.b = b;
         this.blendAmt = blendAmt;
     }
-
-    // /**
-    // * Easy constructor.
-    // *
-    // * @param x The x-coordinate of the path.
-    // * @param y The y-coordinate of the path.
-    // * @param r The radius of the path.
-    // */
-    // public Blender(float x, float y, float r) {
-    // //TODO
-    // }
-
+    
     /*************************
      ***** Functionality *****
      *************************/
 
     @Override
-    public void trace(Point pt, float amt) {
-        if (reversed) {
-            amt = PApplet.map(amt, 0, 1, 1, 0);
+    public void trace(Point pt, float u) {
+        if (u < 0 || u >= 1) {
+            throw new IllegalArgumentException("trace(pt, " + u + ") called where the second argument is outside the range 0 (inclusive) to 1 (exclusive).");
         }
-        a.trace(ptA, amt);
-        b.trace(ptB, amt);
+        if (reversed) {
+            u = PApplet.map(u, 0, 1, 1, 0);
+        }
+        a.trace(ptA, u);
+        b.trace(ptB, u);
         pt.x = PApplet.lerp(ptA.x, ptB.x, blendAmt);
         pt.y = PApplet.lerp(ptA.y, ptB.y, blendAmt);
     }
@@ -119,8 +111,7 @@ public class Blender<T extends Path, U extends Path> extends Path {
 
     /**
      * 
-     * @return a value between 0 and 1 specifying how much to blend between the
-     *         first and second paths
+     * @return a value within [0, 1) specifying how much to blend between the first and second paths
      */
     public float getBlendAmt() {
         return blendAmt;
@@ -128,8 +119,7 @@ public class Blender<T extends Path, U extends Path> extends Path {
 
     /**
      * 
-     * @param blendAmt a value between 0 and 1 specifying how much to blend
-     *            between the first and second paths
+     * @param blendAmt a value within [0, 1) specifying how much to blend between the first and second paths
      */
     public void setBlendAmt(float blendAmt) {
         this.blendAmt = blendAmt;
@@ -150,19 +140,77 @@ public class Blender<T extends Path, U extends Path> extends Path {
 
     @Override
     public int getGapCount() {
-        // TODO I don't know how to do this
-        return 0;
+        int j = 0; //loops through a's gaps
+        int k = 0; //loops through b's gaps
+        int count = 0; //loops through all gaps
+        
+        while (j < a.getGapCount() || k < b.getGapCount()) {
+            float gapA = (j < a.getGapCount()) ? a.getGap(j) : -1;
+            float gapB = (k < b.getGapCount()) ? b.getGap(k) : -1;
+            if (gapA < gapB) {
+                j++;
+            }
+            else if (gapA == gapB) {
+                j++;
+                k++;
+            }
+            else {
+                k++;
+            }
+            count++;
+        }
+
+        return count;
     }
 
     @Override
     public float getGap(int i) {
-        // TODO I don't know how to do this
+        int j = 0; //loops through a's gaps
+        int k = 0; //loops through b's gaps
+        int count = 0; //loops through all gaps
+        
+        while (j < a.getGapCount() || k < b.getGapCount()) {
+            float gapA = (j < a.getGapCount()) ? a.getGap(j) : -1;
+            float gapB = (k < b.getGapCount()) ? b.getGap(k) : -1;
+            if (gapA < gapB) {
+                if (i == count) {
+                    return gapA;
+                }
+                j++;
+            }
+            else if (gapA == gapB) {
+                if (i == count) {
+                    return gapA;
+                }
+                j++;
+                k++;
+            }
+            else {
+                if (i == count) {
+                    return gapB;
+                }
+                k++;
+            }
+            count++;
+        }
+
         return -1;
     }
     
     @Override
-    public boolean isGap(float u) {
-        // TODO I don't know how to do this
+    public boolean isGap(float u) {       
+        for (int i=0; i<a.getGapCount(); i++) {
+            if (u == a.getGap(i)) {
+                return true;
+            }
+        }
+        
+        for (int i=0; i<b.getGapCount(); i++) {
+            if (u == b.getGap(i)) {
+                return true;
+            }
+        }
+
         return false;
     }
     
@@ -170,7 +218,7 @@ public class Blender<T extends Path, U extends Path> extends Path {
      * Blends two Paths and makes a Shape.
      * @param a The first Path
      * @param b The second Path
-     * @param amt A value from 0 to 1, determining how much to weight Path b over Path a.
+     * @param amt A value within [0, 1), determining how much to weight Path b over Path a.
      * @param sampleCount The number of sample points to use
      * @return The Shape
      */

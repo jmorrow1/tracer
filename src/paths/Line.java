@@ -6,7 +6,7 @@ import tracer.Point;
 
 /**
  * 
- * A line in 2-D space.
+ * A line in 2D space.
  * 
  * @author James Morrow [jamesmorrowdesign.com]
  *
@@ -77,9 +77,13 @@ public class Line extends Path {
     }
 
     @Override
-    public void trace(Point pt, float amt) {
-        pt.x = PApplet.lerp(a.x, b.x, amt);
-        pt.y = PApplet.lerp(a.y, b.y, amt);
+    public void trace(Point pt, float u) {
+        if (u < 0 || u >= 1) {
+            throw new IllegalArgumentException("trace(pt, " + u + ") called where the second argument is outside the range 0 (inclusive) to 1 (exclusive).");
+        }
+        
+        pt.x = PApplet.lerp(a.x, b.x, u);
+        pt.y = PApplet.lerp(a.y, b.y, u);
     }
 
     /**
@@ -90,11 +94,15 @@ public class Line extends Path {
      * @param pt The point in which to store the result
      * @param a The first point
      * @param b The second point
-     * @param amt The amount by which to interpolate (a value from 0 to 1)
+     * @param u The amount by which to interpolate (a value within [0, 1))
      */
-    public static void trace(Point pt, Point a, Point b, float amt) {
-        pt.x = PApplet.lerp(a.x, b.x, amt);
-        pt.y = PApplet.lerp(a.y, b.y, amt);
+    public static void trace(Point pt, Point a, Point b, float u) {
+        if (u < 0 || u >= 1) {
+            throw new IllegalArgumentException("trace(pt, " + u + ") called where the second argument is outside the range 0 (inclusive) to 1 (exclusive).");
+        }
+        
+        pt.x = PApplet.lerp(a.x, b.x, u);
+        pt.y = PApplet.lerp(a.y, b.y, u);
     }
 
     /**
@@ -107,11 +115,15 @@ public class Line extends Path {
      * @param ay the y-coordinate of the first point
      * @param bx the x-coordinate of the second point
      * @param by the y-coordinate of the second point
-     * @param amt the amount by which to interpolate (a value from 0 to 1)
+     * @param u the amount by which to interpolate (a value within [0, 1))
      */
-    public static void trace(Point pt, float ax, float ay, float bx, float by, float amt) {
-        pt.x = PApplet.lerp(ax, bx, amt);
-        pt.y = PApplet.lerp(ay, by, amt);
+    public static void trace(Point pt, float ax, float ay, float bx, float by, float u) {
+        if (u < 0 || u >= 1) {
+            throw new IllegalArgumentException("trace(pt, " + u + ") called where the second argument is outside the range 0 (inclusive) to 1 (exclusive).");
+        }
+        
+        pt.x = PApplet.lerp(ax, bx, u);
+        pt.y = PApplet.lerp(ay, by, u);
     }
 
     /**
@@ -219,6 +231,7 @@ public class Line extends Path {
         return new Line(this);
     }
 
+    @Override
     public void reverse() {
         super.reverse();
         Point temp = b;
@@ -235,10 +248,18 @@ public class Line extends Path {
         return PApplet.dist(a.x, a.y, b.x, b.y);
     }
 
+    /**
+     *
+     * @return The center x-coordinate of the Line
+     */
     public float getCenx() {
         return PApplet.lerp(a.x, b.x, 0.5f);
     }
 
+    /**
+     * 
+     * @return The center x-coordinate of the Line
+     */
     public float getCeny() {
         return PApplet.lerp(a.y, b.y, 0.5f);
     }
@@ -249,14 +270,6 @@ public class Line extends Path {
      */
     public float getLength() {
         return getTotalDistance();
-    }
-
-    public float getWidth() {
-        return PApplet.max(a.x, b.x) - PApplet.min(a.x, b.x);
-    }
-
-    public float getHeight() {
-        return PApplet.max(a.y, b.y) - PApplet.min(a.y, b.y);
     }
     
     /**

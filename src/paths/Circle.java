@@ -69,8 +69,11 @@ public class Circle extends Path {
     }
 
     @Override
-    public void trace(Point pt, float amt) {
-        float radians = amt * PApplet.TWO_PI;
+    public void trace(Point pt, float u) {
+        if (u < 0 || u >= 1) {
+            throw new IllegalArgumentException("trace(pt, " + u + ") called where the second argument is outside the range 0 (inclusive) to 1 (exclusive).");
+        }
+        float radians = u * PApplet.TWO_PI;
         if (reversed) {
             radians *= -1;
         }
@@ -78,7 +81,13 @@ public class Circle extends Path {
         pt.y = center.y + radius * PApplet.sin(angleOffset + radians);
     }
 
-    public boolean inside(float x, float y) {
+    /**
+     * Tells whether or not the circle contains the given point.
+     * @param x The x-coordinate of the point
+     * @param y The y-coordintae of the point
+     * @return True if the circle contains the point and false otherwise
+     */
+    public boolean contains(float x, float y) {
         return PApplet.dist(this.getCenx(), this.getCeny(), x, y) <= radius;
     }
 
@@ -101,36 +110,50 @@ public class Circle extends Path {
         return PApplet.TWO_PI * radius;
     }
     
+    /**
+     * Sets the center point of the Circle.
+     * @param center The center poitn
+     */
     public void setCenter(Point center) {
         this.center = center;
     }
     
+    /**
+     * Gives the center point of the Circle.
+     * @return The center point.
+     */
     public Point getCenter() {
         return center;
     }
 
+    /**
+     * Gives the x-coordinate of the center point of the Circle.
+     * @return The x-coordinate
+     */
     public float getCenx() {
         return center.x;
     }
 
+    /**
+     * Gives the y-coordinate of the center point of the Circle.
+     * @return The y-coordinate
+     */
     public float getCeny() {
         return center.y;
     }
 
-    public float getWidth() {
-        return this.getDiameter();
-    }
-
-    public float getHeight() {
-        return this.getDiameter();
-    }
-
+    /**
+     * Sets the center point of the Circle.
+     * @param x The x-coordinate
+     * @param y The y-coordinate
+     */
     public void setCenter(float x, float y) {
-        this.center = new Point(x, y);
+        this.center.x = x;
+        this.center.y = y;
     }
 
     /**
-     * 
+     * Gives the diameter of the Circle.
      * @return the diameter
      */
     public float getDiameter() {
@@ -138,7 +161,7 @@ public class Circle extends Path {
     }
 
     /**
-     * Set the diameter.
+     * Set the diameter of the Circle.
      * 
      * @param diam
      */
@@ -147,7 +170,7 @@ public class Circle extends Path {
     }
 
     /**
-     * 
+     * Gives the radius of the Circle.
      * @return the radius
      */
     public float getRadius() {

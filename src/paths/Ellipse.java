@@ -155,15 +155,21 @@ public class Ellipse extends Path {
                     "draw(g, " + u1 + ", " + u2 + ") called with values outside the range 0 to 1.");
         }
 
-        if (u1 > u2)
+        if (u1 > u2) {
             u2++;
+        }
+            
         g.ellipseMode(ellipseMode);
         g.arc(ab.x, ab.y, cd.x, cd.y, u1 * PApplet.TWO_PI, u2 * PApplet.TWO_PI);
     }
 
     @Override
-    public void trace(Point pt, float amt) {
-        float radians = amt * PApplet.TWO_PI;
+    public void trace(Point pt, float u) {
+        if (u < 0 || u >= 1) {
+            throw new IllegalArgumentException("trace(pt, " + u + ") called where the second argument is outside the range 0 (inclusive) to 1 (exclusive).");
+        }
+        
+        float radians = u * PApplet.TWO_PI;
         if (reversed) {
             radians *= -1;
         }

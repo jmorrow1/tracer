@@ -43,31 +43,24 @@ public class Composite<T extends Path, U extends Path> extends Path {
         this.b = b;
     }
 
-    // /**
-    // * Easy constructor.
-    // *
-    // * @param x The x-coordinate of the path.
-    // * @param y The y-coordinate of the path.
-    // * @param r The radius of the path.
-    // */
-    // public Composite(float x, float y, float r) {
-    // //TODO
-    // }
-
     /*************************
      ***** Functionality *****
      *************************/
 
     @Override
-    public void trace(Point pt, float amt) {
+    public void trace(Point pt, float u) {
+        if (u < 0 || u >= 1) {
+            throw new IllegalArgumentException("trace(pt, " + u + ") called where the second argument is outside the range 0 (inclusive) to 1 (exclusive).");
+        }
+        
         if (reversed) {
-            amt = PApplet.map(amt, 0, 1, 1, 0);
+            u = PApplet.map(u, 0, 1, 1, 0);
         }
            
-        if (amt < 0.5f) {
-            a.trace(pt, 2f * amt);
+        if (u < 0.5f) {
+            a.trace(pt, 2f * u);
         } else {
-            b.trace(pt, 2f * (amt - 0.5f));
+            b.trace(pt, 2f * (u - 0.5f));
         }
     }
 
@@ -88,7 +81,7 @@ public class Composite<T extends Path, U extends Path> extends Path {
      *******************************/
 
     /**
-     * 
+     * Gives the first Path.
      * @return the first path
      */
     public T getA() {
@@ -96,7 +89,7 @@ public class Composite<T extends Path, U extends Path> extends Path {
     }
 
     /**
-     * 
+     * Gives the first Path.
      * @param a the first path
      */
     public void setA(T a) {
@@ -104,7 +97,7 @@ public class Composite<T extends Path, U extends Path> extends Path {
     }
 
     /**
-     * 
+     * Gives the second Path.
      * @return the second path
      */
     public U getB() {
@@ -112,7 +105,7 @@ public class Composite<T extends Path, U extends Path> extends Path {
     }
 
     /**
-     * 
+     * Gives the second Path.
      * @param b the second path
      */
     public void setB(U b) {
@@ -167,70 +160,49 @@ public class Composite<T extends Path, U extends Path> extends Path {
         b.setStyle(pa);
     }
     
-    /**
-     * 
-     * @param strokeCap
-     */
+    @Override
     public void setStrokeCap(int strokeCap) {
         style.strokeCap = strokeCap;
         a.setStrokeCap(strokeCap);
         b.setStrokeCap(strokeCap);
     }
     
-    /**
-     * 
-     * @param strokeJoin
-     */
+    @Override
     public void setStrokeJoin(int strokeJoin) {
         style.strokeJoin = strokeJoin;
         a.setStrokeJoin(strokeJoin);
         b.setStrokeJoin(strokeJoin);
     }
     
-    /**
-     * 
-     * @param strokeWeight
-     */
+    @Override
     public void setStrokeWeight(float strokeWeight) {
         style.strokeWeight = strokeWeight;
         a.setStrokeWeight(strokeWeight);
         b.setStrokeWeight(strokeWeight);
     }
     
-    /**
-     * 
-     * @param fillColor
-     */
+    @Override
     public void setFillColor(int fillColor) {
         style.fillColor = fillColor;
         a.setFillColor(fillColor);
         b.setFillColor(fillColor);
     }
     
-    /**
-     * 
-     * @param strokeColor
-     */
+    @Override
     public void setStrokeColor(int strokeColor) {
         style.strokeColor = strokeColor;
         a.setStrokeColor(strokeColor);
         b.setStrokeColor(strokeColor);
     }
     
-    /**
-     * 
-     * @param stroke
-     */
+    @Override
     public void setStroke(boolean stroke) {
         style.stroke = stroke;
         a.setStroke(stroke);
         b.setStroke(stroke);
     }
     
-    /**
-     * 
-     * @param fill
-     */
+    @Override
     public void setFill(boolean fill) {
         style.fill = fill;
         a.setFill(fill);

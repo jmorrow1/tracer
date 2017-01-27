@@ -25,18 +25,28 @@ public class Lissajous extends Path {
     /**
      * 
      * @param sampleCount The number of sample points to take
-     * @param x
-     * @param y
-     * @param xRadius
-     * @param yRadius
-     * @param freqX
-     * @param freqY
-     * @param phi
+     * @param x The center x-coordinate
+     * @param y The center y-coordinate
+     * @param xRadius The radius in the x-direction
+     * @param yRadius The radius in the y-direction
+     * @param freqX The frequency in the x-direction
+     * @param freqY The frequency in the y-direction
+     * @param phi An offset anngle
      */
     public Lissajous(int sampleCount, float x, float y, float xRadius, float yRadius, float freqX, float freqY, float phi) {
         this(sampleCount, new Point(x, y), xRadius, yRadius, freqX, freqY, phi);
     }
     
+    /**
+     * 
+     * @param sampleCount The number of sample points to take
+     * @param center The center point
+     * @param xRadius The radius in the x-direction
+     * @param yRadius The radius in the y-direction
+     * @param freqX The frequency in the x-direction
+     * @param freqY The frequency in the y-direction
+     * @param phi An offset anngle
+     */
     public Lissajous(int sampleCount, Point center, float xRadius, float yRadius, float freqX, float freqY, float phi) {
         super(sampleCount);
         this.cen = center;
@@ -70,6 +80,10 @@ public class Lissajous extends Path {
 
     @Override
     public void trace(Point pt, float u) {
+        if (u < 0 || u >= 1) {
+            throw new IllegalArgumentException("trace(pt, " + u + ") called where the second argument is outside the range 0 (inclusive) to 1 (exclusive).");
+        }
+        
         if (reversed) {
             u *= -1;
         }

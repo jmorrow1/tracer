@@ -95,10 +95,15 @@ public class Superellipse extends Path {
      *************************/
 
     @Override
-    public void trace(Point pt, float amt) {
-        float theta = amt * PApplet.TWO_PI;
-        if (reversed)
+    public void trace(Point pt, float u) {
+        if (u < 0 || u >= 1) {
+            throw new IllegalArgumentException("trace(pt, " + u + ") called where the second argument is outside the range 0 (inclusive) to 1 (exclusive).");
+        }
+        
+        float theta = u * PApplet.TWO_PI;
+        if (reversed) {
             theta *= -1;
+        }
         float cosTheta = PApplet.cos(theta);
         pt.x = cen.x + PApplet.pow(PApplet.abs(cosTheta), twoOverN) * xRadius * sgn(cosTheta);
         float sinTheta = PApplet.sin(theta);

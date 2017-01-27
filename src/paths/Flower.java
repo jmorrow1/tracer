@@ -100,12 +100,16 @@ public class Flower extends Path {
      *************************/
 
     @Override
-    public void trace(Point pt, float amt) {
-        if (reversed) {
-            amt *= -1;
+    public void trace(Point pt, float u) {
+        if (u < 0 || u >= 1) {
+            throw new IllegalArgumentException("trace(pt, " + u + ") called where the second argument is outside the range 0 (inclusive) to 1 (exclusive).");
         }
-        float alpha = amt * PApplet.TWO_PI * freq1;
-        float beta = amt * PApplet.TWO_PI * freq2;
+        
+        if (reversed) {
+            u *= -1;
+        }
+        float alpha = u * PApplet.TWO_PI * freq1;
+        float beta = u * PApplet.TWO_PI * freq2;
         float x = cen.x + xRadius * PApplet.cos(alpha);
         float y = cen.y + yRadius * PApplet.sin(alpha);
         float lerpAmt = PApplet.map(PApplet.sin(beta), -1, 1, 0, 1);

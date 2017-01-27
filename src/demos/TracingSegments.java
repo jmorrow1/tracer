@@ -24,7 +24,7 @@ import processing.core.PApplet;
  *
  */
 public class TracingSegments extends PApplet {
-    ArrayList<Path> paths;
+    ArrayList<Path> paths = new ArrayList<Path>();
     Blender<InfinitySymbol, Superellipse> blender;
 
     float u = 0;
@@ -40,6 +40,7 @@ public class TracingSegments extends PApplet {
 
     public void setup() {
         paths = initList();
+//        Path.addAllPathTypes(0.4f * cellSize, paths);
         reposition(paths);
     }
 

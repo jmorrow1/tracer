@@ -28,7 +28,7 @@ import tracer.Point;
  *
  */
 public class Tracing extends PApplet {
-    ArrayList<Path> paths;
+    ArrayList<Path> paths = new ArrayList<Path>();
     Blender<InfinitySymbol, Superellipse> blender;
 
     Point pt = new Point(0, 0);
@@ -45,6 +45,7 @@ public class Tracing extends PApplet {
 
     public void setup() {
         paths = initList();
+//        Path.addAllPathTypes(0.4f * cellSize, paths);
         for (Path p : paths) {
             p.setStrokeWeight(1.5f);
         }

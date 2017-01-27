@@ -183,6 +183,10 @@ public class Rect extends Path {
 
     @Override
     public void trace(Point pt, float u) {
+        if (u < 0 || u >= 1) {
+            throw new IllegalArgumentException("trace(pt, " + u + ") called where the second argument is outside the range 0 (inclusive) to 1 (exclusive).");
+        }
+        
         if (reversed) {
             u = PApplet.map(u, 0, 1, 1, 0);
         }

@@ -131,10 +131,16 @@ public class Supershape extends Path {
      *************************/
 
     @Override
-    public void trace(Point pt, float amt) {
-        float theta = (amt * PApplet.TWO_PI) % PApplet.TWO_PI;
-        if (reversed)
+    public void trace(Point pt, float u) {
+        if (u < 0 || u >= 1) {
+            throw new IllegalArgumentException("trace(pt, " + u + ") called where the second argument is outside the range 0 (inclusive) to 1 (exclusive).");
+        }
+        
+        float theta = (u * PApplet.TWO_PI) % PApplet.TWO_PI;
+        if (reversed) {
             theta *= -1;
+        }
+
         float r = radius(theta);
         pt.x = cen.x + xRadius * r * PApplet.cos(theta);
         pt.y = cen.y + yRadius * r * PApplet.sin(theta);

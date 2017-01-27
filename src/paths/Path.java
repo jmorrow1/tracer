@@ -18,7 +18,7 @@ import tracer.TStyle;
  * 
  * Usage:<br>
  * To get a point on an Path p, use p.trace(u) or p.trace(pt, u) where u is a
- * floating point value between 0 and 1 and pt is a Point (a coordinate in 2D
+ * floating point value between 0 (inclusive) and 1 (exclusive) and pt is a Point (a coordinate in 2D
  * space).
  * 
  * <br>
@@ -97,15 +97,14 @@ public abstract class Path implements Drawable {
      * Creates a segment of the path starting at trace(u1) and ending at
      * trace(u2);
      * 
-     * @param u1 The 1D coordinate of the segment's start, a value between 0 and
-     *            1
-     * @param u2 The 1D coordinate of the segment's end, a value between 0 and 1
+     * @param u1 The 1D coordinate of the segment's start, a value within [0, 1)
+     * @param u2 The 1D coordinate of the segment's end, a value within [0, 1)
      * @return The segment
      */
     public Shape segment(float u1, float u2) {
-        boolean inRange = (0 <= u1 && u1 <= 1 && 0 <= u2 && u2 <= 1);
+        boolean inRange = (0 <= u1 && u1 < 1 && 0 <= u2 && u2 < 1);
         if (!inRange) {
-            throw new IllegalArgumentException("draw(g, " + u1 + ", " + u2 + ") called with values outside the range 0 to 1.");
+            throw new IllegalArgumentException("draw(g, " + u1 + ", " + u2 + ") called with values outside in the range [0, 1).");
         }
 
         return new Shape(segmentPoints(u1, u2));
@@ -134,8 +133,7 @@ public abstract class Path implements Drawable {
             return pts;
         }
     }
-
-    
+   
     private void continuousDraw(PGraphics g, float u1, float u2) {
         float length = PApplet.abs(u1 - u2);
         int n = (int) (sampleCount * length);
@@ -156,14 +154,14 @@ public abstract class Path implements Drawable {
      * trace(u2).
      * 
      * @param g A PGraphics object on which to draw the path
-     * @param u1 The 1D coordinate of the segment's start, a value between 0 and 1
-     * @param u2 The 1D coordinate of the segment's end, a value between 0 and 1
+     * @param u1 The 1D coordinate of the segment's start, a value within [0, 1)
+     * @param u2 The 1D coordinate of the segment's end, a value within [0, 1)
      */
     // TODO WORK IN PROGRESS
     public void draw(PGraphics g, float u1, float u2) {        
         boolean inRange = (0 <= u1 && u1 < 1 && 0 <= u2 && u2 < 1);
         if (!inRange) {
-            throw new IllegalArgumentException("draw(g, " + u1 + ", " + u2 + ") called with values outside the range 0 to 1.");
+            throw new IllegalArgumentException("draw(g, " + u1 + ", " + u2 + ") called with values outside the range 0 (inclusive) to 1 (exclusive).");
         }
         style.apply(g);
         drawHelper(g, u1, u2);
@@ -211,11 +209,11 @@ public abstract class Path implements Drawable {
      * <br>
      * <br>
      * 
-     * Maps a given floating point number from 0 to 1 to a given Point along the
+     * Maps a given floating point number within [0, 1) to a given Point along the
      * perimeter of the Path.
      * 
      * @param pt The Point in which the result is stored.
-     * @param u A number from 0 to 1.
+     * @param u A number within [0, 1)
      */
     public abstract void trace(Point pt, float u);
 
@@ -244,10 +242,10 @@ public abstract class Path implements Drawable {
      * <br>
      * <br>
      * 
-     * Maps a given floating point number from 0 to 1 to a Point along the
+     * Maps a given floating point number within [0, 1) to a Point along the
      * perimeter of the Path.
      * 
-     * @param u A number from 0 to 1.
+     * @param u A number within [0, 1).
      * @return The resulting point.
      */
     public Point trace(float u) {
@@ -385,7 +383,7 @@ public abstract class Path implements Drawable {
      * Gives -1 if the index is valid.
      * 
      * @param i The index
-     * @return The ith discontinuity as a value between 0 and 1
+     * @return The ith discontinuity as a value within [0, 1)
      */
     public abstract float getGap(int i);
     
@@ -551,5 +549,62 @@ public abstract class Path implements Drawable {
         else {
             return denom - ((-num) % denom);
         }   
+    }
+    
+    /**
+     * Returns one of each Path type in the tracer library.
+     * Each Path is centered about (0, 0) and has the given radius, r.
+     * 
+     * @param r The radius
+     * @return An array of Paths
+     */
+    public static Path[] getAllPathTypes(float r) {
+        Path[] paths = new Path[] {
+            new Arc(0, 0, r),
+            new Blender(new Circle(0, 0, r), new Rect(0, 0, r, r, RADIUS), 0.5f, 100),
+            new Circle(0, 0, r),
+            new Composite(new Circle(0, 0, r), new Rect(0, 0, r, r, RADIUS)),
+            new CubicBezier(0, 0, r),
+            new Ellipse(0, 0, r),
+            new Flower(0, 0, r),
+            new Gesture(),
+            new InfinitySymbol(0, 0, r),
+            new Line(0, 0, r),
+            new Lissajous(0, 0, r),
+            new Plot(0, 0, r),
+            new Rect(0, 0, r, r, RADIUS),
+            new Segment(0, 0, r),
+            new Shape(0, 0, r),
+            new Superellipse(0, 0, r),
+            new Supershape(0, 0, r)
+        };
+        return paths;
+    }
+    
+    /**
+     * Adds one of each Path type in the tracer library to the given ArrayList.
+     * Each Path is centered about (0, 0) and has the given radius, r.
+     *
+     * @param r The radius
+     * @param paths The ArrayList of Paths
+     */
+    public static void addAllPathTypes(float r, ArrayList<Path> paths) {
+        paths.add(new Arc(0, 0, r));
+        paths.add(new Blender(new Circle(0, 0, r), new Rect(0, 0, r, r, RADIUS), 0.5f, 100));
+        paths.add(new Circle(0, 0, r));
+        paths.add(new Composite(new Circle(0, 0, r), new Rect(0, 0, r, r, RADIUS)));
+        paths.add(new CubicBezier(0, 0, r));
+        paths.add(new Ellipse(0, 0, r));
+        paths.add(new Flower(0, 0, r));
+        paths.add(new Gesture());
+        paths.add(new InfinitySymbol(0, 0, r));
+        paths.add(new Line(0, 0, r));
+        paths.add(new Lissajous(0, 0, r));
+        paths.add(new Plot(0, 0, r));
+        paths.add(new Rect(0, 0, r, r, RADIUS));
+        paths.add(new Segment(0, 0, r));
+        paths.add(new Shape(0, 0, r));
+        paths.add(new Superellipse(0, 0, r));
+        paths.add(new Supershape(0, 0, r));
     }
 }
