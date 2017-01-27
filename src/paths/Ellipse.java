@@ -37,11 +37,11 @@ public class Ellipse extends Path {
     }
     
     public Ellipse(Point ab, float c, float d, int ellipseMode) {
-        
+        set(ab, c, d, ellipseMode);
     }
     
     public Ellipse(Point ab, Point cd, int ellipseMode) {
-        
+        set(ab, cd, ellipseMode);
     }
 
     /**
@@ -134,7 +134,7 @@ public class Ellipse extends Path {
             default:
                 System.err.println("Invalid ellipseMode. Use CORNERS, CORNER, CENTER, or RADIUS.");
                 set(ab, cd, CORNER);
-                break;
+                return;
         }
         this.ellipseMode = ellipseMode;
         setHelperFields();
