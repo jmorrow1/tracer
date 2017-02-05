@@ -1,5 +1,5 @@
 # Tracer
-Geometry library for Processing, currently in alpha.
+A Processing library for creating procedural animations, currently in alpha.
 
 #Basics
 ##Paths
