@@ -87,6 +87,7 @@ public class Lissajous extends Path {
         if (reversed) {
             u *= -1;
         }
+        
         float angle = u * PApplet.TWO_PI;
         pt.x = cen.x + xRadius * PApplet.sin(angle * freqX + phi);
         pt.y = cen.y + yRadius * PApplet.sin(angle * freqY);

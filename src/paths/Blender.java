@@ -59,7 +59,10 @@ public class Blender<T extends Path, U extends Path> extends Path {
             throw new IllegalArgumentException("trace(pt, " + u + ") called where the second argument is outside the range 0 (inclusive) to 1 (exclusive).");
         }
         if (reversed) {
-            u = PApplet.map(u, 0, 1, 1, 0);
+            u = 1 - u;
+            if (u == 1) {
+                u = 0;
+            }
         }
         a.trace(ptA, u);
         b.trace(ptB, u);

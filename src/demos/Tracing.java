@@ -40,7 +40,7 @@ public class Tracing extends PApplet {
     }
 
     public void settings() {
-        size(600, 600);
+        size(600, 600, P2D);
     }
 
     public void setup() {
@@ -50,8 +50,19 @@ public class Tracing extends PApplet {
             p.setStrokeWeight(1.5f);
         }
         reposition(paths);
+        map(paths, (Path p) -> p.reverse());
     }
-
+    
+    private interface PathFunc {
+        public void run(Path p);
+    }
+    
+    private void map(ArrayList<Path> paths, PathFunc f) {
+        for (Path p : paths) {
+            f.run(p);
+        }
+    }
+    
     private ArrayList<Path> initList() {
         float r = 0.4f * cellSize;
         ArrayList<Path> paths = new ArrayList<Path>();

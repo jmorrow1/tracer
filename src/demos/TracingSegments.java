@@ -42,6 +42,17 @@ public class TracingSegments extends PApplet {
         paths = initList();
 //        Path.addAllPathTypes(0.4f * cellSize, paths);
         reposition(paths);
+        map(paths, (Path p) -> p.reverse());
+    }
+    
+    private interface PathFunc {
+        public void run(Path p);
+    }
+    
+    private void map(ArrayList<Path> paths, PathFunc f) {
+        for (Path p : paths) {
+            f.run(p);
+        }
     }
 
     private ArrayList<Path> initList() {

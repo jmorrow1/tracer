@@ -117,6 +117,13 @@ public class Plot extends Path {
             throw new IllegalArgumentException("trace(pt, " + u + ") called where the second argument is outside the range 0 (inclusive) to 1 (exclusive).");
         }
         
+        if (reversed) {
+            u = 1.0f - u;
+            if (u == 1.0f) {
+                u = 0.0f;
+            }
+        }
+        
         for (int i=1; i<xs.length; i++) {
             if (u < xs[i]) {
                 float y = PApplet.map(u, xs[i-1], xs[i], ys[i-1], ys[i]);

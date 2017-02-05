@@ -54,7 +54,10 @@ public class Composite<T extends Path, U extends Path> extends Path {
         }
         
         if (reversed) {
-            u = PApplet.map(u, 0, 1, 1, 0);
+            u = 1.0f - u;
+            if (u == 1.0f) {
+                u = 0.0f;
+            }
         }
            
         if (u < 0.5f) {
@@ -124,6 +127,9 @@ public class Composite<T extends Path, U extends Path> extends Path {
 
     @Override
     public float getGap(int i) {
+        Path a = reversed ? this.b : this.a;
+        Path b = reversed ? this.a : this.b;
+        
         if (i == 0) {
             return 0;
         }

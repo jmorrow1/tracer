@@ -78,7 +78,10 @@ public class CubicBezier extends Path {
         }
         
         if (reversed) {
-            u = PApplet.map(u, 0, 1, 1, 0);
+            u = 1.0f - u;
+            if (u == 1.0f) {
+                u = 0.0f;
+            }
         }
             
         pt.x = bezierPoint(a1.x, c1.x, c2.x, a2.x, u);

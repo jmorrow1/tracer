@@ -14,7 +14,7 @@ import tracer.Point;
 public class Circle extends Path {
     private Point center;
     private float radius;
-    private float angleOffset;
+    private float startAngle;
     
     /**
      * 
@@ -55,17 +55,21 @@ public class Circle extends Path {
 
     @Override
     public void draw(PGraphics g, float u1, float u2) {
-        boolean inRange = (0 <= u1 && u1 <= 1 && 0 <= u2 && u2 <= 1);
+        boolean inRange = (0 <= u1 && u1 < 1 && 0 <= u2 && u2 < 1);
         if (!inRange) {
             throw new IllegalArgumentException("draw(g, " + u1 + ", " + u2 + ") called with values outside the range 0 to 1.");
         }
+        
+        int direction = reversed ? -1 : 1;
+        float angle1 = u1 * PApplet.TWO_PI * direction;
+        float angle2 = u2 * PApplet.TWO_PI * direction;
 
-        if (u1 > u2) {
-            u2++;
+        if (angle1 > angle2) {
+            angle2 += PApplet.TWO_PI;
         }
 
         g.ellipseMode(RADIUS);
-        g.arc(center.x, center.y, radius, radius, u1 * PApplet.TWO_PI, u2 * PApplet.TWO_PI);
+        g.arc(center.x, center.y, radius, radius, angle1, angle2);
     }
 
     @Override
@@ -77,8 +81,8 @@ public class Circle extends Path {
         if (reversed) {
             radians *= -1;
         }
-        pt.x = center.x + radius * PApplet.cos(angleOffset + radians);
-        pt.y = center.y + radius * PApplet.sin(angleOffset + radians);
+        pt.x = center.x + radius * PApplet.cos(startAngle + radians);
+        pt.y = center.y + radius * PApplet.sin(startAngle + radians);
     }
 
     /**
@@ -199,6 +203,14 @@ public class Circle extends Path {
     @Override
     public boolean isGap(float u) {
         return false;
+    }
+    
+    public void setStartAngle(float startAngle) {
+        this.startAngle = startAngle;
+    }
+    
+    public float getStartAngle() {
+        return startAngle;
     }
 
     @Override

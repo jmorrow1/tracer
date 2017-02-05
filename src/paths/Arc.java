@@ -163,7 +163,10 @@ public class Arc extends Path {
         }
         
         if (reversed) {
-            u = PApplet.map(u, 0, 1, 1, 0);
+            u = 1.0f - u;
+            if (u == 1.0f) {
+                u = 0.0f;
+            }
         }
             
         float angle = startAngle + u * (endAngle - startAngle);

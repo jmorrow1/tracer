@@ -112,6 +112,13 @@ public class Gesture extends Path {
             throw new IllegalArgumentException("trace(pt, " + u + ") called where the second argument is outside the range 0 (inclusive) to 1 (exclusive).");
         }
         
+        if (reversed) {
+            u = 1.0f - u;
+            if (u == 1.0f) {
+                u = 0.0f;
+            }
+        }
+        
         float t1 = getStartTime() + u * getTotalTime();
         
         for (int i=1; i<vertices.size(); i++) {

@@ -188,7 +188,10 @@ public class Rect extends Path {
         }
         
         if (reversed) {
-            u = PApplet.map(u, 0, 1, 1, 0);
+            u = 1.0f - u;
+            if (u == 1.0f) {
+                u = 0.0f;
+            }
         }
 
         if (0 <= u && u < vertices1D[1]) {
