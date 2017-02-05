@@ -154,13 +154,17 @@ public class Ellipse extends Path {
             throw new IllegalArgumentException(
                     "draw(g, " + u1 + ", " + u2 + ") called with values outside the range 0 to 1.");
         }
+        
+        int direction = reversed ? -1 : 1;
+        float angle1 = u1 * PApplet.TWO_PI * direction;
+        float angle2 = u2 * PApplet.TWO_PI * direction;
 
-        if (u1 > u2) {
-            u2++;
+        if (angle1 > angle2) {
+            angle2 += PApplet.TWO_PI;
         }
             
         g.ellipseMode(ellipseMode);
-        g.arc(ab.x, ab.y, cd.x, cd.y, u1 * PApplet.TWO_PI, u2 * PApplet.TWO_PI);
+        g.arc(ab.x, ab.y, cd.x, cd.y, angle1, angle2);
     }
 
     @Override

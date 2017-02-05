@@ -53,7 +53,7 @@ public class Segment extends Path {
             throw new IllegalArgumentException("trace(pt, " + u + ") called where the second argument is outside the range 0 (inclusive) to 1 (exclusive).");
         }
         
-        float v = PApplet.map(u, 0, 1, u1, u2);
+        float v = reversed ? PApplet.map(u, 0, 1, u2, u1) : PApplet.map(u, 0, 1, u1, u2);
         parent.trace(pt, v);
     }
     
@@ -91,13 +91,30 @@ public class Segment extends Path {
             return 0;
         }
         
-        for (int j=0; j<parent.getGapCount(); j++) {
-            float gap = parent.getGap(j);
-            if (u1 < gap && gap < u2) {
-                if (i == 0) {
-                    return gap;
+        if (!reversed) {
+            for (int j=0; j<parent.getGapCount(); j++) {
+                float gap = parent.getGap(j);
+                if (u1 < gap && gap < u2) {
+                    if (i == 0) {
+                        return gap;
+                    }
+                    i--;
                 }
-                i--;
+            }
+        }
+        else {
+            for (int j=parent.getGapCount()-1; j>=0; j--) {
+                float gap = parent.getGap(j);
+                if (u1 < gap && gap < u2) {
+                    if (i == 0) {
+                        gap = 1.0f - gap;
+                        if (gap == 1.0f) {
+                            gap = 0.0f;
+                        }
+                        return gap;
+                    }
+                    i--;
+                }
             }
         }
       

@@ -128,6 +128,7 @@ public class Shape extends Path {
 
     @Override
     public void reverse() {
+        super.reverse();
         reverse(vertices2D);
         reverse(vertices1D);
         
@@ -171,7 +172,7 @@ public class Shape extends Path {
         if (isClosed()) {
             return 0;
         } else {
-            return 1;
+            return 0;
         }
     }
 
@@ -180,7 +181,7 @@ public class Shape extends Path {
         if (isClosed() || i != 0) {
             return -1;
         } else {
-            return 1;
+            return 0;
         }
     }
 

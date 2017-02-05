@@ -152,7 +152,7 @@ public class Plot extends Path {
 
     @Override
     public float getGap(int i) {
-        return 1;
+        return 0;
     }
 
     @Override

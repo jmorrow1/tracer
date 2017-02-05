@@ -165,7 +165,7 @@ public class Gesture extends Path {
             return -1;
         }
         else {
-            return 1;
+            return 0;
         }
     }
     

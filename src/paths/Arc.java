@@ -439,7 +439,8 @@ public class Arc extends Path {
     public float getGap(int i) {
         if (getGapCount() == 1 && i == 0) {
             return 0;
-        } else {
+        }
+        else {
             return -1;
         }
     }

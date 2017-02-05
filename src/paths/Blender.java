@@ -59,9 +59,9 @@ public class Blender<T extends Path, U extends Path> extends Path {
             throw new IllegalArgumentException("trace(pt, " + u + ") called where the second argument is outside the range 0 (inclusive) to 1 (exclusive).");
         }
         if (reversed) {
-            u = 1 - u;
-            if (u == 1) {
-                u = 0;
+            u = 1.0f - u;
+            if (u == 1.0f) {
+                u = 0.0f;
             }
         }
         a.trace(ptA, u);
@@ -167,34 +167,77 @@ public class Blender<T extends Path, U extends Path> extends Path {
     }
 
     @Override
-    public float getGap(int i) {
-        int j = 0; //loops through a's gaps
-        int k = 0; //loops through b's gaps
-        int count = 0; //loops through all gaps
-        
-        while (j < a.getGapCount() || k < b.getGapCount()) {
-            float gapA = (j < a.getGapCount()) ? a.getGap(j) : -1;
-            float gapB = (k < b.getGapCount()) ? b.getGap(k) : -1;
-            if (gapA < gapB) {
-                if (i == count) {
-                    return gapA;
+    public float getGap(int i) {        
+        if (!reversed) {
+            int j = 0; //loops through a's gaps
+            int k = 0; //loops through b's gaps
+            int count = 0; //loops through all gaps
+            
+            while (j < a.getGapCount() || k < b.getGapCount()) {
+                float gapA = (j < a.getGapCount()) ? a.getGap(j) : -1;
+                float gapB = (k < b.getGapCount()) ? b.getGap(k) : -1;
+                if (gapA < gapB) {
+                    if (i == count) {
+                        return gapA;
+                    }
+                    j++;
                 }
-                j++;
-            }
-            else if (gapA == gapB) {
-                if (i == count) {
-                    return gapA;
+                else if (gapA == gapB) {
+                    if (i == count) {
+                        return gapA;
+                    }
+                    j++;
+                    k++;
                 }
-                j++;
-                k++;
-            }
-            else {
-                if (i == count) {
-                    return gapB;
+                else {
+                    if (i == count) {
+                        return gapB;
+                    }
+                    k++;
                 }
-                k++;
+                count++;
             }
-            count++;
+        }
+        //TODO test
+        else {
+            int j = a.getGapCount()-1; //loops through a's gaps
+            int k = b.getGapCount()-1; //loops through b's gaps
+            int count = 0; //loops through all gaps
+            
+            while (j < a.getGapCount() || k < b.getGapCount()) {
+                float gapA = (j >= 0) ? a.getGap(j) : -1;
+                float gapB = (k >= 0) ? b.getGap(k) : -1;
+                
+                gapA = 1.0f - gapA;
+                if (gapA == 1.0f) {
+                    gapA = 0.0f;
+                }
+                gapB = 1.0f - gapB;
+                if (gapB == 1.0f) {
+                    gapB = 0.0f;
+                }
+                
+                if (gapA < gapB) {
+                    if (i == count) {
+                        return gapA;
+                    }
+                    j--;
+                }
+                else if (gapA == gapB) {
+                    if (i == count) {
+                        return gapA;
+                    }
+                    j--;
+                    k--;
+                }
+                else {
+                    if (i == count) {
+                        return gapB;
+                    }
+                    k--;
+                }
+                count++;
+            }
         }
 
         return -1;
