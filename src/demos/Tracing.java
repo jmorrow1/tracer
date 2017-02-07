@@ -48,6 +48,8 @@ public class Tracing extends PApplet {
 //        Path.addAllPathTypes(0.4f * cellSize, paths);
         for (Path p : paths) {
             p.setStrokeWeight(1.5f);
+            p.setStrokeColor(0);
+            p.setFill(false);
         }
         reposition(paths);
         map(paths, (Path p) -> p.reverse());

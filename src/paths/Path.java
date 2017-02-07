@@ -154,14 +154,14 @@ public abstract class Path implements Drawable {
      * trace(u2).
      * 
      * @param g A PGraphics object on which to draw the path
-     * @param u1 The 1D coordinate of the segment's start, a value within [0, 1)
-     * @param u2 The 1D coordinate of the segment's end, a value within [0, 1)
+     * @param u1 The 1D coordinate of the segment's start
+     * @param u2 The 1D coordinate of the segment's end
      */
     // TODO WORK IN PROGRESS
     public void draw(PGraphics g, float u1, float u2) {        
         boolean inRange = (0 <= u1 && u1 < 1 && 0 <= u2 && u2 < 1);
         if (!inRange) {
-            throw new IllegalArgumentException("draw(g, " + u1 + ", " + u2 + ") called with values outside the range 0 (inclusive) to 1 (exclusive).");
+            throw new IllegalArgumentException("draw(g, " + u1 + ", " + u2 + ") called with values outside the range 0 to 1.");
         }
         style.apply(g);
         drawHelper(g, u1, u2);
@@ -169,7 +169,7 @@ public abstract class Path implements Drawable {
     
     private void drawHelper(PGraphics g, float u1, float u2) {
         if (u1 > u2) {
-            float u12 = PApplet.max(0.999f, u1 + 0.5f * (1f - u1));
+            float u12 = PApplet.max(0.999f,  0.5f * (u1 + 1.0f));
             drawHelper(g, u1, u12);
             drawHelper(g, 0, u2);
         }
@@ -178,7 +178,7 @@ public abstract class Path implements Drawable {
             for (int i=0; i<gapCount; i++) {
                 float gap = getGap(i);
                 if (u1 < gap && gap < u2) {
-                    float u12 = PApplet.max(gap - 0.001f, u1 + 0.5f * (gap - u1));
+                    float u12 = PApplet.max(gap - 0.001f, 0.5f * (gap + u1));
                     drawHelper(g, u1, u12);
                     u1 = gap + 0.001f;
                 }

@@ -40,9 +40,14 @@ public class TracingSegments extends PApplet {
 
     public void setup() {
         paths = initList();
+        for (Path p : paths) {
+            p.setStrokeWeight(1.5f);
+            p.setStrokeColor(0);
+            p.setFill(false);
+        }
 //        Path.addAllPathTypes(0.4f * cellSize, paths);
         reposition(paths);
-        map(paths, (Path p) -> p.reverse());
+//        map(paths, (Path p) -> p.reverse());
     }
     
     private interface PathFunc {
@@ -67,10 +72,8 @@ public class TracingSegments extends PApplet {
         paths.add(new Arc(0, 0, r, r / 2, 0, 1.5f * PI, RADIUS/* , 50 */));
         paths.add(new Flower(0, 0, r, 4, 3, 100));
         paths.add(new InfinitySymbol(0, 0, r, 0.75f * r, 50));
-        paths.add(new CubicBezier(random(-r, r), random(-r, r), random(-r, r), random(-r, r), random(-r, r),
-                random(-r, r), random(-r, r), random(-r, r)));
-        blender = new Blender(new InfinitySymbol(0, 0, r, 0.75f * r, 50), new Superellipse(0, 0, r, r, 0.5f, 50), 0.5f,
-                100);
+        paths.add(new CubicBezier(random(-r, r), random(-r, r), random(-r, r), random(-r, r), random(-r, r), random(-r, r), random(-r, r), random(-r, r)));
+        blender = new Blender(new InfinitySymbol(0, 0, r, 0.75f * r, 50), new Superellipse(0, 0, r, r, 0.5f, 50), 0.5f, 100);
         paths.add(blender);
         paths.add(new Superellipse(0, 0, r, r, 0.5f, 50));
         Arc a = new Arc(0, 0, r, r, 0, PI, RADIUS/* , 50 */);

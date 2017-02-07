@@ -82,11 +82,11 @@ public class Shape extends Path {
 
         Point a = vertices2D.get(0);
         float u1 = 0;
-        vertices1D.add(0f);
+        vertices1D.add(u1);
         for (int i = 1; i < vertices2D.size(); i++) {
             Point b = vertices2D.get(i);
             float du = Line.dist(a, b) / totalDistance;
-            float u2 = u1 + du;
+            float u2 = (u1 + du);
             vertices1D.add(u2);
             u1 = u2;
             a = b;
@@ -102,6 +102,37 @@ public class Shape extends Path {
             g.vertex(pt.x, pt.y);
         }
         g.endShape();
+    }
+    
+    @Override
+    public void draw(PGraphics g, float u1, float u2) {
+        style.apply(g);
+        if (u1 < u2) {    
+            g.beginShape();
+            trace(pt, u1);
+            g.vertex(pt.x, pt.y);
+
+            for (int i=1; i<vertices1D.size(); i++) {
+                float vtx1D = vertices1D.get(i);
+                
+                boolean inSegment = (u1 < vtx1D && vtx1D < u2);
+                
+                if (inSegment) {
+                    Point vtx2D = vertices2D.get(i);
+                    g.vertex(vtx2D.x, vtx2D.y);
+                }
+            }
+            
+            trace(pt, u2);
+            g.vertex(pt.x, pt.y);
+            g.vertex(pt.x, pt.y); //writing the last vertex twice, because the P2D renderer requires at least 3 vertices
+            g.endShape();
+        }
+        else {
+            float u12 = PApplet.max(0.999f, 0.5f * (u1 + 1.0f));
+            draw(g, u1, u12);
+            draw(g, 0, u2);
+        }
     }
 
     @Override

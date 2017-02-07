@@ -173,13 +173,43 @@ public class Rect extends Path {
             setHelperFields();
         }
     }
-
+    
     @Override
     public void draw(PGraphics g) {
         style.apply(g);
         g.rectMode(rectMode);
         g.rect(ab.x, ab.y, cd.x, cd.y);
     }
+    
+  @Override
+  public void draw(PGraphics g, float u1, float u2) {
+      if (u1 < u2) {
+          g.beginShape();
+          trace(pt, u1);
+          g.vertex(pt.x, pt.y);
+          
+          for (int i=1; i<vertices1D.length; i++) {
+              float vtx1D = vertices1D[i];
+              
+              boolean inSegment = (u1 < vtx1D && vtx1D < u2);
+              
+              if (inSegment) {
+                  trace(pt, vertices1D[i]);
+                  g.vertex(pt.x, pt.y);
+              }
+          }
+          
+          trace(pt, u2);
+          g.vertex(pt.x, pt.y);
+          g.vertex(pt.x, pt.y); //writing the last vertex twice, because the P2D renderer requires at least 3 vertices
+          g.endShape();
+      }
+      else {
+          float u12 = PApplet.max(0.999f, 0.5f * (u1 + 1.0f));
+          draw(g, u1, u12);
+          draw(g, 0, u2);
+      }
+  }
 
     @Override
     public void trace(Point pt, float u) {
@@ -198,15 +228,18 @@ public class Rect extends Path {
             u = PApplet.map(u, 0, vertices1D[1], 0, 1);
             pt.x = getX1() + u * getWidth();
             pt.y = getY1();
-        } else if (u < vertices1D[2]) {
+        }
+        else if (u < vertices1D[2]) {
             u = PApplet.map(u, vertices1D[1], vertices1D[2], 0, 1);
             pt.x = getX2();
             pt.y = getY1() + u * getHeight();
-        } else if (u < vertices1D[3]) {
+        }
+        else if (u < vertices1D[3]) {
             u = PApplet.map(u, vertices1D[2], vertices1D[3], 0, 1);
             pt.x = getX2() - u * getWidth();
             pt.y = getY2();
-        } else if (u < 1) {
+        }
+        else if (u < 1) {
             u = PApplet.map(u, vertices1D[3], 1, 0, 1);
             pt.x = getX1();
             pt.y = getY2() - u * getHeight();
