@@ -165,7 +165,7 @@ public class Arc extends Path {
         if (reversed) {
             u = 1.0f - u;
             if (u == 1.0f) {
-                u = 0.0f;
+                u = ALMOST_ONE;
             }
         }
             

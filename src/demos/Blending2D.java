@@ -2,7 +2,7 @@ package demos;
 
 import paths.Blender;
 import paths.Ellipse;
-import paths.Flower;
+import paths.Rose;
 import paths.InfinitySymbol;
 import paths.Path;
 import paths.Superellipse;

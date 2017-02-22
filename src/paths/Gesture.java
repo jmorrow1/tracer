@@ -115,7 +115,7 @@ public class Gesture extends Path {
         if (reversed) {
             u = 1.0f - u;
             if (u == 1.0f) {
-                u = 0.0f;
+                u = ALMOST_ONE;
             }
         }
         
@@ -235,6 +235,16 @@ public class Gesture extends Path {
      */
     public float getTemporalCoordinate(int i) {
         return vertices.get(i).t;
+    }
+    
+    /**
+     * Adds a vertex at time t.
+     * @param x The x-coordinate
+     * @param y The y-coordinate
+     * @param t The time
+     */
+    public void addVertex(float x, float y, float t) {
+        addVertex(new Point(x, y), t);
     }
     
     /**

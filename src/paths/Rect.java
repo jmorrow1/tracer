@@ -181,36 +181,47 @@ public class Rect extends Path {
         g.rect(ab.x, ab.y, cd.x, cd.y);
     }
     
-  @Override
-  public void draw(PGraphics g, float u1, float u2) {
-      if (u1 < u2) {
-          g.beginShape();
-          trace(pt, u1);
-          g.vertex(pt.x, pt.y);
-          
-          for (int i=1; i<vertices1D.length; i++) {
-              float vtx1D = vertices1D[i];
-              
-              boolean inSegment = (u1 < vtx1D && vtx1D < u2);
-              
-              if (inSegment) {
-                  trace(pt, vertices1D[i]);
-                  g.vertex(pt.x, pt.y);
-              }
-          }
-          
-          trace(pt, u2);
-          g.vertex(pt.x, pt.y);
-          g.vertex(pt.x, pt.y); //writing the last vertex twice, because the P2D renderer requires at least 3 vertices
-          g.endShape();
-      }
-      else {
-          float u12 = PApplet.max(0.999f, 0.5f * (u1 + 1.0f));
-          draw(g, u1, u12);
-          draw(g, 0, u2);
-      }
-  }
+    @Override
+    public void draw(PGraphics g, float u1, float u2) {
+        boolean inRange = (0 <= u1 && u1 < 1 && 0 <= u2 && u2 < 1);
+        if (!inRange) {
+            throw new IllegalArgumentException(
+                    "draw(g, " + u1 + ", " + u2 + ") called with values outside in the range [0, 1).");
+        }
+        
+        style.apply(g);
+        drawHelper(g, u1, u2);
+    }
+  
+    private void drawHelper(PGraphics g, float u1, float u2) {
+        if (u1 < u2) {
+            g.beginShape();
+            trace(pt, u1);
+            g.vertex(pt.x, pt.y);
 
+            for (int i = 1; i < vertices1D.length; i++) {
+                float vtx1D = vertices1D[i];
+
+                boolean inSegment = (u1 < vtx1D && vtx1D < u2);
+
+                if (inSegment) {
+                    trace(pt, vertices1D[i]);
+                    g.vertex(pt.x, pt.y);
+                }
+            }
+
+            trace(pt, u2);
+            g.vertex(pt.x, pt.y);
+            g.vertex(pt.x, pt.y); // writing the last vertex twice, because the
+                                  // P2D renderer requires at least 3 vertices
+            g.endShape();
+        } else {
+            float u12 = PApplet.max(0.999f, 0.5f * (u1 + 1.0f));
+            drawHelper(g, u1, u12);
+            drawHelper(g, 0, u2);
+        }
+    }
+    
     @Override
     public void trace(Point pt, float u) {
         if (u < 0 || u >= 1) {
@@ -220,7 +231,7 @@ public class Rect extends Path {
         if (reversed) {
             u = 1.0f - u;
             if (u == 1.0f) {
-                u = 0.0f;
+                u = ALMOST_ONE;
             }
         }
 

@@ -9,7 +9,7 @@ import paths.Circle;
 import paths.Composite;
 import paths.CubicBezier;
 import paths.Ellipse;
-import paths.Flower;
+import paths.Rose;
 import paths.InfinitySymbol;
 import paths.Line;
 import paths.Lissajous;
@@ -76,7 +76,7 @@ public class Tracing extends PApplet {
         paths.add(Polygonize.makePolygon(0, 0, r / 2, r, 4, QUARTER_PI));
         paths.add(new Arc(0, 0, r, r / 2, 0, 1.5f * PI, RADIUS/* , 50 */));
         paths.add(Path.derivePath(paths.get(paths.size()-1), new float[] {0, 0.25f, 0.5f, 0.75f, 0}));
-        paths.add(new Flower(0, 0, r, 4, 3, 100));
+        paths.add(new Rose(0, 0, r, 4, 3, 100));
         paths.add(new InfinitySymbol(0, 0, r, 0.75f * r, 50));
         paths.add(new CubicBezier(random(-r, r), random(-r, r), random(-r, r), random(-r, r), random(-r, r), random(-r, r), random(-r, r), random(-r, r)));
         blender = new Blender(new InfinitySymbol(0, 0, r, 0.75f * r, 50), new Superellipse(0, 0, r, r, 0.5f, 50), 0.5f, 100);

@@ -12,7 +12,7 @@ import tracer.Point;
  * @author James Morrow [jamesmorrowdesign.com]
  *
  */
-public class Flower extends Path {
+public class Rose extends Path {
     private Point cen;
     private float xRadius, yRadius, freq1, freq2;
 
@@ -23,11 +23,11 @@ public class Flower extends Path {
     /**
      * Copy constructor.
      * 
-     * @param f the flower to copy
+     * @param rose the rose to copy
      */
-    public Flower(Flower f) {
-        this(f.cen.clone(), f.xRadius, f.yRadius, f.freq1, f.freq2, f.sampleCount);
-        setSampleCount(f.sampleCount);
+    public Rose(Rose rose) {
+        this(rose.cen.clone(), rose.xRadius, rose.yRadius, rose.freq1, rose.freq2, rose.sampleCount);
+        setSampleCount(rose.sampleCount);
     }
 
     /**
@@ -39,7 +39,7 @@ public class Flower extends Path {
      * @param freq2 the second frequency
      * @param sampleCount the number of sample points
      */
-    public Flower(float cenx, float ceny, float radius, float freq1, float freq2, int sampleCount) {
+    public Rose(float cenx, float ceny, float radius, float freq1, float freq2, int sampleCount) {
         this(new Point(cenx, ceny), radius, radius, freq1, freq2, sampleCount);
     }
     
@@ -51,7 +51,7 @@ public class Flower extends Path {
      * @param freq2 the second frequency
      * @param drawGranularity the number of sample points
      */
-    public Flower(Point cen, float radius, float freq1, float freq2, int drawGranularity) {
+    public Rose(Point cen, float radius, float freq1, float freq2, int drawGranularity) {
         this(cen, radius, radius, freq1, freq2, drawGranularity);
     }
 
@@ -65,7 +65,7 @@ public class Flower extends Path {
      * @param freq2 the second frequency
      * @param drawGranularity the number of sample points
      */
-    public Flower(Point cen, float xRadius, float yRadius, float freq1, float freq2, int drawGranularity) {
+    public Rose(Point cen, float xRadius, float yRadius, float freq1, float freq2, int drawGranularity) {
         super(drawGranularity);
         this.cen = cen;
         this.xRadius = xRadius;
@@ -81,7 +81,7 @@ public class Flower extends Path {
      * @param y The y-coordinate of the path.
      * @param r The radius of the path.
      */
-    public Flower(float x, float y, float r) {
+    public Rose(float x, float y, float r) {
         this(new Point(x, y), r);
     }
     
@@ -91,7 +91,7 @@ public class Flower extends Path {
      * @param center the center of the path
      * @param r the ratius of the path
      */
-    public Flower(Point center, float r) {
+    public Rose(Point center, float r) {
         this(center, r, r, 3, 5, 100);
     }
 
@@ -239,8 +239,8 @@ public class Flower extends Path {
     }
 
     @Override
-    public Flower clone() {
-        return new Flower(this);
+    public Rose clone() {
+        return new Rose(this);
     }
 
     @Override

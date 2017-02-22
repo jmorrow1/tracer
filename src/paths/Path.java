@@ -48,6 +48,7 @@ public abstract class Path implements Drawable {
     protected boolean reversed;
     protected int sampleCount;
     protected TStyle style;
+    public static final float ALMOST_ONE = 0.9999999f; 
 
     public Path() {
         this(100);
@@ -157,7 +158,6 @@ public abstract class Path implements Drawable {
      * @param u1 The 1D coordinate of the segment's start
      * @param u2 The 1D coordinate of the segment's end
      */
-    // TODO WORK IN PROGRESS
     public void draw(PGraphics g, float u1, float u2) {        
         boolean inRange = (0 <= u1 && u1 < 1 && 0 <= u2 && u2 < 1);
         if (!inRange) {
@@ -169,18 +169,18 @@ public abstract class Path implements Drawable {
     
     private void drawHelper(PGraphics g, float u1, float u2) {
         if (u1 > u2) {
-            float u12 = PApplet.max(0.999f,  0.5f * (u1 + 1.0f));
+            float u12 = PApplet.max(ALMOST_ONE,  0.5f * (u1 + 1.0f));
             drawHelper(g, u1, u12);
-            drawHelper(g, 0, u2);
+            drawHelper(g, 0.0f, u2);
         }
         else {
             int gapCount = getGapCount();
             for (int i=0; i<gapCount; i++) {
                 float gap = getGap(i);
                 if (u1 < gap && gap < u2) {
-                    float u12 = PApplet.max(gap - 0.001f, 0.5f * (gap + u1));
+                    float u12 = PApplet.max(gap - 0.00001f, 0.5f * (gap + u1));
                     drawHelper(g, u1, u12);
-                    u1 = gap + 0.001f;
+                    u1 = gap + 0.00001f;
                 }
             }
             
@@ -565,14 +565,14 @@ public abstract class Path implements Drawable {
             new Circle(0, 0, r),
             new Composite(new Circle(0, 0, r), new Rect(0, 0, r, r, RADIUS)),
             new CubicBezier(0, 0, r),
-            new Ellipse(0, 0, r),
-            new Flower(0, 0, r),
+            new Ellipse(0, 0, r),  
             new Gesture(),
             new InfinitySymbol(0, 0, r),
             new Line(0, 0, r),
             new Lissajous(0, 0, r),
             new Plot(0, 0, r),
             new Rect(0, 0, r, r, RADIUS),
+            new Rose(0, 0, r),
             new Segment(0, 0, r),
             new Shape(0, 0, r),
             new Superellipse(0, 0, r),
@@ -595,13 +595,13 @@ public abstract class Path implements Drawable {
         paths.add(new Composite(new Circle(0, 0, r), new Rect(0, 0, r, r, RADIUS)));
         paths.add(new CubicBezier(0, 0, r));
         paths.add(new Ellipse(0, 0, r));
-        paths.add(new Flower(0, 0, r));
         paths.add(new Gesture());
-        paths.add(new InfinitySymbol(0, 0, r));
+        paths.add(new InfinitySymbol(0, 0, r));      
         paths.add(new Line(0, 0, r));
         paths.add(new Lissajous(0, 0, r));
         paths.add(new Plot(0, 0, r));
         paths.add(new Rect(0, 0, r, r, RADIUS));
+        paths.add(new Rose(0, 0, r));
         paths.add(new Segment(0, 0, r));
         paths.add(new Shape(0, 0, r));
         paths.add(new Superellipse(0, 0, r));

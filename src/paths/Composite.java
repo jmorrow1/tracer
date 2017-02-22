@@ -56,10 +56,10 @@ public class Composite<T extends Path, U extends Path> extends Path {
         if (reversed) {
             u = 1.0f - u;
             if (u == 1.0f) {
-                u = 0.0f;
+                u = ALMOST_ONE;
             }
         }
-           
+
         if (u < 0.5f) {
             a.trace(pt, 2f * u);
         } else {
@@ -72,6 +72,28 @@ public class Composite<T extends Path, U extends Path> extends Path {
         a.draw(g);
         b.draw(g);
     }
+    
+//    @Override
+//    public void draw(PGraphics g, float u1, float u2) {
+//        boolean inRange = (0 <= u1 && u1 < 1 && 0 <= u2 && u2 < 1);
+//        if (!inRange) {
+//            throw new IllegalArgumentException("draw(g, " + u1 + ", " + u2 + ") called with values outside in the range [0, 1).");
+//        }
+//        
+//        style.apply(g);
+//        drawHelper(g, u1, u2);
+//    }
+//    
+//    private void drawHelper(PGraphics g, float u1, float u2) {
+//        if (u1 < u2) {    
+//
+//        }
+//        else {
+//            float u12 = PApplet.max(0.999f, 0.5f * (u1 + 1.0f));
+//            drawHelper(g, u1, u12);
+//            drawHelper(g, 0, u2);
+//        }
+//    }
 
     @Override
     public void translate(float dx, float dy) {

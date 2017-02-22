@@ -106,7 +106,16 @@ public class Shape extends Path {
     
     @Override
     public void draw(PGraphics g, float u1, float u2) {
+        boolean inRange = (0 <= u1 && u1 < 1 && 0 <= u2 && u2 < 1);
+        if (!inRange) {
+            throw new IllegalArgumentException("draw(g, " + u1 + ", " + u2 + ") called with values outside in the range [0, 1).");
+        }
+        
         style.apply(g);
+        drawHelper(g, u1, u2);
+    }
+    
+    private void drawHelper(PGraphics g, float u1, float u2) {
         if (u1 < u2) {    
             g.beginShape();
             trace(pt, u1);
@@ -130,8 +139,8 @@ public class Shape extends Path {
         }
         else {
             float u12 = PApplet.max(0.999f, 0.5f * (u1 + 1.0f));
-            draw(g, u1, u12);
-            draw(g, 0, u2);
+            drawHelper(g, u1, u12);
+            drawHelper(g, 0, u2);
         }
     }
 
