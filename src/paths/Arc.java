@@ -15,10 +15,6 @@ public class Arc extends Path {
     protected Point ab, cd;
     protected float startAngle, endAngle;
     protected int ellipseMode;
-    
-    //helper fields
-    protected float perimeter;
-    protected boolean perimeterOutOfSync;
 
     /**************************
      ***** Initialization *****
@@ -90,7 +86,6 @@ public class Arc extends Path {
             cd.x = c;
             cd.y = d;
             this.ellipseMode = ellipseMode;
-            setHelperFields();
         }
     }
     
@@ -112,7 +107,6 @@ public class Arc extends Path {
             cd.x = c;
             cd.y = d;
             this.ellipseMode = ellipseMode;
-            setHelperFields();
         }
     }
     
@@ -142,7 +136,6 @@ public class Arc extends Path {
                 break;
         }
         this.ellipseMode = ellipseMode;
-        setHelperFields();
     }
     
     /*************************
@@ -185,21 +178,6 @@ public class Arc extends Path {
     /*******************************
      ***** Getters and Setters *****
      *******************************/
-
-    @Override
-    public float getTotalDistance() {
-        if (perimeterOutOfSync) {
-            setHelperFields();
-        }
-        return perimeter;
-    }
-    
-    private void setHelperFields() {
-        float a = PApplet.max(getXRadius(), getYRadius());
-        float b = PApplet.min(getXRadius(), getYRadius());
-        perimeter = PApplet.PI * (3 * (a + b) - PApplet.sqrt((3 * a + b) * (a + 3 * b)));
-        perimeterOutOfSync = false;
-    }
 
     /**
      * Gives the center x-coordinate of the ellipse underlying the arc.
@@ -453,6 +431,17 @@ public class Arc extends Path {
     @Override
     public Arc clone() {
         return new Arc(this);
+    }
+    
+    @Override
+    public float getTotalDistance() {
+        if (getXRadius() == getYRadius()) {
+            float percentCircle = (getEndAngle() - getStartAngle()) / TWO_PI;
+            return percentCircle * TWO_PI * getXRadius();
+        }
+        else {
+            return super.getTotalDistance();
+        }
     }
     
     @Override

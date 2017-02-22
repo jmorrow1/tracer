@@ -144,27 +144,66 @@ public class Composite<T extends Path, U extends Path> extends Path {
 
     @Override
     public int getGapCount() {
-        return a.getGapCount() + b.getGapCount() + 2;
+        int gapCount = 1 + a.getGapCount() + 1 + b.getGapCount();
+        
+        if (a.getGapCount() > 0 && a.getGap(0) == 0) {
+            gapCount--;
+        }
+        
+        if (b.getGapCount() > 0 && b.getGap(0) == 0) {
+            gapCount--;
+        }
+        
+        return gapCount;
     }
 
     @Override
+    //TODO Test
     public float getGap(int i) {
-        Path a = reversed ? this.b : this.a;
-        Path b = reversed ? this.a : this.b;
+        int aGapCount = a.getGapCount();
+        int bGapCount = b.getGapCount();
         
         if (i == 0) {
-            return 0;
+            return a.getGap(0);
         }
-        if (i < a.getGapCount()+1) {
-            return 0.5f * a.getGap(i);
-        }
-        else if (i == a.getGapCount()+1) {
-            return 0.5f;
+        else if (aGapCount > 0 && a.getGap(0) == 0) {
+            if (i < aGapCount) {
+                return a.getGap(i);
+            }
+            else if (i == aGapCount) {
+                return 0.5f;
+            }
+            else if (bGapCount > 0 && b.getGap(0) == 0) {
+                if (i < aGapCount + bGapCount) {
+                    return b.getGap(i-aGapCount);
+                }
+            }
+            else {
+                if (i < aGapCount + bGapCount + 1) {
+                    return b.getGap(i-aGapCount-1);
+                }
+            }
         }
         else {
-            i -= a.getGapCount();
-            return 0.5f + 0.5f * b.getGap(i);
+            if (i < 1 + aGapCount) {
+                return a.getGap(i-1);
+            }
+            else if (i == aGapCount+1) {
+                return 0.5f;
+            }
+            else if (bGapCount > 0 && b.getGap(0) == 0) {
+                if (i < aGapCount + 1 + bGapCount) {
+                    return b.getGap(i-aGapCount-1);
+                }
+            }
+            else {
+                if (i < aGapCount + 1 + bGapCount + 1) {
+                    return b.getGap(i-bGapCount-2);
+                }
+            }
         }
+        
+        return -1;
     }
     
     @Override

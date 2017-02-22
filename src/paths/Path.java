@@ -48,7 +48,7 @@ public abstract class Path implements Drawable {
     protected boolean reversed;
     protected int sampleCount;
     protected TStyle style;
-    public static final float ALMOST_ONE = 0.9999999f; 
+    public static final float ALMOST_ONE = 0.99999f; 
 
     public Path() {
         this(100);
@@ -253,6 +253,40 @@ public abstract class Path implements Drawable {
         this.trace(pt, u);
         return pt;
     }
+    
+//    private void drawHelper(PGraphics g, float u1, float u2) {
+//        if (u1 > u2) {
+//            float u12 = PApplet.max(ALMOST_ONE,  0.5f * (u1 + 1.0f));
+//            drawHelper(g, u1, u12);
+//            drawHelper(g, 0.0f, u2);
+//        }
+//        else {
+//            int gapCount = getGapCount();
+//            for (int i=0; i<gapCount; i++) {
+//                float gap = getGap(i);
+//                if (u1 < gap && gap < u2) {
+//                    float u12 = PApplet.max(gap - 0.00001f, 0.5f * (gap + u1));
+//                    drawHelper(g, u1, u12);
+//                    u1 = gap + 0.00001f;
+//                }
+//            }
+//            
+//            float length = PApplet.abs(u1 - u2);
+//            int n = (int) (sampleCount * length);
+//            float du = length / n;
+//    
+//            g.beginShape();
+//            float u = u1;
+//            for (int i = 0; i <= n; i++) {
+//                trace(pt, u);
+//                g.vertex(pt.x, pt.y);
+//                u = (u + du) % 1f;
+//            }
+//            trace(pt, u2);
+//            g.vertex(pt.x, pt.y);
+//            g.endShape();
+//        }
+//    }
 
     /**
      * Returns the length of the Path.
@@ -261,8 +295,8 @@ public abstract class Path implements Drawable {
      */    
     public float getTotalDistance() {
         trace(pt, 0);
-        float x = pt.x;
-        float y = pt.y;
+        float prevx = pt.x;
+        float prevy = pt.y;
         
         float du = 1.0f / sampleCount;
         float u = du;
@@ -271,29 +305,32 @@ public abstract class Path implements Drawable {
         
         int gapIndex = 0;
         
-        for (int i=0; i<sampleCount; i++) {
-            float gap = getGap(gapIndex);
-            if (gapIndex < getGapCount() && gap != 0 && gap < u) {
-                trace(pt, gap);
-                total += PApplet.dist(x, y, pt.x, pt.y);
-                trace(pt, gap+0.001f);
-                x = pt.x;
-                y = pt.y;
+        if (0 < getGapCount() && getGap(0) == 0) {
+            gapIndex++;
+        }
+        
+        int i=0;
+        while (i < sampleCount && u < 1) {
+            float gap = (gapIndex < getGapCount()) ? getGap(gapIndex) : -1;
+            if (gapIndex < getGapCount() && gap != -1 && gap < u) {
+                trace(pt, gap-0.00001f);
+                total += PApplet.dist(prevx, prevy, pt.x, pt.y);
+                trace(pt, gap+0.00001f);
+                prevx = pt.x;
+                prevy = pt.y;
                 trace(pt, u);
-                total += PApplet.dist(x, y, pt.x, pt.y);
-                gapIndex++;
-            }
-            else if (gap == 0) {
+                total += PApplet.dist(prevx, prevy, pt.x, pt.y);
                 gapIndex++;
             }
             else {
                 trace(pt, u);
-                total += PApplet.dist(x, y, pt.x, pt.y);
+                total += PApplet.dist(prevx, prevy, pt.x, pt.y);
             }
             
-            x = pt.x;
-            y = pt.y;
+            prevx = pt.x;
+            prevy = pt.y;
             u += du;
+            i++;
         }
         
         return total;
@@ -342,12 +379,12 @@ public abstract class Path implements Drawable {
      * @return The slope at trace(u)
      */
     public float slope(float u) {
-        if (u >= 0.001f) {
-            Point a = this.trace(u - 0.001f);
+        if (u >= 0.00001f) {
+            Point a = this.trace(u - 0.00001f);
             Point b = this.trace(u);
             return Point.slope(a, b);
         } else {
-            Point a = this.trace(u + 0.001f);
+            Point a = this.trace(u + 0.00001f);
             Point b = this.trace(u);
             return Point.slope(a, b);
         }
@@ -379,6 +416,8 @@ public abstract class Path implements Drawable {
     /**
      * 
      * Gives the ith discontinuity in the Path as a 1D coordinate.
+     * Gaps should be unique and indexed in ascending order.
+     * In other words, this must hold true: gap(i) < gap(i+1) as i varies from 0 to getGapCount()-1.
      * 
      * Gives -1 if the index is valid.
      * 

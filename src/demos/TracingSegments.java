@@ -48,6 +48,11 @@ public class TracingSegments extends PApplet {
 //        Path.addAllPathTypes(0.4f * cellSize, paths);
         reposition(paths);
 //        map(paths, (Path p) -> p.reverse());
+        
+        for (Path p : paths) {
+            System.out.println(p.toString() + " has a total distance of " + p.getTotalDistance());
+        }
+        
     }
     
     private interface PathFunc {
@@ -62,7 +67,7 @@ public class TracingSegments extends PApplet {
 
     private ArrayList<Path> initList() {
         float r = 0.4f * cellSize;
-        
+
         ArrayList<Path> paths = new ArrayList<Path>();
         paths.add(new Line(r * cos(0.25f * PI), r * sin(0.25f * PI), r * cos(1.25f * PI), r * sin(1.25f * PI)));
         paths.add(new Circle(0, 0, r));
