@@ -102,6 +102,7 @@ public abstract class Path implements Drawable {
      * @param u2 The 1D coordinate of the segment's end, a value within [0, 1)
      * @return The segment
      */
+    //TODO WORK IN PROGRESS
     public Shape segment(float u1, float u2) {
         boolean inRange = (0 <= u1 && u1 < 1 && 0 <= u2 && u2 < 1);
         if (!inRange) {
@@ -111,6 +112,7 @@ public abstract class Path implements Drawable {
         return new Shape(segmentPoints(u1, u2));
     }
 
+    //TODO WORK IN PROGRESS
     private ArrayList<Point> segmentPoints(float u1, float u2) {
         if (u1 > u2) {
             ArrayList<Point> pts = new ArrayList<Point>();
