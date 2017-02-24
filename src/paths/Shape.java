@@ -236,7 +236,27 @@ public class Shape extends Path {
         }
         return dist;
     }
+    
+    /**
+     * 
+     * Gives the ith vertex of the Shape as a 1D coordinate.
+     * @param i The index of the vertex
+     * @return A number between 0 (inclusive) and 1 (exclusive)
+     */
+    public float getVertex1D(int i) {
+        return vertices1D.get(i);
+    }
 
+    /**
+     * 
+     * Gives the ith vertex of the Shape as a 2D coordinate.
+     * @param i The index of the vertex
+     * @return A Point
+     */
+    public Point getVertex2D(int i) {
+        return vertices2D.get(i);
+    }
+    
     /**
      * Adds a vertex to the Shape.
      * 

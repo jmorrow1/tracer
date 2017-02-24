@@ -5,6 +5,8 @@ import java.util.ArrayList;
 import processing.core.PApplet;
 import processing.core.PGraphics;
 import processing.core.PStyle;
+import processing.data.JSONArray;
+import processing.data.JSONObject;
 import tracer.Drawable;
 import tracer.Point;
 import tracer.TStyle;
@@ -255,40 +257,6 @@ public abstract class Path implements Drawable {
         this.trace(pt, u);
         return pt;
     }
-    
-//    private void drawHelper(PGraphics g, float u1, float u2) {
-//        if (u1 > u2) {
-//            float u12 = PApplet.max(ALMOST_ONE,  0.5f * (u1 + 1.0f));
-//            drawHelper(g, u1, u12);
-//            drawHelper(g, 0.0f, u2);
-//        }
-//        else {
-//            int gapCount = getGapCount();
-//            for (int i=0; i<gapCount; i++) {
-//                float gap = getGap(i);
-//                if (u1 < gap && gap < u2) {
-//                    float u12 = PApplet.max(gap - 0.00001f, 0.5f * (gap + u1));
-//                    drawHelper(g, u1, u12);
-//                    u1 = gap + 0.00001f;
-//                }
-//            }
-//            
-//            float length = PApplet.abs(u1 - u2);
-//            int n = (int) (sampleCount * length);
-//            float du = length / n;
-//    
-//            g.beginShape();
-//            float u = u1;
-//            for (int i = 0; i <= n; i++) {
-//                trace(pt, u);
-//                g.vertex(pt.x, pt.y);
-//                u = (u + du) % 1f;
-//            }
-//            trace(pt, u2);
-//            g.vertex(pt.x, pt.y);
-//            g.endShape();
-//        }
-//    }
 
     /**
      * Returns the length of the Path.
@@ -599,7 +567,7 @@ public abstract class Path implements Drawable {
      * @param r The radius
      * @return An array of Paths
      */
-    public static Path[] getAllPathTypes(float r) {
+    public static Path[] getOneOfEachPathType(float r) {
         Path[] paths = new Path[] {
             new Arc(0, 0, r),
             new Blender(new Circle(0, 0, r), new Rect(0, 0, r, r, RADIUS), 0.5f, 100),
@@ -629,7 +597,7 @@ public abstract class Path implements Drawable {
      * @param r The radius
      * @param paths The ArrayList of Paths
      */
-    public static void addAllPathTypes(float r, ArrayList<Path> paths) {
+    public static void addOneOfEachPathType(float r, ArrayList<Path> paths) {
         paths.add(new Arc(0, 0, r));
         paths.add(new Blender(new Circle(0, 0, r), new Rect(0, 0, r, r, RADIUS), 0.5f, 100));
         paths.add(new Circle(0, 0, r));
@@ -647,5 +615,45 @@ public abstract class Path implements Drawable {
         paths.add(new Shape(0, 0, r));
         paths.add(new Superellipse(0, 0, r));
         paths.add(new Supershape(0, 0, r));
+    }
+    
+    public static JSONObject toPath(Path path) {
+        JSONObject json = new JSONObject();
+        JSONArray vertices = new JSONArray();        
+        float u = 0;
+        float du = 1.0f / path.getSampleCount();
+        for (int i=0; i<path.getSampleCount(); i++) {           
+            path.trace(pt, u);
+            vertices.setJSONObject(i, toJSON(pt));
+            u = (u+du) % 1.0f;
+        }       
+        json.setJSONArray("vertices", vertices);
+        return json;
+    }
+    
+    public static JSONObject toJSON(Point pt) {
+        JSONObject json = new JSONObject();
+        json.setFloat("x", pt.x);
+        json.setFloat("y", pt.y);
+        return json;
+    }
+    
+    //TODO Add exception handling if file is corrupted
+    public static Shape toPath(JSONObject json) {
+        return new Shape(toPoints(json.getJSONArray("vertices")));
+    }
+    
+    //TODO Add exception handling if file is corrupted
+    private static ArrayList<Point> toPoints(JSONArray json) {
+        ArrayList<Point> pts = new ArrayList<Point>();
+        for (int i=0; i<json.size(); i++) {
+            pts.add(toPoint(json.getJSONObject(i)));
+        }
+        return pts;
+    }
+    
+    //TODO Add exception handling if file is corrupted
+    private static Point toPoint(JSONObject json) {
+        return new Point(json.getFloat("x"), json.getFloat("y"));
     }
 }
