@@ -83,7 +83,7 @@ public class Rect extends Path {
      * @param r The maximum radius of the Path
      */
     public Rect(float x, float y, float r) {
-        set(x, y, r, r, RADIUS);
+        set(x, y, r, 0.5f*r, RADIUS);
     }
 
     /**
@@ -454,6 +454,16 @@ public class Rect extends Path {
 
     @Override
     public String toString() {
-        return "Rect [ab=" + ab + ", cd=" + cd + ", rectMode=" + rectMode + "]";
+        return "Rect [ab=" + ab + ", cd=" + cd + ", rectMode=" + rectModeToString(rectMode) + "]";
+    }
+    
+    private static String rectModeToString(int rectMode) {
+        switch (rectMode) {
+            case CORNER : return "CORNER";
+            case CENTER: return "CENTER";
+            case CORNERS : return "CORNERS";
+            case RADIUS : return "RADIUS";
+            default : return "UNKNOWN";
+        }
     }
 }

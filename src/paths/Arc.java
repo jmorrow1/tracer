@@ -444,9 +444,21 @@ public class Arc extends Path {
         }
     }
     
+    
+    
     @Override
     public String toString() {
-        return "Arc [cenx=" + getCenx() + ", ceny=" + getCeny() + ", xRadius=" + getXRadius() + ", yRadius=" + getYRadius()
-                + ", startAngle=" + startAngle + ", endAngle=" + endAngle + "]";
+        return "Arc [ab=" + ab + ", cd=" + cd + ", startAngle=" + startAngle + ", endAngle=" + endAngle
+                + ", ellipseMode=" + ellipseModeToString(ellipseMode) + "]";
+    }
+
+    private static String ellipseModeToString(int ellipseMode) {
+        switch (ellipseMode) {
+            case CORNER : return "CORNER";
+            case CENTER: return "CENTER";
+            case CORNERS : return "CORNERS";
+            case RADIUS : return "RADIUS";
+            default : return "UNKNOWN";
+        }
     }
 }

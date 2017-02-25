@@ -58,7 +58,7 @@ public class Line extends Path {
      * @param r The radius of the path.
      */
     public Line(float x, float y, float r) {
-        this(x - r * PApplet.cos(0.75f * PApplet.PI), y - r * PApplet.sin(0.75f * PApplet.PI),
+        this(x + r * PApplet.cos(0.75f * PApplet.PI), y + r * PApplet.sin(0.75f * PApplet.PI),
                 x + r * PApplet.cos(1.75f * PApplet.PI), y + r * PApplet.sin(1.75f * PApplet.PI));
     }
     

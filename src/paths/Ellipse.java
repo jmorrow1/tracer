@@ -62,7 +62,7 @@ public class Ellipse extends Path {
      * @param r The radius of the path.
      */
     public Ellipse(float x, float y, float r) {
-        set(x, y, r, r, PApplet.RADIUS);
+        set(x, y, r, 0.5f*r, PApplet.RADIUS);
     }
     
     /**
@@ -443,6 +443,16 @@ public class Ellipse extends Path {
 
     @Override
     public String toString() {
-        return "Ellipse [ab=" + ab + ", cd=" + cd + ", ellipseMode=" + ellipseMode + "]";
+        return "Ellipse [ab=" + ab + ", cd=" + cd + ", ellipseMode=" + ellipseModeToString(ellipseMode) + "]";
+    }
+    
+    private static String ellipseModeToString(int ellipseMode) {
+        switch (ellipseMode) {
+            case CORNER : return "CORNER";
+            case CENTER: return "CENTER";
+            case CORNERS : return "CORNERS";
+            case RADIUS : return "RADIUS";
+            default : return "UNKNOWN";
+        }
     }
 }

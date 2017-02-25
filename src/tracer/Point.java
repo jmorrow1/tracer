@@ -67,15 +67,6 @@ public class Point {
     public void step(int dt) {}
 
     /**
-     * Displays the point.
-     * 
-     * @param pa
-     */
-    public void display(PApplet pa) {
-        pa.point(x, y);
-    }
-
-    /**
      * Creates an array of points from a sequence or array of floating point
      * values.
      * 

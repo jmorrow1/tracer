@@ -45,14 +45,14 @@ public class Tracing extends PApplet {
 
     public void setup() {
         paths = initList();
-//        Path.addAllPathTypes(0.4f * cellSize, paths);
+        Path.addOneOfEachPathType(0.4f * cellSize, paths);
         for (Path p : paths) {
             p.setStrokeWeight(1.5f);
             p.setStrokeColor(0);
             p.setFill(false);
         }
         reposition(paths);
-        map(paths, (Path p) -> p.reverse());
+//        map(paths, (Path p) -> p.reverse());
     }
     
     private interface PathFunc {
@@ -101,6 +101,7 @@ public class Tracing extends PApplet {
             t.translate(x, y);
 
             x += (t instanceof Composite) ? 2 * cellSize : cellSize;
+//            x += cellSize;
             if (x >= width) {
                 x = cellSize / 2;
                 y += cellSize;
@@ -124,7 +125,7 @@ public class Tracing extends PApplet {
 
         strokeWeight(6);
         t.trace(pt, u);
-        pt.display(this);
+        point(pt.x, pt.y);
     }
 
     public void mouseMoved() {

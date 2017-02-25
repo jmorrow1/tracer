@@ -22,16 +22,16 @@ public class Gesture extends Path {
     
     /**
      * Constructs a gesture by combining the spatial
-     * information of a Shape with the temporal
+     * information of a Path with the temporal
      * information of an Easing.
-     * @param shape The Shape
+     * @param path The Path
      * @param easing The Easing
      */
-    public Gesture(Shape shape, Easing easing) {
+    public Gesture(Path path, Easing easing) {
         float u = 0;
-        float du = 1.0f / shape.getSampleCount();
-        for (int i=0; i<shape.getSampleCount(); i++) {
-            Point pt = shape.trace(u);
+        float du = 1.0f / path.getSampleCount();
+        for (int i=0; i<path.getSampleCount(); i++) {
+            Point pt = path.trace(u);
             float t = easing.val(u);
             
             vertices.add(new SpaceTimePoint(pt, t));
@@ -93,6 +93,17 @@ public class Gesture extends Path {
      */
     public Gesture(List<SpaceTimePoint> vertices) {
         this.vertices = vertices;
+    }
+    
+    /**
+     * Easy constructor
+     * 
+     * @param x The x-coordinate of the path.
+     * @param y The y-coordinate of the path.
+     * @param r The radius of the path.
+     */
+    public Gesture(float x, float y, float r) {
+        this(new CubicBezier(x, y, r), new Easing.QuadEaseIn());
     }
     
     @Override
@@ -387,6 +398,10 @@ public class Gesture extends Path {
     public static class SpaceTimePoint {
         public Point pt;
         public float t;
+        
+        public SpaceTimePoint(float x, float y, float t) {
+            this(new Point(x, y), t);
+        }
         
         public SpaceTimePoint(Point pt, float t) {
             this.pt = pt;

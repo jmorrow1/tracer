@@ -77,7 +77,7 @@ public class Superellipse extends Path {
      * @param r The radius of the path.
      */
     public Superellipse(float x, float y, float r) {
-        this(x, y, r, r, 1, 100);
+        this(x, y, r, r, 0.5f, 100);
     }
 
     /**
@@ -87,7 +87,7 @@ public class Superellipse extends Path {
      * @param r The radius of the path.
      */
     public Superellipse(Point cen, float r) {
-        this(cen, r, r, 1, 100);
+        this(cen, r, r, 0.5f, 100);
     }
     
     /*************************

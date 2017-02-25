@@ -138,21 +138,6 @@ public abstract class Path implements Drawable {
             return pts;
         }
     }
-   
-    private void continuousDraw(PGraphics g, float u1, float u2) {
-        float length = PApplet.abs(u1 - u2);
-        int n = (int) (sampleCount * length);
-        float du = length / n;
-
-        g.beginShape();
-        float u = u1 - 0.001f;
-        for (int i = 0; i < n; i++) {
-            trace(pt, u);
-            g.vertex(pt.x, pt.y);
-            u = (u + du) % 1f;
-        }
-        g.endShape();
-    }
 
     /**
      * Draws a segment of the path starting at trace(u1) and ending at
@@ -341,6 +326,19 @@ public abstract class Path implements Drawable {
      * @param dy The number of pixels to shift the path down.
      */
     public abstract void translate(float dx, float dy);
+
+//    /**
+//     * Scales the path by the scalar.
+//     * @param scalar The scalar
+//     */
+//    public abstract void scale(float scalar);
+//    
+//    /**
+//     * Scales the path in the x direction by sx and in the y direction by sy
+//     * @param sx The x scalar
+//     * @param sy The y scalar
+//     */
+//    public abstract void scale(float sx, float sy);
 
     /**
      * Returns the slope of the Point on the Path at trace(u).
@@ -604,7 +602,7 @@ public abstract class Path implements Drawable {
         paths.add(new Composite(new Circle(0, 0, r), new Rect(0, 0, r, r, RADIUS)));
         paths.add(new CubicBezier(0, 0, r));
         paths.add(new Ellipse(0, 0, r));
-        paths.add(new Gesture());
+        paths.add(new Gesture(0, 0, r));
         paths.add(new InfinitySymbol(0, 0, r));      
         paths.add(new Line(0, 0, r));
         paths.add(new Lissajous(0, 0, r));

@@ -42,7 +42,7 @@ public class Plot extends Path {
         this.xs = new float[n];
         this.ys = new float[n];
         
-        for (int i=0; i<n; i++) {
+        for (int i=0; i<n; i++) {           
            xs[i] = du * i;
            ys[i] = easing.val(xs[i]);
         }
@@ -98,15 +98,21 @@ public class Plot extends Path {
      * @param radius The radius of the rectangle that contains the plot
      */
     public Plot(float x, float y, float radius) {
-        this(new Rect(x, y, radius, radius, RADIUS), new Easing.Linear(), 2);
+        this(new Rect(x, y, radius, radius, RADIUS), new Easing.CircEaseIn(), 100);
     }
     
     @Override
     public void draw(PGraphics g) {
         style.apply(g);
         g.beginShape();
-        for (int i=0; i<xs.length; i++) {
-            g.vertex(rect.getX1() + xs[i] * rect.getWidth(), PApplet.map(ys[i], 0, 1, rect.getY2(), rect.getY1()));
+        if (xs.length == 2) {
+            g.line(rect.getX1() + xs[0] * rect.getWidth(), PApplet.map(ys[0], 0, 1, rect.getY2(), rect.getY1()),
+                    rect.getX1() + xs[1] * rect.getWidth(), PApplet.map(ys[1], 0, 1, rect.getY2(), rect.getY1()));
+        }
+        else {
+            for (int i=0; i<xs.length; i++) {
+                g.vertex(rect.getX1() + xs[i] * rect.getWidth(), PApplet.map(ys[i], 0, 1, rect.getY2(), rect.getY1()));
+            }
         }
         g.endShape();
     }
@@ -163,11 +169,16 @@ public class Plot extends Path {
         
         float dist = 0;
         
-        float ax = xs[0];
-        float ay = ys[0];
+        float x1 = rect.getX1();
+        float y2 = rect.getY2();
+        float w = rect.getWidth();
+        float h = rect.getHeight();
+        
+        float ax = x1 + w*xs[0];
+        float ay = y2 - h*ys[0];
         for (int i=1; i<xs.length; i++) {
-            float bx = xs[i];
-            float by = ys[i];
+            float bx = x1 + w*xs[i];
+            float by = y2 - h*ys[i];
             dist += PApplet.dist(ax, ay, bx, by);
             ax = bx;
             ay = by;
