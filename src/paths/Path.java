@@ -540,7 +540,7 @@ public abstract class Path implements Drawable {
      */
     public void setFill(boolean fill) {
         style.fill = fill;
-    }
+    }   
 
     /**
      * Returns the remainder of num / denom.
@@ -550,13 +550,20 @@ public abstract class Path implements Drawable {
      * @return The remainder of num / denom
      */
     public static float remainder(float num, float denom) {
-        if (num % denom >= 0) {
+        if (0 <= num && num < denom) {
+            return num;
+        }
+        else if (num > 0) {
             return num % denom;
-        }           
+        }
         else {
-            return denom - ((-num) % denom);
-        }   
-    }
+            float result = denom - ((-num) % denom);
+            if (result == denom) {
+                result = 0;
+            }
+            return result;
+        }
+      }
     
     /**
      * Returns one of each Path type in the tracer library.

@@ -21,7 +21,7 @@ int cellSize = 100;
 
 //draw mode
 boolean synchronizeTracing = false;
-boolean drawSegments = false;
+boolean drawSegments = true;
 
 void settings() {
   size(600, 600, P2D);
@@ -33,9 +33,6 @@ void setup() {
     p.setStrokeWeight(1.5f);
     p.setStrokeColor(0);
     p.setFill(false);
-    if (p instanceof Plot) {
-      System.out.println(p.getTotalDistance());
-    }
   }
   reposition(paths, cellSize);
   createTracers(paths);
@@ -106,7 +103,11 @@ void draw() {
     //draw segments
     for (Tracer t : tracers) {
       Path p = t.getPath();
-      p.draw(g, u, (u+0.5) % 1);
+      float dist = 50 / p.getTotalDistance();
+      float start = Path.remainder(t.getU()-dist, 1);
+      float end = t.getU();
+      println("remainder(" + (t.getU()-dist) + ", " + 1 + ") = " + start);
+      p.draw(g, start, end);
     }
   }
 
