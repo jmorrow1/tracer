@@ -4,10 +4,10 @@ import render.*;
 import ease.*;
 
 //paths
-ArrayList<Path> paths = new ArrayList<Path>(); 
+ArrayList<Path> paths;
 
 //tracers
-ArrayList<Tracer> tracers = new ArrayList<Tracer>();
+ArrayList<Tracer> tracers;
 
 //memory
 Point pt = new Point(0, 0);
@@ -17,17 +17,23 @@ float u = 0;
 float du = 0.005;
 
 //layout
-int cellSize = 100;
+int cellSize = 125;
+int rowSize = 5;
+int colSize = 4;
 
 //draw mode
-boolean synchronizeTracing = false;
-boolean drawSegments = true;
+int drawMode = 2;
+boolean synchronizeTracing;
+boolean drawSegments;
 
 void settings() {
-  size(600, 600, P2D);
+  size(rowSize*cellSize, colSize*cellSize, P2D);
 }
 
 void setup() {
+  applyDrawMode();
+  printDrawMode();
+  
   paths = createPaths(0.4 * cellSize);
   for (Path p : paths) {
     p.setStrokeWeight(1.5f);
@@ -35,14 +41,16 @@ void setup() {
     p.setFill(false);
   }
   reposition(paths, cellSize);
-  createTracers(paths);
+  tracers = createTracers(paths);
 }
 
-void createTracers(ArrayList<Path> paths) {
+ArrayList<Tracer> createTracers(ArrayList<Path> paths) {
+  ArrayList<Tracer> tracers = new ArrayList<Tracer>();
   for (Path p : paths) {
     float tracerSpeed = (synchronizeTracing) ? du : (du*200)/p.getTotalDistance();
     tracers.add(new Tracer(p, 0, tracerSpeed));
   }
+  return tracers;
 }
 
 ArrayList<Path> createPaths(float r) {
@@ -103,10 +111,9 @@ void draw() {
     //draw segments
     for (Tracer t : tracers) {
       Path p = t.getPath();
-      float dist = 50 / p.getTotalDistance();
+      float dist = (synchronizeTracing) ? 0.4 : (50 / p.getTotalDistance());
       float start = Path.remainder(t.getU()-dist, 1);
       float end = t.getU();
-      println("remainder(" + (t.getU()-dist) + ", " + 1 + ") = " + start);
       p.draw(g, start, end);
     }
   }
@@ -117,4 +124,51 @@ void draw() {
   for (Tracer t : tracers) {
     point(t.x, t.y);
   }
+}
+
+String lastInfoString = "";
+void mouseMoved() {
+  int i = min(floor(map(mouseX, 0, width, 0, rowSize)), rowSize-1);
+  int j = min(floor(map(mouseY, 0, height, 0, colSize)), colSize-1);
+  int cellIndex = j*rowSize + i;
+  if (0 <= cellIndex && cellIndex < paths.size()) {
+    Path path = paths.get(cellIndex);
+    String pathName = path.getClass().getSimpleName();
+    String newInfoString = "The mouse is hovered over a " + pathName + ".";
+    if (!lastInfoString.equals(newInfoString)) {
+      println(newInfoString);
+      lastInfoString = newInfoString;
+    }
+  }
+}
+
+void mousePressed() {
+  drawMode = (drawMode+1) % 4;
+  setup();
+}
+
+void applyDrawMode() {
+  switch (drawMode) {
+    case 0 : 
+      synchronizeTracing = true;
+      drawSegments = true;
+      break;
+    case 1 : 
+      synchronizeTracing = true;
+      drawSegments = false;
+      break;
+    case 2 : 
+      synchronizeTracing = false;
+      drawSegments = false;
+      break;
+    case 3 :
+      synchronizeTracing = false;
+      drawSegments = true;
+      break;
+  }
+}
+
+void printDrawMode() {
+  print(synchronizeTracing ? "Tracing speeds are synchronized " : "Tracing speeds are dependent on Path lengths ");
+  println(drawSegments ? "and Path segments are being drawn." : "and Paths are being drawn.");
 }
