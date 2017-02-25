@@ -97,7 +97,7 @@ public class Superellipse extends Path {
     @Override
     public void trace(Point pt, float u) {
         if (u < 0 || u >= 1) {
-            throw new IllegalArgumentException("trace(pt, " + u + ") called where the second argument is outside the range 0 (inclusive) to 1 (exclusive).");
+            throw new IllegalArgumentException(Superellipse.class.getName() + ".trace(pt, " + u + ") called where the second argument is outside the range 0 (inclusive) to 1 (exclusive).");
         }
         
         float theta = u * PApplet.TWO_PI;

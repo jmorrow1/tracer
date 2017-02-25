@@ -120,7 +120,7 @@ public class Gesture extends Path {
     @Override
     public void trace(Point pt, float u) {
         if (u < 0 || u >= 1) {
-            throw new IllegalArgumentException("trace(pt, " + u + ") called where the second argument is outside the range 0 (inclusive) to 1 (exclusive).");
+            throw new IllegalArgumentException(Gesture.class.getName() + ".trace(pt, " + u + ") called where the second argument is outside the range 0 (inclusive) to 1 (exclusive).");
         }
         
         if (reversed) {

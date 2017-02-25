@@ -186,7 +186,7 @@ public class Rect extends Path {
         boolean inRange = (0 <= u1 && u1 < 1 && 0 <= u2 && u2 < 1);
         if (!inRange) {
             throw new IllegalArgumentException(
-                    "draw(g, " + u1 + ", " + u2 + ") called with values outside in the range [0, 1).");
+                    Rect.class.getName() + ".draw(g, " + u1 + ", " + u2 + ") called with values outside in the range [0, 1).");
         }
         
         style.apply(g);
@@ -225,7 +225,7 @@ public class Rect extends Path {
     @Override
     public void trace(Point pt, float u) {
         if (u < 0 || u >= 1) {
-            throw new IllegalArgumentException("trace(pt, " + u + ") called where the second argument is outside the range 0 (inclusive) to 1 (exclusive).");
+            throw new IllegalArgumentException(Rect.class.getName() + ".trace(pt, " + u + ") called where the second argument is outside the range 0 (inclusive) to 1 (exclusive).");
         }
         
         if (reversed) {

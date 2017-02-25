@@ -108,7 +108,7 @@ public abstract class Path implements Drawable {
     public Shape segment(float u1, float u2) {
         boolean inRange = (0 <= u1 && u1 < 1 && 0 <= u2 && u2 < 1);
         if (!inRange) {
-            throw new IllegalArgumentException("draw(g, " + u1 + ", " + u2 + ") called with values outside in the range [0, 1).");
+            throw new IllegalArgumentException(Path.class.getName() + ".draw(g, " + u1 + ", " + u2 + ") called with values outside in the range [0, 1).");
         }
 
         return new Shape(segmentPoints(u1, u2));
@@ -150,7 +150,7 @@ public abstract class Path implements Drawable {
     public void draw(PGraphics g, float u1, float u2) {        
         boolean inRange = (0 <= u1 && u1 < 1 && 0 <= u2 && u2 < 1);
         if (!inRange) {
-            throw new IllegalArgumentException("draw(g, " + u1 + ", " + u2 + ") called with values outside the range 0 to 1.");
+            throw new IllegalArgumentException(Path.class.getName() + ".draw(g, " + u1 + ", " + u2 + ") called with values outside the range 0 to 1.");
         }
         style.apply(g);
         drawHelper(g, u1, u2);
