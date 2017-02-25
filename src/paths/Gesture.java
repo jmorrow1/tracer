@@ -141,7 +141,9 @@ public class Gesture extends Path {
                 Point a = vertices.get(i-1).pt;
                 Point b = vertices.get(i).pt;
                
-                Line.trace(pt, a, b, v);
+                pt.x = PApplet.lerp(a.x, b.x, v);
+                pt.y = PApplet.lerp(a.y, b.y, v);
+//                Line.trace(pt, a, b, v);
                 break;
             }
         }

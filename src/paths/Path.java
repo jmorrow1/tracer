@@ -158,8 +158,10 @@ public abstract class Path implements Drawable {
     
     private void drawHelper(PGraphics g, float u1, float u2) {
         if (u1 > u2) {
-            float u12 = PApplet.max(ALMOST_ONE,  0.5f * (u1 + 1.0f));
-            drawHelper(g, u1, u12);
+            float u12 = PApplet.max(ALMOST_ONE,  0.5f * (u1 + 1.0f));  
+            if (u12 != 1) { //because of limitations on floating point precision, u12 could still equal 1, which would cause an error
+                drawHelper(g, u1, u12); 
+            } 
             drawHelper(g, 0.0f, u2);
         }
         else {
@@ -167,9 +169,9 @@ public abstract class Path implements Drawable {
             for (int i=0; i<gapCount; i++) {
                 float gap = getGap(i);
                 if (u1 < gap && gap < u2) {
-                    float u12 = PApplet.max(gap - 0.00001f, 0.5f * (gap + u1));
+                    float u12 = PApplet.max(gap - 0.00001f, 0.5f * (gap + u1)); //TODO This isn't the best solution
                     drawHelper(g, u1, u12);
-                    u1 = gap + 0.00001f;
+                    u1 = gap + 0.00001f; //TODO This isn't the best solution
                 }
             }
             
@@ -303,14 +305,14 @@ public abstract class Path implements Drawable {
      * function.
      * 
      * @param pa The PApplet to which the path is drawn.
-     * @param granularity The number of sample points.
+     * @param sampleCount The number of sample points.
      */
-    public void draw(PGraphics g, int granularity) {
+    public void draw(PGraphics g, int sampleCount) {
         style.apply(g);
         float amt = 0;
-        float dAmt = 1f / granularity;
+        float dAmt = 1f / sampleCount;
         g.beginShape();
-        for (int i = 0; i < granularity + 1; i++) {
+        for (int i = 0; i < sampleCount + 1; i++) {
             trace(pt, amt);
             g.vertex(pt.x, pt.y);
             amt += dAmt;
