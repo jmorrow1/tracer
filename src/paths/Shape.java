@@ -18,6 +18,13 @@ import tracer.Point;
 public class Shape extends Path {
     protected List<Point> vertices2D = new ArrayList<Point>();
     protected List<Float> vertices1D = new ArrayList<Float>();
+    
+    /**
+     * 
+     */
+    public Shape() {
+        this(new Point[] {});
+    }
 
     /**
      * 
@@ -78,18 +85,20 @@ public class Shape extends Path {
     protected void computeVertices1D() {
         vertices1D.clear();
 
-        float totalDistance = getTotalDistance();
-
-        Point a = vertices2D.get(0);
-        float u1 = 0;
-        vertices1D.add(u1);
-        for (int i = 1; i < vertices2D.size(); i++) {
-            Point b = vertices2D.get(i);
-            float du = Line.dist(a, b) / totalDistance;
-            float u2 = (u1 + du);
-            vertices1D.add(u2);
-            u1 = u2;
-            a = b;
+        if (vertices2D.size() > 0) {
+            float totalDistance = getTotalDistance();
+    
+            Point a = vertices2D.get(0);
+            float u1 = 0;
+            vertices1D.add(u1);
+            for (int i = 1; i < vertices2D.size(); i++) {
+                Point b = vertices2D.get(i);
+                float du = Line.dist(a, b) / totalDistance;
+                float u2 = (u1 + du);
+                vertices1D.add(u2);
+                u1 = u2;
+                a = b;
+            }
         }
     }
 
