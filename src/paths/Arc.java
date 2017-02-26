@@ -434,13 +434,13 @@ public class Arc extends Path {
     }
     
     @Override
-    public float getTotalDistance() {
+    public float getTotalLength() {
         if (getXRadius() == getYRadius()) {
             float percentCircle = (getEndAngle() - getStartAngle()) / TWO_PI;
             return percentCircle * TWO_PI * getXRadius();
         }
         else {
-            return super.getTotalDistance();
+            return super.getTotalLength();
         }
     }
     

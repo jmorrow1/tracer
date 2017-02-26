@@ -163,7 +163,7 @@ public class Plot extends Path {
     }
 
     @Override
-    public float getTotalDistance() {
+    public float getTotalLength() {
         if (xs.length == 0) {
             return 0;
         }

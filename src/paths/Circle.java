@@ -110,7 +110,7 @@ public class Circle extends Path {
      *******************************/
 
     @Override
-    public float getTotalDistance() {
+    public float getTotalLength() {
         return PApplet.TWO_PI * radius;
     }
     

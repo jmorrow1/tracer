@@ -86,7 +86,7 @@ public class Shape extends Path {
         vertices1D.clear();
 
         if (vertices2D.size() > 0) {
-            float totalDistance = getTotalDistance();
+            float totalDistance = getTotalLength();
     
             Point a = vertices2D.get(0);
             float u1 = 0;
@@ -235,7 +235,7 @@ public class Shape extends Path {
     }
 
     @Override
-    public float getTotalDistance() {
+    public float getTotalLength() {
         float dist = 0;
         Point a = vertices2D.get(0);
         for (int i = 1; i < vertices2D.size(); i++) {

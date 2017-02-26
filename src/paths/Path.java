@@ -50,7 +50,8 @@ public abstract class Path implements Drawable {
     protected boolean reversed;
     protected int sampleCount;
     protected TStyle style;
-    public static final float ALMOST_ONE = 0.99999f; 
+    public final static float ALMOST_ONE = 0.99999f; 
+//    protected final static float DEFAULT_SAMPLES_PER_UNIT_LENGTH = 0.02f;
 
     public Path() {
         this(100);
@@ -250,7 +251,7 @@ public abstract class Path implements Drawable {
      * 
      * @return The length of the Path
      */    
-    public float getTotalDistance() {
+    public float getTotalLength() {
         trace(pt, 0);
         float prevx = pt.x;
         float prevy = pt.y;

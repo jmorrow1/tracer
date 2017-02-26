@@ -212,7 +212,7 @@ public class Ellipse extends Path {
      *******************************/
 
     @Override
-    public float getTotalDistance() {
+    public float getTotalLength() {
         if (perimeterOutOfSync) {
             setHelperFields();
         }

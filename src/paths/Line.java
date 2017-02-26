@@ -244,7 +244,7 @@ public class Line extends Path {
      *******************************/
 
     @Override
-    public float getTotalDistance() {
+    public float getTotalLength() {
         return PApplet.dist(a.x, a.y, b.x, b.y);
     }
 
@@ -269,7 +269,7 @@ public class Line extends Path {
      * @return the length of the line
      */
     public float getLength() {
-        return getTotalDistance();
+        return getTotalLength();
     }
     
     /**

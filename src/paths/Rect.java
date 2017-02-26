@@ -448,7 +448,7 @@ public class Rect extends Path {
     }
 
     @Override
-    public float getTotalDistance() {
+    public float getTotalLength() {
         return perimeter;
     }
 

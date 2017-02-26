@@ -13,7 +13,7 @@ float baseRadius = 180;
 float baseTraceSpeed = 0.0001;
 int traceSpeedMultiplier = -4;
 int spirographColor = #C83232;
-int pathType = CIRCLE_PATH;
+int pathType = LISSAJOUS_PATH;
 
 //contextual parameters (may not be relevant depending on the path type)
 int freqX = 5, freqY = 3; //used for lissajous paths and rose paths
