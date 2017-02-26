@@ -24,7 +24,7 @@ RenderMesh render;
 int bgColor = #ffffff;
 int fgColor = #111111;
 
-//draw modes
+//draw mode
 boolean showPaths = false;
 boolean showPoints = false;
 

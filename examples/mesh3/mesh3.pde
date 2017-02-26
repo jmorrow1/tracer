@@ -18,7 +18,7 @@ Point[] tracers = new Point[w*h];
 //render
 RenderMesh render;
 
-//draw modes
+//draw mode
 boolean showPaths = false;
 boolean showPoints = false;
 

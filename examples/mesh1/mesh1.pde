@@ -12,13 +12,15 @@ float du = 0.002;
 //paths
 ArrayList<Point> pts = new ArrayList<Point>();
 ArrayList<Path> paths = new ArrayList<Path>();
+
+//render
 Render render;
 
 //style
 int bgColor = #ffffff;
 int fgColor = #111111;
 
-//draw modes
+//draw mode
 boolean showPoints = false;
 boolean showPaths = false;
 
