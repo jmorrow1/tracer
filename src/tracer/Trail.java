@@ -62,7 +62,7 @@ public class Trail implements Drawable {
         float dAlpha = 255 / maxPtCount;
         for (int i = 0; i < pts.size(); i++) {
             Point pt = pts.get(i);
-            g.stroke(0, alpha);
+            g.stroke(color, alpha);
             g.point(pt.x, pt.y);
             alpha += dAlpha;
         }

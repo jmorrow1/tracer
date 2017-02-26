@@ -5,8 +5,10 @@ import ease.*;
 
 Gesture gesture;
 ArrayList<Path> paths = new ArrayList<Path>();
-ArrayList<Tracer> ts = new ArrayList<Tracer>();
+ArrayList<Trail> trails = new ArrayList<Trail>();
 int prevt, t;
+int strokeColor = #C83232;
+int strokeWeight = 6;
 
 void setup() {
   size(600, 600);
@@ -18,25 +20,22 @@ void draw() {
   prevt = millis();
   
   t += dt;
-  
-  for (Tracer tracer : ts) {
-    tracer.step(dt);
-  }
 
   background(255);
   for (Path p : paths) {
     p.draw(g);
   }
   
-  stroke(0);
-  strokeWeight(8);
-  for (Tracer tracer : ts) {
-    point(tracer.x, tracer.y);
+  for (Trail t : trails) {
+    t.step();
+    t.draw(g);
   }
 }
 
 void mousePressed() {
   gesture = new Gesture(new Point[] {}, new float[] {});
+  gesture.setStrokeColor(strokeColor);
+  gesture.setStrokeWeight(strokeWeight);
   paths.add(gesture);
   gesture.setFill(false);
   t = 0;
@@ -48,12 +47,8 @@ void mouseDragged() {
 }
 
 void mouseReleased() {
-  float du = 1f / gesture.getTotalTime();
-  float u = 0;
-  for (int i=0; i<5; i++) {
-    Tracer tracer = new Tracer(gesture, u, du);
-    ts.add(tracer);
-    u += 0.2;
-  }
+  float du = 3f / gesture.getTotalTime();
+  Tracer tracer = new Tracer(gesture, 0, du);
+  trails.add(new Trail(tracer, 100, strokeColor, strokeWeight));
   paths.remove(gesture);
 }
