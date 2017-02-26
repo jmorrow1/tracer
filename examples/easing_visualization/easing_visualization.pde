@@ -16,7 +16,7 @@ Easing[] easings;
 
 //parameters
 int rowSize = 6;
-int colSize = 3;
+int colSize = 4;
 int cellWidth = 150;
 int cellHeight = 100;
 
@@ -57,6 +57,10 @@ void setup() {
     Easings.getCubicEaseInBackAndForth(), 
     Easings.getCubicEaseOutBackAndForth(), 
     Easings.getCubicEaseInOutBackAndForth(), 
+    
+    Easings.getCircEaseInBackAndForth(),
+    Easings.getCircEaseOutBackAndForth(),
+    Easings.getCircEaseInOutBackAndForth(),
   };
 
   float x = 0;
@@ -127,6 +131,20 @@ void draw() {
       ellipse(x, rect.getCeny(), 18, 18);
     }
   }
-  
-  
+}
+
+String lastInfoString = "";
+void mouseMoved() {
+  int i = min(floor(map(mouseX, 0, width, 0, rowSize)), rowSize-1);
+  int j = min(floor(map(mouseY, 0, height, 0, colSize)), colSize-1);
+  int cellIndex = j*rowSize + i;
+  if (0 <= cellIndex && cellIndex < easings.length) {
+    Easing easing = easings[cellIndex];
+    String pathName = easing.getClass().getSimpleName();
+    String newInfoString = "The mouse is hovered over a " + pathName + ".";
+    if (!lastInfoString.equals(newInfoString)) {
+      println(newInfoString);
+      lastInfoString = newInfoString;
+    }
+  }
 }

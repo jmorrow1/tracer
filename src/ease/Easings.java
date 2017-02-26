@@ -273,8 +273,8 @@ public class Easings {
                 return PApplet.sqrt(1 - t * t);
             }
             else {
-                t = (t-0.5f) * 2f;
-                return 1f + (PApplet.sqrt(1 - t * t) - 1);
+                t = 2f * (t-0.5f) - 1f;
+                return 1f - PApplet.sqrt(1 - t * t);
             }           
         }
     }
