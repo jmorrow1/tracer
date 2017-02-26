@@ -1,9 +1,7 @@
 package tracer;
 
-import java.util.ArrayList;
-
 import ease.Easing;
-import ease.Easing.Linear;
+import ease.Easings;
 import paths.Path;
 
 /**
@@ -26,7 +24,7 @@ public class Tracer extends Point {
     }
 
     public Tracer(Path path, float startu, float du) {
-        this(path, startu, du, new Linear());
+        this(path, startu, du, Easings.getLinear());
     }
 
     public Tracer(Path path, float startu, float du, Easing easing) {

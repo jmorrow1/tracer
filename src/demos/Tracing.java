@@ -2,14 +2,13 @@ package demos;
 
 import java.util.ArrayList;
 
-import ease.Easing;
+import ease.Easings;
 import paths.Arc;
 import paths.Blender;
 import paths.Circle;
 import paths.Composite;
 import paths.CubicBezier;
 import paths.Ellipse;
-import paths.Rose;
 import paths.InfinitySymbol;
 import paths.Line;
 import paths.Lissajous;
@@ -17,6 +16,7 @@ import paths.Path;
 import paths.Plot;
 import paths.Polygonize;
 import paths.Rect;
+import paths.Rose;
 import paths.Superellipse;
 import paths.Supershape;
 import processing.core.PApplet;
@@ -87,7 +87,7 @@ public class Tracing extends PApplet {
         Arc b = new Arc(cellSize, 0, r, r, PI, TWO_PI, RADIUS/* , 50 */);
         paths.add(new Composite(a, b));
         paths.add(new Supershape(0, 0, 0.5f * r, r, 5, 1, 1, 1, 300));
-        paths.add(new Plot(new Rect(0, 0, r, r, RADIUS), new Easing.CubicEaseInOut(), 20));
+        paths.add(new Plot(new Rect(0, 0, r, r, RADIUS), Easings.getCubicEaseInOut(), 20));
         paths.add(new Lissajous(0, 0, r));
 
         return paths;

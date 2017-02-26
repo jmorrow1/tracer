@@ -3,6 +3,7 @@ package paths;
 import java.util.Arrays;
 
 import ease.Easing;
+import ease.Easings;
 import processing.core.PApplet;
 import processing.core.PGraphics;
 import tracer.Point;
@@ -98,7 +99,7 @@ public class Plot extends Path {
      * @param radius The radius of the rectangle that contains the plot
      */
     public Plot(float x, float y, float radius) {
-        this(new Rect(x, y, radius, radius, RADIUS), new Easing.CircEaseIn(), 100);
+        this(new Rect(x, y, radius, radius, RADIUS), Easings.getCircEaseIn(), 100);
     }
     
     @Override

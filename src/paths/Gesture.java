@@ -5,6 +5,7 @@ import java.util.Comparator;
 import java.util.List;
 
 import ease.Easing;
+import ease.Easings;
 import processing.core.PApplet;
 import processing.core.PGraphics;
 import tracer.Point;
@@ -103,7 +104,7 @@ public class Gesture extends Path {
      * @param r The radius of the path.
      */
     public Gesture(float x, float y, float r) {
-        this(new CubicBezier(x, y, r), new Easing.QuadEaseIn());
+        this(new CubicBezier(x, y, r), Easings.getQuadEaseIn());
     }
     
     @Override
