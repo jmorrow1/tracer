@@ -13,6 +13,8 @@ import tracer.Point;
 public class Lissajous extends Path {
     private Point cen;
     private float xRadius, yRadius, freqX, freqY, phi;
+    
+    //TODO Create constructor that estimates the sample count based on total distance
 
     /**
      * Copy constructor.

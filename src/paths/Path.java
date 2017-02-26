@@ -334,13 +334,6 @@ public abstract class Path implements Drawable {
 //     * @param scalar The scalar
 //     */
 //    public abstract void scale(float scalar);
-//    
-//    /**
-//     * Scales the path in the x direction by sx and in the y direction by sy
-//     * @param sx The x scalar
-//     * @param sy The y scalar
-//     */
-//    public abstract void scale(float sx, float sy);
 
     /**
      * Returns the slope of the Point on the Path at trace(u).

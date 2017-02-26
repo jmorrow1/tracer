@@ -27,6 +27,8 @@ public class InfinitySymbol extends Path {
         this(s.cen.clone(), s.xRadius, s.yRadius, s.sampleCount);
         setSampleCount(s.sampleCount);
     }
+    
+    //TODO Create a constructor that estimates what the sampleCount should be based on total distance
 
     /**
      * 
@@ -45,10 +47,10 @@ public class InfinitySymbol extends Path {
      * @param cen the center of the path
      * @param xRadius half the width
      * @param yRadius half the height
-     * @param drawGranularity the number of sample points
+     * @param sampleCount the number of sample points
      */
-    public InfinitySymbol(Point cen, float xRadius, float yRadius, int drawGranularity) {
-        super(drawGranularity);
+    public InfinitySymbol(Point cen, float xRadius, float yRadius, int sampleCount) {
+        super(sampleCount);
         this.cen = cen;
         this.xRadius = xRadius;
         this.yRadius = yRadius;

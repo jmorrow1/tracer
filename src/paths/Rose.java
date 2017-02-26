@@ -29,6 +29,8 @@ public class Rose extends Path {
         this(rose.cen.clone(), rose.xRadius, rose.yRadius, rose.freq1, rose.freq2, rose.sampleCount);
         setSampleCount(rose.sampleCount);
     }
+    
+    //TODO Add constructor that estimates the sample count based on total distance
 
     /**
      * 
@@ -49,10 +51,10 @@ public class Rose extends Path {
      * @param radius the radius
      * @param freq1 the first frequency
      * @param freq2 the second frequency
-     * @param drawGranularity the number of sample points
+     * @param sampleCount the number of sample points
      */
-    public Rose(Point cen, float radius, float freq1, float freq2, int drawGranularity) {
-        this(cen, radius, radius, freq1, freq2, drawGranularity);
+    public Rose(Point cen, float radius, float freq1, float freq2, int sampleCount) {
+        this(cen, radius, radius, freq1, freq2, sampleCount);
     }
 
     /**
@@ -63,10 +65,10 @@ public class Rose extends Path {
      * @param yRadius half of the height
      * @param freq1 the first frequency
      * @param freq2 the second frequency
-     * @param drawGranularity the number of sample points
+     * @param sampleCount the number of sample points
      */
-    public Rose(Point cen, float xRadius, float yRadius, float freq1, float freq2, int drawGranularity) {
-        super(drawGranularity);
+    public Rose(Point cen, float xRadius, float yRadius, float freq1, float freq2, int sampleCount) {
+        super(sampleCount);
         this.cen = cen;
         this.xRadius = xRadius;
         this.yRadius = yRadius;
