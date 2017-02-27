@@ -251,7 +251,7 @@ public abstract class Path implements Drawable {
      * 
      * @return The length of the Path
      */    
-    public float getTotalLength() {
+    public float getLength() {
         trace(pt, 0);
         float prevx = pt.x;
         float prevy = pt.y;

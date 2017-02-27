@@ -47,7 +47,7 @@ void setup() {
 ArrayList<Tracer> createTracers(ArrayList<Path> paths) {
   ArrayList<Tracer> tracers = new ArrayList<Tracer>();
   for (Path p : paths) {
-    float tracerSpeed = (synchronizeTracing) ? du : (du*200)/p.getTotalLength();
+    float tracerSpeed = (synchronizeTracing) ? du : (du*200)/p.getLength();
     tracers.add(new Tracer(p, 0, tracerSpeed));
   }
   return tracers;
@@ -111,7 +111,7 @@ void draw() {
     //draw segments
     for (Tracer t : tracers) {
       Path p = t.getPath();
-      float dist = (synchronizeTracing) ? 0.4 : (50 / p.getTotalLength());
+      float dist = (synchronizeTracing) ? 0.4 : (50 / p.getLength());
       float start = Path.remainder(t.getU()-dist, 1);
       float end = t.getU();
       p.draw(g, start, end);

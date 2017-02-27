@@ -244,7 +244,7 @@ public class Line extends Path {
      *******************************/
 
     @Override
-    public float getTotalLength() {
+    public float getLength() {
         return PApplet.dist(a.x, a.y, b.x, b.y);
     }
 
@@ -262,14 +262,6 @@ public class Line extends Path {
      */
     public float getCeny() {
         return PApplet.lerp(a.y, b.y, 0.5f);
-    }
-
-    /**
-     * 
-     * @return the length of the line
-     */
-    public float getLength() {
-        return getTotalLength();
     }
     
     /**

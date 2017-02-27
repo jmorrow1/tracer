@@ -50,7 +50,7 @@ public class TracingSegments extends PApplet {
 //        map(paths, (Path p) -> p.reverse());
         
         for (Path p : paths) {
-            System.out.println(p.toString() + " has a total distance of " + p.getTotalLength());
+            System.out.println(p.toString() + " has a total distance of " + p.getLength());
         }
         
     }
