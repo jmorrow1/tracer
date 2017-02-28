@@ -138,7 +138,8 @@ void step() {
 
 String sketchToString() {
   return componentCount + " " + radiusDecay + " " + baseRadius + " " + baseTraceSpeed
-    + " " + traceSpeedMultiplier + " " + spirographColor + " " + pathType;
+    + " " + traceSpeedMultiplier + " " + spirographColor + " " + pathType + " " +
+    freqX + " " + freqY + " " + phi;
 }
 
 void stringToSketch(String s) {
@@ -150,6 +151,9 @@ void stringToSketch(String s) {
   traceSpeedMultiplier = int(ss[4]);
   spirographColor = int(ss[5]);
   pathType = int(ss[6]);
+  freqX = int(ss[7]);
+  freqY = int(ss[8]);
+  phi = float(ss[9]);
 }
 
 void keyPressed() {

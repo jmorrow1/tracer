@@ -18,7 +18,6 @@ int pathType = LISSAJOUS_PATH;
 //contextual parameters (may not be relevant depending on the path type)
 int freqX = 5, freqY = 3; //used for lissajous paths and rose paths
 float phi = radians(60); //used for lissajous paths
-int polyOrder = 6; //used for poly paths
 
 //draw mode
 boolean drawComponents = true;
@@ -36,7 +35,7 @@ float u = 0;
 void setup() {
   size(600, 600, P2D);
 
-  //stringToSketch("5 0.25 180.0 1.0E-4 -4 -3657166 2");
+  stringToSketch("5 0.25 180.0 1.0E-4 -4 -3657166 3 3 4 1.0471976");
   initComponentPaths();
   spirograph = new Shape();
   spirograph.setFill(false);
@@ -121,7 +120,8 @@ void mousePressed() {
 
 String sketchToString() {
   return componentCount + " " + radiusDecay + " " + baseRadius + " " + baseTraceSpeed
-    + " " + traceSpeedMultiplier + " " + spirographColor + " " + pathType;
+    + " " + traceSpeedMultiplier + " " + spirographColor + " " + pathType + " " +
+    freqX + " " + freqY + " " + phi;
 }
 
 void stringToSketch(String s) {
@@ -133,6 +133,9 @@ void stringToSketch(String s) {
   traceSpeedMultiplier = int(ss[4]);
   spirographColor = int(ss[5]);
   pathType = int(ss[6]);
+  freqX = int(ss[7]);
+  freqY = int(ss[8]);
+  phi = float(ss[9]);
 }
 
 void keyPressed() {
