@@ -4,9 +4,11 @@ import tracer.Point;
 
 /**
  * 
+ * A TranslatedPath is a Path that wraps another Path, translating it by a given Point.
+ * 
  * @author James Morrow [jamesmorrowdesign.com]
  *
- * @param <T>
+ * @param <T> The type of Path wrapped by the TranslatedPath
  */
 public class TranslatedPath<T extends Path> extends Path {    
     protected Point translation;
@@ -70,5 +72,37 @@ public class TranslatedPath<T extends Path> extends Path {
     @Override
     public float getGap(int i) {
         return path.getGap(i);
+    }
+    
+    /**
+     * Gives the Path wrapped by this TranslatedPath.
+     * @return The Path wrapped by this TranslatedPath
+     */
+    public T getPath() {
+        return path;
+    }
+    
+    /**
+     * Sets the Path wrapped by this TranslatedPath.
+     * @param path The Path wrapped by this TranslatedPath
+     */
+    public void setPath(T path) {
+        this.path = path;
+    }
+    
+    /**
+     * Sets the translation Point.
+     * @param translation The translation Point
+     */
+    public void setTranslation(Point translation) {
+        this.translation = translation;
+    }
+    
+    /**
+     * Gives the translation Point.
+     * @return The translation Point
+     */
+    public Point getPoint() {
+        return translation;
     }
 }
