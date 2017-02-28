@@ -253,6 +253,11 @@ public class Point {
         x += dx;
         y += dy;
     }
+    
+    public void translate(Point pt) {
+        x += pt.x;
+        y += pt.y;
+    }
 
     /**
      * Rotates this point around (vx,vy).
