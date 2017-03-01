@@ -1,6 +1,7 @@
 package tracer;
 
 import java.util.ArrayList;
+import java.util.Collection;
 
 import processing.core.PApplet;
 import processing.core.PGraphics;
@@ -32,27 +33,6 @@ public class Point {
     public Point(float x, float y) {
         this.x = x;
         this.y = y;
-    }
-    
-    /**
-     * Calls step on every Point in the ArrayList
-     * @param pts The Points
-     */
-    public static void step(ArrayList<? extends Point> pts) {
-        for (Point pt : pts) {
-            pt.step();
-        }
-    }
-    
-    /**
-     * Calls step(dt) on every Point in the ArrayList
-     * @param pts The Points
-     * @param dt The change in time
-     */
-    public static void step(ArrayList<? extends Point> pts, int dt) {
-        for (Point pt : pts) {
-            pt.step(dt);
-        }
     }
     
     /**
@@ -298,6 +278,27 @@ public class Point {
             pts[i] = new Point(xs[i], ys[i]);
         }
         return pts;
+    }
+    
+    /**
+     * Steps every Point in the array
+     * @param points The array of Points
+     */
+    public static void step(Point[] points) {
+        for (Point pt : points) {
+            pt.step();
+        }
+    }
+    
+    /**
+     * Steps every Point in the array by the given time step.
+     * @param points The array of Points
+     * @param dt The time step
+     */
+    public static void step(Point[] points, int dt) {
+        for (Point pt : points) {
+            pt.step(dt);
+        }
     }
 
     @Override

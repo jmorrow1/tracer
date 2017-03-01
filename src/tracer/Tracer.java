@@ -1,33 +1,49 @@
 package tracer;
 
+import java.util.Collection;
+
 import ease.Easing;
 import ease.Easings;
 import paths.Path;
 
 /**
- * A Point that moves along a Path at some rate of speed.
+ * A Point that moves along a Path at some rate of speed, possibly speeding up and slowing down according to the curve specified by an Easing.
  * 
  * @author James Morrow [jamesmorrowdesign.com]
  *
  */
-public class Tracer extends Point {
-    protected float u; // The Tracer's location in 1D space, relative to the
-                       // Tracer's easing curve.
-    protected float du; // The Tracer's speed in 1D space, relative to the
-                        // Tracer's easing curve.
-    protected Path path; // The Path to which the Tracer is attached
-    protected Easing easing; // The easing curve determining how the Tracer
-                             // moves in time.
+public class Tracer<T extends Path> extends Point {
+    protected float u; //@param The Tracer's location in 1D space, relative to the Tracer's easing curve.
+    protected float du; //@param The Tracer's speed in 1D space, relative to the Tracer's easing curve.
+    protected T path; //@param The Path to which the Tracer is attached
+    protected Easing easing; //@param The easing curve determining how the Tracer moves in time.
     
-    public Tracer(Tracer t) {
+    /**
+     * Copy constructor.
+     * @param t The Tracer to copy
+     */
+    public Tracer(Tracer<T> t) {
         this(t.path, t.u, t.du, t.easing);
     }
 
-    public Tracer(Path path, float startu, float du) {
+    /**
+     * 
+     * @param path The Path
+     * @param startu The starting one-dimensional coordinate
+     * @param du The one-dimensional speed
+     */
+    public Tracer(T path, float startu, float du) {
         this(path, startu, du, Easings.getLinear());
     }
 
-    public Tracer(Path path, float startu, float du, Easing easing) {
+    /**
+     * 
+     * @param path The Path
+     * @param startu The starting one-dimensional coordinate
+     * @param du The one-dimensional speed
+     * @param easing The easing curve
+     */
+    public Tracer(T path, float startu, float du, Easing easing) {
         super(path.trace(startu));
         this.u = Path.remainder(startu, 1f);
         this.du = du;
@@ -35,13 +51,18 @@ public class Tracer extends Point {
         this.easing = easing;
     }
 
-    @Override
+    /**
+     * Moves the Tracer along its Path by its speed.
+     */
     public void step() {
         u = remainder(u + du, 1f);
         update();
     }
 
-    @Override
+    /**
+     * Moves the Tracer along its Path by its speed multiplied by the given time step.
+     * @param dt The time step
+     */
     public void step(int dt) {
         u = remainder(u + du * dt, 1f);
         update();
@@ -52,45 +73,68 @@ public class Tracer extends Point {
         path.trace(this, y);
     }
 
-    public static float remainder(float num, float denom) {
-        if (0 <= num && num < denom)
-            return num;
-        else if (num > 0)
-            return num % denom;
-        else
-            return denom - ((-num) % denom);
-    }
-
+    /**
+     * Gives the one-dimensional coordinate of the Tracer (a value between 0 (inclusive) and 1 (exclusive)).
+     * @return The one-dimensional coordinate
+     */
     public float getU() {
         return u;
     }
 
+    /**
+     * Sets the one-dimensional coordinate of the Tracer (a value between 0 (inclusive) and 1 (exclusive)).
+     * @param u The one-dimensional coordinate
+     */
     public void setU(float u) {
-        this.u = u;
+        this.u = remainder(u, 1f);
         update();
     }
 
+    /**
+     * Gives the one-dimensional speed of the Tracer.
+     * @return The one-dimensional speed of the Tracer
+     */
     public float getDu() {
         return du;
     }
 
+    /**
+     * Sets the one-dimensional speed of the Tracer.
+     * @param du The one-dimensional speed
+     */
     public void setDu(float du) {
         this.du = du;
     }
 
-    public Path getPath() {
+    /**
+     * Gives the Path.
+     * @return The Path
+     */
+    public T getPath() {
         return path;
     }
 
-    public void setPath(Path path) {
+    /**
+     * Sets the Path.
+     * @param path The Path
+     */
+    public void setPath(T path) {
         this.path = path;
         update();
     }
 
+    /**
+     * Gives the Easing.
+     * @return The Easing
+     */
     public Easing getEasing() {
         return easing;
     }
 
+    /**
+     * Sets the Easing.
+     * @param easing The Easing
+     */
     public void setEasing(Easing easing) {
         this.easing = easing;
         update();
@@ -104,5 +148,70 @@ public class Tracer extends Point {
     @Override
     public String toString() {
         return "Tracer [u=" + u + ", du=" + du + ", path=" + path + "]";
+    }
+    
+    /**
+     * Steps every Tracer in the Collection
+     * @param tracers The Collection of Tracers
+     */
+    public static void step(Collection<? extends Tracer> tracers) {
+        for (Tracer t : tracers) {
+            t.step();
+        }
+    }
+    
+    /**
+     * Steps every Tracer in the Collection by the given time step.
+     * @param tracers The Collection of Tracers
+     * @param dt The time step
+     */
+    public static void step(Collection<? extends Tracer> tracers, int dt) {
+        for (Tracer t : tracers) {
+            t.step(dt);
+        }
+    }
+    
+    /**
+     * Steps every Tracer in the array
+     * @param tracers The array of Tracers
+     */
+    public static void step(Tracer[] tracers) {
+        for (Tracer t : tracers) {
+            t.step();
+        }
+    }
+    
+    /**
+     * Steps every Tracer in the array by the given time step.
+     * @param tracers The array of Tracers
+     * @param dt The time step
+     */
+    public static void step(Tracer[] tracers, int dt) {
+        for (Tracer t : tracers) {
+            t.step(dt);
+        }
+    }
+    
+    /**
+     * Computes the remainder of num / denom.
+     * 
+     * @param num the numerator
+     * @param denom the denominator
+     * @return The remainder of num / denom
+     */
+    public static float remainder(float num, float denom) {
+        if (0 <= num && num < denom) {
+            return num;
+        }
+        else if (num > 0) {
+            return num % denom;
+        }
+        else {
+            float result = denom - ((-num) % denom);
+            if (result == denom) {
+                result = 0;
+            }
+            return result;
+        }
     }
 }

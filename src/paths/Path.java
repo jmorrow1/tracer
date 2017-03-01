@@ -1,6 +1,7 @@
 package paths;
 
 import java.util.ArrayList;
+import java.util.Collection;
 
 import processing.core.PApplet;
 import processing.core.PGraphics;
@@ -539,7 +540,7 @@ public abstract class Path implements Drawable {
     }   
 
     /**
-     * Returns the remainder of num / denom.
+     * Computes the remainder of num / denom.
      * 
      * @param num the numerator
      * @param denom the denominator
@@ -559,7 +560,7 @@ public abstract class Path implements Drawable {
             }
             return result;
         }
-      }
+    }
     
     /**
      * Returns one of each Path type in the tracer library.
@@ -656,5 +657,27 @@ public abstract class Path implements Drawable {
     //TODO Add exception handling if file is corrupted
     private static Point toPoint(JSONObject json) {
         return new Point(json.getFloat("x"), json.getFloat("y"));
+    }
+    
+    /**
+     * Draws every Path in the Collection.
+     * @param paths The Collection of Paths
+     * @param g The PGraphics instance
+     */
+    public static void draw(Collection<Path> paths, PGraphics g) {
+        for (Path p : paths) {
+            p.draw(g);
+        }
+    }
+    
+    /**
+     * Draws every Path in the array.
+     * @param paths The array of Paths
+     * @param g The PGraphics instace
+     */
+    public static void draw(Path[] paths, PGraphics g) {
+        for (Path p : paths) {
+            p.draw(g);
+        }
     }
 }
