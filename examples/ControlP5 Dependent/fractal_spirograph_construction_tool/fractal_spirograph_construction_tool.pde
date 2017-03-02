@@ -2,9 +2,10 @@ import tracer.*;
 import paths.*;
 import render.*;
 import ease.*;
+import java.nio.file.Paths;
 
 //constants
-public final static int CIRCLE_PATH = 0, SQUARE_PATH = 1, INFINITY_PATH = 2, LISSAJOUS_PATH = 3, ROSE_PATH = 4;
+public final static int CIRCLE_PATH = 0, SQUARE_PATH = 1, INFINITY_PATH = 2, LISSAJOUS_PATH = 3, ROSE_PATH = 4, POLYGON_PATH = 5;
 public final static int WIDTH = 700, HEIGHT = 700;
 
 //parameters
@@ -19,6 +20,7 @@ public static int pathType = LISSAJOUS_PATH;
 //contextual parameters (may not be relevant depending on the path type)
 public static int freqX = 5, freqY = 3; //used for lissajous paths and rose paths
 public static float phi = radians(60); //used for lissajous paths
+public static int polyOrder = 5;
 
 //draw mode
 public static boolean drawComponents = true;
@@ -33,18 +35,18 @@ public static boolean spirographComplete;
 public static Tracer[] tracers;
 public static float u = 0;
 
-public static void main(String[] args) {
-  PApplet.main("fractal_spirograph_construction_tool");
-}
+//saving
+public static boolean saveSketch;
 
 void settings() {
   size(WIDTH, HEIGHT, P2D);
 }
 
 void setup() {
-  Gui.main(new String[] {});
+  String[] args = {"--location=0,0", "Gui"};
+  PApplet.runSketch(args, new Gui());  
   
-  //stringToSketch("5 0.25 180.0 1.0E-4 -4 -3657166 2");
+  //stringToSketch("5 0.25 180.0 1.0E-4 -4 -3657166 2 4");
   startOver();
 }
 
@@ -65,12 +67,14 @@ static void initComponentPaths() {
   paths = new Path[componentCount];
   tracers = new Tracer[componentCount];
   paths[0] = makePath(pathType, new Point(WIDTH/2, HEIGHT/2), radius);  
+  paths[0].setFill(false);
   tracers[0] = new Tracer(paths[0], 0, traceSpeed); 
 
   for (int i=1; i<componentCount; i++) {
     traceSpeed *= traceSpeedMultiplier;
     radius *= radiusDecay;
     paths[i] = makePath(pathType, tracers[i-1], radius);
+    paths[i].setFill(false);
     tracers[i] = new Tracer(paths[i], 0, traceSpeed);
   }
 }
@@ -82,6 +86,7 @@ static Path makePath(int pathType, Point pt, float radius) {
     case INFINITY_PATH : return new InfinitySymbol(pt, radius, 0.75*radius, 100);
     case LISSAJOUS_PATH : return new Lissajous(100, pt, radius, radius, freqX, freqY, phi);
     case ROSE_PATH : return new Rose(pt, radius, freqX, freqY, 100);
+    case POLYGON_PATH : return new TranslatedPath(pt, Polygonize.makeRegularPolygon(0, 0, radius, polyOrder, 0));
     default : return new Circle(pt, radius);
   }
 }
@@ -112,8 +117,14 @@ void draw() {
       stroke(spirographColor);
       point(pt.x, pt.y);
     }
+    
+    if (saveSketch) {
+      saveTheSketch();
+      saveSketch = false;
+    }
   }
   catch (Exception e) {
+    println(e);
     //this is here to cope with the errors that can crop up if the Gui manipulates this sketch while execution is in the draw loop
   }
 }
@@ -136,13 +147,13 @@ void step() {
   }
 }
 
-String sketchToString() {
+static String sketchToString() {
   return componentCount + " " + radiusDecay + " " + baseRadius + " " + baseTraceSpeed
     + " " + traceSpeedMultiplier + " " + spirographColor + " " + pathType + " " +
-    freqX + " " + freqY + " " + phi;
+    freqX + " " + freqY + " " + phi + " " + polyOrder;
 }
 
-void stringToSketch(String s) {
+static void stringToSketch(String s) {
   String[] ss = s.split(" ");
   componentCount = int(ss[0]);
   radiusDecay = float(ss[1]);
@@ -154,12 +165,16 @@ void stringToSketch(String s) {
   freqX = int(ss[7]);
   freqY = int(ss[8]);
   phi = float(ss[9]);
+  polyOrder = int(ss[1]);
 }
 
-void keyPressed() {
-  if (key == 's' || key == 'S') {
+void saveTheSketch() {
+  try {
     String sketchName = sketchToString() + ".png";
     save(sketchName);
-    println("saved " + sketchName);
+    println("saved " + sketchName + " to sketch folder");
+  }
+  catch (Exception e) {
+    println("Encountered exception while trying to save image file: " + e);
   }
 }
