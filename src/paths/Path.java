@@ -150,7 +150,7 @@ public abstract class Path implements Drawable {
      * @param u2 The 1D coordinate of the segment's end
      */
     public void draw(PGraphics g, float u1, float u2) {        
-        boolean inRange = (0 <= u1 && u1 < 1 && 0 <= u2 && u2 < 1);
+        boolean inRange = (0 <= u1 && u1 <= 1 && 0 <= u2 && u2 <= 1);
         if (!inRange) {
             throw new IllegalArgumentException(Path.class.getName() + ".draw(g, " + u1 + ", " + u2 + ") called with values outside the range 0 to 1.");
         }
@@ -159,9 +159,17 @@ public abstract class Path implements Drawable {
     }
     
     private void drawHelper(PGraphics g, float u1, float u2) {
+        if (u2 == 1) {
+            u2 = ALMOST_ONE;
+        }
+        
+        if (u1 == u2) {
+            return;
+        }
+        
         if (u1 > u2) {
             float u12 = PApplet.max(ALMOST_ONE,  0.5f * (u1 + 1.0f));  
-            if (u12 != 1) { //because of limitations on floating point precision, u12 could still equal 1, which would cause an error
+            if (u12 != 1) {
                 drawHelper(g, u1, u12); 
             } 
             drawHelper(g, 0.0f, u2);

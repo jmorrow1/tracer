@@ -115,9 +115,9 @@ public class Shape extends Path {
     
     @Override
     public void draw(PGraphics g, float u1, float u2) {
-        boolean inRange = (0 <= u1 && u1 < 1 && 0 <= u2 && u2 < 1);
+        boolean inRange = (0 <= u1 && u1 <= 1 && 0 <= u2 && u2 <= 1);
         if (!inRange) {
-            throw new IllegalArgumentException(Shape.class.getName() + "..draw(g, " + u1 + ", " + u2 + ") called with values outside in the range [0, 1).");
+            throw new IllegalArgumentException(Shape.class.getName() + "..draw(g, " + u1 + ", " + u2 + ") called with values outside in the range [0, 1].");
         }
         
         style.apply(g);
@@ -351,6 +351,28 @@ public class Shape extends Path {
         float du = 1f / sampleCount;
         for (int i = 0; i < sampleCount; i++) {
             pts.add(path.trace(u));
+            u += du;
+        }
+        return new Shape(pts);
+    }
+    
+    /**
+     * Converts an arbitrary type of Path into a Shape, using a given
+     * sampleCount, with its starting point offset by a one-dimensional coordinate.
+     * 
+     * @param path The Path
+     * @param sampleCount The number of sample points to use
+     * @param offset The one-dimensional coordinate
+     * @return The Shape
+     */
+    public static Shape toShape(Path path, int sampleCount, float offset) {
+        offset = Path.remainder(offset, 1);
+        ArrayList<Point> pts = new ArrayList<Point>();
+        float u = 0;
+        float du = 1f / sampleCount;
+        for (int i = 0; i < sampleCount; i++) {
+            float v = Path.remainder(u + offset, 1);
+            pts.add(path.trace(v));
             u += du;
         }
         return new Shape(pts);
