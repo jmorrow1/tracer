@@ -1,4 +1,4 @@
-package ease;
+package easings;
 
 import processing.core.PApplet;
 
