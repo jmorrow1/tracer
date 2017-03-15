@@ -441,4 +441,36 @@ public class Easings {
         }
         return circEaseInOutBackAndForth;
     }
+    
+    public static int getEasingCount() {
+        return 20;
+    }
+    
+    public static Easing getEasing(int i) {
+        switch (i) {
+            case 0 : return getLinear();
+            case 1 : return getQuadEaseIn();
+            case 2 : return getQuadEaseOut();
+            case 3 : return getQuadEaseInOut();
+            case 4 : return getCubicEaseIn();
+            case 5 : return getCubicEaseOut();
+            case 6 : return getCubicEaseInOut();
+            case 7 : return getCircEaseIn();
+            case 8 : return getCircEaseOut();
+            case 9 : return getCircEaseInOut();
+            
+            case 10: return getLinearBackAndForth();
+            case 11 : return getQuadEaseInBackAndForth();
+            case 12 : return getQuadEaseOutBackAndForth();
+            case 13 : return getQuadEaseInOutBackAndForth();
+            case 14 : return getCubicEaseInBackAndForth();
+            case 15 : return getCubicEaseOutBackAndForth();
+            case 16 : return getCubicEaseInOutBackAndForth();
+            case 17 : return getCircEaseInBackAndForth();
+            case 18 : return getCircEaseOutBackAndForth();
+            case 19 : return getCircEaseInOutBackAndForth();
+            
+            default : return null;
+        }
+    }
 }
