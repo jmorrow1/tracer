@@ -1,9 +1,11 @@
 package paths;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Comparator;
 
-import ease.Easing;
-import ease.Easings;
+import easings.Easing;
+import easings.Easings;
 import processing.core.PApplet;
 import processing.core.PGraphics;
 import tracer.Point;
@@ -18,6 +20,52 @@ import tracer.Point;
 public class Plot extends Path {
     protected Rect rect;
     protected float[] xs, ys; //normalized coordinates
+    
+    public Plot(ArrayList<Point> pts) {
+        
+        //sort the list of points in ascending order by their x-values
+        pts.sort(Point.XValueComparator.getInstance());
+        
+        //wrap a rectangle around the points
+        if (pts.size() > 0) {
+            Point pt = pts.get(0);
+            float x1 = pt.x;
+            float y1 = pt.y;
+            float x2 = pt.x;
+            float y2 = pt.y;
+            for (int i=1; i<pts.size(); i++) {
+                pt = pts.get(i);
+                
+                if (pt.x < x1) {
+                    x1 = pt.x;
+                }
+                else if (pt.x > x2) {
+                    x2 = pt.x;
+                }
+                
+                if (pt.y < y1) {
+                    y1 = pt.y;
+                }
+                else if (pt.y > y2) {
+                    y2 = pt.y;
+                }
+            }
+            this.rect = new Rect(x1, y1, x2, y2, CORNERS);
+        }
+        else {
+            this.rect = new Rect(0, 0, 0, 0, CORNER);
+        }
+        
+        //store the points in the xs and ys arrays
+        this.xs = new float[pts.size()];
+        this.ys = new float[pts.size()];
+        for (int i=0; i<pts.size(); i++) {
+            Point pt = pts.get(i);
+            this.xs[i] = pt.x;
+            this.ys[i] = pt.y;
+        }
+        
+    }
     
     /**
      * Copy constructor

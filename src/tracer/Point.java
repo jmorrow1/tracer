@@ -2,6 +2,7 @@ package tracer;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Comparator;
 
 import processing.core.PApplet;
 import processing.core.PGraphics;
@@ -234,9 +235,13 @@ public class Point {
         y += dy;
     }
     
-    public void translate(Point pt) {
-        x += pt.x;
-        y += pt.y;
+    /**
+     * Shifts this Point by (translation.x, translation.y)
+     * @param translation The amount to shift the Point
+     */
+    public void translate(Point translation) {
+        x += translation.x;
+        y += translation.y;
     }
 
     /**
@@ -300,6 +305,73 @@ public class Point {
             pt.step(dt);
         }
     }
+    
+    /**
+     * 
+     * Compares Points by comparing their x-values.
+     * 
+     * @author James Morrow [jamesmorrowdesign.com]
+     *
+     */
+    public static class XValueComparator implements Comparator<Point> {
+        private static XValueComparator instance;
+        
+        private XValueComparator() {}
+        
+        @Override
+        public int compare(Point a, Point b) {
+            if (a.x < b.x) {
+                return -1;
+            }
+            else if (a.x == b.x) {
+                return 0;
+            }
+            else {
+                return 1;
+            }
+        }
+        
+        public static XValueComparator getInstance() {
+            if (instance == null) {
+                instance = new XValueComparator();
+            }
+            return instance;
+        }
+        
+    }
+    
+    /**
+     * 
+     * Compares Points by comparing their y-values
+     * 
+     * @author James Morrow [jamesmorrowdesign.com]
+     *
+     */
+    public static class YValueComparator implements Comparator<Point> {
+        private static YValueComparator instance;
+        
+        private YValueComparator() {}
+        
+        @Override
+        public int compare(Point a, Point b) {
+            if (a.y < b.y) {
+                return -1;
+            }
+            else if (a.y == b.y) {
+                return 0;
+            }
+            else {
+                return 1;
+            }
+        }
+        
+        public static YValueComparator getInstance() {
+            if (instance == null) {
+                instance = new YValueComparator();
+            }
+            return instance;
+        }
+    }    
 
     @Override
     public Point clone() {
