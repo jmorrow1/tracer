@@ -56,13 +56,13 @@ public class Plot extends Path {
             this.rect = new Rect(0, 0, 0, 0, CORNER);
         }
         
-        //store the points in the xs and ys arrays
+        //normalize the points and store them in the xs and ys arrays
         this.xs = new float[pts.size()];
         this.ys = new float[pts.size()];
         for (int i=0; i<pts.size(); i++) {
             Point pt = pts.get(i);
-            this.xs[i] = pt.x;
-            this.ys[i] = pt.y;
+            this.xs[i] = PApplet.map(pt.x, rect.getX1(), rect.getX2(), 0, 1);
+            this.ys[i] = PApplet.map(pt.y, rect.getY1(), rect.getY2(), 0, 1);
         }
         
     }
