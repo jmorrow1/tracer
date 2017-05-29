@@ -338,13 +338,7 @@ public abstract class Path implements Drawable {
      * @param dy The number of pixels to shift the path down.
      */
     public abstract void translate(float dx, float dy);
-
-//    /**
-//     * Scales the path by the scalar.
-//     * @param scalar The scalar
-//     */
-//    public abstract void scale(float scalar);
-
+    
     /**
      * Returns the slope of the Point on the Path at trace(u).
      * 
@@ -467,6 +461,62 @@ public abstract class Path implements Drawable {
 //        return false;
 //    }
 
+    /**
+     * 
+     * @return
+     */
+    public int getStrokeCap() {
+        return style.strokeCap;
+    }
+    
+    /**
+     * 
+     * @return
+     */
+    public int getStrokeJoin() {
+        return style.strokeJoin;
+    }
+    
+    /**
+     * 
+     * @return
+     */
+    public float getStrokeWeight() {
+        return style.strokeWeight;
+    }
+    
+    /**
+     * 
+     * @return
+     */
+    public int getFillColor() {
+        return style.fillColor;
+    }
+    
+    /**
+     * 
+     * @return
+     */
+    public int getStrokeColor() {
+        return style.strokeColor;
+    }
+    
+    /**
+     * 
+     * @return
+     */
+    public boolean getFill() {
+        return style.fill;
+    }
+    
+    /**
+     * 
+     * @return
+     */
+    public boolean getStroke() {
+        return style.stroke;
+    }
+    
     /**
      * Sets the style of the Path.
      * @param style the style

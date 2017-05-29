@@ -110,4 +110,28 @@ public class Dot implements Drawable {
     public void setStrokeWeight(float strokeWeight) {
         this.strokeWeight = strokeWeight;
     }
+    
+    /**
+     * 
+     * @return
+     */
+    public int getStrokeCap() {
+        return strokeCap;
+    }
+    
+    /**
+     * 
+     * @return
+     */
+    public int getStrokeColor() {
+        return strokeColor;
+    }
+    
+    /**
+     * 
+     * @return
+     */
+    public float getStrokeWeight() {
+        return strokeWeight;
+    }
 }

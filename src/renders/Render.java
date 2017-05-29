@@ -1,4 +1,4 @@
-package render;
+package renders;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -172,5 +172,61 @@ public abstract class Render implements Drawable {
      */
     public void setFill(boolean fill) {
         style.fill = fill;
+    }
+    
+    /**
+     * 
+     * @return
+     */
+    public int getStrokeCap() {
+        return style.strokeCap;
+    }
+    
+    /**
+     * 
+     * @return
+     */
+    public int getStrokeJoin() {
+        return style.strokeJoin;
+    }
+    
+    /**
+     * 
+     * @return
+     */
+    public float getStrokeWeight() {
+        return style.strokeWeight;
+    }
+    
+    /**
+     * 
+     * @return
+     */
+    public int getFillColor() {
+        return style.fillColor;
+    }
+    
+    /**
+     * 
+     * @return
+     */
+    public int getStrokeColor() {
+        return style.strokeColor;
+    }
+    
+    /**
+     * 
+     * @return
+     */
+    public boolean getFill() {
+        return style.fill;
+    }
+    
+    /**
+     * 
+     * @return
+     */
+    public boolean getStroke() {
+        return style.stroke;
     }
 }
