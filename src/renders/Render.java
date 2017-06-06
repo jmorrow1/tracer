@@ -9,6 +9,7 @@ import processing.core.PStyle;
 import tracer.Drawable;
 import tracer.Point;
 import tracer.TStyle;
+import tracer.Tracer;
 
 /**
  * Draws a list of Point objects in some way using the PGraphics class from
@@ -18,7 +19,7 @@ import tracer.TStyle;
  *
  */
 public abstract class Render implements Drawable {
-    protected List<Point> pts;
+    protected List<? extends Point> pts;
     protected TStyle style;
 
     /**
@@ -32,10 +33,20 @@ public abstract class Render implements Drawable {
     }
     
     /**
+     * Constructs a Render containing the array of Tracers.
+     * @param pts The array of Tracers
+     */
+    public Render(Tracer[] pts) {
+        this(listify(pts));
+        style = new TStyle();
+        PApplet pa = null;
+    }
+    
+    /**
      * Constructs a Render containing the list of Points.
      * @param pts The list of Points
      */
-    public Render(List<Point> pts) {
+    public Render(List<? extends Point> pts) {
         this.pts = pts;
         style = new TStyle();
     }
@@ -67,11 +78,24 @@ public abstract class Render implements Drawable {
 
     /**
      * Converts an array of Points into an ArrayList of points.
-     * @param arr The array of Points
-     * @return The ArrayList of Points.
+     * @param arr An array of Points
+     * @return An ArrayList of Points.
      */
     public static ArrayList<Point> listify(Point[] arr) {
         ArrayList<Point> list = new ArrayList<Point>();
+        for (int i = 0; i < arr.length; i++) {
+            list.add(arr[i]);
+        }
+        return list;
+    }
+    
+    /**
+     * Converts an array of Tracers into an ArrayList of Tracers.
+     * @param arr An array of Tracers
+     * @return An ArrayList of Tracers.
+     */
+    public static ArrayList<Tracer> listify(Tracer[] arr) {
+        ArrayList<Tracer> list = new ArrayList<Tracer>();
         for (int i = 0; i < arr.length; i++) {
             list.add(arr[i]);
         }

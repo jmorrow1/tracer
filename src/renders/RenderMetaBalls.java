@@ -1,10 +1,11 @@
-package render;
+package renders;
 
 import java.util.List;
 
 import processing.core.PApplet;
 import processing.core.PGraphics;
 import tracer.Point;
+import tracer.Tracer;
 
 //TODO Implement w/ GLSL
 
@@ -20,11 +21,11 @@ public class RenderMetaBalls extends Render {
     //style
     protected int bgColor, fgColor;
 
-    public RenderMetaBalls(List<Point> ts) {
+    public RenderMetaBalls(List<? extends Point> ts) {
         this(ts, 10, 100, 0xff000000, 0xffffffff);
     }
 
-    public RenderMetaBalls(List<Point> ts, float ballRadius, float maxDist, int bgColor, int fgColor) {
+    public RenderMetaBalls(List<? extends Point> ts, float ballRadius, float maxDist, int bgColor, int fgColor) {
         super(ts);
         this.ballRadius = ballRadius;
         this.maxDist = maxDist;
@@ -37,6 +38,14 @@ public class RenderMetaBalls extends Render {
     }
 
     public RenderMetaBalls(Point[] ts, float ballRadius, float maxDist, int bgColor, int fgColor) {
+        this(listify(ts), ballRadius, maxDist, bgColor, fgColor);
+    }
+    
+    public RenderMetaBalls(Tracer[] ts) {
+        this(listify(ts));
+    }
+
+    public RenderMetaBalls(Tracer[] ts, float ballRadius, float maxDist, int bgColor, int fgColor) {
         this(listify(ts), ballRadius, maxDist, bgColor, fgColor);
     }
 

@@ -1,11 +1,11 @@
-package render;
+package renders;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import processing.core.PApplet;
 import processing.core.PGraphics;
 import tracer.Point;
+import tracer.Tracer;
 
 /**
  * 
@@ -16,11 +16,15 @@ public class RenderVoronoi extends Render {
     protected int c1 = 0xff000000;
     protected int c2 = 0xffffffff;
     
-    public RenderVoronoi(List<Point> pts) {
+    public RenderVoronoi(List<? extends Point> pts) {
         super(pts);
     }
     
     public RenderVoronoi(Point[] pts) {
+        super(pts);
+    }
+    
+    public RenderVoronoi(Tracer[] pts) {
         super(pts);
     }
 

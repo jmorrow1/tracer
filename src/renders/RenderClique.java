@@ -1,4 +1,4 @@
-package render;
+package renders;
 
 import java.util.List;
 
@@ -15,11 +15,15 @@ import tracer.Tracer;
  *
  */
 public class RenderClique extends Render {
-    public RenderClique(List<Point> ts) {
+    public RenderClique(List<? extends Point> ts) {
         super(ts);
     }
 
     public RenderClique(Point[] ts) {
+        super(ts);
+    }
+    
+    public RenderClique(Tracer[] ts) {
         super(ts);
     }
 

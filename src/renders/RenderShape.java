@@ -1,10 +1,10 @@
-package render;
+package renders;
 
 import java.util.List;
 
 import processing.core.PGraphics;
 import tracer.Point;
-import tracer.Point;
+import tracer.Tracer;
 
 /**
  * Draws a list of Point objects as a shape using Processing's beginShape() and
@@ -17,11 +17,15 @@ public class RenderShape extends Render {
     // style
     protected boolean closeShape = true;
 
-    public RenderShape(List<Point> ts) {
+    public RenderShape(List<? extends Point> ts) {
         super(ts);
     }
 
     public RenderShape(Point[] ts) {
+        this(listify(ts));
+    }
+    
+    public RenderShape(Tracer[] ts) {
         this(listify(ts));
     }
 

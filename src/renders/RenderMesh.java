@@ -1,11 +1,11 @@
-package render;
+package renders;
 
 import java.util.List;
 
 import processing.core.PApplet;
 import processing.core.PGraphics;
 import tracer.Point;
-import tracer.Point;
+import tracer.Tracer;
 
 /**
  * Draws a list of Point objects as a procedural mesh. When two Points get
@@ -21,15 +21,15 @@ public class RenderMesh extends Render {
     // the square of the distance between two Points in which the stroke weight is increased
     protected float sqStrokeRampDist;
     
-    public RenderMesh(List<Point> ts) {
+    public RenderMesh(List<? extends Point> ts) {
         this(ts, 100, 0);
     }
 
-    public RenderMesh(List<Point> ts, float minDist) {
+    public RenderMesh(List<? extends Point> ts, float minDist) {
         this(ts, minDist, 0);
     }
 
-    public RenderMesh(List<Point> ts, float minDist, float strokeRamp) {
+    public RenderMesh(List<? extends Point> ts, float minDist, float strokeRamp) {
         super(ts);
         this.sqMinDist = minDist * minDist;
         this.sqStrokeRampDist = strokeRamp * strokeRamp;
@@ -44,6 +44,18 @@ public class RenderMesh extends Render {
     }
 
     public RenderMesh(Point[] ts, float minDist, float strokeRamp) {
+        this(listify(ts), minDist, strokeRamp);
+    }
+    
+    public RenderMesh(Tracer[] ts) {
+        this(ts, 100, 0);
+    }
+
+    public RenderMesh(Tracer[] ts, float minDist) {
+        this(listify(ts), minDist);
+    }
+
+    public RenderMesh(Tracer[] ts, float minDist, float strokeRamp) {
         this(listify(ts), minDist, strokeRamp);
     }
 
