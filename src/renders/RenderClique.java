@@ -1,8 +1,7 @@
 package renders;
 
-import java.util.List;
+import java.util.Collection;
 
-import processing.core.PApplet;
 import processing.core.PGraphics;
 import tracer.Point;
 import tracer.Tracer;
@@ -15,7 +14,7 @@ import tracer.Tracer;
  *
  */
 public class RenderClique extends Render {
-    public RenderClique(List<? extends Point> ts) {
+    public RenderClique(Collection<? extends Point> ts) {
         super(ts);
     }
 

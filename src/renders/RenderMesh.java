@@ -1,6 +1,6 @@
 package renders;
 
-import java.util.List;
+import java.util.Collection;
 
 import processing.core.PApplet;
 import processing.core.PGraphics;
@@ -21,15 +21,15 @@ public class RenderMesh extends Render {
     // the square of the distance between two Points in which the stroke weight is increased
     protected float sqStrokeRampDist;
     
-    public RenderMesh(List<? extends Point> ts) {
+    public RenderMesh(Collection<? extends Point> ts) {
         this(ts, 100, 0);
     }
 
-    public RenderMesh(List<? extends Point> ts, float minDist) {
+    public RenderMesh(Collection<? extends Point> ts, float minDist) {
         this(ts, minDist, 0);
     }
 
-    public RenderMesh(List<? extends Point> ts, float minDist, float strokeRamp) {
+    public RenderMesh(Collection<? extends Point> ts, float minDist, float strokeRamp) {
         super(ts);
         this.sqMinDist = minDist * minDist;
         this.sqStrokeRampDist = strokeRamp * strokeRamp;

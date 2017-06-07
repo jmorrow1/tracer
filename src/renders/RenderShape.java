@@ -1,6 +1,6 @@
 package renders;
 
-import java.util.List;
+import java.util.Collection;
 
 import processing.core.PGraphics;
 import tracer.Point;
@@ -17,7 +17,7 @@ public class RenderShape extends Render {
     // style
     protected boolean closeShape = true;
 
-    public RenderShape(List<? extends Point> ts) {
+    public RenderShape(Collection<? extends Point> ts) {
         super(ts);
     }
 

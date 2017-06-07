@@ -1,6 +1,7 @@
 package renders;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 import processing.core.PApplet;
@@ -19,7 +20,7 @@ import tracer.Tracer;
  *
  */
 public abstract class Render implements Drawable {
-    protected List<? extends Point> pts;
+    protected List<Point> pts;
     protected TStyle style;
 
     /**
@@ -46,8 +47,9 @@ public abstract class Render implements Drawable {
      * Constructs a Render containing the list of Points.
      * @param pts The list of Points
      */
-    public Render(List<? extends Point> pts) {
-        this.pts = pts;
+    public Render(Collection<? extends Point> pts) {
+        this.pts = new ArrayList<Point>();
+        this.pts.addAll(pts);
         style = new TStyle();
     }
     
@@ -196,6 +198,38 @@ public abstract class Render implements Drawable {
      */
     public void setFill(boolean fill) {
         style.fill = fill;
+    }
+    
+    /**
+     * 
+     * @param pt
+     */
+    public void add(Point pt) {
+        pts.add(pt);
+    }
+    
+    /**
+     * 
+     * @param pt
+     * @return
+     */
+    public boolean remove(Point pt) {
+        return pts.remove(pt);
+    }
+    
+    /**
+     * 
+     */
+    public void clear() {
+        pts.clear();
+    }
+    
+    /**
+     * 
+     * @return
+     */
+    public int size() {
+        return pts.size();
     }
     
     /**

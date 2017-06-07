@@ -49,6 +49,11 @@ public class RenderDemo extends PApplet {
         
         //create render
         render = new RenderMesh(metatracers, 100);
+//        render = new RenderVoronoi(metatracers);
+//        render = new RenderPolygon(metatracers);
+        render.setFillColor(color(40));
+        render.setStroke(false);
+        render.setStrokeWeight(2);
         
         //initialize record of time
         prevt = millis();

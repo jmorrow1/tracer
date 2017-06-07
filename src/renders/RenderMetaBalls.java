@@ -1,6 +1,6 @@
 package renders;
 
-import java.util.List;
+import java.util.Collection;
 
 import processing.core.PApplet;
 import processing.core.PGraphics;
@@ -21,11 +21,11 @@ public class RenderMetaBalls extends Render {
     //style
     protected int bgColor, fgColor;
 
-    public RenderMetaBalls(List<? extends Point> ts) {
+    public RenderMetaBalls(Collection<? extends Point> ts) {
         this(ts, 10, 100, 0xff000000, 0xffffffff);
     }
 
-    public RenderMetaBalls(List<? extends Point> ts, float ballRadius, float maxDist, int bgColor, int fgColor) {
+    public RenderMetaBalls(Collection<? extends Point> ts, float ballRadius, float maxDist, int bgColor, int fgColor) {
         super(ts);
         this.ballRadius = ballRadius;
         this.maxDist = maxDist;
