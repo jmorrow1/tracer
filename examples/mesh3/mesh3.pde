@@ -1,7 +1,7 @@
 import paths.*;
 import tracer.*;
-import ease.*;
-import render.*;
+import easings.*;
+import renders.*;
 
 //parameters
 int w = 12; //circles per row
@@ -19,8 +19,8 @@ Point[] tracers = new Point[w*h];
 RenderMesh render;
 
 //draw mode
-boolean showPaths = false;
-boolean showPoints = false;
+boolean showPaths = false; //toggle with '1' key
+boolean showPoints = false; //toggle with '2' key
 
 void setup() {
   size(500, 500);
@@ -86,7 +86,15 @@ void draw() {
   render.draw(g);
 }
 
-void mousePressed() {
-  showPaths = !showPaths;
-  showPoints = !showPoints;
+void keyPressed() {
+  switch (key) {
+    case '1' : 
+      showPaths = !showPaths;
+      println(showPaths ? "showing paths" : "not showing paths");
+      break;
+    case '2' :
+      showPoints = !showPoints;
+      println(showPoints ? "showing points" : "not showing points");
+      break;
+  }
 }

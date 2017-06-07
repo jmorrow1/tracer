@@ -1,7 +1,7 @@
 import tracer.*;
 import paths.*;
-import render.*;
-import ease.*;
+import renders.*;
+import easings.*;
 import java.nio.file.Paths;
 
 //constants
@@ -9,13 +9,15 @@ public final static int CIRCLE_PATH = 0, SQUARE_PATH = 1, INFINITY_PATH = 2, LIS
 public final static int WIDTH = 700, HEIGHT = 700;
 
 //parameters
+public static boolean fillShape = false;
 public static int componentCount = 5;
 public static float radiusDecay = 0.25;
 public static float baseRadius = 180;
 public static float baseTraceSpeed = 0.0001;
 public static int traceSpeedMultiplier = -4;
 public static int spirographColor = #C83232;
-public static int pathType = LISSAJOUS_PATH;
+public static int pathType = CIRCLE_PATH;
+public static float offset1d;
 
 //contextual parameters (may not be relevant depending on the path type)
 public static int freqX = 5, freqY = 3; //used for lissajous paths and rose paths
@@ -30,6 +32,9 @@ public static int stepsPerFrame = 10;
 public static Path[] paths;
 public static Shape spirograph;
 public static boolean spirographComplete;
+
+//easing
+public static int easingIndex;
 
 //animation
 public static Tracer[] tracers;
@@ -53,7 +58,9 @@ void setup() {
 public static void startOver() {
   initComponentPaths();
   spirograph = new Shape();
-  spirograph.setFill(false);
+  spirograph.setFill(fillShape);
+  spirograph.setFillColor(spirographColor);
+  spirograph.setStroke(!fillShape);
   spirograph.setStrokeColor(spirographColor);
   spirograph.setStrokeWeight(1.5f);
   u = 0;
@@ -68,14 +75,14 @@ static void initComponentPaths() {
   tracers = new Tracer[componentCount];
   paths[0] = makePath(pathType, new Point(WIDTH/2, HEIGHT/2), radius);  
   paths[0].setFill(false);
-  tracers[0] = new Tracer(paths[0], 0, traceSpeed); 
+  tracers[0] = new Tracer(paths[0], 0, traceSpeed, Easings.getEasing(easingIndex)); 
 
   for (int i=1; i<componentCount; i++) {
     traceSpeed *= traceSpeedMultiplier;
     radius *= radiusDecay;
     paths[i] = makePath(pathType, tracers[i-1], radius);
     paths[i].setFill(false);
-    tracers[i] = new Tracer(paths[i], 0, traceSpeed);
+    tracers[i] = new Tracer(paths[i], (offset1d*i) % 1, traceSpeed, Easings.getEasing(easingIndex));
   }
 }
 
@@ -150,7 +157,7 @@ void step() {
 static String sketchToString() {
   return componentCount + " " + radiusDecay + " " + baseRadius + " " + baseTraceSpeed
     + " " + traceSpeedMultiplier + " " + spirographColor + " " + pathType + " " +
-    freqX + " " + freqY + " " + phi + " " + polyOrder;
+    freqX + " " + freqY + " " + phi + " " + polyOrder + " " + easingIndex;
 }
 
 static void stringToSketch(String s) {
@@ -165,7 +172,8 @@ static void stringToSketch(String s) {
   freqX = int(ss[7]);
   freqY = int(ss[8]);
   phi = float(ss[9]);
-  polyOrder = int(ss[1]);
+  polyOrder = int(ss[10]);
+  easingIndex = (ss.length < 12) ? 0 : int(ss[11]);
 }
 
 void saveTheSketch() {

@@ -1,7 +1,7 @@
 import tracer.*;
 import paths.*;
-import render.*;
-import ease.*;
+import renders.*;
+import easings.*;
 
 //paths
 Rose path;
@@ -19,7 +19,7 @@ float speed = 0.0004;
 
 //draw mode
 final static int MESH = 0, CLIQUE = 1, SHP = 2, VORONOI = 3;
-int renderMode = MESH;
+int renderMode = SHP;
 boolean drawMetapaths = false;
 boolean drawRender = true;
 

@@ -1,7 +1,7 @@
 import paths.*;
 import tracer.*;
-import ease.*;
-import render.*;
+import easings.*;
+import renders.*;
 
 //parameters
 float minRadius = 10;

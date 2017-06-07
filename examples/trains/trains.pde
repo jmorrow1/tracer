@@ -1,7 +1,7 @@
 import tracer.*;
 import paths.*;
-import render.*;
-import ease.*;
+import renders.*;
+import easings.*;
 
 //mouse locked to grid
 Point quantizedMouse;
@@ -51,7 +51,9 @@ void mouseMoved() {
 void mousePressed() {
   if (mouseButton == LEFT) {   
     Point vtx = new Point(quantizedMouse);
-    currTrack.setVertex(currTrack.getVertexCount()-1, vtx);
+    int i = currTrack.getVertexCount() - 1;
+    currTrack.removeVertex(i);
+    currTrack.addVertex(i, vtx);
 
     Point firstVtx = currTrack.getVertex2D(0);
    

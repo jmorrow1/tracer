@@ -5,7 +5,7 @@ public static class Gui extends PApplet {
   boolean receiveEvents;
   
   public void settings() {
-    size(500, 200);
+    size(500, 250);
   }
   
   public void setup() {
@@ -62,6 +62,23 @@ public static class Gui extends PApplet {
        .setValue(fractal_spirograph_construction_tool.pathType)
        ;
        
+    cp5.addSlider("easing")
+       .setMin(0)
+       .setMax(Easings.getEasingCount()-1)
+       .setPosition(10, 190)
+       .setHeight(15)
+       .setNumberOfTickMarks(Easings.getEasingCount())
+       .setValue(fractal_spirograph_construction_tool.easingIndex);
+       ;
+       
+    cp5.addSlider("offset 1d")
+       .setMin(0)
+       .setMax(1)
+       .setPosition(10, 220)
+       .setHeight(15)
+       .setValue(fractal_spirograph_construction_tool.offset1d);
+       ;
+       
     cp5.addSlider("freqX")
        .setMin(1)
        .setMax(10)
@@ -112,6 +129,12 @@ public static class Gui extends PApplet {
        .setValue(fractal_spirograph_construction_tool.drawComponents ? 1 : 0)
        ;
        
+    cp5.addToggle("fill shape")
+       .setPosition(250, 200)
+       .setHeight(15)
+       .setValue(fractal_spirograph_construction_tool.fillShape ? 1 : 0)
+       ;
+       
     cp5.addButton("save sketch")
        .setPosition(420, height-20)
        .setWidth(70)
@@ -146,6 +169,13 @@ public static class Gui extends PApplet {
         case "path type" :
           fractal_spirograph_construction_tool.pathType = (int)e.getValue();
           break;
+        case "easing" :
+          fractal_spirograph_construction_tool.easingIndex = (int)e.getValue();
+          break;
+        case "offset 1d" :
+          fractal_spirograph_construction_tool.offset1d = e.getValue();
+          break;
+          
         case "freqX" :
           fractal_spirograph_construction_tool.freqX = (int)e.getValue();
           break;
@@ -164,9 +194,16 @@ public static class Gui extends PApplet {
         case "poly order" :
           fractal_spirograph_construction_tool.polyOrder = (int)e.getValue();
           break;
+        case "fill shape" :
+          fractal_spirograph_construction_tool.fillShape = e.getValue() != 0;
+          fractal_spirograph_construction_tool.spirograph.setFill(e.getValue() != 0);
+          fractal_spirograph_construction_tool.spirograph.setStroke(e.getValue() == 0);
+          return;
+          
         case "save sketch" :
           fractal_spirograph_construction_tool.saveSketch = true;
           return; //don't call start over
+          
       }
       fractal_spirograph_construction_tool.startOver();
     }

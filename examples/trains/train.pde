@@ -8,8 +8,8 @@ class Train {
   Train(Path track) {
     this.track = track;   
     this.u = 0;
-    this.du = 1 / track.getTotalLength();
-    this.length1D = 25 / track.getTotalLength();
+    this.du = 1 / track.getLength();
+    this.length1D = 25 / track.getLength();
     this.pt = new Point(0, 0);  
     this.carCount = floor(random(2, 6));
   }

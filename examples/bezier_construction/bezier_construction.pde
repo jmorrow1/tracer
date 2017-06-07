@@ -1,7 +1,7 @@
 import tracer.*;
 import paths.*;
-import render.*;
-import ease.*;
+import renders.*;
+import easings.*;
 
 //paths
 Point[][] pts;
