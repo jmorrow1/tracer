@@ -33,7 +33,7 @@ A Tracer is like a Point that moves along a Path.
 Tracers provide a way of creating animations with tracer.
 
 ## Easings
-Easings are tweening curves that control the speed of an animation over time. For an introduction to easing functions, try [this] (http://gizma.com/easing/).
+Easings are tweening curves that control the speed of an animation over time. For an introduction to easing functions, try [this](http://gizma.com/easing/).
 
 ## Renders
 Renders provide a way of creating complex forms and animations with tracer.
