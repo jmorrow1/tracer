@@ -37,6 +37,25 @@ public class Point {
     }
     
     /**
+     * Sets this point to (x,y)
+     * @param x
+     * @param y
+     */
+    public void set(float x, float y) {
+        this.x = x;
+        this.y = y;
+    }
+    
+    /**
+     * Sets this point to the given point
+     * @param pt
+     */
+    public void set(Point pt) {
+        this.x = pt.x;
+        this.y = pt.y;
+    }
+    
+    /**
      * Updates the Point.
      */
     public void step() {}
@@ -46,21 +65,6 @@ public class Point {
      * @param dt The change in time
      */
     public void step(int dt) {}
-
-    /**
-     * Creates an array of points from a sequence or array of floating point
-     * values.
-     * 
-     * @param values the floating point values
-     * @return the array of points
-     */
-    public static Point[] points(float... values) {
-        Point[] pts = new Point[values.length / 2];
-        for (int i = 0; i < pts.length; i++) {
-            pts[i] = new Point(values[i * 2], values[i * 2 + 1]);
-        }
-        return pts;
-    }
 
     /**
      * Interpolates a Point a and a Point b by a given amount between 0 and 1.
@@ -82,7 +86,7 @@ public class Point {
      * @return The Point halfway between a and b.
      */
     public static Point avg(Point a, Point b) {
-        return new Point((a.x + b.x) / 2f, (a.y + b.y) / 2f);
+        return new Point(0.5f * (a.x + b.x), 0.5f * (a.y + b.y));
     }
 
     /**
@@ -113,13 +117,24 @@ public class Point {
     public static float dist(Point a, Point b) {
         return PApplet.dist(a.x, a.y, b.x, b.y);
     }
+    
+    /**
+     * Computes the squared distance between two points.
+     * 
+     * @param a the first point
+     * @param b the second point
+     * @return the squared distance
+     */
+    public static float distSq(Point a, Point b) {
+        return (b.y - a.y) * (b.y - a.y) + (b.x - a.x) * (b.x - a.x);
+    }
 
     /**
      * The slope between two points.
      * 
      * @param a the first point
      * @param b the second point
-     * @return
+     * @return the slope
      */
     public static float slope(Point a, Point b) {
         return (b.y - a.y) / (b.x - a.x);
@@ -290,6 +305,27 @@ public class Point {
      * @param points The array of Points
      */
     public static void step(Point[] points) {
+        for (Point pt : points) {
+            pt.step();
+        }
+    }
+    
+    /**
+     * Steps every Point in the collection by the given time step.
+     * @param points The collection of Points
+     * @param dt The time step
+     */
+    public static void step(Collection<? extends Point> points, int dt) {
+        for (Point pt : points) {
+            pt.step(dt);
+        }
+    }
+    
+    /**
+     * Steps every Point in the collection
+     * @param points The collection of Points
+     */
+    public static void step(Collection<? extends Point> points) {
         for (Point pt : points) {
             pt.step();
         }

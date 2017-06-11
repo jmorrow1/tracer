@@ -2,8 +2,8 @@ package tracer;
 
 import java.util.Collection;
 
-import ease.Easing;
-import ease.Easings;
+import easings.Easing;
+import easings.Easings;
 import paths.Path;
 
 /**
@@ -56,7 +56,7 @@ public class Tracer<T extends Path> extends Point {
      */
     public void step() {
         u = remainder(u + du, 1f);
-        update();
+        trace();
     }
 
     /**
@@ -65,10 +65,10 @@ public class Tracer<T extends Path> extends Point {
      */
     public void step(int dt) {
         u = remainder(u + du * dt, 1f);
-        update();
+        trace();
     }
 
-    private void update() {
+    private void trace() {
         float y = easing.val(u);
         path.trace(this, y);
     }
@@ -87,7 +87,7 @@ public class Tracer<T extends Path> extends Point {
      */
     public void setU(float u) {
         this.u = remainder(u, 1f);
-        update();
+        trace();
     }
 
     /**
@@ -120,7 +120,7 @@ public class Tracer<T extends Path> extends Point {
      */
     public void setPath(T path) {
         this.path = path;
-        update();
+        trace();
     }
 
     /**
@@ -137,7 +137,7 @@ public class Tracer<T extends Path> extends Point {
      */
     public void setEasing(Easing easing) {
         this.easing = easing;
-        update();
+        trace();
     }
     
     @Override
@@ -148,27 +148,6 @@ public class Tracer<T extends Path> extends Point {
     @Override
     public String toString() {
         return "Tracer [u=" + u + ", du=" + du + ", path=" + path + "]";
-    }
-    
-    /**
-     * Steps every Tracer in the Collection
-     * @param tracers The Collection of Tracers
-     */
-    public static void step(Collection<? extends Tracer> tracers) {
-        for (Tracer t : tracers) {
-            t.step();
-        }
-    }
-    
-    /**
-     * Steps every Tracer in the Collection by the given time step.
-     * @param tracers The Collection of Tracers
-     * @param dt The time step
-     */
-    public static void step(Collection<? extends Tracer> tracers, int dt) {
-        for (Tracer t : tracers) {
-            t.step(dt);
-        }
     }
     
     /**
