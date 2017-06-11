@@ -1,6 +1,6 @@
 import tracer.*;
-import renders.*;
-import paths.*;
+import tracer.paths.*;
+import tracer.renders.*;
 import java.util.Collection;
 
 CustomRender render;

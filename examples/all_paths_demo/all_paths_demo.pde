@@ -1,7 +1,5 @@
 import tracer.*;
-import paths.*;
-import renders.*;
-import easings.*;
+import tracer.paths.*;
 
 //paths
 ArrayList<Path> paths;
@@ -169,6 +167,6 @@ void applyDrawMode() {
 }
 
 void printDrawMode() {
-  print(synchronizeTracing ? "Tracing speeds are synchronized " : "Tracing speeds are dependent on Path lengths ");
+  print(synchronizeTracing ? "Tracing speeds are synchronized " : "Tracing speeds are asynchronized on Path lengths ");
   println(drawSegments ? "and Path segments are being drawn." : "and Paths are being drawn.");
 }

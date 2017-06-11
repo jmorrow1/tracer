@@ -1,7 +1,7 @@
-import paths.*;
 import tracer.*;
-import easings.*;
-import renders.*;
+import tracer.paths.*;
+import tracer.renders.*;
+import tracer.easings.*;
 
 //parameters
 int w = 12; //circles per row

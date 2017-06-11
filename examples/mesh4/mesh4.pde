@@ -1,7 +1,6 @@
 import tracer.*;
-import renders.*;
-import paths.*;
-import easings.*;
+import tracer.paths.*;
+import tracer.renders.*;
 
 //flags:
 boolean drawTracers = false; //toggle with '1' key

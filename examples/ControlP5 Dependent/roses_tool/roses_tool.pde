@@ -1,7 +1,6 @@
 import tracer.*;
-import paths.*;
-import renders.*;
-import easings.*;
+import tracer.paths.*;
+import tracer.renders.*;
 
 //paths
 public static Rose path;

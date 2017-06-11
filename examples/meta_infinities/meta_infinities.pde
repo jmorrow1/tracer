@@ -1,7 +1,5 @@
 import tracer.*;
-import paths.*;
-import renders.*;
-import easings.*;
+import tracer.paths.*;
 
 //parameters
 final int INFINITY_COUNT = 5;

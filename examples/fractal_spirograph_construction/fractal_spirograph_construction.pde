@@ -1,7 +1,6 @@
 import tracer.*;
-import paths.*;
-import renders.*;
-import easings.*;
+import tracer.paths.*;
+import tracer.easings.*;
 
 //constants
 public final static int CIRCLE_PATH = 0, SQUARE_PATH = 1, INFINITY_PATH = 2, LISSAJOUS_PATH = 3, ROSE_PATH = 4, POLYGON_PATH = 5;

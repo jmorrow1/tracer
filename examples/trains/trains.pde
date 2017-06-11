@@ -1,7 +1,5 @@
 import tracer.*;
-import paths.*;
-import renders.*;
-import easings.*;
+import tracer.paths.*;
 
 //mouse locked to grid
 Point quantizedMouse;

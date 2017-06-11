@@ -1,7 +1,5 @@
 import tracer.*;
-import paths.*;
-import render.*;
-import ease.*;
+import tracer.paths.*;
 
 Gesture gesture;
 ArrayList<Path> paths = new ArrayList<Path>();
