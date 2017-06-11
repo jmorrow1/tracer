@@ -24,6 +24,14 @@ public abstract class Render implements Drawable {
     protected TStyle style;
 
     /**
+     * Constructs an empty Render with no Points.
+     */
+    public Render() {
+        pts = new ArrayList<Point>();
+        style = new TStyle();
+    }
+    
+    /**
      * Constructs a Render containing the array of Points.
      * @param pts The array of Points
      */
