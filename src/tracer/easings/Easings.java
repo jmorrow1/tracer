@@ -1,7 +1,12 @@
-package easings;
+package tracer.easings;
 
 import processing.core.PApplet;
 
+/**
+ * 
+ * @author James Morrow [jamesmorrowdesign.com]
+ *
+ */
 public class Easings {
     private static Linear linear = new Linear();
     
@@ -470,7 +475,7 @@ public class Easings {
             case 18 : return getCircEaseOutBackAndForth();
             case 19 : return getCircEaseInOutBackAndForth();
             
-            default : return null;
+            default : throw new IndexOutOfBoundsException("Easing " + i + " does not exist.");
         }
     }
 }

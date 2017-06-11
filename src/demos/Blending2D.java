@@ -1,13 +1,13 @@
 package demos;
 
-import paths.Blender;
-import paths.Ellipse;
-import paths.Rose;
-import paths.InfinitySymbol;
-import paths.Path;
-import paths.Superellipse;
 import processing.core.PApplet;
 import tracer.Point;
+import tracer.paths.Blender;
+import tracer.paths.Ellipse;
+import tracer.paths.InfinitySymbol;
+import tracer.paths.Path;
+import tracer.paths.Rose;
+import tracer.paths.Superellipse;
 
 /**
  * 

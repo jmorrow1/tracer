@@ -1,4 +1,4 @@
-package paths;
+package tracer.paths;
 
 import processing.core.PApplet;
 import processing.core.PGraphics;
@@ -116,7 +116,7 @@ public class Rect extends Path {
         }
         this.rectMode = rectMode;
 
-        setHelperFields();
+        computeHelperFields();
     }
 
     /**
@@ -141,7 +141,7 @@ public class Rect extends Path {
             cd.x = c;
             cd.y = d;
             this.rectMode = rectMode;
-            setHelperFields();
+            computeHelperFields();
         }
     }
 
@@ -170,7 +170,7 @@ public class Rect extends Path {
             cd.x = c;
             cd.y = d;
             this.rectMode = rectMode;
-            setHelperFields();
+            computeHelperFields();
         }
     }
     
@@ -268,6 +268,25 @@ public class Rect extends Path {
         if (rectMode == CORNERS) {
             cd.translate(dx, dy);
         }
+    }
+    
+    public void make1DProportionalTo2D() {
+        computeHelperFields();
+    }
+    
+    private void computeHelperFields() {
+        float width = getX2() - getX1();
+        
+        perimeter = 2f * width + 2f * (getY2() - getY1());
+        
+        if (vertices1D == null) {
+            vertices1D = new float[4];
+        }
+
+        vertices1D[0] = 0;
+        vertices1D[1] = width / perimeter;
+        vertices1D[2] = 0.5f;
+        vertices1D[3] = 0.5f + vertices1D[1];
     }
 
     @Override
@@ -432,19 +451,6 @@ public class Rect extends Path {
             default:
                 return -1;
         }
-    }
-
-    private void setHelperFields() {
-        perimeter = 2f * (getX2() - getX1()) + 2f * (getY2() - getY1());
-        
-        if (vertices1D == null) {
-            vertices1D = new float[4];
-        }
-
-        vertices1D[0] = 0;
-        vertices1D[1] = (getX2() - getX1()) / perimeter;
-        vertices1D[2] = 0.5f;
-        vertices1D[3] = 0.5f + vertices1D[1];
     }
 
     @Override

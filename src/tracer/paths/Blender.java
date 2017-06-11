@@ -1,4 +1,4 @@
-package paths;
+package tracer.paths;
 
 import processing.core.PApplet;
 import processing.core.PGraphics;
@@ -35,6 +35,16 @@ public class Blender<T extends Path, U extends Path> extends Path {
         this((T)blender.a.clone(), (U)blender.b.clone(), blender.blendAmt, blender.sampleCount);
     }
 
+    /**
+     * 
+     * @param a
+     * @param b
+     * @param blendAmt
+     */
+    public Blender(T a, U b, float blendAmt) {
+        this(a, b, blendAmt, PApplet.max(a.sampleCount, b.sampleCount));
+    }
+    
     /**
      * 
      * @param a the first path

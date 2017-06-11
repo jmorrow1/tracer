@@ -1,4 +1,4 @@
-package easings;
+package tracer.easings;
 
 import processing.core.PApplet;
 

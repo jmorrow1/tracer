@@ -1,4 +1,4 @@
-package renders;
+package tracer.renders;
 
 import java.util.Collection;
 

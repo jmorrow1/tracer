@@ -2,10 +2,10 @@ package demos;
 
 import java.util.ArrayList;
 
-import paths.Shape;
 import processing.core.PApplet;
 import tracer.Point;
 import tracer.Tracer;
+import tracer.paths.Shape;
 import tracer.Tracer;
 
 public class TrainLines extends PApplet {

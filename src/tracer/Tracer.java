@@ -2,9 +2,9 @@ package tracer;
 
 import java.util.Collection;
 
-import easings.Easing;
-import easings.Easings;
-import paths.Path;
+import tracer.easings.Easing;
+import tracer.easings.Easings;
+import tracer.paths.Path;
 
 /**
  * A Point that moves along a Path at some rate of speed, possibly speeding up and slowing down according to the curve specified by an Easing.

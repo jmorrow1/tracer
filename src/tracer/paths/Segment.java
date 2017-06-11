@@ -1,6 +1,7 @@
-package paths;
+package tracer.paths;
 
 import processing.core.PApplet;
+import processing.core.PGraphics;
 import tracer.Point;
 
 /**
@@ -55,6 +56,13 @@ public class Segment extends Path {
         
         float v = reversed ? PApplet.map(u, 0, 1, u2, u1) : PApplet.map(u, 0, 1, u1, u2);
         parent.trace(pt, v);
+    }
+    
+    @Override
+    public void draw(PGraphics g) {
+        super.draw(g); //<-- placeholder
+        
+        //TODO
     }
     
     @Override
@@ -121,6 +129,15 @@ public class Segment extends Path {
         return -1;
     }
 
+    /**
+     * Translates the segment's location within its path by the given 1D value.
+     * @param du The 1D value
+     */
+    public void translate(float du) {
+        u1 = remainder(u1 + du, 1);
+        u2 = remainder(u2 + du, 1);
+    }
+    
     /**
      * Gives the first 1D coordinate of the Segment.
      * @return The first 1D coordinate

@@ -1,4 +1,4 @@
-package paths;
+package tracer.paths;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -68,6 +68,15 @@ public abstract class Path implements Drawable {
     }
     
     /**
+     * Derive a Path by connecting a sequence of points located on this Path with lines.
+     * @param us 1-dimensional coordinates of the sequence of points
+     * @return The derivative path
+     */
+    public final Shape derivePath(float[] us) {
+        return Shape.derivePath(this, us);
+    }
+    
+    /**
      * Derive a Path by connecting a sequence of points located on a source Path with lines.
      * @param src The source path
      * @param us 1-dimensional coordinates of the sequence of points
@@ -107,21 +116,21 @@ public abstract class Path implements Drawable {
      * @return The segment
      */
     //TODO WORK IN PROGRESS
-    public Shape segment(float u1, float u2) {
+    public Shape createSegment(float u1, float u2) {
         boolean inRange = (0 <= u1 && u1 < 1 && 0 <= u2 && u2 < 1);
         if (!inRange) {
             throw new IllegalArgumentException(Path.class.getName() + ".draw(g, " + u1 + ", " + u2 + ") called with values outside in the range [0, 1).");
         }
 
-        return new Shape(segmentPoints(u1, u2));
+        return new Shape(createSegmentPoints(u1, u2));
     }
 
     //TODO WORK IN PROGRESS
-    private ArrayList<Point> segmentPoints(float u1, float u2) {
+    private ArrayList<Point> createSegmentPoints(float u1, float u2) {
         if (u1 > u2) {
             ArrayList<Point> pts = new ArrayList<Point>();
-            pts.addAll(segmentPoints(u1, 1));
-            pts.addAll(segmentPoints(0, u2));
+            pts.addAll(createSegmentPoints(u1, 1));
+            pts.addAll(createSegmentPoints(0, u2));
             return pts;
         } else {
             float length = PApplet.abs(u1 - u2);
@@ -138,6 +147,74 @@ public abstract class Path implements Drawable {
             }
 
             return pts;
+        }
+    }
+    
+    /**
+     * 
+     * @param u1
+     * @param u2
+     * @return
+     */
+    public static float compute1DSegmentLength(float u1, float u2) {
+        if (u1 < 0 || u1 > 1 || u2 < 0 || u2 > 1) {
+            //TODO do something
+        }
+        
+        if (u1 < u2) {
+            return u2 - u1;
+        }
+        else {
+            return (1.0f - u1) + u2;
+        }
+    }
+    
+    
+    public float compute2DSegmentLength(float u1, float u2) {
+        if (u2 == 1) {
+            u2 = ALMOST_ONE;
+        }
+        
+        if (u1 == u2) {
+            return 0;
+        }
+        
+        if (u1 > u2) {
+            float segmentLength = 0;
+            float u12 = PApplet.max(ALMOST_ONE,  0.5f * (u1 + 1.0f));  
+            if (u12 != 1) {
+                segmentLength += compute2DSegmentLength(u1, u12); 
+            } 
+            segmentLength += compute2DSegmentLength(0.0f, u2);
+            return segmentLength;
+        }
+        else {
+            float segmentLength = 0;
+            int gapCount = getGapCount();
+            for (int i=0; i<gapCount; i++) {
+                float gap = getGap(i);
+                if (u1 < gap && gap < u2) {
+                    float u12 = PApplet.max(gap - 0.00001f, 0.5f * (gap + u1)); //TODO This isn't the best solution
+                    segmentLength += compute2DSegmentLength(u1, u12);
+                    u1 = gap + 0.00001f; //TODO This isn't the best solution
+                }
+            }
+            
+            float length = PApplet.abs(u1 - u2);
+            int n = (int) (sampleCount * length);
+            float du = length / n;
+
+            float u = u1;
+            trace(pt, u);
+            Point prevpt = new Point(pt);
+            for (int i = 1; i < n; i++) {
+                trace(pt, u);         
+                segmentLength += PApplet.dist(prevpt.x, prevpt.y, pt.x, pt.y);
+                u = (u + du) % 1f;
+                prevpt.set(pt);
+            }
+            
+            return segmentLength;
         }
     }
 
@@ -329,7 +406,7 @@ public abstract class Path implements Drawable {
         }
         g.endShape();
     }
-
+    
     /**
      * Shifts this Path dx units in the x-direction and dy units in the
      * y-direction.

@@ -1,4 +1,4 @@
-package paths;
+package tracer.paths;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -86,14 +86,14 @@ public class Shape extends Path {
         vertices1D.clear();
 
         if (vertices2D.size() > 0) {
-            float totalDistance = getLength();
+            float totalLength = getLength();
     
             Point a = vertices2D.get(0);
             float u1 = 0;
             vertices1D.add(u1);
             for (int i = 1; i < vertices2D.size(); i++) {
                 Point b = vertices2D.get(i);
-                float du = Line.dist(a, b) / totalDistance;
+                float du = Line.dist(a, b) / totalLength;
                 float u2 = (u1 + du);
                 vertices1D.add(u2);
                 u1 = u2;
@@ -305,6 +305,14 @@ public class Shape extends Path {
      */
     public void setVertex(int i, Point pt) {
         vertices2D.set(i, pt);
+        computeVertices1D();
+    }
+    
+    //TODO Maybe come up with a better name:
+    /**
+     * 
+     */
+    public void make1DProportionalTo2D() {
         computeVertices1D();
     }
 

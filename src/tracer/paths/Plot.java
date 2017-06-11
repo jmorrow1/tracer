@@ -1,14 +1,14 @@
-package paths;
+package tracer.paths;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Comparator;
 
-import easings.Easing;
-import easings.Easings;
 import processing.core.PApplet;
 import processing.core.PGraphics;
 import tracer.Point;
+import tracer.easings.Easing;
+import tracer.easings.Easings;
 
 /**
  * 

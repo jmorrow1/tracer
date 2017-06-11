@@ -1,4 +1,4 @@
-package paths;
+package tracer.paths;
 
 import processing.core.PApplet;
 import tracer.Point;

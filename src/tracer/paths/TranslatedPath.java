@@ -1,10 +1,14 @@
-package paths;
+package tracer.paths;
 
+import processing.core.PGraphics;
 import tracer.Point;
 
 /**
  * 
  * A TranslatedPath is a Path that wraps another Path, translating it by a given Point.
+ * 
+ * Any changes to the translation Point (by tracing a Path with it, for example) will
+ * directly and automatically affect the TranslatedPath.
  * 
  * @author James Morrow [jamesmorrowdesign.com]
  *
@@ -35,15 +39,33 @@ public class TranslatedPath<T extends Path> extends Path {
         this.path = path;
     }
     
+    /**
+     * Constructs a Path that is the given Path translated by the given Point.
+     * 
+     * @param x The x-coordinate of the translation point
+     * @param y The y-coordinate of the translation point
+     * @param path The Path
+     */
+    public TranslatedPath(float x, float y, T path) {
+        this(new Point(x, y), path);
+    }
+    
     /********************
      ***** Behavior *****
      ********************/
     
-
     @Override
     public void trace(Point pt, float u) {
         path.trace(pt, u);
         pt.translate(translation);
+    }
+    
+    @Override
+    public void draw(PGraphics g) {
+        g.pushMatrix();
+        g.translate(pt.x, pt.y);
+        path.draw(g);
+        g.popMatrix();
     }
 
     /******************

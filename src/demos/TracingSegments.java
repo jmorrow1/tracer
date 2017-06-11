@@ -2,21 +2,21 @@ package demos;
 
 import java.util.ArrayList;
 
-import paths.Arc;
-import paths.Blender;
-import paths.Circle;
-import paths.Composite;
-import paths.CubicBezier;
-import paths.Ellipse;
-import paths.Rose;
-import paths.Path;
-import paths.Polygonize;
-import paths.Rect;
-import paths.InfinitySymbol;
-import paths.Line;
-import paths.Superellipse;
-import paths.Supershape;
 import processing.core.PApplet;
+import tracer.paths.Arc;
+import tracer.paths.Blender;
+import tracer.paths.Circle;
+import tracer.paths.Composite;
+import tracer.paths.CubicBezier;
+import tracer.paths.Ellipse;
+import tracer.paths.InfinitySymbol;
+import tracer.paths.Line;
+import tracer.paths.Path;
+import tracer.paths.Polygonize;
+import tracer.paths.Rect;
+import tracer.paths.Rose;
+import tracer.paths.Superellipse;
+import tracer.paths.Supershape;
 
 /**
  * 

@@ -1,10 +1,10 @@
 package demos;
 
-import paths.Circle;
-import paths.InfinitySymbol;
-import paths.Path;
 import processing.core.PApplet;
 import tracer.Tracer;
+import tracer.paths.Circle;
+import tracer.paths.InfinitySymbol;
+import tracer.paths.Path;
 
 /**
  * 

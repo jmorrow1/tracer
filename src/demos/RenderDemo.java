@@ -2,12 +2,12 @@ package demos;
 
 import java.util.ArrayList;
 
-import paths.Circle;
-import paths.Path;
 import processing.core.PApplet;
-import renders.Render;
-import renders.RenderMesh;
 import tracer.Tracer;
+import tracer.paths.Circle;
+import tracer.paths.Path;
+import tracer.renders.Render;
+import tracer.renders.RenderMesh;
 
 public class RenderDemo extends PApplet {
     
