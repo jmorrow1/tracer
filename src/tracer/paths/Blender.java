@@ -64,7 +64,7 @@ public class Blender<T extends Path, U extends Path> extends Path {
      *************************/
 
     @Override
-    public void trace(Point pt, float u) {
+    public void trace(Point target, float u) {
         if (u < 0 || u >= 1) {
             throw new IllegalArgumentException(Blender.class.getName() + ".trace(pt, " + u + ") called where the second argument is outside the range 0 (inclusive) to 1 (exclusive).");
         }
@@ -76,8 +76,8 @@ public class Blender<T extends Path, U extends Path> extends Path {
         }
         a.trace(ptA, u);
         b.trace(ptB, u);
-        pt.x = PApplet.lerp(ptA.x, ptB.x, blendAmt);
-        pt.y = PApplet.lerp(ptA.y, ptB.y, blendAmt);
+        target.x = PApplet.lerp(ptA.x, ptB.x, blendAmt);
+        target.y = PApplet.lerp(ptA.y, ptB.y, blendAmt);
     }
 
     @Override

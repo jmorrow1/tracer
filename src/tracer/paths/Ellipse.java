@@ -168,7 +168,7 @@ public class Ellipse extends Path {
     }
 
     @Override
-    public void trace(Point pt, float u) {
+    public void trace(Point target, float u) {
         if (u < 0 || u >= 1) {
             throw new IllegalArgumentException(Ellipse.class.getName() + ".trace(pt, " + u + ") called where the second argument is outside the range 0 (inclusive) to 1 (exclusive).");
         }
@@ -177,8 +177,8 @@ public class Ellipse extends Path {
         if (reversed) {
             radians *= -1;
         }
-        pt.x = getCenx() + getXRadius() * PApplet.cos(radians);
-        pt.y = getCeny() + getYRadius() * PApplet.sin(radians);
+        target.x = getCenx() + getXRadius() * PApplet.cos(radians);
+        target.y = getCeny() + getYRadius() * PApplet.sin(radians);
     }
 
     public boolean inside(float x, float y) {

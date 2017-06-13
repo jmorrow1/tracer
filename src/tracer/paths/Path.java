@@ -47,7 +47,7 @@ import tracer.TStyle;
  *
  */
 public abstract class Path implements Drawable {
-    protected final static Point pt = new Point(0, 0);
+    protected final static Point buffer = new Point(0, 0);
     protected boolean reversed;
     protected int sampleCount;
     protected TStyle style;
@@ -141,8 +141,8 @@ public abstract class Path implements Drawable {
 
             float u = u1;
             for (int i = 0; i < n; i++) {
-                trace(pt, u);
-                pts.add(new Point(pt));
+                trace(buffer, u);
+                pts.add(new Point(buffer));
                 u = (u + du) % 1f;
             }
 
@@ -205,13 +205,13 @@ public abstract class Path implements Drawable {
             float du = length / n;
 
             float u = u1;
-            trace(pt, u);
-            Point prevpt = new Point(pt);
+            trace(buffer, u);
+            Point prevpt = new Point(buffer);
             for (int i = 1; i < n; i++) {
-                trace(pt, u);         
-                segmentLength += PApplet.dist(prevpt.x, prevpt.y, pt.x, pt.y);
+                trace(buffer, u);         
+                segmentLength += PApplet.dist(prevpt.x, prevpt.y, buffer.x, buffer.y);
                 u = (u + du) % 1f;
-                prevpt.set(pt);
+                prevpt.set(buffer);
             }
             
             return segmentLength;
@@ -269,12 +269,12 @@ public abstract class Path implements Drawable {
             g.beginShape();
             float u = u1;
             for (int i = 0; i <= n; i++) {
-                trace(pt, u);
-                g.vertex(pt.x, pt.y);
+                trace(buffer, u);
+                g.vertex(buffer.x, buffer.y);
                 u = (u + du) % 1f;
             }
-            trace(pt, u2);
-            g.vertex(pt.x, pt.y);
+            trace(buffer, u2);
+            g.vertex(buffer.x, buffer.y);
             g.endShape();
         }
     }
@@ -290,10 +290,10 @@ public abstract class Path implements Drawable {
      * Maps a given floating point number within [0, 1) to a given Point along the
      * perimeter of the Path.
      * 
-     * @param pt The Point in which the result is stored.
+     * @param target The Point in which the result is stored.
      * @param u A number within [0, 1)
      */
-    public abstract void trace(Point pt, float u);
+    public abstract void trace(Point target, float u);
 
     /**
      * Tells whether or not the Path is reversed.
@@ -338,9 +338,9 @@ public abstract class Path implements Drawable {
      * @return The length of the Path
      */    
     public float getLength() {
-        trace(pt, 0);
-        float prevx = pt.x;
-        float prevy = pt.y;
+        trace(buffer, 0);
+        float prevx = buffer.x;
+        float prevy = buffer.y;
         
         float du = 1.0f / sampleCount;
         float u = du;
@@ -357,22 +357,22 @@ public abstract class Path implements Drawable {
         while (i < sampleCount && u < 1) {
             float gap = (gapIndex < getGapCount()) ? getGap(gapIndex) : -1;
             if (gapIndex < getGapCount() && gap != -1 && gap < u) {
-                trace(pt, gap-0.00001f);
-                total += PApplet.dist(prevx, prevy, pt.x, pt.y);
-                trace(pt, gap+0.00001f);
-                prevx = pt.x;
-                prevy = pt.y;
-                trace(pt, u);
-                total += PApplet.dist(prevx, prevy, pt.x, pt.y);
+                trace(buffer, gap-0.00001f);
+                total += PApplet.dist(prevx, prevy, buffer.x, buffer.y);
+                trace(buffer, gap+0.00001f);
+                prevx = buffer.x;
+                prevy = buffer.y;
+                trace(buffer, u);
+                total += PApplet.dist(prevx, prevy, buffer.x, buffer.y);
                 gapIndex++;
             }
             else {
-                trace(pt, u);
-                total += PApplet.dist(prevx, prevy, pt.x, pt.y);
+                trace(buffer, u);
+                total += PApplet.dist(prevx, prevy, buffer.x, buffer.y);
             }
             
-            prevx = pt.x;
-            prevy = pt.y;
+            prevx = buffer.x;
+            prevy = buffer.y;
             u += du;
             i++;
         }
@@ -400,8 +400,8 @@ public abstract class Path implements Drawable {
         float dAmt = 1f / sampleCount;
         g.beginShape();
         for (int i = 0; i < sampleCount + 1; i++) {
-            trace(pt, amt);
-            g.vertex(pt.x, pt.y);
+            trace(buffer, amt);
+            g.vertex(buffer.x, buffer.y);
             amt += dAmt;
         }
         g.endShape();
@@ -760,8 +760,8 @@ public abstract class Path implements Drawable {
         float u = 0;
         float du = 1.0f / path.getSampleCount();
         for (int i=0; i<path.getSampleCount(); i++) {           
-            path.trace(pt, u);
-            vertices.setJSONObject(i, toJSON(pt));
+            path.trace(buffer, u);
+            vertices.setJSONObject(i, toJSON(buffer));
             u = (u+du) % 1.0f;
         }       
         json.setJSONArray("vertices", vertices);

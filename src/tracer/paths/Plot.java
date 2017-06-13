@@ -167,7 +167,7 @@ public class Plot extends Path {
     }
 
     @Override
-    public void trace(Point pt, float u) {
+    public void trace(Point target, float u) {
         if (u < 0 || u >= 1) {
             throw new IllegalArgumentException(Plot.class.getName() + ".trace(pt, " + u + ") called where the second argument is outside the range 0 (inclusive) to 1 (exclusive).");
         }
@@ -183,8 +183,8 @@ public class Plot extends Path {
             if (u < xs[i]) {
                 float y = PApplet.map(u, xs[i-1], xs[i], ys[i-1], ys[i]);
                 
-                pt.x = PApplet.map(u, 0, 1, rect.getX1(), rect.getX2());
-                pt.y = PApplet.map(y, 0, 1, rect.getY2(), rect.getY1());
+                target.x = PApplet.map(u, 0, 1, rect.getX1(), rect.getX2());
+                target.y = PApplet.map(y, 0, 1, rect.getY2(), rect.getY1());
                 break;
             }
         }

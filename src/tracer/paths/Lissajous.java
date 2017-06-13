@@ -81,7 +81,7 @@ public class Lissajous extends Path {
     }
 
     @Override
-    public void trace(Point pt, float u) {
+    public void trace(Point target, float u) {
         if (u < 0 || u >= 1) {
             throw new IllegalArgumentException(Lissajous.class.getName() + ".trace(pt, " + u + ") called where the second argument is outside the range 0 (inclusive) to 1 (exclusive).");
         }
@@ -91,8 +91,8 @@ public class Lissajous extends Path {
         }
         
         float angle = u * PApplet.TWO_PI;
-        pt.x = cen.x + xRadius * PApplet.sin(angle * freqX + phi);
-        pt.y = cen.y + yRadius * PApplet.sin(angle * freqY);
+        target.x = cen.x + xRadius * PApplet.sin(angle * freqX + phi);
+        target.y = cen.y + yRadius * PApplet.sin(angle * freqY);
     }
 
     @Override

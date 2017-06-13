@@ -55,15 +55,15 @@ public class TranslatedPath<T extends Path> extends Path {
      ********************/
     
     @Override
-    public void trace(Point pt, float u) {
-        path.trace(pt, u);
-        pt.translate(translation);
+    public void trace(Point target, float u) {
+        path.trace(target, u);
+        target.translate(translation);
     }
     
     @Override
     public void draw(PGraphics g) {
         g.pushMatrix();
-        g.translate(pt.x, pt.y);
+        g.translate(buffer.x, buffer.y);
         path.draw(g);
         g.popMatrix();
     }

@@ -102,7 +102,7 @@ public class Rose extends Path {
      *************************/
 
     @Override
-    public void trace(Point pt, float u) {
+    public void trace(Point target, float u) {
         if (u < 0 || u >= 1) {
             throw new IllegalArgumentException(Rose.class.getName() + ".trace(pt, " + u + ") called where the second argument is outside the range 0 (inclusive) to 1 (exclusive).");
         }
@@ -115,8 +115,8 @@ public class Rose extends Path {
         float x = cen.x + xRadius * PApplet.cos(alpha);
         float y = cen.y + yRadius * PApplet.sin(alpha);
         float lerpAmt = PApplet.map(PApplet.sin(beta), -1, 1, 0, 1);
-        pt.x = PApplet.lerp(cen.x, x, lerpAmt);
-        pt.y = PApplet.lerp(cen.y, y, lerpAmt);
+        target.x = PApplet.lerp(cen.x, x, lerpAmt);
+        target.y = PApplet.lerp(cen.y, y, lerpAmt);
     }
 
     @Override

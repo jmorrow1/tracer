@@ -150,7 +150,7 @@ public class Arc extends Path {
     }
 
     @Override
-    public void trace(Point pt, float u) {
+    public void trace(Point target, float u) {
         if (u < 0 || u >= 1) {
             throw new IllegalArgumentException(Arc.class.getName() + ".trace(pt, " + u + ") called where the second argument is outside the range 0 (inclusive) to 1 (exclusive).");
         }
@@ -163,8 +163,8 @@ public class Arc extends Path {
         }
             
         float angle = startAngle + u * (endAngle - startAngle);
-        pt.x = getCenx() + getXRadius() * PApplet.cos(angle);
-        pt.y = getCeny() + getYRadius() * PApplet.sin(angle);
+        target.x = getCenx() + getXRadius() * PApplet.cos(angle);
+        target.y = getCeny() + getYRadius() * PApplet.sin(angle);
     }
 
     @Override

@@ -131,7 +131,7 @@ public class Supershape extends Path {
      *************************/
 
     @Override
-    public void trace(Point pt, float u) {
+    public void trace(Point target, float u) {
         if (u < 0 || u >= 1) {
             throw new IllegalArgumentException(Supershape.class.getName() + ".trace(pt, " + u + ") called where the second argument is outside the range 0 (inclusive) to 1 (exclusive).");
         }
@@ -142,8 +142,8 @@ public class Supershape extends Path {
         }
 
         float r = radius(theta);
-        pt.x = cen.x + xRadius * r * PApplet.cos(theta);
-        pt.y = cen.y + yRadius * r * PApplet.sin(theta);
+        target.x = cen.x + xRadius * r * PApplet.cos(theta);
+        target.y = cen.y + yRadius * r * PApplet.sin(theta);
     }
 
     private float radius(float theta) {

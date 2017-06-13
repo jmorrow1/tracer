@@ -72,7 +72,7 @@ public class CubicBezier extends Path {
      *************************/
 
     @Override
-    public void trace(Point pt, float u) {
+    public void trace(Point target, float u) {
         if (u < 0 || u >= 1) {
             throw new IllegalArgumentException(CubicBezier.class.getName() + ".trace(pt, " + u + ") called where the second argument is outside the range 0 (inclusive) to 1 (exclusive).");
         }
@@ -84,8 +84,8 @@ public class CubicBezier extends Path {
             }
         }
             
-        pt.x = bezierPoint(a1.x, c1.x, c2.x, a2.x, u);
-        pt.y = bezierPoint(a1.y, c1.y, c2.y, a2.y, u);
+        target.x = bezierPoint(a1.x, c1.x, c2.x, a2.x, u);
+        target.y = bezierPoint(a1.y, c1.y, c2.y, a2.y, u);
     }
 
     @Override

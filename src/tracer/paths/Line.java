@@ -77,13 +77,13 @@ public class Line extends Path {
     }
 
     @Override
-    public void trace(Point pt, float u) {
+    public void trace(Point target, float u) {
         if (u < 0 || u >= 1) {
             throw new IllegalArgumentException(Line.class.getName() + ".trace(pt, " + u + ") called where the second argument is outside the range 0 (inclusive) to 1 (exclusive).");
         }
         
-        pt.x = PApplet.lerp(a.x, b.x, u);
-        pt.y = PApplet.lerp(a.y, b.y, u);
+        target.x = PApplet.lerp(a.x, b.x, u);
+        target.y = PApplet.lerp(a.y, b.y, u);
     }
 
     /**
@@ -91,18 +91,18 @@ public class Line extends Path {
      * given amount (a value between 0 and 1) and stores the result in the given
      * point.
      * 
-     * @param pt The point in which to store the result
+     * @param target The point in which to store the result
      * @param a The first point
      * @param b The second point
      * @param u The amount by which to interpolate (a value within [0, 1))
      */
-    public static void trace(Point pt, Point a, Point b, float u) {
+    public static void trace(Point target, Point a, Point b, float u) {
         if (u < 0 || u >= 1) {
             throw new IllegalArgumentException(Line.class.getName() + ".trace(pt, " + u + ") called where the second argument is outside the range 0 (inclusive) to 1 (exclusive).");
         }
         
-        pt.x = PApplet.lerp(a.x, b.x, u);
-        pt.y = PApplet.lerp(a.y, b.y, u);
+        target.x = PApplet.lerp(a.x, b.x, u);
+        target.y = PApplet.lerp(a.y, b.y, u);
     }
 
     /**

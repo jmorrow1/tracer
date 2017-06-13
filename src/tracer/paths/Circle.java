@@ -73,7 +73,7 @@ public class Circle extends Path {
     }
 
     @Override
-    public void trace(Point pt, float u) {
+    public void trace(Point target, float u) {
         if (u < 0 || u >= 1) {
             throw new IllegalArgumentException(Circle.class.getName() + ".trace(pt, " + u + ") called where the second argument is outside the range 0 (inclusive) to 1 (exclusive).");
         }
@@ -81,8 +81,8 @@ public class Circle extends Path {
         if (reversed) {
             radians *= -1;
         }
-        pt.x = center.x + radius * PApplet.cos(startAngle + radians);
-        pt.y = center.y + radius * PApplet.sin(startAngle + radians);
+        target.x = center.x + radius * PApplet.cos(startAngle + radians);
+        target.y = center.y + radius * PApplet.sin(startAngle + radians);
     }
 
     /**

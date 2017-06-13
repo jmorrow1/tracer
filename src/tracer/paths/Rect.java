@@ -196,8 +196,8 @@ public class Rect extends Path {
     private void drawHelper(PGraphics g, float u1, float u2) {
         if (u1 < u2) {
             g.beginShape();
-            trace(pt, u1);
-            g.vertex(pt.x, pt.y);
+            trace(buffer, u1);
+            g.vertex(buffer.x, buffer.y);
 
             for (int i = 1; i < vertices1D.length; i++) {
                 float vtx1D = vertices1D[i];
@@ -205,14 +205,14 @@ public class Rect extends Path {
                 boolean inSegment = (u1 < vtx1D && vtx1D < u2);
 
                 if (inSegment) {
-                    trace(pt, vertices1D[i]);
-                    g.vertex(pt.x, pt.y);
+                    trace(buffer, vertices1D[i]);
+                    g.vertex(buffer.x, buffer.y);
                 }
             }
 
-            trace(pt, u2);
-            g.vertex(pt.x, pt.y);
-            g.vertex(pt.x, pt.y); // writing the last vertex twice, because the
+            trace(buffer, u2);
+            g.vertex(buffer.x, buffer.y);
+            g.vertex(buffer.x, buffer.y); // writing the last vertex twice, because the
                                   // P2D renderer requires at least 3 vertices
             g.endShape();
         } else {
@@ -223,7 +223,7 @@ public class Rect extends Path {
     }
     
     @Override
-    public void trace(Point pt, float u) {
+    public void trace(Point target, float u) {
         if (u < 0 || u >= 1) {
             throw new IllegalArgumentException(Rect.class.getName() + ".trace(pt, " + u + ") called where the second argument is outside the range 0 (inclusive) to 1 (exclusive).");
         }
@@ -237,23 +237,23 @@ public class Rect extends Path {
 
         if (0 <= u && u < vertices1D[1]) {
             u = PApplet.map(u, 0, vertices1D[1], 0, 1);
-            pt.x = getX1() + u * getWidth();
-            pt.y = getY1();
+            target.x = getX1() + u * getWidth();
+            target.y = getY1();
         }
         else if (u < vertices1D[2]) {
             u = PApplet.map(u, vertices1D[1], vertices1D[2], 0, 1);
-            pt.x = getX2();
-            pt.y = getY1() + u * getHeight();
+            target.x = getX2();
+            target.y = getY1() + u * getHeight();
         }
         else if (u < vertices1D[3]) {
             u = PApplet.map(u, vertices1D[2], vertices1D[3], 0, 1);
-            pt.x = getX2() - u * getWidth();
-            pt.y = getY2();
+            target.x = getX2() - u * getWidth();
+            target.y = getY2();
         }
         else if (u < 1) {
             u = PApplet.map(u, vertices1D[3], 1, 0, 1);
-            pt.x = getX1();
-            pt.y = getY2() - u * getHeight();
+            target.x = getX1();
+            target.y = getY2() - u * getHeight();
         }
     }
 

@@ -49,13 +49,13 @@ public class Segment extends Path {
     }
     
     @Override
-    public void trace(Point pt, float u) {
+    public void trace(Point target, float u) {
         if (u < 0 || u >= 1) {
             throw new IllegalArgumentException(Segment.class.getName() + ".trace(pt, " + u + ") called where the second argument is outside the range 0 (inclusive) to 1 (exclusive).");
         }
         
         float v = reversed ? PApplet.map(u, 0, 1, u2, u1) : PApplet.map(u, 0, 1, u1, u2);
-        parent.trace(pt, v);
+        parent.trace(target, v);
     }
     
     @Override
@@ -175,8 +175,8 @@ public class Segment extends Path {
      * @return The x-coordinate of the first 2D coordinate
      */
     public float getX1() {
-        parent.trace(pt, u1);
-        return pt.x;
+        parent.trace(buffer, u1);
+        return buffer.x;
     }
     
     /**
@@ -184,8 +184,8 @@ public class Segment extends Path {
      * @return The y-coordinate of the first 2D coordinate
      */
     public float getY1() {
-        parent.trace(pt, u1);
-        return pt.y;
+        parent.trace(buffer, u1);
+        return buffer.y;
     }
     
     /**
@@ -193,8 +193,8 @@ public class Segment extends Path {
      * @return The x-coordinate of the second 2D coordinate
      */
     public float getX2() {
-        parent.trace(pt, u2);
-        return pt.x;
+        parent.trace(buffer, u2);
+        return buffer.x;
     }
     
     /**
@@ -202,8 +202,8 @@ public class Segment extends Path {
      * @return The y-coordinate of the second 2D coordinate
      */
     public float getY2() {
-        parent.trace(pt, u2);
-        return pt.y;
+        parent.trace(buffer, u2);
+        return buffer.y;
     }
 
     @Override

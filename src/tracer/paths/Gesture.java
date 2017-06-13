@@ -119,7 +119,7 @@ public class Gesture extends Path {
     }
 
     @Override
-    public void trace(Point pt, float u) {
+    public void trace(Point target, float u) {
         if (u < 0 || u >= 1) {
             throw new IllegalArgumentException(Gesture.class.getName() + ".trace(pt, " + u + ") called where the second argument is outside the range 0 (inclusive) to 1 (exclusive).");
         }
@@ -142,8 +142,8 @@ public class Gesture extends Path {
                 Point a = vertices.get(i-1).pt;
                 Point b = vertices.get(i).pt;
                
-                pt.x = PApplet.lerp(a.x, b.x, v);
-                pt.y = PApplet.lerp(a.y, b.y, v);
+                target.x = PApplet.lerp(a.x, b.x, v);
+                target.y = PApplet.lerp(a.y, b.y, v);
 //                Line.trace(pt, a, b, v);
                 break;
             }
