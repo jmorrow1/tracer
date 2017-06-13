@@ -115,10 +115,8 @@ public class Shape extends Path {
     
     @Override
     public void draw(PGraphics g, float u1, float u2) {
-        boolean inRange = (0 <= u1 && u1 <= 1 && 0 <= u2 && u2 <= 1);
-        if (!inRange) {
-            throw new IllegalArgumentException(Shape.class.getName() + "..draw(g, " + u1 + ", " + u2 + ") called with values outside in the range [0, 1].");
-        }
+        u1 = Path.remainder(u1, 1.0f);
+        u2 = Path.remainder(u2, 1.0f);
         
         style.apply(g);
         drawHelper(g, u1, u2);
@@ -155,11 +153,8 @@ public class Shape extends Path {
 
     @Override
     public void trace(Point target, float u) {
-        if (u < 0 || u >= 1) {
-            throw new IllegalArgumentException(Shape.class.getName() + ".pt, " + u
-                    + ") called where the second argument is outside the range 0 (inclusive) to 1 (exclusive).");
-        }
-
+        u = Path.remainder(u, 1.0f);
+        
         for (int i = 1; i < vertices1D.size(); i++) {
             float coord = vertices1D.get(i);
             if (u < coord) {

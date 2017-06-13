@@ -132,9 +132,7 @@ public class Supershape extends Path {
 
     @Override
     public void trace(Point target, float u) {
-        if (u < 0 || u >= 1) {
-            throw new IllegalArgumentException(Supershape.class.getName() + ".trace(pt, " + u + ") called where the second argument is outside the range 0 (inclusive) to 1 (exclusive).");
-        }
+        u = Path.remainder(u, 1.0f);
         
         float theta = (u * PApplet.TWO_PI) % PApplet.TWO_PI;
         if (reversed) {

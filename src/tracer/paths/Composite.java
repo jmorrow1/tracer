@@ -49,9 +49,7 @@ public class Composite<T extends Path, U extends Path> extends Path {
 
     @Override
     public void trace(Point target, float u) {
-        if (u < 0 || u >= 1) {
-            throw new IllegalArgumentException(Composite.class.getName() + ".trace(pt, " + u + ") called where the second argument is outside the range 0 (inclusive) to 1 (exclusive).");
-        }
+        u = Path.remainder(u, 1.0f);
         
         if (reversed) {
             u = 1.0f - u;

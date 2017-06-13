@@ -72,6 +72,14 @@ public class Tracer<T extends Path> extends Point {
         float y = easing.val(u);
         path.trace(this, y);
     }
+    
+    /**
+     * 
+     * @return
+     */
+    public float getV() { //TODO name this better
+        return easing.val(u);
+    }
 
     /**
      * Gives the one-dimensional coordinate of the Tracer (a value between 0 (inclusive) and 1 (exclusive)).
@@ -86,7 +94,7 @@ public class Tracer<T extends Path> extends Point {
      * @param u The one-dimensional coordinate
      */
     public void setU(float u) {
-        this.u = remainder(u, 1f);
+        this.u = remainder(u, 1.0f);
         trace();
     }
 

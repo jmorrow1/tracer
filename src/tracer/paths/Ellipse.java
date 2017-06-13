@@ -149,11 +149,8 @@ public class Ellipse extends Path {
 
     @Override
     public void draw(PGraphics g, float u1, float u2) {
-        boolean inRange = (0 <= u1 && u1 <= 1 && 0 <= u2 && u2 <= 1);
-        if (!inRange) {
-            throw new IllegalArgumentException(
-                    Ellipse.class.getName() + ".draw(g, " + u1 + ", " + u2 + ") called with values outside the range 0 to 1.");
-        }
+        u1 = Path.remainder(u1, 1.0f);
+        u2 = Path.remainder(u2, 1.0f);
         
         int direction = reversed ? -1 : 1;
         float angle1 = u1 * PApplet.TWO_PI * direction;
@@ -169,9 +166,7 @@ public class Ellipse extends Path {
 
     @Override
     public void trace(Point target, float u) {
-        if (u < 0 || u >= 1) {
-            throw new IllegalArgumentException(Ellipse.class.getName() + ".trace(pt, " + u + ") called where the second argument is outside the range 0 (inclusive) to 1 (exclusive).");
-        }
+        u = Path.remainder(u, 1.0f);
         
         float radians = u * PApplet.TWO_PI;
         if (reversed) {

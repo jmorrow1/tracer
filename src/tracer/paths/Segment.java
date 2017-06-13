@@ -50,9 +50,7 @@ public class Segment extends Path {
     
     @Override
     public void trace(Point target, float u) {
-        if (u < 0 || u >= 1) {
-            throw new IllegalArgumentException(Segment.class.getName() + ".trace(pt, " + u + ") called where the second argument is outside the range 0 (inclusive) to 1 (exclusive).");
-        }
+        u = Path.remainder(u, 1.0f);
         
         float v = reversed ? PApplet.map(u, 0, 1, u2, u1) : PApplet.map(u, 0, 1, u1, u2);
         parent.trace(target, v);
