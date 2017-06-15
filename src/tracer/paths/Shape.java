@@ -231,14 +231,19 @@ public class Shape extends Path {
 
     @Override
     public float getLength() {
-        float dist = 0;
-        Point a = vertices2D.get(0);
-        for (int i = 1; i < vertices2D.size(); i++) {
-            Point b = vertices2D.get(i);
-            dist += Line.dist(a, b);
-            a = b;
+        if (vertices2D.size() > 0) {
+            float dist = 0;
+            Point a = vertices2D.get(0);
+            for (int i = 1; i < vertices2D.size(); i++) {
+                Point b = vertices2D.get(i);
+                dist += Line.dist(a, b);
+                a = b;
+            }
+            return dist;
         }
-        return dist;
+        else {
+            return 0;
+        }
     }
     
     /**

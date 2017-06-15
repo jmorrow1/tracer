@@ -129,13 +129,13 @@ public class Gesture extends Path {
             }
         }
         
-        float t1 = getStartTime() + u * getTotalTime();
+        float t = getStartTime() + u * getDuration();
         
         for (int i=1; i<vertices.size(); i++) {
             float t2 = vertices.get(i).t;
-            if (t1 < t2) {
-                float t0 = vertices.get(i-1).t;
-                float v = PApplet.map(t1, t0, t2, 0, 1);
+            if (t < t2) {
+                float t1 = vertices.get(i-1).t;
+                float v = PApplet.map(t, t1, t2, 0, 1);
                 
                 Point a = vertices.get(i-1).pt;
                 Point b = vertices.get(i).pt;
@@ -205,11 +205,28 @@ public class Gesture extends Path {
         return (vertices.size() > 0) ? vertices.get(vertices.size()-1).t : 0;
     }
     
+    @Override
+    public float getLength() {
+        if (vertices.size() > 0) {
+            float dist = 0;
+            Point a = vertices.get(0).pt;
+            for (int i = 1; i < vertices.size(); i++) {
+                Point b = vertices.get(i).pt;
+                dist += Line.dist(a, b);
+                a = b;
+            }
+            return dist;
+        }
+        else {
+            return 0;
+        }
+    }
+    
     /**
      * Gives the total time of the Gesture
      * @return The total time of the Gesture
      */
-    public float getTotalTime() {
+    public float getDuration() {
         return getEndTime() - getStartTime();
     }
     
