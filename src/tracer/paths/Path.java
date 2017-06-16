@@ -3,12 +3,12 @@ package tracer.paths;
 import java.util.ArrayList;
 import java.util.Collection;
 
+import experimental.Drawable;
 import processing.core.PApplet;
 import processing.core.PGraphics;
 import processing.core.PStyle;
 import processing.data.JSONArray;
 import processing.data.JSONObject;
-import tracer.Drawable;
 import tracer.Point;
 import tracer.TStyle;
 

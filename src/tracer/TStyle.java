@@ -14,6 +14,10 @@ public class TStyle {
     public int fillColor, strokeColor;
     public boolean stroke, fill;
     
+    /**************************
+     ***** Initialization *****
+     **************************/
+    
     /**
      * 
      * @param style The style
@@ -54,6 +58,10 @@ public class TStyle {
     public TStyle() {
         this(2, 8, 1.0f, -1, -16777216, true, true);
     }
+    
+    /*******************
+     ***** Getters *****
+     *******************/
     
     /**
      * Applies this style to the given PGraphics instance.

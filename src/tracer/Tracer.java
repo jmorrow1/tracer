@@ -18,6 +18,10 @@ public class Tracer<T extends Path> extends Point {
     protected T path; //@param The Path to which the Tracer is attached
     protected Easing easing; //@param The easing curve determining how the Tracer moves in time.
     
+    /**************************
+     ***** Initialization *****
+     **************************/
+    
     /**
      * Copy constructor.
      * @param t The Tracer to copy
@@ -51,6 +55,10 @@ public class Tracer<T extends Path> extends Point {
         this.easing = easing;
     }
 
+    /********************
+     ***** Behavior *****
+     ********************/
+    
     /**
      * Moves the Tracer along its Path by its speed.
      */
@@ -67,11 +75,54 @@ public class Tracer<T extends Path> extends Point {
         u = remainder(u + du * dt, 1f);
         trace();
     }
-
+    
     private void trace() {
         float y = easing.val(u);
         path.trace(this, y);
     }
+    
+    /******************
+     ***** Events *****
+     ******************/
+    
+    /**
+     * Sets the one-dimensional coordinate of the Tracer (a value between 0 (inclusive) and 1 (exclusive)).
+     * @param u The one-dimensional coordinate
+     */
+    public void setU(float u) {
+        this.u = remainder(u, 1.0f);
+        trace();
+    }
+    
+    /**
+     * Sets the one-dimensional speed of the Tracer.
+     * @param du The one-dimensional speed
+     */
+    public void setDu(float du) {
+        this.du = du;
+    }
+    
+    /**
+     * Sets the Path.
+     * @param path The Path
+     */
+    public void setPath(T path) {
+        this.path = path;
+        trace();
+    }
+    
+    /**
+     * Sets the Easing.
+     * @param easing The Easing
+     */
+    public void setEasing(Easing easing) {
+        this.easing = easing;
+        trace();
+    }
+    
+    /*******************
+     ***** Getters *****
+     *******************/
     
     /**
      * 
@@ -90,28 +141,11 @@ public class Tracer<T extends Path> extends Point {
     }
 
     /**
-     * Sets the one-dimensional coordinate of the Tracer (a value between 0 (inclusive) and 1 (exclusive)).
-     * @param u The one-dimensional coordinate
-     */
-    public void setU(float u) {
-        this.u = remainder(u, 1.0f);
-        trace();
-    }
-
-    /**
      * Gives the one-dimensional speed of the Tracer.
      * @return The one-dimensional speed of the Tracer
      */
     public float getDu() {
         return du;
-    }
-
-    /**
-     * Sets the one-dimensional speed of the Tracer.
-     * @param du The one-dimensional speed
-     */
-    public void setDu(float du) {
-        this.du = du;
     }
 
     /**
@@ -123,29 +157,11 @@ public class Tracer<T extends Path> extends Point {
     }
 
     /**
-     * Sets the Path.
-     * @param path The Path
-     */
-    public void setPath(T path) {
-        this.path = path;
-        trace();
-    }
-
-    /**
      * Gives the Easing.
      * @return The Easing
      */
     public Easing getEasing() {
         return easing;
-    }
-
-    /**
-     * Sets the Easing.
-     * @param easing The Easing
-     */
-    public void setEasing(Easing easing) {
-        this.easing = easing;
-        trace();
     }
     
     @Override
@@ -157,6 +173,10 @@ public class Tracer<T extends Path> extends Point {
     public String toString() {
         return "Tracer [u=" + u + ", du=" + du + ", path=" + path + "]";
     }
+    
+    /******************
+     ***** Static *****
+     ******************/
     
     /**
      * Steps every Tracer in the array

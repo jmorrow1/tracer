@@ -14,17 +14,38 @@ import tracer.Tracer;
  *
  */
 public class RenderClique extends Render {
+    
+    /**************************
+     ***** Initialization *****
+     **************************/
+    
+    /**
+     * 
+     * @param ts
+     */
     public RenderClique(Collection<? extends Point> ts) {
         super(ts);
     }
 
+    /**
+     * 
+     * @param ts
+     */
     public RenderClique(Point[] ts) {
         super(ts);
     }
     
+    /**
+     * 
+     * @param ts
+     */
     public RenderClique(Tracer[] ts) {
         super(ts);
     }
+    
+    /********************
+     ***** Behavior *****
+     ********************/
 
     @Override
     public void draw(PGraphics g) {

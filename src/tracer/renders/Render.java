@@ -4,10 +4,10 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
+import experimental.Drawable;
 import processing.core.PApplet;
 import processing.core.PGraphics;
 import processing.core.PStyle;
-import tracer.Drawable;
 import tracer.Point;
 import tracer.TStyle;
 import tracer.Tracer;
@@ -22,6 +22,10 @@ import tracer.Tracer;
 public abstract class Render implements Drawable {
     protected List<Point> pts;
     protected TStyle style;
+    
+    /**************************
+     ***** Initialization *****
+     **************************/
 
     /**
      * Constructs an empty Render with no Points.
@@ -61,6 +65,10 @@ public abstract class Render implements Drawable {
         style = new TStyle();
     }
     
+    /********************
+     ***** Behavior *****
+     ********************/
+    
     /**
      * Steps every Point in the list.
      */
@@ -86,39 +94,9 @@ public abstract class Render implements Drawable {
      */
     public abstract void draw(PGraphics g);
 
-    /**
-     * Converts an array of Points into an ArrayList of points.
-     * @param arr An array of Points
-     * @return An ArrayList of Points.
-     */
-    public static ArrayList<Point> listify(Point[] arr) {
-        ArrayList<Point> list = new ArrayList<Point>();
-        for (int i = 0; i < arr.length; i++) {
-            list.add(arr[i]);
-        }
-        return list;
-    }
-    
-    /**
-     * Converts an array of Tracers into an ArrayList of Tracers.
-     * @param arr An array of Tracers
-     * @return An ArrayList of Tracers.
-     */
-    public static ArrayList<Tracer> listify(Tracer[] arr) {
-        ArrayList<Tracer> list = new ArrayList<Tracer>();
-        for (int i = 0; i < arr.length; i++) {
-            list.add(arr[i]);
-        }
-        return list;
-    }
-
-    /**
-     * Gives the number of points stored by the Render.
-     * @return The number of points
-     */
-    public int getPointCount() {
-        return pts.size();
-    }
+    /******************
+     ***** Events *****
+     ******************/
     
     /**
      * Sets the style of the Render.
@@ -232,6 +210,18 @@ public abstract class Render implements Drawable {
         pts.clear();
     }
     
+    /*******************
+     ***** Getters *****
+     *******************/
+    
+    /**
+     * Gives the number of points stored by the Render.
+     * @return The number of points
+     */
+    public int getPointCount() {
+        return pts.size();
+    }
+    
     /**
      * 
      * @return
@@ -294,5 +284,35 @@ public abstract class Render implements Drawable {
      */
     public boolean getStroke() {
         return style.stroke;
+    }
+    
+    /******************
+     ***** Static *****
+     ******************/
+    
+    /**
+     * Converts an array of Points into an ArrayList of points.
+     * @param arr An array of Points
+     * @return An ArrayList of Points.
+     */
+    public static ArrayList<Point> listify(Point[] arr) {
+        ArrayList<Point> list = new ArrayList<Point>();
+        for (int i = 0; i < arr.length; i++) {
+            list.add(arr[i]);
+        }
+        return list;
+    }
+    
+    /**
+     * Converts an array of Tracers into an ArrayList of Tracers.
+     * @param arr An array of Tracers
+     * @return An ArrayList of Tracers.
+     */
+    public static ArrayList<Tracer> listify(Tracer[] arr) {
+        ArrayList<Tracer> list = new ArrayList<Tracer>();
+        for (int i = 0; i < arr.length; i++) {
+            list.add(arr[i]);
+        }
+        return list;
     }
 }

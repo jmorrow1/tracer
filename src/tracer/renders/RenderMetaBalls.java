@@ -21,6 +21,22 @@ public class RenderMetaBalls extends Render {
     //style
     protected int bgColor, fgColor;
 
+    /**************************
+     ***** Initialization *****
+     **************************/
+    
+    /********************
+     ***** Behavior *****
+     ********************/
+    
+    /******************
+     ***** Events *****
+     ******************/
+    
+    /*******************
+     ***** Getters *****
+     *******************/
+    
     public RenderMetaBalls(Collection<? extends Point> ts) {
         this(ts, 10, 100, 0xff000000, 0xffffffff);
     }

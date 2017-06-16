@@ -15,49 +15,105 @@ import tracer.Tracer;
  *
  */
 public class RenderMesh extends Render {
-    // the square of the minimum between two Points for them to be connected by a line
-    protected float sqMinDist;
-
-    // the square of the distance between two Points in which the stroke weight is increased
-    protected float sqStrokeRampDist;
     
+    // the minimum distance between two Points for them to be connected by a line
+    protected float minDist, sqMinDist;
+
+    // the minimum distance between two Points in which the stroke weight is increased
+    protected float strokeRamp, sqStrokeRampDist;
+    
+    /**************************
+     ***** Initialization *****
+     **************************/
+
+    /**
+     * 
+     * @param ts
+     */
     public RenderMesh(Collection<? extends Point> ts) {
         this(ts, 100, 0);
     }
 
+    /**
+     * 
+     * @param ts
+     * @param minDist
+     */
     public RenderMesh(Collection<? extends Point> ts, float minDist) {
         this(ts, minDist, 0);
     }
 
+    /**
+     * 
+     * @param ts
+     * @param minDist
+     * @param strokeRamp
+     */
     public RenderMesh(Collection<? extends Point> ts, float minDist, float strokeRamp) {
         super(ts);
+        this.minDist = minDist;
+        this.strokeRamp = strokeRamp;
         this.sqMinDist = minDist * minDist;
         this.sqStrokeRampDist = strokeRamp * strokeRamp;
     }
     
+    /**
+     * 
+     * @param ts
+     */
     public RenderMesh(Point[] ts) {
         this(ts, 100, 0);
     }
 
+    /**
+     * 
+     * @param ts
+     * @param minDist
+     */
     public RenderMesh(Point[] ts, float minDist) {
         this(listify(ts), minDist);
     }
 
+    /**
+     * 
+     * @param ts
+     * @param minDist
+     * @param strokeRamp
+     */
     public RenderMesh(Point[] ts, float minDist, float strokeRamp) {
         this(listify(ts), minDist, strokeRamp);
     }
     
+    /**
+     * 
+     * @param ts
+     */
     public RenderMesh(Tracer[] ts) {
         this(ts, 100, 0);
     }
 
+    /**
+     * 
+     * @param ts
+     * @param minDist
+     */
     public RenderMesh(Tracer[] ts, float minDist) {
         this(listify(ts), minDist);
     }
 
+    /**
+     * 
+     * @param ts
+     * @param minDist
+     * @param strokeRamp
+     */
     public RenderMesh(Tracer[] ts, float minDist, float strokeRamp) {
         this(listify(ts), minDist, strokeRamp);
     }
+    
+    /********************
+     ***** Behavior *****
+     ********************/
 
     @Override
     public void draw(PGraphics g) {
@@ -88,13 +144,44 @@ public class RenderMesh extends Render {
             }
         }
     }
+    
+    /******************
+     ***** Events *****
+     ******************/
 
-
+    /**
+     * 
+     * @param minDist
+     */
     public void setMinDist(float minDist) {
         sqMinDist = minDist * minDist;
     }
 
+    /**
+     * 
+     * @param strokeRampDist
+     */
     public void setStrokeRamp(float strokeRampDist) {
         sqStrokeRampDist = strokeRampDist * strokeRampDist;
+    }
+    
+    /*******************
+     ***** Getters *****
+     *******************/
+    
+    /**
+     * 
+     * @return
+     */
+    public float getMinDist() {
+        return minDist;
+    }
+    
+    /**
+     * 
+     * @return
+     */
+    public float getStrokeRamp() {
+        return strokeRamp;
     }
 }

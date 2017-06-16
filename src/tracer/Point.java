@@ -17,6 +17,10 @@ import processing.data.JSONObject;
  */
 public class Point {
     public float x, y;
+    
+    /**************************
+     ***** Initialization *****
+     **************************/
 
     /**
      * Copy constructor.
@@ -57,6 +61,10 @@ public class Point {
         this.y = pt.y;
     }
     
+    /********************
+     ***** Behavior *****
+     ********************/
+    
     /**
      * Updates the Point.
      */
@@ -67,6 +75,112 @@ public class Point {
      * @param dt The change in time
      */
     public void step(int dt) {}
+    
+    /******************
+     ***** Events *****
+     ******************/
+    
+    /**
+     * Multiply this point by the given multiplier.
+     * 
+     * @param multiplier the multiplier
+     */
+    public void mult(float multiplier) {
+        x *= multiplier;
+        y *= multiplier;
+    }
+
+    /**
+     * Add the given point to this point.
+     * 
+     * @param pt the point to add
+     */
+    public void add(Point pt) {
+        x += pt.x;
+        y += pt.y;
+    }
+
+    /**
+     * Divide this point by a given divisor.
+     * 
+     * @param divisor
+     */
+    public void div(float divisor) {
+        x /= divisor;
+        y /= divisor;
+    }
+
+    /**
+     * Shifts this Point dx units in the x-direction and dy units in the
+     * y-direction.
+     * 
+     * @param dx
+     * @param dy
+     */
+    public void translate(float dx, float dy) {
+        x += dx;
+        y += dy;
+    }
+    
+    /**
+     * Shifts this Point by (translation.x, translation.y)
+     * @param translation The amount to shift the Point
+     */
+    public void translate(Point translation) {
+        x += translation.x;
+        y += translation.y;
+    }
+
+    /**
+     * Rotates this point around (vx,vy).
+     * 
+     * @param angle
+     * @param vx
+     * @param vy
+     */
+    public void rotate(float angle, float vx, float vy) {
+        float c = (float) Math.cos(angle);
+        float s = (float) Math.sin(angle);
+
+        x -= vx;
+        y -= vy;
+
+        float tempx = x;
+        float tempy = y;
+
+        x = tempx * c - tempy * s;
+        y = tempx * s + tempy * c;
+
+        x += vx;
+        y += vy;
+    }
+    
+    /*******************
+     ***** Getters *****
+     *******************/
+    
+    /**
+     * 
+     * @param pt
+     * @return true if the points are equivalent, false otherwise
+     */
+    public boolean equals(Point pt) {
+        return pt.x == this.x && pt.y == this.y;
+    }
+    
+    @Override
+    public Point clone() {
+        return new Point(this);
+    }
+
+    @Override
+    public String toString() {
+        return "Point [x=" + x + ", y=" + y + "]";
+    }  
+    
+    /******************
+     ***** Static *****
+     ******************/
 
     /**
      * Interpolates a Point a and a Point b by a given amount between 0 and 1.
@@ -180,36 +294,6 @@ public class Point {
     }
 
     /**
-     * Multiply this point by the given multiplier.
-     * 
-     * @param multiplier the multiplier
-     */
-    public void mult(float multiplier) {
-        x *= multiplier;
-        y *= multiplier;
-    }
-
-    /**
-     * Add the given point to this point.
-     * 
-     * @param pt the point to add
-     */
-    public void add(Point pt) {
-        x += pt.x;
-        y += pt.y;
-    }
-
-    /**
-     * Divide this point by a given divisor.
-     * 
-     * @param divisor
-     */
-    public void div(float divisor) {
-        x /= divisor;
-        y /= divisor;
-    }
-
-    /**
      * Divide a point by a divisor and return the result.
      * 
      * @param pt the point to divide
@@ -231,60 +315,6 @@ public class Point {
         return new Point(pt.x * multiplier, pt.y * multiplier);
     }
 
-    /**
-     * 
-     * @param pt
-     * @return true if the points are equivalent, false otherwise
-     */
-    public boolean equals(Point pt) {
-        return pt.x == this.x && pt.y == this.y;
-    }
-
-    /**
-     * Shifts this Point dx units in the x-direction and dy units in the
-     * y-direction.
-     * 
-     * @param dx
-     * @param dy
-     */
-    public void translate(float dx, float dy) {
-        x += dx;
-        y += dy;
-    }
-    
-    /**
-     * Shifts this Point by (translation.x, translation.y)
-     * @param translation The amount to shift the Point
-     */
-    public void translate(Point translation) {
-        x += translation.x;
-        y += translation.y;
-    }
-
-    /**
-     * Rotates this point around (vx,vy).
-     * 
-     * @param angle
-     * @param vx
-     * @param vy
-     */
-    public void rotate(float angle, float vx, float vy) {
-        float c = (float) Math.cos(angle);
-        float s = (float) Math.sin(angle);
-
-        x -= vx;
-        y -= vy;
-
-        float tempx = x;
-        float tempy = y;
-
-        x = tempx * c - tempy * s;
-        y = tempx * s + tempy * c;
-
-        x += vx;
-        y += vy;
-    }
-    
     /**
      * Takes two float arrays, xs and ys, to make a Point array, pts,
      * such that pts[i] == new Point(xs[i], ys[i]), as i varies from 0 to min(xs.length, ys.length)-1
@@ -445,15 +475,5 @@ public class Point {
             }
             return instance;
         }
-    }    
-
-    @Override
-    public Point clone() {
-        return new Point(this);
     }
-
-    @Override
-    public String toString() {
-        return "Point [x=" + x + ", y=" + y + "]";
-    }  
 }

@@ -16,6 +16,22 @@ import tracer.Tracer;
 public class RenderShape extends Render {
     // style
     protected boolean closeShape = true;
+    
+    /**************************
+     ***** Initialization *****
+     **************************/
+    
+    /********************
+     ***** Behavior *****
+     ********************/
+    
+    /******************
+     ***** Events *****
+     ******************/
+    
+    /*******************
+     ***** Getters *****
+     *******************/
 
     public RenderShape(Collection<? extends Point> ts) {
         super(ts);

@@ -15,6 +15,10 @@ public class RenderVoronoi extends Render {
 //    protected int c1 = 0xff000000;
 //    protected int c2 = 0xffffffff;
     
+    /**************************
+     ***** Initialization *****
+     **************************/    
+    
     public RenderVoronoi(Collection<? extends Point> pts) {
         super(pts);
     }
@@ -26,6 +30,10 @@ public class RenderVoronoi extends Render {
     public RenderVoronoi(Tracer[] pts) {
         super(pts);
     }
+    
+    /********************
+     ***** Behavior *****
+     ********************/
     
     @Override
     public void draw(PGraphics g) {
