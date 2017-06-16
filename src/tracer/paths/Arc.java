@@ -12,7 +12,7 @@ import tracer.Point;
  */
 public class Arc extends Path {
     //definition
-    protected Point ab, cd;
+    public Point ab, cd;
     protected float startAngle, endAngle;
     protected int ellipseMode;
 

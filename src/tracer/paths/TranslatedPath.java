@@ -15,7 +15,7 @@ import tracer.Point;
  * @param <T> The type of Path wrapped by the TranslatedPath
  */
 public class TranslatedPath<T extends Path> extends Path {    
-    protected Point translation;
+    public Point translation;
     protected T path;
     
     /**************************

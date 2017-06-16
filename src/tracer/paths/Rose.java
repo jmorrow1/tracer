@@ -13,7 +13,7 @@ import tracer.Point;
  *
  */
 public class Rose extends Path {
-    private Point cen;
+    public Point cen;
     private float xRadius, yRadius, freq1, freq2;
 
     /**************************

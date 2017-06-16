@@ -19,7 +19,7 @@ import tracer.Point;
  *
  */
 public class Supershape extends Path {
-    private Point cen;
+    public Point cen;
     private float xRadius, yRadius, m, n1, n2, n3;
 
     private float mOver4, n1Inverted;

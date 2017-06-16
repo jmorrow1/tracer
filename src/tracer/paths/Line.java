@@ -12,7 +12,7 @@ import tracer.Point;
  *
  */
 public class Line extends Path {
-    private Point a, b;
+    public Point a, b;
     public final static int DEFAULT_INTERSECT_RADIUS = 8;
 
     /**************************

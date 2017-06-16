@@ -17,7 +17,8 @@ import tracer.Point;
  * @param <U> the type of thes second path
  */
 public class Blender<T extends Path, U extends Path> extends Path {
-    private Point ptA = new Point(0, 0), ptB = new Point(0, 0);
+    private Point bufferPtA = new Point(0, 0);
+    private Point bufferPtB = new Point(0, 0);
     private T a;
     private U b;
     private float blendAmt;
@@ -73,10 +74,10 @@ public class Blender<T extends Path, U extends Path> extends Path {
                 u = ALMOST_ONE;
             }
         }
-        a.trace(ptA, u);
-        b.trace(ptB, u);
-        target.x = PApplet.lerp(ptA.x, ptB.x, blendAmt);
-        target.y = PApplet.lerp(ptA.y, ptB.y, blendAmt);
+        a.trace(bufferPtA, u);
+        b.trace(bufferPtB, u);
+        target.x = PApplet.lerp(bufferPtA.x, bufferPtB.x, blendAmt);
+        target.y = PApplet.lerp(bufferPtA.y, bufferPtB.y, blendAmt);
     }
 
     /******************
