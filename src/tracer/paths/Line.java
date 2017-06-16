@@ -62,9 +62,9 @@ public class Line extends Path {
                 x + r * PApplet.cos(1.75f * PApplet.PI), y + r * PApplet.sin(1.75f * PApplet.PI));
     }
     
-    /**************************
-     ***** Functionality *****
-     **************************/
+    /********************
+     ***** Behavior *****
+     ********************/
 
     @Override
     public void draw(PGraphics g) {
@@ -83,6 +83,10 @@ public class Line extends Path {
         target.x = PApplet.lerp(a.x, b.x, u);
         target.y = PApplet.lerp(a.y, b.y, u);
     }
+    
+    /******************
+     ***** Static *****
+     ******************/
 
     /**
      * Interpolates between the line defined by (a.x, a.y) and (b.x, b.y) by the
@@ -119,33 +123,17 @@ public class Line extends Path {
         pt.x = PApplet.lerp(ax, bx, u);
         pt.y = PApplet.lerp(ay, by, u);
     }
-
+    
     /**
-     * Returns true if the given point comes within the given radius to any
-     * point in the line.
-     * 
-     * @param x the x of the point
-     * @param y the y of the point
-     * @param intersectRadius the maximum distance that can be considered
-     *            touching
-     * @return true if the point touches the line and false otherwise
+     * Computes the distance between a and b.
+     * @param a Point a
+     * @param b Point b
+     * @return The distance
      */
-    public boolean touches(float x, float y, float intersectRadius) {
-        return touches(a.x, a.y, b.x, b.y, x, y, intersectRadius);
+    public static float dist(Point a, Point b) {
+        return PApplet.dist(a.x, a.y, b.x, b.y);
     }
-
-    /**
-     * Returns true if the given point comes in close enough contact with the
-     * line.
-     * 
-     * @param x the x of the point
-     * @param y the y of the point
-     * @return true if the point touches the line and false otherwise
-     */
-    public boolean touches(float x, float y) {
-        return touches(a.x, a.y, b.x, b.y, x, y, DEFAULT_INTERSECT_RADIUS);
-    }
-
+    
     /**
      * Returns true if the given point comes in close enough contact with the
      * line.
@@ -213,18 +201,33 @@ public class Line extends Path {
             return false;
         }
     }
-
+    
+    /******************
+     ***** Events *****
+     ******************/
+    
     @Override
     public void translate(float dx, float dy) {
         a.translate(dx, dy);
         b.translate(dx, dy);
     }
 
-    @Override
-    public Line clone() {
-        return new Line(this);
+    /**
+     * 
+     * @param a the line's start point
+     */
+    public void setA(Point a) {
+        this.a = a;
     }
-
+    
+    /**
+     * 
+     * @param b the line's end point
+     */
+    public void setB(Point b) {
+        this.b = b;
+    }
+    
     @Override
     public void reverse() {
         super.reverse();
@@ -232,10 +235,41 @@ public class Line extends Path {
         b = a;
         a = temp;
     }
+    
+    /*******************
+     ***** Getters *****
+     *******************/
 
-    /*******************************
-     ***** Getters and Setters *****
-     *******************************/
+    /**
+     * Returns true if the given point comes within the given radius to any
+     * point in the line.
+     * 
+     * @param x the x of the point
+     * @param y the y of the point
+     * @param intersectRadius the maximum distance that can be considered
+     *            touching
+     * @return true if the point touches the line and false otherwise
+     */
+    public boolean touches(float x, float y, float intersectRadius) {
+        return touches(a.x, a.y, b.x, b.y, x, y, intersectRadius);
+    }
+
+    /**
+     * Returns true if the given point comes in close enough contact with the
+     * line.
+     * 
+     * @param x the x of the point
+     * @param y the y of the point
+     * @return true if the point touches the line and false otherwise
+     */
+    public boolean touches(float x, float y) {
+        return touches(a.x, a.y, b.x, b.y, x, y, DEFAULT_INTERSECT_RADIUS);
+    }
+
+    @Override
+    public Line clone() {
+        return new Line(this);
+    } 
 
     @Override
     public float getLength() {
@@ -265,14 +299,6 @@ public class Line extends Path {
     public Point getA() {
         return a;
     }
-    
-    /**
-     * 
-     * @param a the line's start point
-     */
-    public void setA(Point a) {
-        this.a = a;
-    }
 
     /**
      * 
@@ -296,14 +322,6 @@ public class Line extends Path {
      */
     public Point getB() {
         return b;
-    }
-    
-    /**
-     * 
-     * @param b the line's end point
-     */
-    public void setB(Point b) {
-        this.b = b;
     }
 
     /**
@@ -330,16 +348,6 @@ public class Line extends Path {
     @Override
     public float getGap(int i) {
         return 0;
-    }
-    
-    /**
-     * Computes the distance between a and b.
-     * @param a Point a
-     * @param b Point b
-     * @return The distance
-     */
-    public static float dist(Point a, Point b) {
-        return PApplet.dist(a.x, a.y, b.x, b.y);
     }
 
     @Override

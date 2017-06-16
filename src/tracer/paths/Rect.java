@@ -19,6 +19,10 @@ public class Rect extends Path {
     //helper fields
     protected float[] vertices1D = new float[4]; // one-dimensional coordinates
     protected float perimeter;
+    
+    /**************************
+     ***** Initialization *****
+     **************************/
 
     /**
      * 
@@ -35,6 +39,7 @@ public class Rect extends Path {
      */
     public Rect(float a, float b, float c, float d, int rectMode) {
         set(a, b, c, d, rectMode);
+        setSamplesPerUnitLength(Path.STANDARD_SAMPLES_PER_UNIT_LENGTH);
     }
 
     /**
@@ -50,6 +55,7 @@ public class Rect extends Path {
      */
     public Rect(Point ab, float c, float d, int rectMode) {
         set(ab, c, d, rectMode);
+        setSamplesPerUnitLength(Path.STANDARD_SAMPLES_PER_UNIT_LENGTH);
     }
 
     /**
@@ -63,6 +69,7 @@ public class Rect extends Path {
      */
     public Rect(Point ab, Point cd, int rectMode) {
         set(ab, cd, rectMode);
+        setSamplesPerUnitLength(Path.STANDARD_SAMPLES_PER_UNIT_LENGTH);
     }
 
     /**
@@ -84,6 +91,7 @@ public class Rect extends Path {
      */
     public Rect(float x, float y, float r) {
         set(x, y, r, 0.5f*r, RADIUS);
+        setSamplesPerUnitLength(Path.STANDARD_SAMPLES_PER_UNIT_LENGTH);
     }
 
     /**
@@ -174,6 +182,10 @@ public class Rect extends Path {
         }
     }
     
+    /********************
+     ***** Behavior *****
+     ********************/
+    
     @Override
     public void draw(PGraphics g) {
         style.apply(g);
@@ -193,8 +205,8 @@ public class Rect extends Path {
     private void drawHelper(PGraphics g, float u1, float u2) {
         if (u1 < u2) {
             g.beginShape();
-            trace(buffer, u1);
-            g.vertex(buffer.x, buffer.y);
+            trace(bufferPoint, u1);
+            g.vertex(bufferPoint.x, bufferPoint.y);
 
             for (int i = 1; i < vertices1D.length; i++) {
                 float vtx1D = vertices1D[i];
@@ -202,14 +214,14 @@ public class Rect extends Path {
                 boolean inSegment = (u1 < vtx1D && vtx1D < u2);
 
                 if (inSegment) {
-                    trace(buffer, vertices1D[i]);
-                    g.vertex(buffer.x, buffer.y);
+                    trace(bufferPoint, vertices1D[i]);
+                    g.vertex(bufferPoint.x, bufferPoint.y);
                 }
             }
 
-            trace(buffer, u2);
-            g.vertex(buffer.x, buffer.y);
-            g.vertex(buffer.x, buffer.y); // writing the last vertex twice, because the
+            trace(bufferPoint, u2);
+            g.vertex(bufferPoint.x, bufferPoint.y);
+            g.vertex(bufferPoint.x, bufferPoint.y); // writing the last vertex twice, because the
                                   // P2D renderer requires at least 3 vertices
             g.endShape();
         } else {
@@ -251,12 +263,11 @@ public class Rect extends Path {
             target.y = getY2() - u * getHeight();
         }
     }
-
-    @Override
-    public Path clone() {
-        return new Rect(this);
-    }
-
+    
+    /******************
+     ***** Events *****
+     ******************/
+    
     @Override
     public void translate(float dx, float dy) {
         ab.translate(dx, dy);
@@ -265,23 +276,20 @@ public class Rect extends Path {
         }
     }
     
+    /**
+     * 
+     */
     public void make1DProportionalTo2D() {
         computeHelperFields();
     }
-    
-    private void computeHelperFields() {
-        float width = getX2() - getX1();
-        
-        perimeter = 2f * width + 2f * (getY2() - getY1());
-        
-        if (vertices1D == null) {
-            vertices1D = new float[4];
-        }
 
-        vertices1D[0] = 0;
-        vertices1D[1] = width / perimeter;
-        vertices1D[2] = 0.5f;
-        vertices1D[3] = 0.5f + vertices1D[1];
+    /*******************
+     ***** Getters *****
+     *******************/
+
+    @Override
+    public Path clone() {
+        return new Rect(this);
     }
 
     @Override
@@ -466,5 +474,24 @@ public class Rect extends Path {
             case RADIUS : return "RADIUS";
             default : return "UNKNOWN";
         }
+    }
+    
+    /*******************
+     ***** Helpers *****
+     *******************/
+    
+    private void computeHelperFields() {
+        float width = getX2() - getX1();
+        
+        perimeter = 2f * width + 2f * (getY2() - getY1());
+        
+        if (vertices1D == null) {
+            vertices1D = new float[4];
+        }
+
+        vertices1D[0] = 0;
+        vertices1D[1] = width / perimeter;
+        vertices1D[2] = 0.5f;
+        vertices1D[3] = 0.5f + vertices1D[1];
     }
 }

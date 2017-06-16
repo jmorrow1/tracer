@@ -19,6 +19,10 @@ public class Ellipse extends Path {
     //helper fields
     protected float perimeter;
     protected boolean perimeterOutOfSync; //flag
+    
+    /**************************
+     ***** Initialization *****
+     **************************/
 
     /**
      * Constructs an Ellipse analogously to Processing's native ellipse()
@@ -34,14 +38,42 @@ public class Ellipse extends Path {
      */
     public Ellipse(float a, float b, float c, float d, int ellipseMode) {
         set(a, b, c, d, ellipseMode);
+        setSamplesPerUnitLength(Path.STANDARD_SAMPLES_PER_UNIT_LENGTH);
     }
     
+    /**
+     * 
+     * @param ab
+     * @param c
+     * @param d
+     * @param ellipseMode
+     */
     public Ellipse(Point ab, float c, float d, int ellipseMode) {
         set(ab, c, d, ellipseMode);
+        setSamplesPerUnitLength(Path.STANDARD_SAMPLES_PER_UNIT_LENGTH);
     }
     
+    /**
+     * 
+     * @param ab
+     * @param cd
+     * @param ellipseMode
+     */
     public Ellipse(Point ab, Point cd, int ellipseMode) {
         set(ab, cd, ellipseMode);
+        setSamplesPerUnitLength(Path.STANDARD_SAMPLES_PER_UNIT_LENGTH);
+    }
+    
+    /**
+     * Easy constructor.
+     * 
+     * @param x The x-coordinate of the path.
+     * @param y The y-coordinate of the path.
+     * @param r The radius of the path.
+     */
+    public Ellipse(float x, float y, float r) {
+        set(x, y, r, 0.5f*r, PApplet.RADIUS);
+        setSamplesPerUnitLength(Path.STANDARD_SAMPLES_PER_UNIT_LENGTH);
     }
 
     /**
@@ -54,17 +86,6 @@ public class Ellipse extends Path {
         setSampleCount(ellipse.sampleCount);
     }
 
-    /**
-     * Easy constructor.
-     * 
-     * @param x The x-coordinate of the path.
-     * @param y The y-coordinate of the path.
-     * @param r The radius of the path.
-     */
-    public Ellipse(float x, float y, float r) {
-        set(x, y, r, 0.5f*r, PApplet.RADIUS);
-    }
-    
     /**
      * 
      * Sets the position and size of the Ellipse.
@@ -139,6 +160,17 @@ public class Ellipse extends Path {
         this.ellipseMode = ellipseMode;
         setHelperFields();
     }
+    
+    private void setHelperFields() {
+        float a = PApplet.max(getXRadius(), getYRadius());
+        float b = PApplet.min(getXRadius(), getYRadius());
+        perimeter = PApplet.PI * (3 * (a + b) - PApplet.sqrt((3 * a + b) * (a + 3 * b)));
+        perimeterOutOfSync = false;
+    }
+    
+    /********************
+     ***** Behavior *****
+     ********************/
 
     @Override
     public void draw(PGraphics g) {
@@ -175,14 +207,10 @@ public class Ellipse extends Path {
         target.x = getCenx() + getXRadius() * PApplet.cos(radians);
         target.y = getCeny() + getYRadius() * PApplet.sin(radians);
     }
-
-    public boolean inside(float x, float y) {
-        float dx = x - this.getCenx();
-        float dy = y - this.getCeny();
-        float xRadius = getXRadius();
-        float yRadius = getYRadius();
-        return (dx * dx) / (xRadius * xRadius) + (dy * dy) / (yRadius * yRadius) <= 1;
-    }
+    
+    /*******************
+     ***** Events ******
+     *******************/
 
     @Override
     public void translate(float dx, float dy) {
@@ -197,14 +225,14 @@ public class Ellipse extends Path {
         perimeterOutOfSync = true;
     }
 
+    /*******************
+     ***** Getters *****
+     *******************/
+    
     @Override
     public Ellipse clone() {
         return new Ellipse(this);
     }
-
-    /*******************************
-     ***** Getters and Setters *****
-     *******************************/
 
     @Override
     public float getLength() {
@@ -214,13 +242,6 @@ public class Ellipse extends Path {
         return perimeter;
     }
     
-    private void setHelperFields() {
-        float a = PApplet.max(getXRadius(), getYRadius());
-        float b = PApplet.min(getXRadius(), getYRadius());
-        perimeter = PApplet.PI * (3 * (a + b) - PApplet.sqrt((3 * a + b) * (a + 3 * b)));
-        perimeterOutOfSync = false;
-    }
-
     /**
      * Gives the radius of the ellipse (the length of a line drawn from the
      * ellipse's center to its circumference with the given angle)

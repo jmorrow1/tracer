@@ -11,8 +11,10 @@ import tracer.Point;
  *
  */
 public class Polygonize {
-    private Polygonize() {
-    }
+    
+    //this file is intended to group a bunch of static functions, so this class need never be initialized
+    private Polygonize() {} 
+
 
     /**
      * Makes a regular polygon, a polygon circumscribed in a circle with its

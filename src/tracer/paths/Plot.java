@@ -21,6 +21,10 @@ public class Plot extends Path {
     protected Rect rect;
     protected float[] xs, ys; //normalized coordinates
     
+    /**************************
+     ***** Initialization *****
+     **************************/
+    
     public Plot(ArrayList<Point> pts) {
         
         //sort the list of points in ascending order by their x-values
@@ -65,6 +69,7 @@ public class Plot extends Path {
             this.ys[i] = PApplet.map(pt.y, rect.getY1(), rect.getY2(), 0, 1);
         }
         
+        setSampleCount(pts.size());
     }
     
     /**
@@ -95,6 +100,8 @@ public class Plot extends Path {
            xs[i] = du * i;
            ys[i] = easing.val(xs[i]);
         }
+        
+        setSampleCount(n);
     }
     
     /**
@@ -121,6 +128,8 @@ public class Plot extends Path {
                 ys[i] = PApplet.map(ys[i], minY, maxY, 0, 1);
             }
         }
+        
+        setSampleCount(n);
     }
     
     /**
@@ -137,6 +146,8 @@ public class Plot extends Path {
             this.xs[i] = du * i;
         }
         this.ys = ys;
+        
+        setSampleCount(xs.length);
     }
     
     /**
@@ -149,6 +160,10 @@ public class Plot extends Path {
     public Plot(float x, float y, float radius) {
         this(new Rect(x, y, radius, radius, RADIUS), Easings.getCircEaseIn(), 100);
     }
+    
+    /********************
+     ***** Behavior *****
+     ********************/
     
     @Override
     public void draw(PGraphics g) {
@@ -187,15 +202,23 @@ public class Plot extends Path {
             }
         }
     }
+    
+    /******************
+     ***** Events *****
+     ******************/
+    
+    @Override
+    public void translate(float dx, float dy) {
+        rect.translate(dx, dy);
+    }
+
+    /*******************
+     ***** Getters *****
+     *******************/
 
     @Override
     public Path clone() {
         return new Plot(this);
-    }
-
-    @Override
-    public void translate(float dx, float dy) {
-        rect.translate(dx, dy);
     }
 
     @Override

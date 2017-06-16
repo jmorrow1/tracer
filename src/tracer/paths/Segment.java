@@ -16,6 +16,10 @@ public class Segment extends Path {
     protected float u1, u2;
     protected Path parent;
     
+    /**************************
+     ***** Initialization *****
+     **************************/
+    
     /**
      * 
      * @param parent The parent path
@@ -26,6 +30,7 @@ public class Segment extends Path {
         this.parent = parent;
         setU1(u1);
         setU2(u2);
+        setSamplesPerUnitLength(Path.STANDARD_SAMPLES_PER_UNIT_LENGTH);
     }
     
     /**
@@ -48,6 +53,10 @@ public class Segment extends Path {
         this(new Rect(0, 0, r, r, RADIUS), 0, 0.33f);
     }
     
+    /********************
+     ***** Behavior *****
+     ********************/
+    
     @Override
     public void trace(Point target, float u) {
         u = Path.remainder(u, 1.0f);
@@ -63,14 +72,47 @@ public class Segment extends Path {
         //TODO
     }
     
-    @Override
-    public Path clone() {
-        return new Segment(this);
-    }
+    /******************
+     ***** Events *****
+     ******************/
     
     @Override
     public void translate(float dx, float dy) {
         parent.translate(dx, dy);
+    }
+    
+    /**
+     * Translates the segment's location within its path by the given 1D value.
+     * @param du The 1D value
+     */
+    public void translate(float du) {
+        u1 = remainder(u1 + du, 1);
+        u2 = remainder(u2 + du, 1);
+    }
+    
+    /**
+     * Sets the first 1D coordinate of the Segment.
+     * @param u1 The second 1D coordinate
+     */
+    public void setU1(float u1) {
+        this.u1 = remainder(u1, 1);
+    }
+
+    /**
+     * Sets the second 1D coordinate of the Segment.
+     * @param u2 The second 1D coordinate
+     */
+    public void setU2(float u2) {
+        this.u2 = remainder(u2, 1);
+    }
+
+    /*******************
+     ***** Getters *****
+     *******************/
+    
+    @Override
+    public Path clone() {
+        return new Segment(this);
     }
     
     @Override
@@ -126,15 +168,6 @@ public class Segment extends Path {
       
         return -1;
     }
-
-    /**
-     * Translates the segment's location within its path by the given 1D value.
-     * @param du The 1D value
-     */
-    public void translate(float du) {
-        u1 = remainder(u1 + du, 1);
-        u2 = remainder(u2 + du, 1);
-    }
     
     /**
      * Gives the first 1D coordinate of the Segment.
@@ -145,27 +178,11 @@ public class Segment extends Path {
     }
 
     /**
-     * Sets the first 1D coordinate of the Segment.
-     * @param u1 The second 1D coordinate
-     */
-    public void setU1(float u1) {
-        this.u1 = remainder(u1, 1);
-    }
-
-    /**
      * Gives the second 1D coordinate of the Segment.
      * @return The second 1D coordinate
      */
     public float getU2() {
         return u2;
-    }
-
-    /**
-     * Sets the second 1D coordinate of the Segment.
-     * @param u2 The second 1D coordinate
-     */
-    public void setU2(float u2) {
-        this.u2 = remainder(u2, 1);
     }
     
     /**
@@ -173,8 +190,8 @@ public class Segment extends Path {
      * @return The x-coordinate of the first 2D coordinate
      */
     public float getX1() {
-        parent.trace(buffer, u1);
-        return buffer.x;
+        parent.trace(bufferPoint, u1);
+        return bufferPoint.x;
     }
     
     /**
@@ -182,8 +199,8 @@ public class Segment extends Path {
      * @return The y-coordinate of the first 2D coordinate
      */
     public float getY1() {
-        parent.trace(buffer, u1);
-        return buffer.y;
+        parent.trace(bufferPoint, u1);
+        return bufferPoint.y;
     }
     
     /**
@@ -191,8 +208,8 @@ public class Segment extends Path {
      * @return The x-coordinate of the second 2D coordinate
      */
     public float getX2() {
-        parent.trace(buffer, u2);
-        return buffer.x;
+        parent.trace(bufferPoint, u2);
+        return bufferPoint.x;
     }
     
     /**
@@ -200,8 +217,8 @@ public class Segment extends Path {
      * @return The y-coordinate of the second 2D coordinate
      */
     public float getY2() {
-        parent.trace(buffer, u2);
-        return buffer.y;
+        parent.trace(bufferPoint, u2);
+        return bufferPoint.y;
     }
 
     @Override

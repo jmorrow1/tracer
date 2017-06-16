@@ -18,15 +18,10 @@ public class TranslatedPath<T extends Path> extends Path {
     protected Point translation;
     protected T path;
     
-    /**
-     * Clones the CenteredPath.
-     * 
-     * @param cpath The Path to clone
-     */
-    public TranslatedPath(TranslatedPath<T> cpath) {
-        this(cpath.translation.clone(), (T)cpath.path.clone());
-    }
-
+    /**************************
+     ***** Initialization *****
+     **************************/
+    
     /**
      * 
      * Constructs a Path that is the given Path translated by the given Point.
@@ -37,6 +32,15 @@ public class TranslatedPath<T extends Path> extends Path {
     public TranslatedPath(Point translation, T path) {
         this.translation = translation;
         this.path = path;
+    }
+    
+    /**
+     * Clones the CenteredPath.
+     * 
+     * @param cpath The Path to clone
+     */
+    public TranslatedPath(TranslatedPath<T> cpath) {
+        this(cpath.translation.clone(), (T)cpath.path.clone());
     }
     
     /**
@@ -63,7 +67,7 @@ public class TranslatedPath<T extends Path> extends Path {
     @Override
     public void draw(PGraphics g) {
         g.pushMatrix();
-        g.translate(buffer.x, buffer.y);
+        g.translate(bufferPoint.x, bufferPoint.y);
         path.draw(g);
         g.popMatrix();
     }

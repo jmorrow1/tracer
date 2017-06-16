@@ -14,19 +14,40 @@ public class Lissajous extends Path {
     private Point cen;
     private float xRadius, yRadius, freqX, freqY, phi;
     
-    //TODO Create constructor that estimates the sample count based on total distance
-
+    /**************************
+     ***** Initialization *****
+     **************************/
+    
+    /**
+     * 
+     * @param center The center point
+     * @param xRadius The radius in the x-direction
+     * @param yRadius The radius in the y-direction
+     * @param freqX The frequency in the x-direction
+     * @param freqY The frequency in the y-direction
+     * @param phi An offset anngle
+     */
+    public Lissajous(Point center, float xRadius, float yRadius, float freqX, float freqY, float phi) {
+        this.cen = center;
+        this.xRadius = xRadius;
+        this.yRadius = yRadius;
+        this.freqX = freqX;
+        this.freqY = freqY;
+        this.phi = phi;
+        this.setSamplesPerUnitLength(Path.STANDARD_SAMPLES_PER_UNIT_LENGTH);
+    }
+    
     /**
      * Copy constructor.
      * @param l The path to copy
      */
     public Lissajous(Lissajous l) {
-        this(l.sampleCount, l.cen.clone(), l.xRadius, l.yRadius, l.freqX, l.freqY, l.phi);
+        this(l.cen.clone(), l.xRadius, l.yRadius, l.freqX, l.freqY, l.phi);
+        this.sampleCount = l.sampleCount;
     }
     
     /**
      * 
-     * @param sampleCount The number of sample points to take
      * @param x The center x-coordinate
      * @param y The center y-coordinate
      * @param xRadius The radius in the x-direction
@@ -35,28 +56,8 @@ public class Lissajous extends Path {
      * @param freqY The frequency in the y-direction
      * @param phi An offset anngle
      */
-    public Lissajous(int sampleCount, float x, float y, float xRadius, float yRadius, float freqX, float freqY, float phi) {
-        this(sampleCount, new Point(x, y), xRadius, yRadius, freqX, freqY, phi);
-    }
-    
-    /**
-     * 
-     * @param sampleCount The number of sample points to take
-     * @param center The center point
-     * @param xRadius The radius in the x-direction
-     * @param yRadius The radius in the y-direction
-     * @param freqX The frequency in the x-direction
-     * @param freqY The frequency in the y-direction
-     * @param phi An offset anngle
-     */
-    public Lissajous(int sampleCount, Point center, float xRadius, float yRadius, float freqX, float freqY, float phi) {
-        super(sampleCount);
-        this.cen = center;
-        this.xRadius = xRadius;
-        this.yRadius = yRadius;
-        this.freqX = freqX;
-        this.freqY = freqY;
-        this.phi = phi;
+    public Lissajous(float x, float y, float xRadius, float yRadius, float freqX, float freqY, float phi) {
+        this(new Point(x, y), xRadius, yRadius, freqX, freqY, phi);
     }
 
     /**
@@ -67,7 +68,7 @@ public class Lissajous extends Path {
      * @param r The radius of the path.
      */
     public Lissajous(float x, float y, float r) {
-        this(200, x, y, r, r, 3, 5, PApplet.QUARTER_PI);
+        this(x, y, r, r, 3, 5, PApplet.QUARTER_PI);
     }
     
     /**
@@ -77,8 +78,12 @@ public class Lissajous extends Path {
      * @param r The radius of the path
      */
     public Lissajous(Point cen, float r) {
-        this(200, cen, r, r, 3, 5, PApplet.QUARTER_PI);
+        this(cen, r, r, 3, 5, PApplet.QUARTER_PI);
     }
+    
+    /********************
+     ***** Behavior *****
+     ********************/
 
     @Override
     public void trace(Point target, float u) {
@@ -92,20 +97,16 @@ public class Lissajous extends Path {
         target.x = cen.x + xRadius * PApplet.sin(angle * freqX + phi);
         target.y = cen.y + yRadius * PApplet.sin(angle * freqY);
     }
+    
+    /******************
+     ***** Events *****
+     ******************/
 
     @Override
     public void translate(float dx, float dy) {
         cen.translate(dx, dy);
     }
-
-    /**
-     * Gives the x-coordinate of the center of the Path.
-     * @return the x-coordinate
-     */
-    public float getX() {
-        return cen.x;
-    }
-
+    
     /**
      * Sets the x-coordinate of the center of the Path.
      * @param x the x-coordinate
@@ -113,15 +114,7 @@ public class Lissajous extends Path {
     public void setX(float x) {
         this.cen.x = x;
     }
-
-    /**
-     * Gives the y-coordinate of the center of the Path.
-     * @return the y-coordinate
-     */
-    public float getY() {
-        return cen.y;
-    }
-
+    
     /**
      * Sets the y-coordinate of the center of the Path.
      * @param y the y-coordinate
@@ -129,29 +122,13 @@ public class Lissajous extends Path {
     public void setY(float y) {
         this.cen.y = y;
     }
-
-    /**
-     * Gives the width of the Path.
-     * @return The width
-     */
-    public float getWidth() {
-        return xRadius;
-    }
-
+    
     /**
      * Sets the width of the Path.
      * @param width The width
      */
     public void setWidth(float width) {
         this.xRadius = width/2f;
-    }
-
-    /**
-     * Gives the height of the Path.
-     * @return The height
-     */
-    public float getHeight() {
-        return 2f * yRadius;
     }
     
     /**
@@ -163,19 +140,71 @@ public class Lissajous extends Path {
     }
 
     /**
-     * Gives the x frequency
-     * @return The x frequency
-     */
-    public float getFreqX() {
-        return freqX;
-    }
-
-    /**
      * Sets the x frequency
      * @param freqX The x frequency
      */
     public void setFreqX(float freqX) {
         this.freqX = freqX;
+    }
+    
+    /**
+     * Sets the y frequency
+     * @param freqY The y frequency
+     */
+    public void setFreqY(float freqY) {
+        this.freqY = freqY;
+    }
+    
+    /**
+     * Sets the phi angle.
+     * @param phi The phi angle
+     */
+    public void setPhi(float phi) {
+        this.phi = phi;
+    }
+    
+    /*******************
+     ***** Getters *****
+     *******************/
+
+    /**
+     * Gives the x-coordinate of the center of the Path.
+     * @return the x-coordinate
+     */
+    public float getX() {
+        return cen.x;
+    }
+
+    /**
+     * Gives the y-coordinate of the center of the Path.
+     * @return the y-coordinate
+     */
+    public float getY() {
+        return cen.y;
+    }
+
+    /**
+     * Gives the width of the Path.
+     * @return The width
+     */
+    public float getWidth() {
+        return xRadius;
+    }
+
+    /**
+     * Gives the height of the Path.
+     * @return The height
+     */
+    public float getHeight() {
+        return 2f * yRadius;
+    }
+
+    /**
+     * Gives the x frequency
+     * @return The x frequency
+     */
+    public float getFreqX() {
+        return freqX;
     }
 
     /**
@@ -187,27 +216,11 @@ public class Lissajous extends Path {
     }
 
     /**
-     * Sets the y frequency
-     * @param freqY The y frequency
-     */
-    public void setFreqY(float freqY) {
-        this.freqY = freqY;
-    }
-
-    /**
      * Gives the phi angle.
      * @return The phi angle
      */
     public float getPhi() {
         return phi;
-    }
-
-    /**
-     * Sets the phi angle.
-     * @param phi The phi angle
-     */
-    public void setPhi(float phi) {
-        this.phi = phi;
     }
 
     @Override

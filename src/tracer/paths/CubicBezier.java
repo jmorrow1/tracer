@@ -29,6 +29,7 @@ public class CubicBezier extends Path {
         this.c1 = c1;
         this.c2 = c2;
         this.a2 = a2;
+        setSamplesPerUnitLength(Path.STANDARD_SAMPLES_PER_UNIT_LENGTH);
     }
 
     /**
@@ -67,9 +68,9 @@ public class CubicBezier extends Path {
         this(x - r, y, x, y - r, x, y - r, x + r, y);
     }
     
-    /*************************
-     ***** Functionality *****
-     *************************/
+    /********************
+     ***** Behavior *****
+     ********************/
 
     @Override
     public void trace(Point target, float u) {
@@ -91,6 +92,10 @@ public class CubicBezier extends Path {
         style.apply(g);
         g.bezier(a1.x, a1.y, c1.x, c1.y, c2.x, c2.y, a2.x, a2.y);
     }
+    
+    /******************
+     ***** Events *****
+     ******************/
 
     @Override
     public void translate(float dx, float dy) {
@@ -104,29 +109,7 @@ public class CubicBezier extends Path {
         c2.y += dy;
         a2.y += dy;
     }
-
-    private static float bezierPoint(float a, float b, float c, float d, float t) {
-        float t1 = 1.0f - t;
-        float t1Sq = t1 * t1;
-        float tSq = t * t;
-        return a * t1Sq * t1 +
-               3 * b * t * t1Sq +
-               3 * c * tSq * t1 +
-               d * tSq * t;
-    }
-
-    /*******************************
-     ***** Getters and Setters *****
-     *******************************/
-
-    /**
-     * 
-     * @return the x-coordinate of the 1st anchor point
-     */
-    public float getAnchorX1() {
-        return a1.x;
-    }
-
+    
     /**
      * 
      * @param ax1 the x-coordinate of the 1st anchor point
@@ -134,15 +117,7 @@ public class CubicBezier extends Path {
     public void setAnchorX1(float ax1) {
         this.a1.x = ax1;
     }
-
-    /**
-     * 
-     * @return the y-coordinate of the 1st anchor point
-     */
-    public float getAnchorY1() {
-        return a1.y;
-    }
-
+    
     /**
      * 
      * @param ay1 the y-coordinate of the 2nd anchor point
@@ -150,15 +125,7 @@ public class CubicBezier extends Path {
     public void setAnchorY1(float ay1) {
         this.a1.y = ay1;
     }
-
-    /**
-     * 
-     * @return the x-coordinate of the 1st control point
-     */
-    public float getControlX1() {
-        return c1.x;
-    }
-
+    
     /**
      * 
      * @param cx1 the x-coordinate of the 1st anchor point
@@ -166,15 +133,7 @@ public class CubicBezier extends Path {
     public void setControlX1(float cx1) {
         this.c1.x = cx1;
     }
-
-    /**
-     * 
-     * @return the t-coordinate of the 1st control point
-     */
-    public float getControlY1() {
-        return c1.y;
-    }
-
+    
     /**
      * 
      * @param cy1 the y-coordinate of the 1st control point
@@ -182,15 +141,7 @@ public class CubicBezier extends Path {
     public void setControlY1(float cy1) {
         this.c1.y = cy1;
     }
-
-    /**
-     * 
-     * @return the x-coordinate of the 2nd control point
-     */
-    public float getControlX2() {
-        return c2.x;
-    }
-
+    
     /**
      * 
      * @param cx2 the x-coordinate of the 2nd control point
@@ -198,15 +149,7 @@ public class CubicBezier extends Path {
     public void setControlX2(float cx2) {
         this.c2.x = cx2;
     }
-
-    /**
-     * 
-     * @return the y-coordinate of the 2nd control point
-     */
-    public float getControlY2() {
-        return c2.y;
-    }
-
+    
     /**
      * 
      * @param cy2 the y-coordinate of the 2nd control point
@@ -214,15 +157,7 @@ public class CubicBezier extends Path {
     public void setControlY2(float cy2) {
         this.c2.y = cy2;
     }
-
-    /**
-     * 
-     * @return the x-coordinate of the 2nd anchor point
-     */
-    public float getAnchorX2() {
-        return a2.x;
-    }
-
+    
     /**
      * 
      * @param ax2 the x-coordinate of the 2nd anchor point
@@ -230,15 +165,31 @@ public class CubicBezier extends Path {
     public void setAnchorX2(float ax2) {
         this.a2.x = ax2;
     }
-
+    
     /**
      * 
-     * @return the y-coordinate of the 2nd anchor point
+     * @param c2 the second control point
      */
-    public float getAnchorY2() {
-        return a2.y;
+    public void setControl2(Point c2) {
+        this.c2 = c2;
     }
-
+    
+    /**
+     * 
+     * @param c1 the first control point
+     */
+    public void setControl1(Point c1) {
+        this.c1 = c1;
+    }
+    
+    /**
+     * 
+     * @param a2 the second anchor point
+     */
+    public void setAnchor2(Point a2) {
+        this.a2 = a2;
+    }
+    
     /**
      * 
      * @param ay2 the y-coordinate of the 2nd anchor point
@@ -255,20 +206,94 @@ public class CubicBezier extends Path {
         this.a1 = a1;
     }
     
+    /*******************
+     ***** Helpers *****
+     *******************/
+
+    private static float bezierPoint(float a, float b, float c, float d, float t) {
+        float t1 = 1.0f - t;
+        float t1Sq = t1 * t1;
+        float tSq = t * t;
+        return a * t1Sq * t1 +
+               3 * b * t * t1Sq +
+               3 * c * tSq * t1 +
+               d * tSq * t;
+    }
+
+    /*******************
+     ***** Getters *****
+     *******************/
+
+    /**
+     * 
+     * @return the x-coordinate of the 1st anchor point
+     */
+    public float getAnchorX1() {
+        return a1.x;
+    }
+
+    /**
+     * 
+     * @return the y-coordinate of the 1st anchor point
+     */
+    public float getAnchorY1() {
+        return a1.y;
+    }
+
+    /**
+     * 
+     * @return the x-coordinate of the 1st control point
+     */
+    public float getControlX1() {
+        return c1.x;
+    }
+
+    /**
+     * 
+     * @return the t-coordinate of the 1st control point
+     */
+    public float getControlY1() {
+        return c1.y;
+    }
+
+    /**
+     * 
+     * @return the x-coordinate of the 2nd control point
+     */
+    public float getControlX2() {
+        return c2.x;
+    }
+
+    /**
+     * 
+     * @return the y-coordinate of the 2nd control point
+     */
+    public float getControlY2() {
+        return c2.y;
+    }
+
+    /**
+     * 
+     * @return the x-coordinate of the 2nd anchor point
+     */
+    public float getAnchorX2() {
+        return a2.x;
+    }
+
+    /**
+     * 
+     * @return the y-coordinate of the 2nd anchor point
+     */
+    public float getAnchorY2() {
+        return a2.y;
+    }
+    
     /**
      * 
      * @return the first anchor point
      */
     public Point getAnchor1() {
         return a1;
-    }
-    
-    /**
-     * 
-     * @param c1 the first control point
-     */
-    public void setControl1(Point c1) {
-        this.c1 = c1;
     }
     
     /**
@@ -281,26 +306,10 @@ public class CubicBezier extends Path {
     
     /**
      * 
-     * @param c2 the second control point
-     */
-    public void setControl2(Point c2) {
-        this.c2 = c2;
-    }
-    
-    /**
-     * 
      * @return the second control point
      */
     public Point getControl2() {
         return c2;
-    }
-    
-    /**
-     * 
-     * @param a2 the second anchor point
-     */
-    public void setAnchor2(Point a2) {
-        this.a2 = a2;
     }
     
     /**

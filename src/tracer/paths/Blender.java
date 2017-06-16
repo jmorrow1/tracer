@@ -25,6 +25,21 @@ public class Blender<T extends Path, U extends Path> extends Path {
     /**************************
      ***** Initialization *****
      **************************/
+    
+    /**
+     * 
+     * @param a the first path
+     * @param b the second path
+     * @param blendAmt a value between within [0, 1) specifying how much to blend between a and b
+     * @param sampleCount the number of sample points
+     */
+    public Blender(T a, U b, float blendAmt, int sampleCount) {
+        super(sampleCount);
+        this.a = a;
+        this.b = b;
+        this.blendAmt = blendAmt;
+        setSamplesPerUnitLength(Path.STANDARD_SAMPLES_PER_UNIT_LENGTH);
+    }
 
     /**
      * Copy constructor.
@@ -45,23 +60,9 @@ public class Blender<T extends Path, U extends Path> extends Path {
         this(a, b, blendAmt, PApplet.max(a.sampleCount, b.sampleCount));
     }
     
-    /**
-     * 
-     * @param a the first path
-     * @param b the second path
-     * @param blendAmt a value between within [0, 1) specifying how much to blend between a and b
-     * @param sampleCount the number of sample points
-     */
-    public Blender(T a, U b, float blendAmt, int sampleCount) {
-        super(sampleCount);
-        this.a = a;
-        this.b = b;
-        this.blendAmt = blendAmt;
-    }
-    
-    /*************************
-     ***** Functionality *****
-     *************************/
+    /********************
+     ***** Behavior *****
+     ********************/
 
     @Override
     public void trace(Point target, float u) {
@@ -78,15 +79,51 @@ public class Blender<T extends Path, U extends Path> extends Path {
         target.y = PApplet.lerp(ptA.y, ptB.y, blendAmt);
     }
 
+    /******************
+     ***** Events *****
+     ******************/
+    
     @Override
     public void translate(float dx, float dy) {
         a.translate(dx, dy);
         b.translate(dx, dy);
     }
-
-    /*******************************
-     ***** Getters and Setters *****
-     *******************************/
+    
+    /**
+     * 
+     * @param a the first path
+     */
+    public void setA(T a) {
+        this.a = a;
+    }
+    
+    /**
+     * 
+     * @param b the second path
+     */
+    public void setB(U b) {
+        this.b = b;
+    }
+    
+    /**
+     * 
+     * @param blendAmt a value within [0, 1) specifying how much to blend between the first and second paths
+     */
+    public void setBlendAmt(float blendAmt) {
+        this.blendAmt = blendAmt;
+    }
+    
+    /**
+     * 
+     * @param dAmt how much to change the blendAmt
+     */
+    public void addToBlendAmt(float dAmt) {
+        this.blendAmt = Path.remainder(this.blendAmt + dAmt, 1);
+    }
+    
+    /*******************
+     ***** Getters *****
+     *******************/
 
     /**
      * 
@@ -94,14 +131,6 @@ public class Blender<T extends Path, U extends Path> extends Path {
      */
     public T getA() {
         return a;
-    }
-
-    /**
-     * 
-     * @param a the first path
-     */
-    public void setA(T a) {
-        this.a = a;
     }
 
     /**
@@ -114,34 +143,10 @@ public class Blender<T extends Path, U extends Path> extends Path {
 
     /**
      * 
-     * @param b the second path
-     */
-    public void setB(U b) {
-        this.b = b;
-    }
-
-    /**
-     * 
      * @return a value within [0, 1) specifying how much to blend between the first and second paths
      */
     public float getBlendAmt() {
         return blendAmt;
-    }
-
-    /**
-     * 
-     * @param blendAmt a value within [0, 1) specifying how much to blend between the first and second paths
-     */
-    public void setBlendAmt(float blendAmt) {
-        this.blendAmt = blendAmt;
-    }
-
-    /**
-     * 
-     * @param dAmt how much to change the blendAmt
-     */
-    public void addToBlendAmt(float dAmt) {
-        this.blendAmt = Path.remainder(this.blendAmt + dAmt, 1);
     }
 
     @Override

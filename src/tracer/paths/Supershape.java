@@ -27,6 +27,30 @@ public class Supershape extends Path {
     /**************************
      ***** Initialization *****
      **************************/
+    
+    /**
+     * 
+     * @param cen the center of the path
+     * @param xRadius half the width
+     * @param yRadius half the height
+     * @param m controls the number of rotational symmetries
+     * @param n1 controls the amount of pinching (lesser values of n1 give more
+     *            pinching)
+     * @param n2
+     * @param n3
+     */
+    public Supershape(Point cen, float xRadius, float yRadius, float m, float n1, float n2, float n3) {
+        this.cen  = cen;
+        this.xRadius = xRadius;
+        this.yRadius = yRadius;
+        this.m = m;
+        this.n1 = n1;
+        this.n2 = n2;
+        this.n3 = n3;
+        this.mOver4 = m / 4f;
+        this.n1Inverted = 1f / n1;
+        setSamplesPerUnitLength(Path.STANDARD_SAMPLES_PER_UNIT_LENGTH);
+    }
 
     /**
      * Copy constructor.
@@ -34,7 +58,7 @@ public class Supershape extends Path {
      * @param s the supershape to copy
      */
     public Supershape(Supershape s) {
-        this(s.cen.clone(), s.xRadius, s.yRadius, s.m, s.n1, s.n2, s.n3, s.sampleCount);
+        this(s.cen.clone(), s.xRadius, s.yRadius, s.m, s.n1, s.n2, s.n3);
         setSampleCount(s.sampleCount);
     }
 
@@ -49,35 +73,9 @@ public class Supershape extends Path {
      *            pinching)
      * @param n2
      * @param n3
-     * @param sampleCount the number of sample points
      */
-    public Supershape(float cenx, float ceny, float xRadius, float yRadius, float m, float n1, float n2, float n3, int sampleCount) {
-        this(new Point(cenx, ceny), xRadius, yRadius, m, n1, n2, n3, sampleCount);
-    }
-    
-    /**
-     * 
-     * @param cen the center of the path
-     * @param xRadius half the width
-     * @param yRadius half the height
-     * @param m controls the number of rotational symmetries
-     * @param n1 controls the amount of pinching (lesser values of n1 give more
-     *            pinching)
-     * @param n2
-     * @param n3
-     * @param sampleCount the number of sample points
-     */
-    public Supershape(Point cen, float xRadius, float yRadius, float m, float n1, float n2, float n3, int sampleCount) {
-        super(sampleCount);
-        this.cen  = cen;
-        this.xRadius = xRadius;
-        this.yRadius = yRadius;
-        this.m = m;
-        this.n1 = n1;
-        this.n2 = n2;
-        this.n3 = n3;
-        this.mOver4 = m / 4f;
-        this.n1Inverted = 1f / n1;
+    public Supershape(float cenx, float ceny, float xRadius, float yRadius, float m, float n1, float n2, float n3) {
+        this(new Point(cenx, ceny), xRadius, yRadius, m, n1, n2, n3);
     }
 
     /**
@@ -87,10 +85,9 @@ public class Supershape extends Path {
      * @param xRadius half the width
      * @param yRadius half the height
      * @param m controls the number of rotational symmetries
-     * @param sampleCount The number of sample points
      */
-    public Supershape(float cenx, float ceny, float xRadius, float yRadius, float m, int sampleCount) {
-        this(cenx, ceny, xRadius, yRadius, m, 1, 1, 1, sampleCount);
+    public Supershape(float cenx, float ceny, float xRadius, float yRadius, float m) {
+        this(cenx, ceny, xRadius, yRadius, m, 1, 1, 1);
     }
 
     /**
@@ -99,10 +96,9 @@ public class Supershape extends Path {
      * @param xRadius half the width
      * @param yRadius half the height
      * @param m controls the number of rotational symmetries
-     * @param sampleCount The number of sample points
      */
-    public Supershape(Point cen, float xRadius, float yRadius, float m, int sampleCount) {
-        this(cen, xRadius, yRadius, m, 1, 1, 1, sampleCount);
+    public Supershape(Point cen, float xRadius, float yRadius, float m) {
+        this(cen, xRadius, yRadius, m, 1, 1, 1);
     }
     
     /**
@@ -113,7 +109,7 @@ public class Supershape extends Path {
      * @param r The radius of the path.
      */
     public Supershape(float x, float y, float r) {
-        this(x, y, r, r, 3, 100);
+        this(x, y, r, r, 3);
     }
     
     /**
@@ -123,12 +119,12 @@ public class Supershape extends Path {
      * @param r The radius of the path.
      */
     public Supershape(Point cen, float r) {
-        this(cen, r, r, 3, 100);
+        this(cen, r, r, 3);
     }
 
-    /*************************
-     ***** Functionality *****
-     *************************/
+    /********************
+     ***** Behavior *****
+     ********************/
 
     @Override
     public void trace(Point target, float u) {
@@ -158,23 +154,76 @@ public class Supershape extends Path {
         style.apply(g);
         draw(g, sampleCount);
     }
-
-    @Override
-    public void translate(float dx, float dy) {
-        cen.translate(dx, dy);
-    }
-
-    private static int sgn(float x) {
+    
+    private static int sign(float x) {
         if (x > 0)
             return 1;
         if (x < 0)
             return -1;
         return 0;
     }
-
-    /*******************************
-     ***** Getters and Setters *****
-     *******************************/
+    
+    /******************
+     ***** Events *****
+     ******************/
+    
+    @Override
+    public void translate(float dx, float dy) {
+        cen.translate(dx, dy);
+    }
+    
+    /**
+     * 
+     * @param cen the center of the path
+     */
+    public void setCenter(Point cen) {
+        this.cen = cen;
+    }
+    
+    /**
+     * 
+     * @param cenx the center x-coordinate
+     */
+    public void setCenx(float cenx) {
+        this.cen.x = cenx;
+    }
+    
+    /**
+     * 
+     * @param ceny the center y-coordinate
+     */
+    public void setCeny(float ceny) {
+        this.cen.y = ceny;
+    }
+    
+    /**
+     * 
+     * @param m a variable that controls the number of rotational symmetries
+     */
+    public void setM(float m) {
+        this.m = m;
+        this.mOver4 = m / 4f;
+    }
+    
+    /**
+     * 
+     * @param n2
+     */
+    public void setN2(float n2) {
+        this.n2 = n2;
+    }
+    
+    /**
+     * 
+     * @param n3
+     */
+    public void setN3(float n3) {
+        this.n3 = n3;
+    }
+    
+    /*******************
+     ***** Getters *****
+     *******************/
     
     /**
      * 
@@ -186,26 +235,10 @@ public class Supershape extends Path {
     
     /**
      * 
-     * @param cen the center of the path
-     */
-    public void setCenter(Point cen) {
-        this.cen = cen;
-    }
-
-    /**
-     * 
      * @return the center x-coordinate
      */
     public float getCenx() {
         return cen.x;
-    }
-
-    /**
-     * 
-     * @param cenx the center x-coordinate
-     */
-    public void setCenx(float cenx) {
-        this.cen.x = cenx;
     }
 
     /**
@@ -218,27 +251,10 @@ public class Supershape extends Path {
 
     /**
      * 
-     * @param ceny the center y-coordinate
-     */
-    public void setCeny(float ceny) {
-        this.cen.y = ceny;
-    }
-
-    /**
-     * 
      * @return a value that relates to the number of rotational symmetries
      */
     public float getM() {
         return m;
-    }
-
-    /**
-     * 
-     * @param m a variable that controls the number of rotational symmetries
-     */
-    public void setM(float m) {
-        this.m = m;
-        this.mOver4 = m / 4f;
     }
 
     /**
@@ -271,26 +287,10 @@ public class Supershape extends Path {
 
     /**
      * 
-     * @param n2
-     */
-    public void setN2(float n2) {
-        this.n2 = n2;
-    }
-
-    /**
-     * 
      * @return
      */
     public float getN3() {
         return n3;
-    }
-
-    /**
-     * 
-     * @param n3
-     */
-    public void setN3(float n3) {
-        this.n3 = n3;
     }
 
     @Override

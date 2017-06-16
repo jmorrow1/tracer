@@ -17,6 +17,19 @@ public class InfinitySymbol extends Path {
     /**************************
      ***** Initialization *****
      **************************/
+    
+    /**
+     * 
+     * @param cen the center of the path
+     * @param xRadius half the width
+     * @param yRadius half the height
+     */
+    public InfinitySymbol(Point cen, float xRadius, float yRadius) {
+        this.cen = cen;
+        this.xRadius = xRadius;
+        this.yRadius = yRadius;
+        this.setSamplesPerUnitLength(Path.STANDARD_SAMPLES_PER_UNIT_LENGTH);
+    }
 
     /**
      * Copy constructor.
@@ -24,36 +37,19 @@ public class InfinitySymbol extends Path {
      * @param s The infinity symbol to copy
      */
     public InfinitySymbol(InfinitySymbol s) {
-        this(s.cen.clone(), s.xRadius, s.yRadius, s.sampleCount);
+        this(s.cen.clone(), s.xRadius, s.yRadius);
         setSampleCount(s.sampleCount);
     }
     
-    //TODO Create a constructor that estimates what the sampleCount should be based on total distance
-
     /**
      * 
      * @param cenx the center x-coordinate
      * @param ceny the center y-coordinate
      * @param xRadius half the width
      * @param yRadius half the height
-     * @param sampleCount the number of sample points
      */
-    public InfinitySymbol(float cenx, float ceny, float xRadius, float yRadius, int sampleCount) {
-        this(new Point(cenx, ceny), xRadius, yRadius, sampleCount);
-    }
-    
-    /**
-     * 
-     * @param cen the center of the path
-     * @param xRadius half the width
-     * @param yRadius half the height
-     * @param sampleCount the number of sample points
-     */
-    public InfinitySymbol(Point cen, float xRadius, float yRadius, int sampleCount) {
-        super(sampleCount);
-        this.cen = cen;
-        this.xRadius = xRadius;
-        this.yRadius = yRadius;
+    public InfinitySymbol(float cenx, float ceny, float xRadius, float yRadius) {
+        this(new Point(cenx, ceny), xRadius, yRadius);
     }
 
     /**
@@ -64,7 +60,7 @@ public class InfinitySymbol extends Path {
      * @param r The radius of the path.
      */
     public InfinitySymbol(float x, float y, float r) {
-        this(x, y, r, r, 100);
+        this(x, y, r, r);
     }
     
     /**
@@ -74,12 +70,12 @@ public class InfinitySymbol extends Path {
      * @param r The radius of the path.
      */
     public InfinitySymbol(Point cen, float r) {
-        this(cen, r, r, 100);
+        this(cen, r, r);
     }
 
-    /*************************
-     ***** Functionality *****
-     *************************/
+    /********************
+     ***** Behavior *****
+     ********************/
 
     @Override
     public void trace(Point target, float u) {
@@ -93,21 +89,13 @@ public class InfinitySymbol extends Path {
         target.y = cen.y + yRadius * PApplet.cos(radians) * PApplet.sin(radians);
     }
 
+    /******************
+     ***** Events *****
+     ******************/
+    
     @Override
     public void translate(float dx, float dy) {
         cen.translate(dx, dy);
-    }
-
-    /*******************************
-     ***** Getters and Setters *****
-     *******************************/
-    
-    /**
-     * 
-     * @return the center of the path
-     */
-    public Point getCenter() {
-        return cen;
     }
     
     /**
@@ -116,6 +104,50 @@ public class InfinitySymbol extends Path {
      */
     public void setCenter(Point cen) {
         this.cen = cen;
+    }
+    
+    /**
+     * 
+     * @param cenx the center x-coordinate
+     */
+    public void setCenx(float cenx) {
+        this.cen.x = cenx;
+    }
+    
+    /**
+     * 
+     * @param ceny the center y-coordinate
+     */
+    public void setCeny(float ceny) {
+        this.cen.y = ceny;
+    }
+    
+    /**
+     * 
+     * @param xRadius half the width
+     */
+    public void setXRadius(float xRadius) {
+        this.xRadius = xRadius;
+    }
+    
+    /**
+     * 
+     * @param yRadius half the height
+     */
+    public void setYRadius(float yRadius) {
+        this.yRadius = yRadius;
+    }
+
+    /*******************
+     ***** Getters *****
+     *******************/
+    
+    /**
+     * 
+     * @return the center of the path
+     */
+    public Point getCenter() {
+        return cen;
     }
 
     /**
@@ -128,26 +160,10 @@ public class InfinitySymbol extends Path {
 
     /**
      * 
-     * @param cenx the center x-coordinate
-     */
-    public void setCenx(float cenx) {
-        this.cen.x = cenx;
-    }
-
-    /**
-     * 
      * @return the center y-coordinate
      */
     public float getCeny() {
         return cen.y;
-    }
-
-    /**
-     * 
-     * @param ceny the center y-coordinate
-     */
-    public void setCeny(float ceny) {
-        this.cen.y = ceny;
     }
 
     /**
@@ -160,26 +176,10 @@ public class InfinitySymbol extends Path {
 
     /**
      * 
-     * @param xRadius half the width
-     */
-    public void setXRadius(float xRadius) {
-        this.xRadius = xRadius;
-    }
-
-    /**
-     * 
      * @return half the height
      */
     public float getYRadius() {
         return yRadius;
-    }
-
-    /**
-     * 
-     * @param yRadius half the height
-     */
-    public void setYRadius(float yRadius) {
-        this.yRadius = yRadius;
     }
 
     @Override

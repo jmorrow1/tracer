@@ -16,6 +16,20 @@ public class Circle extends Path {
     private float radius;
     private float startAngle;
     
+    /**************************
+     ***** Initialization *****
+     **************************/
+    
+    /**
+     * 
+     * @param center the center
+     * @param radius the radius
+     */
+    public Circle(Point center, float radius) {
+        this.center = center;
+        this.radius = radius;
+    }
+    
     /**
      * 
      * @param x the center x-coordinate
@@ -27,16 +41,6 @@ public class Circle extends Path {
     }
 
     /**
-     * 
-     * @param center the center
-     * @param radius the radius
-     */
-    public Circle(Point center, float radius) {
-        this.center = center;
-        this.radius = radius;
-    }
-
-    /**
      * Copy constructor.
      * 
      * @param c the circle to copy
@@ -45,6 +49,10 @@ public class Circle extends Path {
         this(c.center.clone(), c.radius);
         setSampleCount(c.sampleCount);
     }
+    
+    /********************
+     ***** Behavior *****
+     ********************/
 
     @Override
     public void draw(PGraphics g) {
@@ -81,34 +89,32 @@ public class Circle extends Path {
         target.x = center.x + radius * PApplet.cos(startAngle + radians);
         target.y = center.y + radius * PApplet.sin(startAngle + radians);
     }
-
-    /**
-     * Tells whether or not the circle contains the given point.
-     * @param x The x-coordinate of the point
-     * @param y The y-coordintae of the point
-     * @return True if the circle contains the point and false otherwise
-     */
-    public boolean contains(float x, float y) {
-        return PApplet.dist(this.getCenx(), this.getCeny(), x, y) <= radius;
-    }
+    
+    /******************
+     ***** Events *****
+     ******************/
 
     @Override
     public void translate(float dx, float dy) {
         center.translate(dx, dy);
     }
 
-    @Override
-    public Circle clone() {
-        return new Circle(this);
+    /**
+     * 
+     * @param startAngle
+     */
+    public void setStartAngle(float startAngle) {
+        this.startAngle = startAngle;
     }
-
-    /*******************************
-     ***** Getters and Setters *****
-     *******************************/
-
-    @Override
-    public float getLength() {
-        return PApplet.TWO_PI * radius;
+    
+    /**
+     * Sets the center point of the Circle.
+     * @param x The x-coordinate
+     * @param y The y-coordinate
+     */
+    public void setCenter(float x, float y) {
+        this.center.x = x;
+        this.center.y = y;
     }
     
     /**
@@ -117,6 +123,38 @@ public class Circle extends Path {
      */
     public void setCenter(Point center) {
         this.center = center;
+    }
+    
+    /**
+     * Set the diameter of the Circle.
+     * 
+     * @param diam
+     */
+    public void setDiameter(float diam) {
+        this.radius = 2 * diam;
+    }
+    
+    /**
+     * Set the radius.
+     * 
+     * @param radius the radius
+     */
+    public void setRadius(float radius) {
+        this.radius = radius;
+    }
+    
+    /*******************
+     ***** Getters *****
+     *******************/
+
+    @Override
+    public Circle clone() {
+        return new Circle(this);
+    }
+
+    @Override
+    public float getLength() {
+        return PApplet.TWO_PI * radius;
     }
     
     /**
@@ -144,16 +182,6 @@ public class Circle extends Path {
     }
 
     /**
-     * Sets the center point of the Circle.
-     * @param x The x-coordinate
-     * @param y The y-coordinate
-     */
-    public void setCenter(float x, float y) {
-        this.center.x = x;
-        this.center.y = y;
-    }
-
-    /**
      * Gives the diameter of the Circle.
      * @return the diameter
      */
@@ -162,29 +190,11 @@ public class Circle extends Path {
     }
 
     /**
-     * Set the diameter of the Circle.
-     * 
-     * @param diam
-     */
-    public void setDiameter(float diam) {
-        this.radius = 2 * diam;
-    }
-
-    /**
      * Gives the radius of the Circle.
      * @return the radius
      */
     public float getRadius() {
         return radius;
-    }
-
-    /**
-     * Set the radius.
-     * 
-     * @param radius the radius
-     */
-    public void setRadius(float radius) {
-        this.radius = radius;
     }
 
     @Override
@@ -200,10 +210,6 @@ public class Circle extends Path {
     @Override
     public boolean isGap(float u) {
         return false;
-    }
-    
-    public void setStartAngle(float startAngle) {
-        this.startAngle = startAngle;
     }
     
     public float getStartAngle() {

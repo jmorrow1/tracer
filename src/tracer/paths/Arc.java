@@ -19,17 +19,7 @@ public class Arc extends Path {
     /**************************
      ***** Initialization *****
      **************************/
-
-    /**
-     * Copy constructor.
-     * 
-     * @param arc the arc to copy
-     */
-    public Arc(Arc arc) {
-        this(arc.getCenx(), arc.getCeny(), arc.getXRadius(), arc.getYRadius(), arc.startAngle, arc.endAngle, PApplet.RADIUS);
-        setSampleCount(arc.sampleCount);
-    }
-
+    
     /**
      * 
      * Constructs an Arc analogously to Processing's native arc() function.
@@ -53,6 +43,17 @@ public class Arc extends Path {
         setEllipse(a, b, c, d, ellipseMode);
         this.startAngle = startAngle;
         this.endAngle = endAngle;
+        setSamplesPerUnitLength(Path.STANDARD_SAMPLES_PER_UNIT_LENGTH);
+    }
+
+    /**
+     * Copy constructor.
+     * 
+     * @param arc the arc to copy
+     */
+    public Arc(Arc arc) {
+        this(arc.getCenx(), arc.getCeny(), arc.getXRadius(), arc.getYRadius(), arc.startAngle, arc.endAngle, PApplet.RADIUS);
+        this.sampleCount = arc.sampleCount;
     }
 
     /**
@@ -93,27 +94,6 @@ public class Arc extends Path {
      * 
      * Sets the position and size of the ellipse underlying the arc.
      * 
-     * @param ab the 1st and 2nd ellipse arguments, whose meaning is determined by the given ellipseMode
-     * @param c the 3rd ellipse argument, whose meaning is determined by the given ellipseMode
-     * @param d the 4th ellipse argument, whose meaning is determined by the given ellipseMode
-     * @param ellipseMode Determines the meaning of a, b, c, and d. The ellipseMode can be CENTER, RADIUS, CORNER, or CORNERS.
-     */
-    public void setEllipse(Point ab, float c, float d, int ellipseMode) {
-        if (ab == null || cd == null) {
-            setEllipse(ab, new Point(c, d), ellipseMode);
-        }
-        else {
-            this.ab = ab;
-            cd.x = c;
-            cd.y = d;
-            this.ellipseMode = ellipseMode;
-        }
-    }
-    
-    /**
-     * 
-     * Sets the position and size of the ellipse underlying the arc.
-     * 
      * @param ab the 1st and 2nd arc arguments, whose meaning is determined by the given ellipseMode
      * @param cd the 3rd and 4th arc argument, whose meaning is determined by the given ellipseMode
      * @param ellipseMode Determines the meaning of a, b, c, and d. The ellipseMode can be CENTER, RADIUS, CORNER, or CORNERS.
@@ -138,9 +118,30 @@ public class Arc extends Path {
         this.ellipseMode = ellipseMode;
     }
     
-    /*************************
-     ***** Functionality *****
-     *************************/
+    /**
+     * 
+     * Sets the position and size of the ellipse underlying the arc.
+     * 
+     * @param ab the 1st and 2nd ellipse arguments, whose meaning is determined by the given ellipseMode
+     * @param c the 3rd ellipse argument, whose meaning is determined by the given ellipseMode
+     * @param d the 4th ellipse argument, whose meaning is determined by the given ellipseMode
+     * @param ellipseMode Determines the meaning of a, b, c, and d. The ellipseMode can be CENTER, RADIUS, CORNER, or CORNERS.
+     */
+    public void setEllipse(Point ab, float c, float d, int ellipseMode) {
+        if (ab == null || cd == null) {
+            setEllipse(ab, new Point(c, d), ellipseMode);
+        }
+        else {
+            this.ab = ab;
+            cd.x = c;
+            cd.y = d;
+            this.ellipseMode = ellipseMode;
+        }
+    }
+    
+    /********************
+     ***** Behavior *****
+     ********************/
 
     @Override
     public void draw(PGraphics g) {
@@ -164,6 +165,10 @@ public class Arc extends Path {
         target.x = getCenx() + getXRadius() * PApplet.cos(angle);
         target.y = getCeny() + getYRadius() * PApplet.sin(angle);
     }
+    
+    /******************
+     ***** Events *****
+     ******************/
 
     @Override
     public void translate(float dx, float dy) {
@@ -171,6 +176,22 @@ public class Arc extends Path {
         if (ellipseMode == CORNERS) {
             cd.translate(dx, dy);
         }
+    }
+    
+    /**
+     * Sets the start angle.
+     * @param startAngle the angle where the arc starts
+     */
+    public void setStartAngle(float startAngle) {
+        this.startAngle = startAngle;
+    }
+    
+    /**
+     * Sets the end angle.
+     * @param endAngle the angle where the arc ends
+     */
+    public void setEndAngle(float endAngle) {
+        this.endAngle = endAngle;
     }
     
     /*******************************
@@ -378,27 +399,11 @@ public class Arc extends Path {
     }
 
     /**
-     * Sets the start angle.
-     * @param startAngle the angle where the arc starts
-     */
-    public void setStartAngle(float startAngle) {
-        this.startAngle = startAngle;
-    }
-
-    /**
      * Gives the end angle.
      * @return the angle where the arc ends
      */
     public float getEndAngle() {
         return endAngle;
-    }
-
-    /**
-     * Sets the end angle.
-     * @param endAngle the angle where the arc ends
-     */
-    public void setEndAngle(float endAngle) {
-        this.endAngle = endAngle;
     }
 
     @Override
@@ -442,13 +447,15 @@ public class Arc extends Path {
         }
     }
     
-    
-    
     @Override
     public String toString() {
         return "Arc [ab=" + ab + ", cd=" + cd + ", startAngle=" + startAngle + ", endAngle=" + endAngle
                 + ", ellipseMode=" + ellipseModeToString(ellipseMode) + "]";
     }
+    
+    /******************
+     ***** Static *****
+     ******************/
 
     private static String ellipseModeToString(int ellipseMode) {
         switch (ellipseMode) {

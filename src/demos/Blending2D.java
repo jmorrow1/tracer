@@ -34,9 +34,9 @@ public class Blending2D extends PApplet {
         float r = 120;
 
         p1 = new Blender(
-                new Blender(new InfinitySymbol(cenx, ceny, r, 0.75f * r, 50),
-                        new Superellipse(cenx, ceny, r, r, 0.4f, 50), 0.5f, 75),
-                new Blender(new Ellipse(cenx, ceny, 2 * r, r, RADIUS), new InfinitySymbol(cenx, ceny, r, 1.25f * r, 50),
+                new Blender(new InfinitySymbol(cenx, ceny, r, 0.75f * r),
+                            new Superellipse(cenx, ceny, r, r, 0.4f), 0.5f),
+                new Blender(new Ellipse(cenx, ceny, 2 * r, r, RADIUS), new InfinitySymbol(cenx, ceny, r, 1.25f * r),
                         0.5f, 75),
                 0.5f, 150);
 

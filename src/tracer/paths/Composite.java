@@ -22,6 +22,17 @@ public class Composite<T extends Path, U extends Path> extends Path {
     /**************************
      ***** Initialization *****
      **************************/
+    
+    /**
+     * 
+     * @param a the first path
+     * @param b the second path
+     */
+    public Composite(T a, U b) {
+        this.a = a;
+        this.b = b;
+        setSamplesPerUnitLength(Path.STANDARD_SAMPLES_PER_UNIT_LENGTH);
+    }
 
     /**
      * Copy constructor.
@@ -33,19 +44,9 @@ public class Composite<T extends Path, U extends Path> extends Path {
         setSampleCount(c.sampleCount);
     }
 
-    /**
-     * 
-     * @param a the first path
-     * @param b the second path
-     */
-    public Composite(T a, U b) {
-        this.a = a;
-        this.b = b;
-    }
-
-    /*************************
-     ***** Functionality *****
-     *************************/
+    /********************
+     ***** Behavior *****
+     ********************/
 
     @Override
     public void trace(Point target, float u) {
@@ -70,25 +71,17 @@ public class Composite<T extends Path, U extends Path> extends Path {
         a.draw(g);
         b.draw(g);
     }
+    
+    /******************
+     ***** Events *****
+     ******************/
 
     @Override
     public void translate(float dx, float dy) {
         a.translate(dx, dy);
         b.translate(dx, dy);
     }
-
-    /*******************************
-     ***** Getters and Setters *****
-     *******************************/
-
-    /**
-     * Gives the first Path.
-     * @return the first path
-     */
-    public T getA() {
-        return a;
-    }
-
+    
     /**
      * Gives the first Path.
      * @param a the first path
@@ -96,90 +89,13 @@ public class Composite<T extends Path, U extends Path> extends Path {
     public void setA(T a) {
         this.a = a;
     }
-
-    /**
-     * Gives the second Path.
-     * @return the second path
-     */
-    public U getB() {
-        return b;
-    }
-
+    
     /**
      * Gives the second Path.
      * @param b the second path
      */
     public void setB(U b) {
         this.b = b;
-    }
-
-    @Override
-    public Composite<T, U> clone() {
-        return new Composite(this);
-    }
-
-    @Override
-    public int getGapCount() {
-        int gapCount = 1 + a.getGapCount() + 1 + b.getGapCount();
-        
-        if (a.getGapCount() > 0 && a.getGap(0) == 0) {
-            gapCount--;
-        }
-        
-        if (b.getGapCount() > 0 && b.getGap(0) == 0) {
-            gapCount--;
-        }
-        
-        return gapCount;
-    }
-
-    @Override
-    //TODO Test
-    public float getGap(int i) {
-        int aGapCount = a.getGapCount();
-        int bGapCount = b.getGapCount();
-        
-        if (i == 0) {
-            return a.getGap(0);
-        }
-        else if (aGapCount > 0 && a.getGap(0) == 0) {
-            if (i < aGapCount) {
-                return a.getGap(i);
-            }
-            else if (i == aGapCount) {
-                return 0.5f;
-            }
-            else if (bGapCount > 0 && b.getGap(0) == 0) {
-                if (i < aGapCount + bGapCount) {
-                    return b.getGap(i-aGapCount);
-                }
-            }
-            else {
-                if (i < aGapCount + bGapCount + 1) {
-                    return b.getGap(i-aGapCount-1);
-                }
-            }
-        }
-        else {
-            if (i < 1 + aGapCount) {
-                return a.getGap(i-1);
-            }
-            else if (i == aGapCount+1) {
-                return 0.5f;
-            }
-            else if (bGapCount > 0 && b.getGap(0) == 0) {
-                if (i < aGapCount + 1 + bGapCount) {
-                    return b.getGap(i-aGapCount-1);
-                }
-            }
-            else {
-                if (i < aGapCount + 1 + bGapCount + 1) {
-                    return b.getGap(i-bGapCount-2);
-                }
-            }
-        }
-        
-        return -1;
     }
     
     @Override
@@ -250,6 +166,95 @@ public class Composite<T extends Path, U extends Path> extends Path {
         style.fill = fill;
         a.setFill(fill);
         b.setFill(fill);
+    }
+
+    /*******************
+     ***** Getters *****
+     *******************/
+
+    /**
+     * Gives the first Path.
+     * @return the first path
+     */
+    public T getA() {
+        return a;
+    }
+
+    /**
+     * Gives the second Path.
+     * @return the second path
+     */
+    public U getB() {
+        return b;
+    }
+
+    @Override
+    public Composite<T, U> clone() {
+        return new Composite(this);
+    }
+
+    @Override
+    public int getGapCount() {
+        int gapCount = 1 + a.getGapCount() + 1 + b.getGapCount();
+        
+        if (a.getGapCount() > 0 && a.getGap(0) == 0) {
+            gapCount--;
+        }
+        
+        if (b.getGapCount() > 0 && b.getGap(0) == 0) {
+            gapCount--;
+        }
+        
+        return gapCount;
+    }
+
+    @Override
+    //TODO Test
+    public float getGap(int i) {
+        int aGapCount = a.getGapCount();
+        int bGapCount = b.getGapCount();
+        
+        if (i == 0) {
+            return a.getGap(0);
+        }
+        else if (aGapCount > 0 && a.getGap(0) == 0) {
+            if (i < aGapCount) {
+                return a.getGap(i);
+            }
+            else if (i == aGapCount) {
+                return 0.5f;
+            }
+            else if (bGapCount > 0 && b.getGap(0) == 0) {
+                if (i < aGapCount + bGapCount) {
+                    return b.getGap(i-aGapCount);
+                }
+            }
+            else {
+                if (i < aGapCount + bGapCount + 1) {
+                    return b.getGap(i-aGapCount-1);
+                }
+            }
+        }
+        else {
+            if (i < 1 + aGapCount) {
+                return a.getGap(i-1);
+            }
+            else if (i == aGapCount+1) {
+                return 0.5f;
+            }
+            else if (bGapCount > 0 && b.getGap(0) == 0) {
+                if (i < aGapCount + 1 + bGapCount) {
+                    return b.getGap(i-aGapCount-1);
+                }
+            }
+            else {
+                if (i < aGapCount + 1 + bGapCount + 1) {
+                    return b.getGap(i-bGapCount-2);
+                }
+            }
+        }
+        
+        return -1;
     }
 
     @Override

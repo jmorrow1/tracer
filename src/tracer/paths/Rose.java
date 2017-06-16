@@ -19,19 +19,35 @@ public class Rose extends Path {
     /**************************
      ***** Initialization *****
      **************************/
-
+    
+    /**
+     * 
+     * @param cenx the center x-coordinate
+     * @param ceny the center y-coordinate
+     * @param xRadius half of the width
+     * @param yRadius half of the height
+     * @param freq1 the first frequency
+     * @param freq2 the second frequency
+     */
+    public Rose(Point cen, float xRadius, float yRadius, float freq1, float freq2) {
+        this.cen = cen;
+        this.xRadius = xRadius;
+        this.yRadius = yRadius;
+        this.freq1 = freq1;
+        this.freq2 = freq2;
+        setSamplesPerUnitLength(Path.STANDARD_SAMPLES_PER_UNIT_LENGTH);
+    } 
+    
     /**
      * Copy constructor.
      * 
      * @param rose the rose to copy
      */
     public Rose(Rose rose) {
-        this(rose.cen.clone(), rose.xRadius, rose.yRadius, rose.freq1, rose.freq2, rose.sampleCount);
+        this(rose.cen.clone(), rose.xRadius, rose.yRadius, rose.freq1, rose.freq2);
         setSampleCount(rose.sampleCount);
     }
     
-    //TODO Add constructor that estimates the sample count based on total distance
-
     /**
      * 
      * @param cenx the center x-coordinate
@@ -41,8 +57,8 @@ public class Rose extends Path {
      * @param freq2 the second frequency
      * @param sampleCount the number of sample points
      */
-    public Rose(float cenx, float ceny, float radius, float freq1, float freq2, int sampleCount) {
-        this(new Point(cenx, ceny), radius, radius, freq1, freq2, sampleCount);
+    public Rose(float cenx, float ceny, float radius, float freq1, float freq2) {
+        this(new Point(cenx, ceny), radius, radius, freq1, freq2);
     }
     
     /**
@@ -53,28 +69,9 @@ public class Rose extends Path {
      * @param freq2 the second frequency
      * @param sampleCount the number of sample points
      */
-    public Rose(Point cen, float radius, float freq1, float freq2, int sampleCount) {
-        this(cen, radius, radius, freq1, freq2, sampleCount);
+    public Rose(Point cen, float radius, float freq1, float freq2) {
+        this(cen, radius, radius, freq1, freq2);
     }
-
-    /**
-     * 
-     * @param cenx the center x-coordinate
-     * @param ceny the center y-coordinate
-     * @param xRadius half of the width
-     * @param yRadius half of the height
-     * @param freq1 the first frequency
-     * @param freq2 the second frequency
-     * @param sampleCount the number of sample points
-     */
-    public Rose(Point cen, float xRadius, float yRadius, float freq1, float freq2, int sampleCount) {
-        super(sampleCount);
-        this.cen = cen;
-        this.xRadius = xRadius;
-        this.yRadius = yRadius;
-        this.freq1 = freq1;
-        this.freq2 = freq2;
-    } 
 
     /**
      * Easy constructor.
@@ -94,12 +91,12 @@ public class Rose extends Path {
      * @param r the ratius of the path
      */
     public Rose(Point center, float r) {
-        this(center, r, r, 3, 5, 100);
+        this(center, r, r, 3, 5);
     }
 
-    /*************************
-     ***** Functionality *****
-     *************************/
+    /********************
+     ***** Behavior *****
+     ********************/
 
     @Override
     public void trace(Point target, float u) {
@@ -117,14 +114,74 @@ public class Rose extends Path {
         target.y = PApplet.lerp(cen.y, y, lerpAmt);
     }
 
+    /******************
+     ***** Events *****
+     ******************/
+    
     @Override
     public void translate(float dx, float dy) {
         cen.translate(dx, dy);
     }
+    
+    /**
+     * 
+     * @param cen the center of the path
+     */
+    public void setCenter(Point cen) {
+        this.cen = cen;
+    }
+    
+    /**
+     * 
+     * @param cenx the center x-coordinate
+     */
+    public void setCenx(float cenx) {
+        this.cen.x = cenx;
+    }
+    
+    /**
+     * 
+     * @param ceny the center y-coordinate
+     */
+    public void setCeny(float ceny) {
+        this.cen.y = ceny;
+    }
+    
+    /**
+     * 
+     * @param xRadius half of the width
+     */
+    public void setXRadius(float xRadius) {
+        this.xRadius = xRadius;
+    }
+    
+    /**
+     * 
+     * @param yRadius half of the height
+     */
+    public void setYRadius(float yRadius) {
+        this.yRadius = yRadius;
+    }
 
-    /*******************************
-     ***** Getters and Setters *****
-     *******************************/
+    /**
+     * 
+     * @param freq1 the first frequency
+     */
+    public void setFreq1(float freq1) {
+        this.freq1 = freq1;
+    }
+    
+    /**
+     * 
+     * @param freq2 the second frequency
+     */
+    public void setFreq2(float freq2) {
+        this.freq2 = freq2;
+    }
+    
+    /*******************
+     ***** Getters *****
+     *******************/
     
     /**
      * 
@@ -136,26 +193,10 @@ public class Rose extends Path {
     
     /**
      * 
-     * @param cen the center of the path
-     */
-    public void setCenter(Point cen) {
-        this.cen = cen;
-    }
-
-    /**
-     * 
      * @return the center x-coordinate
      */
     public float getCenx() {
         return cen.x;
-    }
-
-    /**
-     * 
-     * @param cenx the center x-coordinate
-     */
-    public void setCenx(float cenx) {
-        this.cen.x = cenx;
     }
 
     /**
@@ -168,26 +209,10 @@ public class Rose extends Path {
 
     /**
      * 
-     * @param ceny the center y-coordinate
-     */
-    public void setCeny(float ceny) {
-        this.cen.y = ceny;
-    }
-
-    /**
-     * 
      * @return half of the width
      */
     public float getXRadius() {
         return xRadius;
-    }
-
-    /**
-     * 
-     * @param xRadius half of the width
-     */
-    public void setXRadius(float xRadius) {
-        this.xRadius = xRadius;
     }
 
     /**
@@ -200,14 +225,6 @@ public class Rose extends Path {
 
     /**
      * 
-     * @param yRadius half of the height
-     */
-    public void setYRadius(float yRadius) {
-        this.yRadius = yRadius;
-    }
-
-    /**
-     * 
      * @return the first frequency
      */
     public float getFreq1() {
@@ -216,26 +233,10 @@ public class Rose extends Path {
 
     /**
      * 
-     * @param freq1 the first frequency
-     */
-    public void setFreq1(float freq1) {
-        this.freq1 = freq1;
-    }
-
-    /**
-     * 
      * @return the second frequency
      */
     public float getFreq2() {
         return freq2;
-    }
-
-    /**
-     * 
-     * @param freq2 the second frequency
-     */
-    public void setFreq2(float freq2) {
-        this.freq2 = freq2;
     }
 
     @Override

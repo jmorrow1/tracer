@@ -47,12 +47,16 @@ import tracer.TStyle;
  *
  */
 public abstract class Path implements Drawable {
-    protected final static Point buffer = new Point(0, 0);
+    protected final static Point bufferPoint = new Point(0, 0);
     protected boolean reversed;
     protected int sampleCount;
     protected TStyle style;
-    public final static float ALMOST_ONE = 0.99999f; 
-//    protected final static float DEFAULT_SAMPLES_PER_UNIT_LENGTH = 0.02f;
+    public final static float ALMOST_ONE = 0.99999f;
+    protected final static float STANDARD_SAMPLES_PER_UNIT_LENGTH = 0.2f;
+    
+    /**************************
+     ***** Initialization *****
+     **************************/
 
     public Path() {
         this(100);
@@ -66,158 +70,50 @@ public abstract class Path implements Drawable {
         this.sampleCount = sampleCount;
         this.style = new TStyle();
     }
-    
-    /**
-     * Derive a Path by connecting a sequence of points located on this Path with lines.
-     * @param us 1-dimensional coordinates of the sequence of points
-     * @return The derivative path
-     */
-    public final Shape derivePath(float[] us) {
-        return Shape.derivePath(this, us);
-    }
-    
-    /**
-     * Derive a Path by connecting a sequence of points located on a source Path with lines.
-     * @param src The source path
-     * @param us 1-dimensional coordinates of the sequence of points
-     * @return The derivative path
-     */
-    public static Shape derivePath(Path src, float[] us) {
-        if (us.length == 0) {
-            return new Shape(new Point[] {});
-        }
-        else {
-            Point[] pts = new Point[us.length];
-            for (int i=0; i<us.length; i++) {
-                pts[i] = src.trace(us[i]);
-            }
-            return new Shape(pts);
-        }
-    }
 
+    /********************
+     ***** Behavior *****
+     ********************/
+    
     /**
      * Draws the path.
      * 
      * @param g A PGraphics object on which to draw the path
      */
     public void draw(PGraphics g) {
-        if (sampleCount != -1) {
+        if (sampleCount > 0) {
             style.apply(g);
             draw(g, sampleCount);
         }
     }
-
-    /**
-     * Creates a segment of the path starting at trace(u1) and ending at
-     * trace(u2);
-     * 
-     * @param u1 The 1D coordinate of the segment's start, a value within [0, 1)
-     * @param u2 The 1D coordinate of the segment's end, a value within [0, 1)
-     * @return The segment
-     */
-    //TODO WORK IN PROGRESS
-    public Shape createSegment(float u1, float u2) {
-        boolean inRange = (0 <= u1 && u1 < 1 && 0 <= u2 && u2 < 1);
-        if (!inRange) {
-            throw new IllegalArgumentException(Path.class.getName() + ".draw(g, " + u1 + ", " + u2 + ") called with values outside in the range [0, 1).");
-        }
-
-        return new Shape(createSegmentPoints(u1, u2));
-    }
-
-    //TODO WORK IN PROGRESS
-    private ArrayList<Point> createSegmentPoints(float u1, float u2) {
-        if (u1 > u2) {
-            ArrayList<Point> pts = new ArrayList<Point>();
-            pts.addAll(createSegmentPoints(u1, 1));
-            pts.addAll(createSegmentPoints(0, u2));
-            return pts;
-        } else {
-            float length = PApplet.abs(u1 - u2);
-            int n = (int) (sampleCount * length);
-            float du = length / n;
-
-            ArrayList<Point> pts = new ArrayList<Point>();
-
-            float u = u1;
-            for (int i = 0; i < n; i++) {
-                trace(buffer, u);
-                pts.add(new Point(buffer));
-                u = (u + du) % 1f;
-            }
-
-            return pts;
-        }
-    }
     
     /**
+     * Draws the path by approximating it with a given number of sample points,
+     * and then connecting those points with lines.
      * 
-     * @param u1
-     * @param u2
-     * @return
+     * <br>
+     * <br>
+     * 
+     * This is a useful shortcut for classes that implement IPath to use. It
+     * allows an IPath to define its proper display method in terms of this
+     * function.
+     * 
+     * @param pa The PApplet to which the path is drawn.
+     * @param sampleCount The number of sample points.
      */
-    public static float compute1DSegmentLength(float u1, float u2) {
-        if (u1 < 0 || u1 > 1 || u2 < 0 || u2 > 1) {
-            //TODO do something
+    public void draw(PGraphics g, int sampleCount) {
+        style.apply(g);
+        float amt = 0;
+        float dAmt = 1f / sampleCount;
+        g.beginShape();
+        for (int i = 0; i < sampleCount + 1; i++) {
+            trace(bufferPoint, amt);
+            g.vertex(bufferPoint.x, bufferPoint.y);
+            amt += dAmt;
         }
-        
-        if (u1 < u2) {
-            return u2 - u1;
-        }
-        else {
-            return (1.0f - u1) + u2;
-        }
+        g.endShape();
     }
     
-    
-    public float compute2DSegmentLength(float u1, float u2) {
-        if (u2 == 1) {
-            u2 = ALMOST_ONE;
-        }
-        
-        if (u1 == u2) {
-            return 0;
-        }
-        
-        if (u1 > u2) {
-            float segmentLength = 0;
-            float u12 = PApplet.max(ALMOST_ONE,  0.5f * (u1 + 1.0f));  
-            if (u12 != 1) {
-                segmentLength += compute2DSegmentLength(u1, u12); 
-            } 
-            segmentLength += compute2DSegmentLength(0.0f, u2);
-            return segmentLength;
-        }
-        else {
-            float segmentLength = 0;
-            int gapCount = getGapCount();
-            for (int i=0; i<gapCount; i++) {
-                float gap = getGap(i);
-                if (u1 < gap && gap < u2) {
-                    float u12 = PApplet.max(gap - 0.00001f, 0.5f * (gap + u1)); //TODO This isn't the best solution
-                    segmentLength += compute2DSegmentLength(u1, u12);
-                    u1 = gap + 0.00001f; //TODO This isn't the best solution
-                }
-            }
-            
-            float length = PApplet.abs(u1 - u2);
-            int n = (int) (sampleCount * length);
-            float du = length / n;
-
-            float u = u1;
-            trace(buffer, u);
-            Point prevpt = new Point(buffer);
-            for (int i = 1; i < n; i++) {
-                trace(buffer, u);         
-                segmentLength += PApplet.dist(prevpt.x, prevpt.y, buffer.x, buffer.y);
-                u = (u + du) % 1f;
-                prevpt.set(buffer);
-            }
-            
-            return segmentLength;
-        }
-    }
-
     /**
      * Draws a segment of the path starting at trace(u1) and ending at
      * trace(u2).
@@ -269,12 +165,12 @@ public abstract class Path implements Drawable {
             g.beginShape();
             float u = u1;
             for (int i = 0; i <= n; i++) {
-                trace(buffer, u);
-                g.vertex(buffer.x, buffer.y);
+                trace(bufferPoint, u);
+                g.vertex(bufferPoint.x, bufferPoint.y);
                 u = (u + du) % 1f;
             }
-            trace(buffer, u2);
-            g.vertex(buffer.x, buffer.y);
+            trace(bufferPoint, u2);
+            g.vertex(bufferPoint.x, bufferPoint.y);
             g.endShape();
         }
     }
@@ -294,26 +190,7 @@ public abstract class Path implements Drawable {
      * @param u A number within [0, 1)
      */
     public abstract void trace(Point target, float u);
-
-    /**
-     * Tells whether or not the Path is reversed.
-     * 
-     * @return true, if the path is set to reversed and false otherwise
-     */
-    public boolean isReversed() {
-        return reversed;
-    }
-
-    /**
-     * Reverses the orientation of the Path.
-     */
-    public void reverse() {
-        reversed = !reversed;
-    }
-
-    @Override
-    public abstract Path clone();
-
+    
     /**
      * A continuous function from real values (floats) to Points.
      * 
@@ -331,6 +208,247 @@ public abstract class Path implements Drawable {
         this.trace(pt, u);
         return pt;
     }
+    
+    /******************
+     ***** Events *****
+     ******************/
+    
+    /**
+     * Shifts this Path dx units in the x-direction and dy units in the
+     * y-direction.
+     * 
+     * @param dx The number of pixels to shift the path right.
+     * @param dy The number of pixels to shift the path down.
+     */
+    public abstract void translate(float dx, float dy);
+    
+    /**
+     * Derive a Path by connecting a sequence of points located on this Path with lines.
+     * @param us 1-dimensional coordinates of the sequence of points
+     * @return The derivative path
+     */
+    public final Shape derivePath(float[] us) {
+        return Shape.derivePath(this, us);
+    }
+
+    /**
+     * Creates a segment of the path starting at trace(u1) and ending at
+     * trace(u2);
+     * 
+     * @param u1 The 1D coordinate of the segment's start, a value within [0, 1)
+     * @param u2 The 1D coordinate of the segment's end, a value within [0, 1)
+     * @return The segment
+     */
+    //TODO WORK IN PROGRESS
+    public Shape createSegment(float u1, float u2) {
+        boolean inRange = (0 <= u1 && u1 < 1 && 0 <= u2 && u2 < 1);
+        if (!inRange) {
+            throw new IllegalArgumentException(Path.class.getName() + ".draw(g, " + u1 + ", " + u2 + ") called with values outside in the range [0, 1).");
+        }
+
+        return new Shape(createSegmentPoints(u1, u2));
+    }
+
+    //TODO WORK IN PROGRESS
+    private ArrayList<Point> createSegmentPoints(float u1, float u2) {
+        if (u1 > u2) {
+            ArrayList<Point> pts = new ArrayList<Point>();
+            pts.addAll(createSegmentPoints(u1, 1));
+            pts.addAll(createSegmentPoints(0, u2));
+            return pts;
+        } else {
+            float length = PApplet.abs(u1 - u2);
+            int n = (int) (sampleCount * length);
+            float du = length / n;
+
+            ArrayList<Point> pts = new ArrayList<Point>();
+
+            float u = u1;
+            for (int i = 0; i < n; i++) {
+                trace(bufferPoint, u);
+                pts.add(new Point(bufferPoint));
+                u = (u + du) % 1f;
+            }
+
+            return pts;
+        }
+    }
+    
+    /**
+     * Sets the style of the Path.
+     * @param style the style
+     */
+    public void setStyle(PStyle style) {
+        this.style = new TStyle(style);
+    }
+    
+    /**
+     * Sets the style of the Path.
+     * @param style the style
+     */
+    public void setStyle(TStyle style) {
+        this.style = style;
+    }
+    
+    /**
+     * Sets the style of the Path to the current style of the PApplet.
+     * @param pa the PApplet
+     */
+    public void setStyle(PApplet pa) {
+        this.style = new TStyle(pa.getGraphics().getStyle());
+    }
+    
+    /**
+     * 
+     * @param strokeCap
+     */
+    public void setStrokeCap(int strokeCap) {
+        style.strokeCap = strokeCap;
+    }
+    
+    /**
+     * 
+     * @param strokeJoin
+     */
+    public void setStrokeJoin(int strokeJoin) {
+        style.strokeJoin = strokeJoin;
+    }
+    
+    /**
+     * 
+     * @param strokeWeight
+     */
+    public void setStrokeWeight(float strokeWeight) {
+        style.strokeWeight = strokeWeight;
+    }
+    
+    /**
+     * 
+     * @param fillColor
+     */
+    public void setFillColor(int fillColor) {
+        style.fillColor = fillColor;
+    }
+    
+    /**
+     * 
+     * @param strokeColor
+     */
+    public void setStrokeColor(int strokeColor) {
+        style.strokeColor = strokeColor;
+    }
+    
+    /**
+     * 
+     * @param stroke
+     */
+    public void setStroke(boolean stroke) {
+        style.stroke = stroke;
+    }
+    
+    /**
+     * 
+     * @param fill
+     */
+    public void setFill(boolean fill) {
+        style.fill = fill;
+    }
+    
+    /**
+     * Sets the number of sample points the Path uses for various computations.
+     * @param sampleCount The number of sample points
+     */
+    public void setSampleCount(int sampleCount) {
+        this.sampleCount = sampleCount;
+    }
+    
+    /**
+     * Sets the number of sample points per unit length, which the Path uses for various computations.
+     * @param samplesPerUnitLength The number of sample points per unit length
+     */
+    public void setSamplesPerUnitLength(float samplesPerUnitLength) {
+        this.sampleCount = 1 + PApplet.floor(this.getLength() * samplesPerUnitLength);
+        if (sampleCount == 1) {
+            sampleCount = 2; //at a minimum, a path needs 2 samples
+        }
+    }
+    
+    /**
+     * Reverses the orientation of the Path.
+     */
+    public void reverse() {
+        reversed = !reversed;
+    }
+    
+    /*******************
+     ***** Getters *****
+     *******************/
+    
+    /**
+     * 
+     * @param u1
+     * @param u2
+     * @return
+     */
+    public float compute2DSegmentLength(float u1, float u2) {
+        if (u2 == 1) {
+            u2 = ALMOST_ONE;
+        }
+        
+        if (u1 == u2) {
+            return 0;
+        }
+        
+        if (u1 > u2) {
+            float segmentLength = 0;
+            float u12 = PApplet.max(ALMOST_ONE,  0.5f * (u1 + 1.0f));  
+            if (u12 != 1) {
+                segmentLength += compute2DSegmentLength(u1, u12); 
+            } 
+            segmentLength += compute2DSegmentLength(0.0f, u2);
+            return segmentLength;
+        }
+        else {
+            float segmentLength = 0;
+            int gapCount = getGapCount();
+            for (int i=0; i<gapCount; i++) {
+                float gap = getGap(i);
+                if (u1 < gap && gap < u2) {
+                    float u12 = PApplet.max(gap - 0.00001f, 0.5f * (gap + u1)); //TODO This isn't the best solution
+                    segmentLength += compute2DSegmentLength(u1, u12);
+                    u1 = gap + 0.00001f; //TODO This isn't the best solution
+                }
+            }
+            
+            float length = PApplet.abs(u1 - u2);
+            int n = (int) (sampleCount * length);
+            float du = length / n;
+
+            float u = u1;
+            trace(bufferPoint, u);
+            Point prevpt = new Point(bufferPoint);
+            for (int i = 1; i < n; i++) {
+                trace(bufferPoint, u);         
+                segmentLength += PApplet.dist(prevpt.x, prevpt.y, bufferPoint.x, bufferPoint.y);
+                u = (u + du) % 1f;
+                prevpt.set(bufferPoint);
+            }
+            
+            return segmentLength;
+        }
+    }
+
+    /**
+     * Tells whether or not the Path is reversed.
+     * 
+     * @return true, if the path is set to reversed and false otherwise
+     */
+    public boolean isReversed() {
+        return reversed;
+    }
+
+    @Override
+    public abstract Path clone();
 
     /**
      * Returns the length of the Path.
@@ -338,9 +456,9 @@ public abstract class Path implements Drawable {
      * @return The length of the Path
      */    
     public float getLength() {
-        trace(buffer, 0);
-        float prevx = buffer.x;
-        float prevy = buffer.y;
+        trace(bufferPoint, 0);
+        float prevx = bufferPoint.x;
+        float prevy = bufferPoint.y;
         
         float du = 1.0f / sampleCount;
         float u = du;
@@ -357,64 +475,28 @@ public abstract class Path implements Drawable {
         while (i < sampleCount && u < 1) {
             float gap = (gapIndex < getGapCount()) ? getGap(gapIndex) : -1;
             if (gapIndex < getGapCount() && gap != -1 && gap < u) {
-                trace(buffer, gap-0.00001f);
-                total += PApplet.dist(prevx, prevy, buffer.x, buffer.y);
-                trace(buffer, gap+0.00001f);
-                prevx = buffer.x;
-                prevy = buffer.y;
-                trace(buffer, u);
-                total += PApplet.dist(prevx, prevy, buffer.x, buffer.y);
+                trace(bufferPoint, gap-0.00001f);
+                total += PApplet.dist(prevx, prevy, bufferPoint.x, bufferPoint.y);
+                trace(bufferPoint, gap+0.00001f);
+                prevx = bufferPoint.x;
+                prevy = bufferPoint.y;
+                trace(bufferPoint, u);
+                total += PApplet.dist(prevx, prevy, bufferPoint.x, bufferPoint.y);
                 gapIndex++;
             }
             else {
-                trace(buffer, u);
-                total += PApplet.dist(prevx, prevy, buffer.x, buffer.y);
+                trace(bufferPoint, u);
+                total += PApplet.dist(prevx, prevy, bufferPoint.x, bufferPoint.y);
             }
             
-            prevx = buffer.x;
-            prevy = buffer.y;
+            prevx = bufferPoint.x;
+            prevy = bufferPoint.y;
             u += du;
             i++;
         }
         
         return total;
     }
-
-    /**
-     * Draws the path by approximating it with a given number of sample points,
-     * and then connecting those points with lines.
-     * 
-     * <br>
-     * <br>
-     * 
-     * This is a useful shortcut for classes that implement IPath to use. It
-     * allows an IPath to define its proper display method in terms of this
-     * function.
-     * 
-     * @param pa The PApplet to which the path is drawn.
-     * @param sampleCount The number of sample points.
-     */
-    public void draw(PGraphics g, int sampleCount) {
-        style.apply(g);
-        float amt = 0;
-        float dAmt = 1f / sampleCount;
-        g.beginShape();
-        for (int i = 0; i < sampleCount + 1; i++) {
-            trace(buffer, amt);
-            g.vertex(buffer.x, buffer.y);
-            amt += dAmt;
-        }
-        g.endShape();
-    }
-    
-    /**
-     * Shifts this Path dx units in the x-direction and dy units in the
-     * y-direction.
-     * 
-     * @param dx The number of pixels to shift the path right.
-     * @param dy The number of pixels to shift the path down.
-     */
-    public abstract void translate(float dx, float dy);
     
     /**
      * Returns the slope of the Point on the Path at trace(u).
@@ -422,7 +504,7 @@ public abstract class Path implements Drawable {
      * @param u The 1D coordinate of the Path
      * @return The slope at trace(u)
      */
-    public float slope(float u) {
+    public float getSlope(float u) {
         if (u >= 0.00001f) {
             Point a = this.trace(u - 0.00001f);
             Point b = this.trace(u);
@@ -432,14 +514,6 @@ public abstract class Path implements Drawable {
             Point b = this.trace(u);
             return Point.slope(a, b);
         }
-    }
-    
-    /**
-     * Sets the number of sample points the Path uses for various computations
-     * @param sampleCount The number of sample points
-     */
-    public void setSampleCount(int sampleCount) {
-        this.sampleCount = sampleCount;
     }
     
     /**
@@ -592,88 +666,54 @@ public abstract class Path implements Drawable {
      */
     public boolean getStroke() {
         return style.stroke;
-    }
-    
-    /**
-     * Sets the style of the Path.
-     * @param style the style
-     */
-    public void setStyle(PStyle style) {
-        this.style = new TStyle(style);
-    }
-    
-    /**
-     * Sets the style of the Path.
-     * @param style the style
-     */
-    public void setStyle(TStyle style) {
-        this.style = style;
-    }
-    
-    /**
-     * Sets the style of the Path to the current style of the PApplet.
-     * @param pa the PApplet
-     */
-    public void setStyle(PApplet pa) {
-        this.style = new TStyle(pa.getGraphics().getStyle());
-    }
-    
-    /**
-     * 
-     * @param strokeCap
-     */
-    public void setStrokeCap(int strokeCap) {
-        style.strokeCap = strokeCap;
-    }
-    
-    /**
-     * 
-     * @param strokeJoin
-     */
-    public void setStrokeJoin(int strokeJoin) {
-        style.strokeJoin = strokeJoin;
-    }
-    
-    /**
-     * 
-     * @param strokeWeight
-     */
-    public void setStrokeWeight(float strokeWeight) {
-        style.strokeWeight = strokeWeight;
-    }
-    
-    /**
-     * 
-     * @param fillColor
-     */
-    public void setFillColor(int fillColor) {
-        style.fillColor = fillColor;
-    }
-    
-    /**
-     * 
-     * @param strokeColor
-     */
-    public void setStrokeColor(int strokeColor) {
-        style.strokeColor = strokeColor;
-    }
-    
-    /**
-     * 
-     * @param stroke
-     */
-    public void setStroke(boolean stroke) {
-        style.stroke = stroke;
-    }
-    
-    /**
-     * 
-     * @param fill
-     */
-    public void setFill(boolean fill) {
-        style.fill = fill;
     }   
 
+    /*******************
+     ***** Statics *****
+     *******************/
+    
+    /**
+     * 
+     * @param u1
+     * @param u2
+     * @return
+     */
+    public static float compute1DSegmentLength(float u1, float u2) {
+        if (u1 < 0.0f || u1 >= 1.0f) {
+            u1 = Path.remainder(u1,  1.0f);
+        }
+        
+        if (u2 < 0.0f || u2 >= 1.0f) {
+            u2 = Path.remainder(u2, 1.0f);
+        }
+        
+        if (u1 < u2) {
+            return u2 - u1;
+        }
+        else {
+            return (1.0f - u1) + u2;
+        }
+    }
+    
+    /**
+     * Derive a Path by connecting a sequence of points located on a source Path with lines.
+     * @param src The source path
+     * @param us 1-dimensional coordinates of the sequence of points
+     * @return The derivative path
+     */
+    public static Shape derivePath(Path src, float[] us) {
+        if (us.length == 0) {
+            return new Shape(new Point[] {});
+        }
+        else {
+            Point[] pts = new Point[us.length];
+            for (int i=0; i<us.length; i++) {
+                pts[i] = src.trace(us[i]);
+            }
+            return new Shape(pts);
+        }
+    }
+    
     /**
      * Computes the remainder of num / denom.
      * 
@@ -754,44 +794,23 @@ public abstract class Path implements Drawable {
         paths.add(new Supershape(0, 0, r));
     }
     
-    public static JSONObject toPath(Path path) {
+    /**
+     * 
+     * @param path
+     * @return
+     */
+    public static JSONObject toJSON(Path path) {
         JSONObject json = new JSONObject();
         JSONArray vertices = new JSONArray();        
         float u = 0;
         float du = 1.0f / path.getSampleCount();
         for (int i=0; i<path.getSampleCount(); i++) {           
-            path.trace(buffer, u);
-            vertices.setJSONObject(i, toJSON(buffer));
+            path.trace(bufferPoint, u);
+            vertices.setJSONObject(i, Point.toJSON(bufferPoint));
             u = (u+du) % 1.0f;
         }       
         json.setJSONArray("vertices", vertices);
         return json;
-    }
-    
-    public static JSONObject toJSON(Point pt) {
-        JSONObject json = new JSONObject();
-        json.setFloat("x", pt.x);
-        json.setFloat("y", pt.y);
-        return json;
-    }
-    
-    //TODO Add exception handling if file is corrupted
-    public static Shape toPath(JSONObject json) {
-        return new Shape(toPoints(json.getJSONArray("vertices")));
-    }
-    
-    //TODO Add exception handling if file is corrupted
-    private static ArrayList<Point> toPoints(JSONArray json) {
-        ArrayList<Point> pts = new ArrayList<Point>();
-        for (int i=0; i<json.size(); i++) {
-            pts.add(toPoint(json.getJSONObject(i)));
-        }
-        return pts;
-    }
-    
-    //TODO Add exception handling if file is corrupted
-    private static Point toPoint(JSONObject json) {
-        return new Point(json.getFloat("x"), json.getFloat("y"));
     }
     
     /**

@@ -21,6 +21,10 @@ import tracer.easings.Easings;
 public class Gesture extends Path {
     protected List<SpaceTimePoint> vertices = new ArrayList<SpaceTimePoint>();
     
+    /**************************
+     ***** Initialization *****
+     **************************/
+    
     /**
      * Constructs a gesture by combining the spatial
      * information of a Path with the temporal
@@ -38,16 +42,6 @@ public class Gesture extends Path {
             vertices.add(new SpaceTimePoint(pt, t));
             
             u += du;
-        }
-    }
-    
-    /**
-     * Copy constructor
-     * @param g
-     */
-    public Gesture(Gesture g) {
-        for (int i=0; i<g.vertices.size(); i++) {
-            this.vertices.add(g.vertices.get(i).clone());
         }
     }
     
@@ -73,12 +67,10 @@ public class Gesture extends Path {
      */
     public Gesture(Point[] vertices, float[] ts) {
         int n = PApplet.min(vertices.length, ts.length);
-        
         for (int i=0; i<n; i++) {
             this.vertices.add(new SpaceTimePoint(vertices[i], ts[i]));
-        }
-        
-        this.vertices.sort(GesturePointComparator.instance);
+        }        
+        this.vertices.sort(GesturePointComparator.instance);       
     }
     
     /**
@@ -86,6 +78,17 @@ public class Gesture extends Path {
      */
     public Gesture() {
         this.vertices = new ArrayList<SpaceTimePoint>();
+    }
+    
+    /**
+     * Copy constructor
+     * @param g
+     */
+    public Gesture(Gesture g) {
+        for (int i=0; i<g.vertices.size(); i++) {
+            this.vertices.add(g.vertices.get(i).clone());
+        }
+        this.sampleCount = g.sampleCount;
     }
     
     /**
@@ -106,6 +109,10 @@ public class Gesture extends Path {
     public Gesture(float x, float y, float r) {
         this(new CubicBezier(x, y, r), Easings.getQuadEaseIn());
     }
+    
+    /********************
+     ***** Behavior *****
+     ********************/
     
     @Override
     public void draw(PGraphics g) {
@@ -147,18 +154,148 @@ public class Gesture extends Path {
             }
         }
     }
-
-    @Override
-    public Path clone() {
-       return new Gesture(this);
-    }
-
+    
+    /******************
+     ***** Events *****
+     ******************/
+    
     @Override
     public void translate(float dx, float dy) {
         for (SpaceTimePoint g : vertices) {
             g.pt.x += dx;
             g.pt.y += dy;
         }
+    }
+    
+    /**
+     * Adds a vertex at time t.
+     * @param x The x-coordinate
+     * @param y The y-coordinate
+     * @param t The time
+     */
+    public void addVertex(float x, float y, float t) {
+        addVertex(new Point(x, y), t);
+    }
+    
+    /**
+     * Adds a vertex at time t.
+     * @param pt The vertex
+     * @param t The time
+     */
+    public void addVertex(Point pt, float t) {
+        if (t < getStartTime()) {
+            vertices.add(0, new SpaceTimePoint(pt, t));
+        }
+        else if (t < getEndTime()) {
+            for (int i=0; i<vertices.size(); i++) {
+                SpaceTimePoint g = vertices.get(i);
+                if (t == g.t) {
+                    vertices.set(i, new SpaceTimePoint(pt, t));
+                    break;
+                }
+                else if (t > g.t) {
+                    vertices.add(i+1, new SpaceTimePoint(pt, t));
+                    break;
+                }
+            }
+        }
+        else if (t == getEndTime() && vertices.size() > 0) {
+            vertices.set(vertices.size()-1, new SpaceTimePoint(pt, t));
+        }
+        else {
+            vertices.add(new SpaceTimePoint(pt, t));
+        }
+    }
+    
+    /**
+     * Adds a vertex / time coordinate to the Path.
+     * @param g The vertex / time coordinate
+     */
+    public void addVertex(SpaceTimePoint g) {
+        if (g.t < getStartTime()) {
+            vertices.add(0, g);
+        }
+        else if (g.t < getEndTime()) {
+            for (int i=0; i<vertices.size(); i++) {
+                SpaceTimePoint h = vertices.get(i);
+                if (g.t == h.t) {
+                    vertices.set(i, g);
+                    break;
+                }
+                else if (g.t > h.t) {
+                    vertices.add(i+1, g);
+                    break;
+                }
+            }
+        }
+        else if (g.t == getEndTime() && vertices.size() > 0) {
+            vertices.set(vertices.size()-1, g);
+        }
+        else {
+            vertices.add(g);
+        }
+       
+    }
+    
+    /**
+     * Removes the vertex at index i.
+     * @param i The index
+     */
+    public void removeVertex(int i) {
+        vertices.remove(i);
+    }
+    
+    /**
+     * Looks for a vertex at time coordinate t and, if found, removes it.
+     * The method stops after removing the first vertex it finds or after iterating
+     * through the entire list of vertices and finding nothing.
+     * @param t The time coordinate
+     */
+    public void removeVertex(float t) {
+        for (int i=0; i<vertices.size(); i++) {
+            SpaceTimePoint g = vertices.get(i);
+            if (t == g.t) {
+                vertices.remove(i);
+                break;
+            }
+        }
+    }
+
+    /*******************
+     ***** Getters *****
+     *******************/
+    
+    /**
+     * Flattens the Gesture, which has 3 dimensions (2 spatial dimensions and 1 temporal dimension), 
+     * to create an Easing, which has 2 dimensions (1 spatial dimension and 1 temporal dimension),
+     * and returns the Easing.
+     * 
+     * @return The Easing
+     */
+    public Easing easing() {
+        float[] xs = new float[vertices.size()]; //time coordinate
+        float[] ys = new float[vertices.size()]; //space coordinate
+        
+        if (vertices.size() > 0) {
+            Point prev = vertices.get(0).pt;
+            xs[0] = vertices.get(0).t;
+            ys[0] = 0;
+            for (int i=1; i<vertices.size(); i++) {
+                Point curr = vertices.get(i).pt;
+                xs[i] = vertices.get(i).t;
+                ys[i] = Line.dist(prev, curr);
+            }
+            
+            normalize(xs);
+            normalize(ys);
+        }
+        
+        return new CustomEasing(Point.zip(xs, ys));
+    }
+    
+    @Override
+    public Path clone() {
+       return new Gesture(this);
     }
 
     @Override
@@ -266,127 +403,14 @@ public class Gesture extends Path {
         return vertices.get(i).t;
     }
     
-    /**
-     * Adds a vertex at time t.
-     * @param x The x-coordinate
-     * @param y The y-coordinate
-     * @param t The time
-     */
-    public void addVertex(float x, float y, float t) {
-        addVertex(new Point(x, y), t);
+    @Override
+    public String toString() {
+        return "Gesture [vertices=" + vertices + "]";
     }
     
-    /**
-     * Adds a vertex at time t.
-     * @param pt The vertex
-     * @param t The time
-     */
-    public void addVertex(Point pt, float t) {
-        if (t < getStartTime()) {
-            vertices.add(0, new SpaceTimePoint(pt, t));
-        }
-        else if (t < getEndTime()) {
-            for (int i=0; i<vertices.size(); i++) {
-                SpaceTimePoint g = vertices.get(i);
-                if (t == g.t) {
-                    vertices.set(i, new SpaceTimePoint(pt, t));
-                    break;
-                }
-                else if (t > g.t) {
-                    vertices.add(i+1, new SpaceTimePoint(pt, t));
-                    break;
-                }
-            }
-        }
-        else if (t == getEndTime() && vertices.size() > 0) {
-            vertices.set(vertices.size()-1, new SpaceTimePoint(pt, t));
-        }
-        else {
-            vertices.add(new SpaceTimePoint(pt, t));
-        }
-    }
-    
-    /**
-     * Adds a vertex / time coordinate to the Path.
-     * @param g The vertex / time coordinate
-     */
-    public void addVertex(SpaceTimePoint g) {
-        if (g.t < getStartTime()) {
-            vertices.add(0, g);
-        }
-        else if (g.t < getEndTime()) {
-            for (int i=0; i<vertices.size(); i++) {
-                SpaceTimePoint h = vertices.get(i);
-                if (g.t == h.t) {
-                    vertices.set(i, g);
-                    break;
-                }
-                else if (g.t > h.t) {
-                    vertices.add(i+1, g);
-                    break;
-                }
-            }
-        }
-        else if (g.t == getEndTime() && vertices.size() > 0) {
-            vertices.set(vertices.size()-1, g);
-        }
-        else {
-            vertices.add(g);
-        }
-       
-    }
-    
-    /**
-     * Removes the vertex at index i.
-     * @param i The index
-     */
-    public void removeVertex(int i) {
-        vertices.remove(i);
-    }
-    
-    /**
-     * Looks for a vertex at time coordinate t and, if found, removes it.
-     * The method stops after removing the first vertex it finds or after iterating
-     * through the entire list of vertices and finding nothing.
-     * @param t The time coordinate
-     */
-    public void removeVertex(float t) {
-        for (int i=0; i<vertices.size(); i++) {
-            SpaceTimePoint g = vertices.get(i);
-            if (t == g.t) {
-                vertices.remove(i);
-                break;
-            }
-        }
-    }
-    
-    /**
-     * Flattens the Gesture, which has 3 dimensions (2 spatial dimensions and 1 temporal dimension), 
-     * to create an Easing, which has 2 dimensions (1 spatial dimension and 1 temporal dimension),
-     * and returns the Easing.
-     * 
-     * @return The Easing
-     */
-    public Easing easing() {
-        float[] xs = new float[vertices.size()]; //time coordinate
-        float[] ys = new float[vertices.size()]; //space coordinate
-        
-        if (vertices.size() > 0) {
-            Point prev = vertices.get(0).pt;
-            xs[0] = vertices.get(0).t;
-            ys[0] = 0;
-            for (int i=1; i<vertices.size(); i++) {
-                Point curr = vertices.get(i).pt;
-                xs[i] = vertices.get(i).t;
-                ys[i] = Line.dist(prev, curr);
-            }
-            
-            normalize(xs);
-            normalize(ys);
-        }
-        
-        return new CustomEasing(Point.zip(xs, ys));
-    }
+    /*******************
+     ***** Helpers *****
+     *******************/
     
     private static class CustomEasing implements Easing {
         private Point[] pts;
@@ -406,7 +430,7 @@ public class Gesture extends Path {
             return 0;
         }
     }
-
+    
     /**
      * A coordinate in space and in time.
      * 
@@ -455,6 +479,10 @@ public class Gesture extends Path {
             }
         }
     }
+
+    /******************
+     ***** Static *****
+     ******************/
     
     /**
      * Normalizes an array of floats (maps them to [0,1])
@@ -484,10 +512,5 @@ public class Gesture extends Path {
                 }
             }
         }
-    }
-
-    @Override
-    public String toString() {
-        return "Gesture [vertices=" + vertices + "]";
     }
 }

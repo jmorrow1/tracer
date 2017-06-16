@@ -76,17 +76,17 @@ public class Tracing extends PApplet {
         paths.add(Polygonize.makePolygon(0, 0, r / 2, r, 4, QUARTER_PI));
         paths.add(new Arc(0, 0, r, r / 2, 0, 1.5f * PI, RADIUS/* , 50 */));
         paths.add(Path.derivePath(paths.get(paths.size()-1), new float[] {0, 0.25f, 0.5f, 0.75f, 0}));
-        paths.add(new Rose(0, 0, r, 4, 3, 100));
-        paths.add(new InfinitySymbol(0, 0, r, 0.75f * r, 50));
+        paths.add(new Rose(0, 0, r, 4, 3));
+        paths.add(new InfinitySymbol(0, 0, r, 0.75f * r));
         paths.add(new CubicBezier(random(-r, r), random(-r, r), random(-r, r), random(-r, r), random(-r, r), random(-r, r), random(-r, r), random(-r, r)));
-        blender = new Blender(new InfinitySymbol(0, 0, r, 0.75f * r, 50), new Superellipse(0, 0, r, r, 0.5f, 50), 0.5f, 100);
+        blender = new Blender(new InfinitySymbol(0, 0, r, 0.75f * r), new Superellipse(0, 0, r, r, 0.5f), 0.5f, 100);
         paths.add(blender);
-        paths.add(new Superellipse(0, 0, r, r, 0.5f, 50));
-        Arc a = new Arc(0, 0, r, r, 0, PI, RADIUS/* , 50 */);
+        paths.add(new Superellipse(0, 0, r, r, 0.5f));
+        Arc a = new Arc(0, 0, r, r, 0, PI, RADIUS);
         a.reverse();
-        Arc b = new Arc(cellSize, 0, r, r, PI, TWO_PI, RADIUS/* , 50 */);
+        Arc b = new Arc(cellSize, 0, r, r, PI, TWO_PI, RADIUS);
         paths.add(new Composite(a, b));
-        paths.add(new Supershape(0, 0, 0.5f * r, r, 5, 1, 1, 1, 300));
+        paths.add(new Supershape(0, 0, 0.5f * r, r, 5, 1, 1, 1));
         paths.add(new Plot(new Rect(0, 0, r, r, RADIUS), Easings.getCubicEaseInOut(), 20));
         paths.add(new Lissajous(0, 0, r));
 
