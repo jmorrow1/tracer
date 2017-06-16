@@ -1,8 +1,8 @@
 # Tracer
 A Processing library for creating procedural animations, currently in alpha.
 
-#Basics
-##Paths
+# Basics
+## Paths
 Paths are basically curves in 2-dimensional space.
 
 The main power of Paths is that they map a 1-dimensional coordinate to a 2-dimensional coordinate using the trace() method. The method trace() takes a single normal value (a value between 0 and 1) and returns a Point in 2-dimensional space.
@@ -27,15 +27,15 @@ PGraphics g = this.g;
 path.draw(g); //draws the path to the PGraphics object
 ```
 
-##Tracers
+## Tracers
 A Tracer is like a Point that moves along a Path.
 
 Tracers provide a way of creating animations with tracer.
 
-##Easings
-Easings are tweening curves that control the speed of an animation over time. For an introduction to easing functions, try [this] (http://gizma.com/easing/).
+## Easings
+Easings are tweening curves that control the speed of an animation over time. For an introduction to easing functions, try [this](http://gizma.com/easing/).
 
-##Renders
+## Renders
 Renders provide a way of creating complex forms and animations with tracer.
 
 A Render stores a List of Tracers and draws them in some way.
@@ -51,7 +51,7 @@ r.draw(g); //draws a polygonal form with the List of Tracers as vertices
 # Documentation
 [Javadoc](http://jamesmorrowdesign.com/tracer/doc/index.html)
 
-#Installation
+# Installation
 For use with the PDE: Add a folder called tracer to the libraries folder located in your sketchbook. Copy the folder called library from this repo to the tracer folder. After restarting Processing, tracer should be available to your sketch after adding an import statement.
 
 ``` {.java}
