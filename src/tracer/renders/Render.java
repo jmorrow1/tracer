@@ -4,10 +4,10 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
-import experimental.Drawable;
 import processing.core.PApplet;
 import processing.core.PGraphics;
 import processing.core.PStyle;
+import tracer.Drawable;
 import tracer.Point;
 import tracer.TStyle;
 import tracer.Tracer;

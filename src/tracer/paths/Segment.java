@@ -105,7 +105,7 @@ public class Segment extends Path {
     public void setU2(float u2) {
         this.u2 = remainder(u2, 1);
     }
-
+    
     /*******************
      ***** Getters *****
      *******************/

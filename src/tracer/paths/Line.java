@@ -236,6 +236,13 @@ public class Line extends Path {
         a = temp;
     }
     
+    @Override
+    public void setCenter(float x, float y) {
+        float currx = 0.5f * (a.x + b.x);
+        float curry = 0.5f * (a.y + b.y);
+        translate(x - currx, y - curry);
+    }
+    
     /*******************
      ***** Getters *****
      *******************/

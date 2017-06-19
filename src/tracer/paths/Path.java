@@ -3,12 +3,12 @@ package tracer.paths;
 import java.util.ArrayList;
 import java.util.Collection;
 
-import experimental.Drawable;
 import processing.core.PApplet;
 import processing.core.PGraphics;
 import processing.core.PStyle;
 import processing.data.JSONArray;
 import processing.data.JSONObject;
+import tracer.Drawable;
 import tracer.Point;
 import tracer.TStyle;
 
@@ -380,6 +380,53 @@ public abstract class Path implements Drawable {
         reversed = !reversed;
     }
     
+    /**
+     * 
+     * @param x
+     * @param y
+     */
+    public void setCenter(float x, float y) {
+        if (sampleCount > 0) {
+            
+            float u = 0;
+            
+            trace(bufferPoint, u);
+            
+            float x1 = bufferPoint.x;
+            float y1 = bufferPoint.y;
+            float x2 = bufferPoint.x;
+            float y2 = bufferPoint.y;
+            
+            float du = 1.0f / sampleCount;
+            u += du;
+            
+            for (int i=1; i<sampleCount; i++) {
+                trace(bufferPoint, u);
+                
+                if (bufferPoint.x < x1) {
+                    x1 = bufferPoint.x;
+                }
+                else if (bufferPoint.x > x2) {
+                    x2 = bufferPoint.x;
+                }
+                
+                if (bufferPoint.y < y1) {
+                    y1 = bufferPoint.y;
+                }
+                else if (bufferPoint.y > y2) {
+                    y2 = bufferPoint.y;
+                }
+                
+                u += du;
+            }
+            
+            float currx = 0.5f * (x1 + x2);
+            float curry = 0.5f * (y1 + y2);
+            
+            translate(x - currx, y - curry);
+        }
+    }
+  
     /*******************
      ***** Getters *****
      *******************/

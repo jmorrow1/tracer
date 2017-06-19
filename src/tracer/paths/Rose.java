@@ -179,6 +179,11 @@ public class Rose extends Path {
         this.freq2 = freq2;
     }
     
+    @Override
+    public void setCenter(float x, float y) {
+        this.cen.set(x, y);
+    }
+    
     /*******************
      ***** Getters *****
      *******************/

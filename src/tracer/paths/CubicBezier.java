@@ -205,7 +205,7 @@ public class CubicBezier extends Path {
     public void setAnchor1(Point a1) {
         this.a1 = a1;
     }
-    
+
     /*******************
      ***** Helpers *****
      *******************/

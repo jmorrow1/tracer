@@ -194,6 +194,11 @@ public class Arc extends Path {
         this.endAngle = endAngle;
     }
     
+    @Override
+    public void setCenter(float x, float y) {
+         translate(x - getCenx(), y - getCeny());
+    }
+    
     /*******************************
      ***** Getters and Setters *****
      *******************************/

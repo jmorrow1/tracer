@@ -180,6 +180,11 @@ public class Supershape extends Path {
         this.cen = cen;
     }
     
+    @Override
+    public void setCenter(float x, float y) {
+        this.cen.set(x, y);
+    }
+    
     /**
      * 
      * @param cenx the center x-coordinate

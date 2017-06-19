@@ -211,6 +211,11 @@ public class Plot extends Path {
     public void translate(float dx, float dy) {
         rect.translate(dx, dy);
     }
+    
+    @Override
+    public void setCenter(float x, float y) {
+        rect.setCenter(x, y);
+    }
 
     /*******************
      ***** Getters *****

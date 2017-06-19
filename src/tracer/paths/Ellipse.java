@@ -224,6 +224,11 @@ public class Ellipse extends Path {
         set(getCenx(), getCeny(), s * getXRadius(), s * getYRadius(), RADIUS);
         perimeterOutOfSync = true;
     }
+    
+    @Override
+    public void setCenter(float x, float y) {
+         translate(x - getCenx(), y - getCeny());
+    }
 
     /*******************
      ***** Getters *****

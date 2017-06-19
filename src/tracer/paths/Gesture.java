@@ -260,6 +260,41 @@ public class Gesture extends Path {
             }
         }
     }
+    
+    @Override
+    public void setCenter(float x, float y) {
+        if (vertices.size() > 0) {
+            Point pt = vertices.get(0).pt;
+            
+            float x1 = pt.x;
+            float y1 = pt.y;
+            float x2 = pt.x;
+            float y2 = pt.y;
+            
+            for (int i=1; i<vertices.size(); i++) {
+                pt = vertices.get(i).pt;
+                
+                if (pt.x < x1) {
+                    x1 = pt.x;
+                }
+                else if (pt.x > x2) {
+                    x2 = pt.x;
+                }
+                
+                if (pt.y < y1) {
+                    y1 = pt.y;
+                }
+                else if (pt.y > y2) {
+                    y2 = pt.y;
+                }
+            }
+            
+            float currx = 0.5f * (x1 + x2);
+            float curry = 0.5f * (y1 + y2);
+            
+            translate(x - currx, y - curry);
+        }
+    }
 
     /*******************
      ***** Getters *****

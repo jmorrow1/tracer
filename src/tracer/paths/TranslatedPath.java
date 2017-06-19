@@ -67,7 +67,7 @@ public class TranslatedPath<T extends Path> extends Path {
     @Override
     public void draw(PGraphics g) {
         g.pushMatrix();
-        g.translate(bufferPoint.x, bufferPoint.y);
+        g.translate(translation.x, translation.y);
         path.draw(g);
         g.popMatrix();
     }
@@ -80,7 +80,7 @@ public class TranslatedPath<T extends Path> extends Path {
     public void translate(float dx, float dy) {
         translation.translate(dx, dy);
     }
-
+    
     /*******************
      ***** Getters *****
      *******************/

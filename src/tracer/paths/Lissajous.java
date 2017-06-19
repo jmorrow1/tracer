@@ -163,6 +163,19 @@ public class Lissajous extends Path {
         this.phi = phi;
     }
     
+    @Override
+    public void setCenter(float x, float y) {
+        this.cen.set(x, y);
+    }
+    
+    /**
+     * 
+     * @param pt
+     */
+    public void setCenter(Point pt) {
+        this.cen = pt;
+    }
+    
     /*******************
      ***** Getters *****
      *******************/

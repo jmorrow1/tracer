@@ -157,6 +157,11 @@ public class Superellipse extends Path {
         this.cen.y = ceny;
     }
     
+    @Override
+    public void setCenter(float x, float y) {
+        this.cen.set(x, y);
+    }
+    
     /**
      * 
      * @param xRadius half the width
