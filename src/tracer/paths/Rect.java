@@ -13,7 +13,7 @@ import tracer.Point;
  */
 public class Rect extends Path {
     //definition
-    public Point ab, cd;
+    private Point ab, cd;
     protected int rectMode;
     
     //helper fields

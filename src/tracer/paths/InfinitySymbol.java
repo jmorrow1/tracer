@@ -11,7 +11,7 @@ import tracer.Point;
  *
  */
 public class InfinitySymbol extends Path {
-    public Point cen;
+    private Point cen;
     private float xRadius, yRadius;
 
     /**************************

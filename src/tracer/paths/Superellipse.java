@@ -18,7 +18,7 @@ import tracer.Point;
  *
  */
 public class Superellipse extends Path {
-    public Point cen;
+    private Point cen;
     private float xRadius, yRadius;
     private float n;
     private float twoOverN;

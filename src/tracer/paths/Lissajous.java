@@ -11,7 +11,7 @@ import tracer.Point;
  *
  */
 public class Lissajous extends Path {
-    public Point cen;
+    private Point cen;
     private float xRadius, yRadius, freqX, freqY, phi;
     
     /**************************

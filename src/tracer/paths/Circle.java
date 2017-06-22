@@ -12,7 +12,7 @@ import tracer.Point;
  *
  */
 public class Circle extends Path {
-    public Point center;
+    private Point center;
     private float radius;
     private float startAngle;
     

@@ -11,7 +11,7 @@ import tracer.Point;
  *
  */
 public class CubicBezier extends Path {
-    public Point a1, c1, c2, a2; //anchor and control points
+    private Point a1, c1, c2, a2; //anchor and control points
 
     /**************************
      ***** Initialization *****
