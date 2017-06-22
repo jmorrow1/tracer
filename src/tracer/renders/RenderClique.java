@@ -21,6 +21,13 @@ public class RenderClique extends Render {
     
     /**
      * 
+     */
+    public RenderClique() {
+        super();
+    }
+    
+    /**
+     * 
      * @param ts
      */
     public RenderClique(Collection<? extends Point> ts) {

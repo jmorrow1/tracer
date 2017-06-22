@@ -1,5 +1,6 @@
 package tracer.renders;
 
+import java.util.ArrayList;
 import java.util.Collection;
 
 import processing.core.PApplet;
@@ -25,6 +26,10 @@ public class RenderMesh extends Render {
     /**************************
      ***** Initialization *****
      **************************/
+    
+    public RenderMesh() {
+        this(new ArrayList<Point>(), 100, 0);
+    }
 
     /**
      * 

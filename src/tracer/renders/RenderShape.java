@@ -16,35 +16,42 @@ import tracer.Tracer;
 public class RenderShape extends Render {
     // style
     protected boolean closeShape = true;
+
+    /**
+     * 
+     */
+    public RenderShape() {
+        super();
+    }
     
-    /**************************
-     ***** Initialization *****
-     **************************/
+    /**
+     * 
+     * @param ts
+     */
+    public RenderShape(Collection<? extends Point> ts) {
+        super(ts);
+    }
+
+    /**
+     * 
+     * @param ts
+     */
+    public RenderShape(Point[] ts) {
+        this(listify(ts));
+    }
+    
+    /**
+     * 
+     * @param ts
+     */
+    public RenderShape(Tracer[] ts) {
+        this(listify(ts));
+    }
     
     /********************
      ***** Behavior *****
      ********************/
     
-    /******************
-     ***** Events *****
-     ******************/
-    
-    /*******************
-     ***** Getters *****
-     *******************/
-
-    public RenderShape(Collection<? extends Point> ts) {
-        super(ts);
-    }
-
-    public RenderShape(Point[] ts) {
-        this(listify(ts));
-    }
-    
-    public RenderShape(Tracer[] ts) {
-        this(listify(ts));
-    }
-
     @Override
     public void draw(PGraphics g) {
         // stroke
@@ -77,6 +84,14 @@ public class RenderShape extends Render {
         }
     }
 
+    /******************
+     ***** Events *****
+     ******************/
+    
+    /**
+     * 
+     * @param closeShape
+     */
     public void setCloseShape(boolean closeShape) {
         this.closeShape = closeShape;
     }
