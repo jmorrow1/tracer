@@ -35,7 +35,7 @@ public class Rose extends Path {
         this.yRadius = yRadius;
         this.freq1 = freq1;
         this.freq2 = freq2;
-        setSamplesPerUnitLength(Path.STANDARD_SAMPLES_PER_UNIT_LENGTH);
+        setSamplesPerUnitLength(Path.defaultSamplesPerUnitLength);
     } 
     
     /**

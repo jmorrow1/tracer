@@ -52,7 +52,7 @@ public abstract class Path implements Drawable {
     protected int sampleCount;
     protected TStyle style;
     public final static float ALMOST_ONE = 0.99999f;
-    protected final static float STANDARD_SAMPLES_PER_UNIT_LENGTH = 0.2f;
+    public static float defaultSamplesPerUnitLength = 0.2f;
     
     /**************************
      ***** Initialization *****

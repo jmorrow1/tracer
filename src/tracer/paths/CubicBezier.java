@@ -29,7 +29,7 @@ public class CubicBezier extends Path {
         this.c1 = c1;
         this.c2 = c2;
         this.a2 = a2;
-        setSamplesPerUnitLength(Path.STANDARD_SAMPLES_PER_UNIT_LENGTH);
+        setSamplesPerUnitLength(Path.defaultSamplesPerUnitLength);
     }
 
     /**

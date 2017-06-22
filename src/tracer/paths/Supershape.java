@@ -49,7 +49,7 @@ public class Supershape extends Path {
         this.n3 = n3;
         this.mOver4 = m / 4f;
         this.n1Inverted = 1f / n1;
-        setSamplesPerUnitLength(Path.STANDARD_SAMPLES_PER_UNIT_LENGTH);
+        setSamplesPerUnitLength(Path.defaultSamplesPerUnitLength);
     }
 
     /**

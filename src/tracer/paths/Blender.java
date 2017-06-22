@@ -39,7 +39,7 @@ public class Blender<T extends Path, U extends Path> extends Path {
         this.a = a;
         this.b = b;
         this.blendAmt = blendAmt;
-        setSamplesPerUnitLength(Path.STANDARD_SAMPLES_PER_UNIT_LENGTH);
+        setSamplesPerUnitLength(Path.defaultSamplesPerUnitLength);
     }
 
     /**

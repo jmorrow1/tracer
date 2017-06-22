@@ -30,7 +30,7 @@ public class Segment extends Path {
         this.parent = parent;
         setU1(u1);
         setU2(u2);
-        setSamplesPerUnitLength(Path.STANDARD_SAMPLES_PER_UNIT_LENGTH);
+        setSamplesPerUnitLength(Path.defaultSamplesPerUnitLength);
     }
     
     /**

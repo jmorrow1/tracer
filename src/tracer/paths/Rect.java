@@ -39,7 +39,7 @@ public class Rect extends Path {
      */
     public Rect(float a, float b, float c, float d, int rectMode) {
         set(a, b, c, d, rectMode);
-        setSamplesPerUnitLength(Path.STANDARD_SAMPLES_PER_UNIT_LENGTH);
+        setSamplesPerUnitLength(Path.defaultSamplesPerUnitLength);
     }
 
     /**
@@ -55,7 +55,7 @@ public class Rect extends Path {
      */
     public Rect(Point ab, float c, float d, int rectMode) {
         set(ab, c, d, rectMode);
-        setSamplesPerUnitLength(Path.STANDARD_SAMPLES_PER_UNIT_LENGTH);
+        setSamplesPerUnitLength(Path.defaultSamplesPerUnitLength);
     }
 
     /**
@@ -69,7 +69,7 @@ public class Rect extends Path {
      */
     public Rect(Point ab, Point cd, int rectMode) {
         set(ab, cd, rectMode);
-        setSamplesPerUnitLength(Path.STANDARD_SAMPLES_PER_UNIT_LENGTH);
+        setSamplesPerUnitLength(Path.defaultSamplesPerUnitLength);
     }
 
     /**
@@ -91,7 +91,7 @@ public class Rect extends Path {
      */
     public Rect(float x, float y, float r) {
         set(x, y, r, 0.5f*r, RADIUS);
-        setSamplesPerUnitLength(Path.STANDARD_SAMPLES_PER_UNIT_LENGTH);
+        setSamplesPerUnitLength(Path.defaultSamplesPerUnitLength);
     }
 
     /**

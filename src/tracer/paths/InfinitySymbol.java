@@ -28,7 +28,7 @@ public class InfinitySymbol extends Path {
         this.cen = cen;
         this.xRadius = xRadius;
         this.yRadius = yRadius;
-        this.setSamplesPerUnitLength(Path.STANDARD_SAMPLES_PER_UNIT_LENGTH);
+        this.setSamplesPerUnitLength(Path.defaultSamplesPerUnitLength);
     }
 
     /**

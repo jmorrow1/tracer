@@ -38,7 +38,7 @@ public class Ellipse extends Path {
      */
     public Ellipse(float a, float b, float c, float d, int ellipseMode) {
         set(a, b, c, d, ellipseMode);
-        setSamplesPerUnitLength(Path.STANDARD_SAMPLES_PER_UNIT_LENGTH);
+        setSamplesPerUnitLength(Path.defaultSamplesPerUnitLength);
     }
     
     /**
@@ -50,7 +50,7 @@ public class Ellipse extends Path {
      */
     public Ellipse(Point ab, float c, float d, int ellipseMode) {
         set(ab, c, d, ellipseMode);
-        setSamplesPerUnitLength(Path.STANDARD_SAMPLES_PER_UNIT_LENGTH);
+        setSamplesPerUnitLength(Path.defaultSamplesPerUnitLength);
     }
     
     /**
@@ -61,7 +61,7 @@ public class Ellipse extends Path {
      */
     public Ellipse(Point ab, Point cd, int ellipseMode) {
         set(ab, cd, ellipseMode);
-        setSamplesPerUnitLength(Path.STANDARD_SAMPLES_PER_UNIT_LENGTH);
+        setSamplesPerUnitLength(Path.defaultSamplesPerUnitLength);
     }
     
     /**
@@ -73,7 +73,7 @@ public class Ellipse extends Path {
      */
     public Ellipse(float x, float y, float r) {
         set(x, y, r, 0.5f*r, PApplet.RADIUS);
-        setSamplesPerUnitLength(Path.STANDARD_SAMPLES_PER_UNIT_LENGTH);
+        setSamplesPerUnitLength(Path.defaultSamplesPerUnitLength);
     }
 
     /**

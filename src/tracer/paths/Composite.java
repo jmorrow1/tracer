@@ -31,7 +31,7 @@ public class Composite<T extends Path, U extends Path> extends Path {
     public Composite(T a, U b) {
         this.a = a;
         this.b = b;
-        setSamplesPerUnitLength(Path.STANDARD_SAMPLES_PER_UNIT_LENGTH);
+        setSamplesPerUnitLength(Path.defaultSamplesPerUnitLength);
     }
 
     /**

@@ -34,7 +34,7 @@ public class Lissajous extends Path {
         this.freqX = freqX;
         this.freqY = freqY;
         this.phi = phi;
-        this.setSamplesPerUnitLength(Path.STANDARD_SAMPLES_PER_UNIT_LENGTH);
+        this.setSamplesPerUnitLength(Path.defaultSamplesPerUnitLength);
     }
     
     /**

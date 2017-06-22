@@ -40,7 +40,7 @@ public class Superellipse extends Path {
         this.yRadius = yRadius;
         this.n = n;
         this.twoOverN = 2f / n;
-        setSamplesPerUnitLength(Path.STANDARD_SAMPLES_PER_UNIT_LENGTH);
+        setSamplesPerUnitLength(Path.defaultSamplesPerUnitLength);
     }
     
     /**

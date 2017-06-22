@@ -43,7 +43,7 @@ public class Arc extends Path {
         setEllipse(a, b, c, d, ellipseMode);
         this.startAngle = startAngle;
         this.endAngle = endAngle;
-        setSamplesPerUnitLength(Path.STANDARD_SAMPLES_PER_UNIT_LENGTH);
+        setSamplesPerUnitLength(Path.defaultSamplesPerUnitLength);
     }
 
     /**

@@ -31,7 +31,7 @@ public class Shape extends Path {
     public Shape(List<Point> vertices) {
         this.vertices2D = vertices;
         computeVertices1D();
-        setSamplesPerUnitLength(Path.STANDARD_SAMPLES_PER_UNIT_LENGTH);
+        setSamplesPerUnitLength(Path.defaultSamplesPerUnitLength);
     }
 
     /**
@@ -62,7 +62,7 @@ public class Shape extends Path {
             vertices2D.add(new Point(x + r * PApplet.cos(theta), y + r * PApplet.sin(theta)));
         }
         computeVertices1D();
-        setSamplesPerUnitLength(Path.STANDARD_SAMPLES_PER_UNIT_LENGTH);
+        setSamplesPerUnitLength(Path.defaultSamplesPerUnitLength);
     }
     
     /**
