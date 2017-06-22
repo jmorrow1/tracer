@@ -52,7 +52,7 @@ public abstract class Path implements Drawable {
     protected int sampleCount;
     protected TStyle style;
     public final static float ALMOST_ONE = 0.99999f;
-    public static float defaultSamplesPerUnitLength = 0.2f;
+    protected static float defaultSamplesPerUnitLength = 0.2f;
     
     /**************************
      ***** Initialization *****
@@ -880,5 +880,26 @@ public abstract class Path implements Drawable {
         for (Path p : paths) {
             p.draw(g);
         }
+    }
+    
+    /**
+     * 
+     * @param defaultSamplesPerUnitLength
+     */
+    public static void setDefaultSamplesPerUnitLength(float defaultSamplesPerUnitLength) {
+        if (defaultSamplesPerUnitLength > 0) {
+            Path.defaultSamplesPerUnitLength = defaultSamplesPerUnitLength;
+        }
+        else {
+            throw new IllegalArgumentException("Path.defaultSamplesPerUnitLength must be greater than 0.");
+        }
+    }
+    
+    /**
+     * 
+     * @return
+     */
+    public static float getDefaultSamplesPerUnitLength() {
+        return defaultSamplesPerUnitLength;
     }
 }
