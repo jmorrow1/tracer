@@ -82,9 +82,9 @@ static Path makePath(int pathType, Point pt, float radius) {
   switch (pathType) {
     case CIRCLE_PATH : return new Circle(pt, radius);
     case SQUARE_PATH : return new Rect(pt, radius, radius, RADIUS);
-    case INFINITY_PATH : return new InfinitySymbol(pt, radius, 0.75*radius, 100);
-    case LISSAJOUS_PATH : return new Lissajous(100, pt, radius, radius, freqX, freqY, phi);
-    case ROSE_PATH : return new Rose(pt, radius, freqX, freqY, 100);
+    case INFINITY_PATH : return new InfinitySymbol(pt, radius, 0.75*radius);
+    case LISSAJOUS_PATH : return new Lissajous(pt, radius, radius, freqX, freqY, phi);
+    case ROSE_PATH : return new Rose(pt, radius, freqX, freqY);
     case POLYGON_PATH : return new TranslatedPath(pt, Polygonize.makeRegularPolygon(0, 0, radius, polyOrder, 0));
     default : return new Circle(pt, radius);
   }

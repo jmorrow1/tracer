@@ -13,8 +13,8 @@ import tracer.paths.Path;
  *
  */
 public class Tracer<T extends Path> extends Point {
-    protected float u; //@param The Tracer's location in 1D space, relative to the Tracer's easing curve.
-    protected float du; //@param The Tracer's speed in 1D space, relative to the Tracer's easing curve.
+    protected float input1D; //@param The Tracer's location in 1D space, relative to the Tracer's easing curve.
+    protected float speed1D; //@param The Tracer's speed in 1D space, relative to the Tracer's easing curve.
     protected T path; //@param The Path to which the Tracer is attached
     protected Easing easing; //@param The easing curve determining how the Tracer moves in time.
     
@@ -27,30 +27,30 @@ public class Tracer<T extends Path> extends Point {
      * @param t The Tracer to copy
      */
     public Tracer(Tracer<T> t) {
-        this(t.path, t.u, t.du, t.easing);
+        this(t.path, t.input1D, t.speed1D, t.easing);
     }
 
     /**
      * 
      * @param path The Path
-     * @param startu The starting one-dimensional coordinate
-     * @param du The one-dimensional speed
+     * @param initInput1D The starting one-dimensional coordinate
+     * @param speed1D The one-dimensional speed
      */
-    public Tracer(T path, float startu, float du) {
-        this(path, startu, du, Easings.getLinear());
+    public Tracer(T path, float initInput1D, float speed1D) {
+        this(path, initInput1D, speed1D, Easings.getLinear());
     }
 
     /**
      * 
      * @param path The Path
-     * @param startu The starting one-dimensional coordinate
-     * @param du The one-dimensional speed
+     * @param initInput1D The starting one-dimensional coordinate
+     * @param speed1D The one-dimensional speed
      * @param easing The easing curve
      */
-    public Tracer(T path, float startu, float du, Easing easing) {
-        super(path.trace(startu));
-        this.u = Path.remainder(startu, 1f);
-        this.du = du;
+    public Tracer(T path, float initInput1D, float speed1D, Easing easing) {
+        super(path.trace(initInput1D));
+        this.input1D = Path.remainder(initInput1D, 1f);
+        this.speed1D = speed1D;
         this.path = path;
         this.easing = easing;
     }
@@ -63,7 +63,7 @@ public class Tracer<T extends Path> extends Point {
      * Moves the Tracer along its Path by its speed.
      */
     public void step() {
-        u = remainder(u + du, 1f);
+        input1D = remainder(input1D + speed1D, 1f);
         trace();
     }
 
@@ -72,12 +72,12 @@ public class Tracer<T extends Path> extends Point {
      * @param dt The time step
      */
     public void step(int dt) {
-        u = remainder(u + du * dt, 1f);
+        input1D = remainder(input1D + speed1D * dt, 1f);
         trace();
     }
     
     private void trace() {
-        float y = easing.val(u);
+        float y = easing.val(input1D);
         path.trace(this, y);
     }
     
@@ -87,19 +87,19 @@ public class Tracer<T extends Path> extends Point {
     
     /**
      * Sets the one-dimensional coordinate of the Tracer (a value between 0 (inclusive) and 1 (exclusive)).
-     * @param u The one-dimensional coordinate
+     * @param input1D The one-dimensional coordinate
      */
-    public void setU(float u) {
-        this.u = remainder(u, 1.0f);
+    public void setInput1D(float input1D) {
+        this.input1D = remainder(input1D, 1.0f);
         trace();
     }
     
     /**
      * Sets the one-dimensional speed of the Tracer.
-     * @param du The one-dimensional speed
+     * @param speed1D The one-dimensional speed
      */
-    public void setDu(float du) {
-        this.du = du;
+    public void setSpeed1D(float speed1D) {
+        this.speed1D = speed1D;
     }
     
     /**
@@ -128,24 +128,24 @@ public class Tracer<T extends Path> extends Point {
      * 
      * @return
      */
-    public float getV() { //TODO name this better
-        return easing.val(u);
+    public float getOutput1D() {
+        return easing.val(input1D);
     }
 
     /**
      * Gives the one-dimensional coordinate of the Tracer (a value between 0 (inclusive) and 1 (exclusive)).
      * @return The one-dimensional coordinate
      */
-    public float getU() {
-        return u;
+    public float getInput1D() {
+        return input1D;
     }
 
     /**
      * Gives the one-dimensional speed of the Tracer.
      * @return The one-dimensional speed of the Tracer
      */
-    public float getDu() {
-        return du;
+    public float getSpeed1D() {
+        return speed1D;
     }
 
     /**
@@ -171,7 +171,7 @@ public class Tracer<T extends Path> extends Point {
 
     @Override
     public String toString() {
-        return "Tracer [u=" + u + ", du=" + du + ", path=" + path + "]";
+        return "Tracer [input1D=" + input1D + ", speed1D=" + speed1D + ", path=" + path + "]";
     }
     
     /******************

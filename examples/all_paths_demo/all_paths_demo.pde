@@ -99,7 +99,7 @@ void draw() {
 
 
   if (!drawSegments) {
-    //draw paths
+    //draw paths    
     for (Path p : paths) {
       p.draw(g);
     }
@@ -110,8 +110,9 @@ void draw() {
     for (Tracer t : tracers) {
       Path p = t.getPath();
       float dist = (synchronizeTracing) ? 0.4 : (50 / p.getLength());
-      float start = Path.remainder(t.getU()-dist, 1);
-      float end = t.getU();
+      float start = Path.remainder(t.getInput1D()-dist, 1);
+      float end = t.getInput1D();
+      strokeWeight(1);
       p.draw(g, start, end);
     }
   }

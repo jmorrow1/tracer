@@ -40,7 +40,7 @@ public class Composite<T extends Path, U extends Path> extends Path {
      * @param c The composite to copy
      */
     public Composite(Composite<T, U> c) {
-        this(c.a, c.b);
+        this((T)c.a.clone(), (U)c.b.clone());
         setSampleCount(c.sampleCount);
     }
 

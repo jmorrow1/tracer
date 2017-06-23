@@ -126,7 +126,7 @@ void draw() {
       Rect rect = rects.get(i);
       Tracer t = tracers.get(i);
       
-      float x = map(easing.val(t.getU()), 0, 1, rect.getX1() + 9, rect.getX2() - 9);
+      float x = map(easing.val(t.getInput1D()), 0, 1, rect.getX1() + 9, rect.getX2() - 9);
       ellipse(x, rect.getCeny(), 18, 18);
     }
   }

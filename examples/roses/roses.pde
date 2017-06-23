@@ -61,7 +61,7 @@ void switchRenderMode() {
       render.setStrokeWeight(4);
       break;
     case VORONOI :
-      render = new RenderVoronoi(tracers);
+      //render = new RenderVoronoi(tracers);
       break;
   }
   

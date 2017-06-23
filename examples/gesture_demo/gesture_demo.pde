@@ -45,7 +45,7 @@ void mouseDragged() {
 }
 
 void mouseReleased() {
-  float du = 3f / gesture.getTotalTime();
+  float du = 3f / gesture.getDuration();
   Tracer tracer = new Tracer(gesture, 0, du);
   trails.add(new Trail(tracer, 100, strokeColor, strokeWeight));
   paths.remove(gesture);

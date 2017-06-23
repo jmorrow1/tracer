@@ -127,7 +127,7 @@ public abstract class Path implements Drawable {
         if (!inRange) {
             throw new IllegalArgumentException(Path.class.getName() + ".draw(g, " + u1 + ", " + u2 + ") called with values outside the range 0 to 1.");
         }
-        style.apply(g);
+//        style.apply(g);
         drawHelper(g, u1, u2);
     }
     
@@ -158,20 +158,28 @@ public abstract class Path implements Drawable {
                 }
             }
             
-            float length = PApplet.abs(u1 - u2);
+            float length = u2 - u1;
             int n = (int) (sampleCount * length);
-            float du = length / n;
-    
-            g.beginShape();
-            float u = u1;
-            for (int i = 0; i <= n; i++) {
-                trace(bufferPoint, u);
+            
+            if (n > 1) {
+                float du = length / (n-1);
+                
+                g.beginShape();
+                float u = u1;
+                for (int i = 0; i <= n; i++) {
+                    trace(bufferPoint, u);
+                    g.vertex(bufferPoint.x, bufferPoint.y);
+                    u = (u + du) % 1f;
+                }
+                trace(bufferPoint, u2);
                 g.vertex(bufferPoint.x, bufferPoint.y);
-                u = (u + du) % 1f;
+                g.endShape();
             }
-            trace(bufferPoint, u2);
-            g.vertex(bufferPoint.x, bufferPoint.y);
-            g.endShape();
+            else {
+                Point prevpt = trace(u1);
+                trace(bufferPoint, u2);
+                g.line(prevpt.x, prevpt.y, bufferPoint.x, bufferPoint.y);
+            }
         }
     }
 
@@ -467,21 +475,29 @@ public abstract class Path implements Drawable {
                 }
             }
             
-            float length = PApplet.abs(u1 - u2);
+            float length = u2 - u1;
             int n = (int) (sampleCount * length);
-            float du = length / n;
-
-            float u = u1;
-            trace(bufferPoint, u);
-            Point prevpt = new Point(bufferPoint);
-            for (int i = 1; i < n; i++) {
-                trace(bufferPoint, u);         
-                segmentLength += PApplet.dist(prevpt.x, prevpt.y, bufferPoint.x, bufferPoint.y);
-                u = (u + du) % 1f;
-                prevpt.set(bufferPoint);
-            }
             
-            return segmentLength;
+            if (n > 0) {
+                float u = u1;
+                float du = length / n;
+                trace(bufferPoint, u);
+                Point prevpt = new Point(bufferPoint);
+                for (int i = 1; i <= n; i++) {
+                    u = (u + du) % 1f;
+                    trace(bufferPoint, u);         
+                    segmentLength += PApplet.dist(prevpt.x, prevpt.y, bufferPoint.x, bufferPoint.y);
+                    prevpt.set(bufferPoint);
+                }
+                
+                return segmentLength;
+            }
+            else {
+               Point prevpt = new Point(0, 0);
+               trace(prevpt, u1);
+               trace(bufferPoint, u2);
+               return PApplet.dist(prevpt.x, prevpt.y, bufferPoint.x, bufferPoint.y);
+            }
         }
     }
 

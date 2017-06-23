@@ -42,13 +42,18 @@ class Spiral extends Path {
   //the getGap(i) method returns a normalized floating point value giving the 1D location of the ith gap in the Path.
   @Override
   float getGap(int i) {
-    return -1; //Squares contain no gaps. Return the error code -1. If there was an ith gap, we would return the 1D location of the gap.
+    if (i == 0) {
+      return 0; //Sprials contain a gap at 0.
+    }
+    else {
+      return -1; //Invalid index; return error code
+    }
   }
   
   //the getGapCount() method returns the number of gaps in the Path
   @Override
   int getGapCount() {
-    return 0; //Squares contains zero gaps, they are completely continuous.
+    return 1; //Spirals contain 1 gap
   }
   
   //the clone() method creates a copy of the Path and returns it

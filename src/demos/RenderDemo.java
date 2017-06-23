@@ -2,9 +2,9 @@ package demos;
 
 import java.util.ArrayList;
 
-import experimental.RenderMetaBalls;
 import processing.core.PApplet;
 import tracer.Tracer;
+import tracer.experimental.RenderMetaBalls;
 import tracer.paths.Circle;
 import tracer.paths.Path;
 import tracer.renders.Render;
