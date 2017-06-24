@@ -16,10 +16,6 @@ public class Ellipse extends Path {
     private Point ab, cd;
     protected int ellipseMode;
     
-    //helper fields
-    protected float perimeter;
-    protected boolean perimeterOutOfSync; //flag
-    
     /**************************
      ***** Initialization *****
      **************************/
@@ -106,7 +102,6 @@ public class Ellipse extends Path {
             cd.x = c;
             cd.y = d;
             this.ellipseMode = ellipseMode;
-            setHelperFields();
         }
     }
     
@@ -128,7 +123,6 @@ public class Ellipse extends Path {
             cd.x = c;
             cd.y = d;
             this.ellipseMode = ellipseMode;
-            setHelperFields();
         }
     }
     
@@ -155,14 +149,6 @@ public class Ellipse extends Path {
                 return;
         }
         this.ellipseMode = ellipseMode;
-        setHelperFields();
-    }
-    
-    private void setHelperFields() {
-        float a = PApplet.max(getXRadius(), getYRadius());
-        float b = PApplet.min(getXRadius(), getYRadius());
-        perimeter = PApplet.PI * (3 * (a + b) - PApplet.sqrt((3 * a + b) * (a + 3 * b)));
-        perimeterOutOfSync = false;
     }
     
     /********************
@@ -219,7 +205,6 @@ public class Ellipse extends Path {
 
     public void scale(float s) {
         set(getCenx(), getCeny(), s * getXRadius(), s * getYRadius(), RADIUS);
-        perimeterOutOfSync = true;
     }
     
     @Override
@@ -254,10 +239,11 @@ public class Ellipse extends Path {
 
     @Override
     public float getLength() {
-        if (perimeterOutOfSync) {
-            setHelperFields();
-        }
-        return perimeter;
+        float xRadius = getXRadius();
+        float yRadius = getYRadius();
+        float a = PApplet.max(xRadius, yRadius);
+        float b = PApplet.min(xRadius, yRadius);
+        return PApplet.PI * (3 * (a + b) - PApplet.sqrt((3 * a + b) * (a + 3 * b)));
     }
     
     /**

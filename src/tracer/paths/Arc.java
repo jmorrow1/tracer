@@ -11,14 +11,28 @@ import tracer.Point;
  *
  */
 public class Arc extends Path {
-    //definition
     private Point ab, cd;
-    protected float startAngle, endAngle;
-    protected int ellipseMode;
+    private float startAngle, endAngle;
+    private int ellipseMode;
 
     /**************************
      ***** Initialization *****
      **************************/
+    
+    /**
+     * 
+     * @param ab
+     * @param cd
+     * @param startAngle
+     * @param endAngle
+     * @param ellipseMode
+     */
+    public Arc(Point ab, Point cd, float startAngle, float endAngle, int ellipseMode) {
+       setEllipse(ab, cd, ellipseMode);
+       this.startAngle = startAngle;
+       this.endAngle = endAngle;
+       setSamplesPerUnitLength(Path.defaultSamplesPerUnitLength);
+    }
     
     /**
      * 
@@ -82,10 +96,8 @@ public class Arc extends Path {
             setEllipse(new Point(a, b), new Point(c, d), ellipseMode);
         }
         else {
-            ab.x = a;
-            ab.y = b;
-            cd.x = c;
-            cd.y = d;
+            ab.set(a, b);
+            cd.set(c, d);
             this.ellipseMode = ellipseMode;
         }
     }
@@ -101,14 +113,11 @@ public class Arc extends Path {
     public void setEllipse(Point ab, Point cd, int ellipseMode) {
         switch (ellipseMode) {
             case CORNERS:
-                this.ab = ab;
-                this.cd = cd;
-                break;
             case CORNER:
             case CENTER:
             case RADIUS:
                 this.ab = ab;
-                this.cd = new Point(cd);
+                this.cd = cd;
                 break;
             default:
                 System.err.println("Invalid ellipseMode. Use CORNERS, CORNER, CENTER, or RADIUS.");
@@ -129,12 +138,11 @@ public class Arc extends Path {
      */
     public void setEllipse(Point ab, float c, float d, int ellipseMode) {
         if (ab == null || cd == null) {
-            setEllipse(ab, new Point(c, d), ellipseMode);
+            setEllipse(ab, new Point(c, d), ellipseMode); 
         }
         else {
             this.ab = ab;
-            cd.x = c;
-            cd.y = d;
+            this.cd = new Point(c, d);
             this.ellipseMode = ellipseMode;
         }
     }
@@ -199,9 +207,41 @@ public class Arc extends Path {
          translate(x - getCenx(), y - getCeny());
     }
     
-    /*******************************
-     ***** Getters and Setters *****
-     *******************************/
+    /**
+     * 
+     * @param ab
+     */
+    public void setAB(Point ab) {
+        this.ab = ab;
+    }
+    
+    /**
+     * 
+     * @param cd
+     */
+    public void setCD(Point cd) {
+        this.cd = cd;
+    }
+    
+    /*******************
+     ***** Getters *****
+     *******************/
+    
+    /**
+     * 
+     * @return
+     */
+    public Point getAB() {
+        return ab;
+    }
+    
+    /**
+     * 
+     * @return
+     */
+    public Point getCD() {
+        return cd;
+    }
 
     /**
      * Gives the center x-coordinate of the ellipse underlying the arc.
@@ -441,6 +481,14 @@ public class Arc extends Path {
         return new Arc(this);
     }
     
+    /**
+     * 
+     * @return
+     */
+    public int getEllipseMode() {
+        return ellipseMode;
+    }
+    
     @Override
     public float getLength() {
         if (getXRadius() == getYRadius()) {
@@ -455,20 +503,6 @@ public class Arc extends Path {
     @Override
     public String toString() {
         return "Arc [ab=" + ab + ", cd=" + cd + ", startAngle=" + startAngle + ", endAngle=" + endAngle
-                + ", ellipseMode=" + ellipseModeToString(ellipseMode) + "]";
-    }
-    
-    /******************
-     ***** Static *****
-     ******************/
-
-    private static String ellipseModeToString(int ellipseMode) {
-        switch (ellipseMode) {
-            case CORNER : return "CORNER";
-            case CENTER: return "CENTER";
-            case CORNERS : return "CORNERS";
-            case RADIUS : return "RADIUS";
-            default : return "UNKNOWN";
-        }
+                + ", ellipseMode=" + Ellipse.ellipseModeToString(ellipseMode) + "]";
     }
 }

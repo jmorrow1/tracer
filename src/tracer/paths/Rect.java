@@ -284,10 +284,42 @@ public class Rect extends Path {
     public void make1DProportionalTo2D() {
         computeHelperFields();
     }
+    
+    /**
+     * 
+     * @param ab
+     */
+    public void setAB(Point ab) {
+        this.ab = ab;
+    }
+    
+    /**
+     * 
+     * @param cd
+     */
+    public void setCD(Point cd) {
+        this.cd = cd;
+    }
 
     /*******************
      ***** Getters *****
      *******************/
+    
+    /**
+     * 
+     * @return
+     */
+    public Point getAB() {
+        return ab;
+    }
+    
+    /**
+     * 
+     * @return
+     */
+    public Point getCD() {
+        return cd;
+    }
 
     @Override
     public Path clone() {
