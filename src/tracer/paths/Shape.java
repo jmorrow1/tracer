@@ -314,12 +314,8 @@ public class Shape extends Path {
     }
 
     @Override
-    public Path clone() {
-        ArrayList<Point> pts = new ArrayList<Point>();
-        for (Point pt : pts) {
-            pts.add(new Point(pt));
-        }
-        return new Shape(pts);
+    public Shape clone() {
+        return new Shape(this);
     }
 
     @Override

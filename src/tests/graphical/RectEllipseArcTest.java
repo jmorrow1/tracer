@@ -19,8 +19,7 @@ public class RectEllipseArcTest extends PApplet {
     
     private Point ab, cd; //control with left and right mouse buttons (mac users can use shift+left click instead of right click)
     private int modeIndex = 0; //control with mouse wheel or left and right keys
-    private int pathMode = RECT; //control with space bar
-    
+    private int pathMode = RECT; //control with space bar    
     
     private Path path;
     private String mouseBehavior = "";
