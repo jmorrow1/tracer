@@ -18,7 +18,6 @@ public class Rect extends Path {
     
     //helper fields
     protected float[] vertices1D = new float[4]; // one-dimensional coordinates
-    protected float perimeter;
     
     /**************************
      ***** Initialization *****
@@ -501,7 +500,7 @@ public class Rect extends Path {
 
     @Override
     public float getLength() {
-        return perimeter;
+        return 2f * (getY2() - getY1()) + 2f * (getX2() - getX1());
     }
     
     /**
@@ -539,7 +538,7 @@ public class Rect extends Path {
     private void computeHelperFields() {
         float width = getX2() - getX1();
         
-        perimeter = 2f * width + 2f * (getY2() - getY1());
+        float perimeter = 2f * width + 2f * (getY2() - getY1());
         
         if (vertices1D == null) {
             vertices1D = new float[4];
