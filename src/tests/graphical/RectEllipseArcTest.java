@@ -3,19 +3,26 @@ package tests.graphical;
 import processing.core.PApplet;
 import processing.event.MouseEvent;
 import tracer.Point;
+import tracer.paths.Arc;
 import tracer.paths.Ellipse;
 import tracer.paths.Path;
+import tracer.paths.Rect;
 
-public class EllipseModeTest extends PApplet {
+public class RectEllipseArcTest extends PApplet {
 
     public static void main(String[] args) {
-        PApplet.main(EllipseModeTest.class);
+        PApplet.main(RectEllipseArcTest.class);
     }
     
+    private int[] modes = new int[] {CENTER, CORNER, CORNERS, RADIUS};
+    private final int RECT = 0, ELLIPSE = 1, ARC = 2;
+    
     private Point ab, cd; //control with left and right mouse buttons (mac users can use shift+left click instead of right click)
-    private Ellipse ellipse;
-    private int[] ellipseModes = new int[] {CENTER, CORNER, CORNERS, RADIUS};
-    private int ellipseModeIndex = 0; //control with mouse wheel or left and right keys
+    private int modeIndex = 0; //control with mouse wheel or left and right keys
+    private int pathMode = RECT; //control with space bar
+    
+    
+    private Path path;
     private String mouseBehavior = "";
     private boolean shift;
 
@@ -27,14 +34,24 @@ public class EllipseModeTest extends PApplet {
         ab = new Point(width/2, height/2);
         cd = new Point(150, 125);
         
-        createEllipse();
+        createPath();
         
         textSize(16);
     }
     
-    private void createEllipse() {
-        ellipse = new Ellipse(ab, cd, ellipseModes[ellipseModeIndex]);
-        style(ellipse);
+    private void createPath() {
+        switch (pathMode) {
+            case RECT :
+                path = new Rect(ab, cd, modes[modeIndex]);
+                break;
+            case ELLIPSE :
+                path = new Ellipse(ab, cd, modes[modeIndex]);
+                break;
+            case ARC :
+                path = new Arc(ab, cd, 0.1f * TWO_PI, 0.7f * TWO_PI, modes[modeIndex]);
+                break;
+        }
+        style(path);
     }
     
     private void style(Path path) {
@@ -46,13 +63,13 @@ public class EllipseModeTest extends PApplet {
     public void draw() {
         background(255);
         
-        //display ellipse mode
+        //display ellipse/rect mode
         textAlign(CENTER, TOP);
         fill(0);
-        text("< " + Ellipse.ellipseModeToString(ellipseModes[ellipseModeIndex]) + " Mode"+ " >", width/2, 10);
+        text("< " + Ellipse.ellipseModeToString(modes[modeIndex]) + " Mode"+ " >", width/2, 10);
         
-        //draw the ellipse
-        ellipse.draw(g);
+        //draw the path
+        path.draw(g);
         
         //draw the control points
         drawDot(ab);
@@ -73,12 +90,12 @@ public class EllipseModeTest extends PApplet {
     public void keyPressed() {
         if (key == CODED) {
             if (keyCode == LEFT) {
-                ellipseModeIndex = (int) Path.remainder(ellipseModeIndex-1, ellipseModes.length);
-                createEllipse();
+                modeIndex = (int) Path.remainder(modeIndex-1, modes.length);
+                createPath();
             }
             else if (keyCode == RIGHT) {
-                ellipseModeIndex = (int) Path.remainder(ellipseModeIndex+1, ellipseModes.length);
-                createEllipse();
+                modeIndex = (int) Path.remainder(modeIndex+1, modes.length);
+                createPath();
             }
             else if (keyCode == SHIFT) {
                 shift = true;
@@ -92,11 +109,15 @@ public class EllipseModeTest extends PApplet {
                 shift = false;
             }
         }
+        else if (key == ' ') {
+            pathMode = (pathMode + 1) % 3;
+            createPath();
+        }
     }
     
     public void mouseWheel(MouseEvent e) {
-        ellipseModeIndex = (int) Path.remainder(ellipseModeIndex + e.getCount(), ellipseModes.length);
-        createEllipse();
+        modeIndex = (int) Path.remainder(modeIndex + e.getCount(), modes.length);
+        createPath();
     }
     
     public void mousePressed() {
@@ -126,7 +147,7 @@ public class EllipseModeTest extends PApplet {
     }
     
     private String abToString() {
-        switch (ellipseModes[ellipseModeIndex]) {
+        switch (modes[modeIndex]) {
             case CORNER:
             case CORNERS:
                 return "left corner";
@@ -139,7 +160,7 @@ public class EllipseModeTest extends PApplet {
     }
     
     private String cdToString() {
-        switch (ellipseModes[ellipseModeIndex]) {
+        switch (modes[modeIndex]) {
             case CORNERS:
                 return "right corner";
             case CORNER:
