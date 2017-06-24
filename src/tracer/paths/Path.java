@@ -115,6 +115,25 @@ public abstract class Path implements Drawable {
     }
     
     /**
+     * 
+     * @param g
+     * @param u1
+     * @param u2
+     * @param disableStyle
+     */
+    public void draw(PGraphics g, float u1, float u2, boolean disableStyle) {
+        boolean inRange = (0 <= u1 && u1 <= 1 && 0 <= u2 && u2 <= 1);
+        if (!inRange) {
+            u1 = Path.remainder(u1, 1.0f);
+            u2 = Path.remainder(u2, 1.0f);
+        }
+        if (!disableStyle) {
+            style.apply(g);
+        }
+        drawHelper(g, u1, u2);
+    }
+    
+    /**
      * Draws a segment of the path starting at trace(u1) and ending at
      * trace(u2).
      * 
@@ -123,13 +142,7 @@ public abstract class Path implements Drawable {
      * @param u2 The 1D coordinate of the segment's end
      */
     public void draw(PGraphics g, float u1, float u2) {                
-      boolean inRange = (0 <= u1 && u1 <= 1 && 0 <= u2 && u2 <= 1);
-        if (!inRange) {
-            u1 = Path.remainder(u1, 1.0f);
-            u2 = Path.remainder(u2, 1.0f);
-        }
-        style.apply(g);
-        drawHelper(g, u1, u2);
+        draw(g, u1, u2, false);
     }
     
     private void drawHelper(PGraphics g, float u1, float u2) {
@@ -809,26 +822,9 @@ public abstract class Path implements Drawable {
      * @return An array of Paths
      */
     public static Path[] getOneOfEachPathType(float r) {
-        Path[] paths = new Path[] {
-            new Arc(0, 0, r),
-            new Blender(new Circle(0, 0, r), new Rect(0, 0, r, r, RADIUS), 0.5f, 100),
-            new Circle(0, 0, r),
-            new Composite(new Circle(0, 0, r), new Rect(0, 0, r, r, RADIUS)),
-            new CubicBezier(0, 0, r),
-            new Ellipse(0, 0, r),  
-            new Gesture(),
-            new InfinitySymbol(0, 0, r),
-            new Line(0, 0, r),
-            new Lissajous(0, 0, r),
-            new Plot(0, 0, r),
-            new Rect(0, 0, r, r, RADIUS),
-            new Rose(0, 0, r),
-            new Segment(0, 0, r),
-            new Shape(0, 0, r),
-            new Superellipse(0, 0, r),
-            new Supershape(0, 0, r)
-        };
-        return paths;
+        ArrayList<Path> paths = new ArrayList<Path>();
+        addOneOfEachPathType(r, paths);
+        return paths.toArray(new Path[] {});
     }
     
     /**
@@ -840,9 +836,9 @@ public abstract class Path implements Drawable {
      */
     public static void addOneOfEachPathType(float r, ArrayList<Path> paths) {
         paths.add(new Arc(0, 0, r));
-        paths.add(new Blender(new Circle(0, 0, r), new Rect(0, 0, r, r, RADIUS), 0.5f, 100));
+        paths.add(new Blender(new Circle(0, 0, r), new InfinitySymbol(0, 0, r), 0.7f, 100));
         paths.add(new Circle(0, 0, r));
-        paths.add(new Composite(new Circle(0, 0, r), new Rect(0, 0, r, r, RADIUS)));
+        paths.add(new Composite(new Rect(-r, -r, 0.75f*r, 0.75f*r, CORNER), new Rect(0, 0, 0.75f*r, 0.75f*r, CORNER)));
         paths.add(new CubicBezier(0, 0, r));
         paths.add(new Ellipse(0, 0, r));
         paths.add(new Gesture(0, 0, r));
