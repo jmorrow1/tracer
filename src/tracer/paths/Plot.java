@@ -77,7 +77,7 @@ public class Plot extends Path {
      * @param plot The plot to copy
      */
     public Plot(Plot plot) {
-        this.rect = plot.rect;
+        this.rect = (Rect) plot.rect.clone();
         this.xs = plot.xs;
         this.ys = plot.ys;
         setSampleCount(plot.sampleCount);
