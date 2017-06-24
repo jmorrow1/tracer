@@ -108,14 +108,11 @@ public class Rect extends Path {
     public void set(Point ab, Point cd, int rectMode) {
         switch (rectMode) {
             case CORNERS:
-                this.ab = ab;
-                this.cd = cd;
-                break;
             case CORNER:
             case CENTER:
             case RADIUS:
                 this.ab = ab;
-                this.cd = new Point(cd);
+                this.cd = cd;
                 break;
             default:
                 System.err.println("Invalid rectMode. Use CORNERS, CORNER, CENTER, or RADIUS.");
@@ -465,13 +462,26 @@ public class Rect extends Path {
     public float getLength() {
         return perimeter;
     }
+    
+    /**
+     * 
+     * @return
+     */
+    public int getRectMode() {
+       return rectMode; 
+    }
 
     @Override
     public String toString() {
         return "Rect [ab=" + ab + ", cd=" + cd + ", rectMode=" + rectModeToString(rectMode) + "]";
     }
     
-    private static String rectModeToString(int rectMode) {
+    /**
+     * 
+     * @param rectMode
+     * @return
+     */
+    public static String rectModeToString(int rectMode) {
         switch (rectMode) {
             case CORNER : return "CORNER";
             case CENTER: return "CENTER";

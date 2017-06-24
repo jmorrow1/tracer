@@ -143,14 +143,11 @@ public class Ellipse extends Path {
     public void set(Point ab, Point cd, int ellipseMode) {
         switch (ellipseMode) {
             case CORNERS:
-                this.ab = ab;
-                this.cd = cd;
-                break;
             case CORNER:
             case CENTER:
             case RADIUS:
                 this.ab = ab;
-                this.cd = new Point(cd);
+                this.cd = cd;
                 break;
             default:
                 System.err.println("Invalid ellipseMode. Use CORNERS, CORNER, CENTER, or RADIUS.");
@@ -228,6 +225,22 @@ public class Ellipse extends Path {
     @Override
     public void setCenter(float x, float y) {
          translate(x - getCenx(), y - getCeny());
+    }
+    
+    /**
+     * 
+     * @param ab
+     */
+    public void setAB(Point ab) {
+        this.ab = ab;
+    }
+    
+    /**
+     * 
+     * @param cd
+     */
+    public void setCD(Point cd) {
+        this.cd = cd;
     }
 
     /*******************
@@ -451,6 +464,22 @@ public class Ellipse extends Path {
                 return -1;
         }
     }
+    
+    /**
+     * 
+     * @return
+     */
+    public Point getAB() {
+        return ab;
+    }
+    
+    /**
+     * 
+     * @return
+     */
+    public Point getCD() {
+        return cd;
+    }
 
     @Override
     public int getGapCount() {
@@ -461,13 +490,21 @@ public class Ellipse extends Path {
     public float getGap(int i) {
         return -1;
     }
+    
+    /**
+     * 
+     * @return
+     */
+    public int getEllipseMode() {
+        return ellipseMode;
+    }
 
     @Override
     public String toString() {
         return "Ellipse [ab=" + ab + ", cd=" + cd + ", ellipseMode=" + ellipseModeToString(ellipseMode) + "]";
     }
     
-    private static String ellipseModeToString(int ellipseMode) {
+    public static String ellipseModeToString(int ellipseMode) {
         switch (ellipseMode) {
             case CORNER : return "CORNER";
             case CENTER: return "CENTER";
