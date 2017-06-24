@@ -223,6 +223,14 @@ public class Arc extends Path {
         this.cd = cd;
     }
     
+    /**
+     * 
+     * @param ellipseMode
+     */
+    public void setEllipseMode(int ellipseMode) {
+        this.ellipseMode = ellipseMode;
+    }
+    
     /*******************
      ***** Getters *****
      *******************/

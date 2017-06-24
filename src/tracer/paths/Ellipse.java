@@ -227,6 +227,14 @@ public class Ellipse extends Path {
     public void setCD(Point cd) {
         this.cd = cd;
     }
+    
+    /**
+     * 
+     * @param ellipseMode
+     */
+    public void setEllipseMode(int ellipseMode) {
+        this.ellipseMode = ellipseMode;
+    }
 
     /*******************
      ***** Getters *****

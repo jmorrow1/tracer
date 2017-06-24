@@ -102,8 +102,7 @@ public class ProportionalityTest extends PApplet {
         }
     }
     
-    private void drawSegments() {
-        
+    private void drawSegments() {        
         int cellWidth = width / rowSize;
         int cellHeight = height / colSize;
         for (int i=0; i<rowSize; i++) {

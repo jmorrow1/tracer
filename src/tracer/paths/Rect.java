@@ -300,6 +300,15 @@ public class Rect extends Path {
     public void setCD(Point cd) {
         this.cd = cd;
     }
+    
+    /**
+     * 
+     * @param rectMode
+     */
+    public void setRectMode(int rectMode) {
+        this.rectMode = rectMode;
+        computeHelperFields();
+    }
 
     /*******************
      ***** Getters *****
