@@ -339,7 +339,7 @@ public class CubicBezier extends Path {
         if (getGapCount() == 1 && i == 0) {
             return 0;
         } else {
-            return -1;
+            throw new IndexOutOfBoundsException(this.getClass().toString() + ".getGap(" + i + ")");
         }
     }
 

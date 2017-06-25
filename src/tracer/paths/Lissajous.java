@@ -246,7 +246,7 @@ public class Lissajous extends Path {
     @Override
     public float getGap(int i) {
         if (isClosed() || i != 0) {
-            return -1;
+            throw new IndexOutOfBoundsException(this.getClass().toString() + ".getGap(" + i + ")");
         }
         else {
             return 0;

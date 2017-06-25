@@ -204,7 +204,7 @@ public class Circle extends Path {
 
     @Override
     public float getGap(int i) {
-        return -1;
+        throw new IndexOutOfBoundsException(this.getClass().toString() + ".getGap(" + i + ")");
     }
     
     @Override

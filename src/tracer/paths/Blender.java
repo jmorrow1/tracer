@@ -254,7 +254,7 @@ public class Blender<T extends Path, U extends Path> extends Path {
             }
         }
 
-        return -1;
+        throw new IndexOutOfBoundsException(this.getClass().toString() + ".getGap(" + i + ")");
     }
     
     @Override

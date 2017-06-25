@@ -97,7 +97,12 @@ public class TranslatedPath<T extends Path> extends Path {
 
     @Override
     public float getGap(int i) {
-        return path.getGap(i);
+        try {
+            return path.getGap(i);
+        }
+        catch (ArrayIndexOutOfBoundsException e) {
+            throw new IndexOutOfBoundsException(this.getClass().toString() + ".getGap(" + i + ")");
+        }
     }
     
     /**

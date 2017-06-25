@@ -233,7 +233,12 @@ public class Plot extends Path {
 
     @Override
     public float getGap(int i) {
-        return 0;
+        if (i == 0) {
+            return 0;
+        }
+        else {
+            throw new IndexOutOfBoundsException(this.getClass().toString() + ".getGap(" + i + ")");
+        }
     }
 
     @Override

@@ -475,7 +475,7 @@ public class Arc extends Path {
             return 0;
         }
         else {
-            return -1;
+            throw new IndexOutOfBoundsException(this.getClass().toString() + ".getGap(" + i + ")");
         }
     }
     

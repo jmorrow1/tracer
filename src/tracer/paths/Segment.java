@@ -134,11 +134,7 @@ public class Segment extends Path {
     }
     
     @Override
-    public float getGap(int i) {
-        if (u1 == u2) {
-            return 0;
-        }
-        
+    public float getGap(int i) {        
         if (!reversed) {
             for (int j=0; j<parent.getGapCount(); j++) {
                 float gap = parent.getGap(j);
@@ -166,7 +162,7 @@ public class Segment extends Path {
             }
         }
       
-        return -1;
+        throw new IndexOutOfBoundsException(this.getClass().toString() + ".getGap(" + i + ")");
     }
     
     /**
