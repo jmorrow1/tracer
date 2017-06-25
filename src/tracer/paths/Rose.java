@@ -125,30 +125,6 @@ public class Rose extends Path {
     
     /**
      * 
-     * @param cen the center of the path
-     */
-    public void setCenter(Point cen) {
-        this.cen = cen;
-    }
-    
-    /**
-     * 
-     * @param cenx the center x-coordinate
-     */
-    public void setCenx(float cenx) {
-        this.cen.x = cenx;
-    }
-    
-    /**
-     * 
-     * @param ceny the center y-coordinate
-     */
-    public void setCeny(float ceny) {
-        this.cen.y = ceny;
-    }
-    
-    /**
-     * 
      * @param xRadius half of the width
      */
     public void setXRadius(float xRadius) {
@@ -182,6 +158,14 @@ public class Rose extends Path {
     @Override
     public void setCenter(float x, float y) {
         this.cen.set(x, y);
+    }
+    
+    /**
+     * 
+     * @param cen the center of the path
+     */
+    public void setCenter(Point cen) {
+        this.cen = cen;
     }
     
     /*******************

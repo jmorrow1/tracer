@@ -108,22 +108,6 @@ public class Lissajous extends Path {
     }
     
     /**
-     * Sets the x-coordinate of the center of the Path.
-     * @param x the x-coordinate
-     */
-    public void setX(float x) {
-        this.cen.x = x;
-    }
-    
-    /**
-     * Sets the y-coordinate of the center of the Path.
-     * @param y the y-coordinate
-     */
-    public void setY(float y) {
-        this.cen.y = y;
-    }
-    
-    /**
      * Sets the width of the Path.
      * @param width The width
      */
@@ -172,19 +156,27 @@ public class Lissajous extends Path {
      * 
      * @param pt
      */
-    public void setCenter(Point pt) {
-        this.cen = pt;
+    public void setCenter(Point cen) {
+        this.cen = cen;
     }
     
     /*******************
      ***** Getters *****
      *******************/
+    
+    /**
+     * 
+     * @return
+     */
+    public Point getCenter() {
+        return cen;
+    }
 
     /**
      * Gives the x-coordinate of the center of the Path.
      * @return the x-coordinate
      */
-    public float getX() {
+    public float getCenx() {
         return cen.x;
     }
 
@@ -192,7 +184,7 @@ public class Lissajous extends Path {
      * Gives the y-coordinate of the center of the Path.
      * @return the y-coordinate
      */
-    public float getY() {
+    public float getCeny() {
         return cen.y;
     }
 

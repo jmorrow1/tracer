@@ -113,22 +113,6 @@ public class InfinitySymbol extends Path {
     
     /**
      * 
-     * @param cenx the center x-coordinate
-     */
-    public void setCenx(float cenx) {
-        this.cen.x = cenx;
-    }
-    
-    /**
-     * 
-     * @param ceny the center y-coordinate
-     */
-    public void setCeny(float ceny) {
-        this.cen.y = ceny;
-    }
-    
-    /**
-     * 
      * @param xRadius half the width
      */
     public void setXRadius(float xRadius) {
