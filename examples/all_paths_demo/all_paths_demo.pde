@@ -20,26 +20,29 @@ int rowSize = 5;
 int colSize = 4;
 
 //draw mode
-int drawMode = 2;
-boolean synchronizeTracing;
-boolean drawSegments;
+boolean synchronizeTracing; //control with '1' key
+boolean drawSegments; //control with '2' keys
 
 void settings() {
   size(rowSize*cellSize, colSize*cellSize, P2D);
 }
 
 void setup() {
-  applyDrawMode();
-  printDrawMode();
-  
-  paths = createPaths(0.4 * cellSize);
+  printDrawMode(); 
+  createPaths();
+  tracers = createTracers(paths);
+}
+
+void createPaths() {
+  paths = new ArrayList<Path>();
+  float pathRadius = 0.4 * cellSize;
+  Path.addOneOfEachPathType(pathRadius, paths);
   for (Path p : paths) {
     p.setStrokeWeight(1.5f);
     p.setStrokeColor(0);
     p.setFill(false);
   }
   reposition(paths, cellSize);
-  tracers = createTracers(paths);
 }
 
 ArrayList<Tracer> createTracers(ArrayList<Path> paths) {
@@ -49,28 +52,6 @@ ArrayList<Tracer> createTracers(ArrayList<Path> paths) {
     tracers.add(new Tracer(p, 0, tracerSpeed));
   }
   return tracers;
-}
-
-ArrayList<Path> createPaths(float r) {
-  ArrayList<Path> paths = new ArrayList<Path>();
-  paths.add(new Arc(0, 0, r));
-  paths.add(new Blender(new Circle(0, 0, r), new InfinitySymbol(0, 0, r), 0.7, 100));
-  paths.add(new Circle(0, 0, r));
-  paths.add(new Composite(new Rect(-r, -r, 0.75*r, 0.75*r, CORNER), new Rect(0, 0, 0.75*r, 0.75*r, CORNER)));
-  paths.add(new CubicBezier(0, 0, r));
-  paths.add(new Ellipse(0, 0, r));
-  paths.add(new Gesture(0, 0, r));
-  paths.add(new InfinitySymbol(0, 0, r));
-  paths.add(new Line(0, 0, r));
-  paths.add(new Lissajous(0, 0, r));
-  paths.add(new Plot(0, 0, r));
-  paths.add(new Rect(0, 0, r));
-  paths.add(new Rose(0, 0, r));
-  paths.add(new Segment(0, 0, r));
-  paths.add(new Shape(0, 0, r));
-  paths.add(new Superellipse(0, 0, r));
-  paths.add(new Supershape(0, 0, r));
-  return paths;
 }
 
 void reposition(ArrayList<Path> paths, int cellSize) {
@@ -141,33 +122,21 @@ void mouseMoved() {
   }
 }
 
-void mousePressed() {
-  drawMode = (drawMode+1) % 4;
-  setup();
-}
 
-void applyDrawMode() {
-  switch (drawMode) {
-    case 0 : 
-      synchronizeTracing = true;
-      drawSegments = true;
+void keyPressed() {
+  switch (key) {
+    case '1' : 
+      synchronizeTracing = !synchronizeTracing;
+      println(synchronizeTracing ? "Tracing speeds are synchronized " : "Tracing speeds are asynchronized (dependent on path length)");
       break;
-    case 1 : 
-      synchronizeTracing = true;
-      drawSegments = false;
-      break;
-    case 2 : 
-      synchronizeTracing = false;
-      drawSegments = false;
-      break;
-    case 3 :
-      synchronizeTracing = false;
-      drawSegments = true;
+    case '2' : 
+      drawSegments = !drawSegments;
+      println(drawSegments ? "Drawing segments." : "Drawing paths");
       break;
   }
 }
 
 void printDrawMode() {
-  print(synchronizeTracing ? "Tracing speeds are synchronized " : "Tracing speeds are asynchronized on Path lengths ");
+  print(synchronizeTracing ? "Tracing speeds are synchronized " : "Tracing speeds are asynchronized (dependent on path length)");
   println(drawSegments ? "and Path segments are being drawn." : "and Paths are being drawn.");
 }
