@@ -106,12 +106,6 @@ public class Superellipse extends Path {
         target.y = cen.y + PApplet.pow(PApplet.abs(sinTheta), twoOverN) * yRadius * sign(sinTheta);
     }
 
-    @Override
-    public void draw(PGraphics g) {
-        style.apply(g);
-        draw(g, sampleCount);
-    }
-
     private static int sign(float x) {
         if (x > 0) {
             return 1;

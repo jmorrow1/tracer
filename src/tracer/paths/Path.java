@@ -81,37 +81,23 @@ public abstract class Path implements Drawable {
      * @param g A PGraphics object on which to draw the path
      */
     public void draw(PGraphics g) {
-        if (sampleCount > 0) {
-            style.apply(g);
-            draw(g, sampleCount);
-        }
-    }
-    
-    /**
-     * Draws the path by approximating it with a given number of sample points,
-     * and then connecting those points with lines.
-     * 
-     * <br>
-     * <br>
-     * 
-     * This is a useful shortcut for classes that implement IPath to use. It
-     * allows an IPath to define its proper display method in terms of this
-     * function.
-     * 
-     * @param pa The PApplet to which the path is drawn.
-     * @param sampleCount The number of sample points.
-     */
-    public void draw(PGraphics g, int sampleCount) {
         style.apply(g);
-        float amt = 0;
-        float dAmt = 1f / sampleCount;
-        g.beginShape();
-        for (int i = 0; i < sampleCount + 1; i++) {
-            trace(bufferPoint, amt);
-            g.vertex(bufferPoint.x, bufferPoint.y);
-            amt += dAmt;
+        
+        if (getGapCount() == 0) {
+            float amt = 0;
+            float dAmt = 1f / sampleCount;
+            g.beginShape();
+            for (int i = 0; i <= sampleCount; i++) {
+                trace(bufferPoint, amt);
+                g.vertex(bufferPoint.x, bufferPoint.y);
+                amt += dAmt;
+            }
+            g.endShape();
         }
-        g.endShape();
+        else {
+            draw(g, 0, ALMOST_ONE);
+        }
+        
     }
     
     /**
@@ -186,7 +172,7 @@ public abstract class Path implements Drawable {
                     u = (u + du) % 1f;
                 }
                 trace(bufferPoint, u2);
-                g.vertex(bufferPoint.x, bufferPoint.y);
+                g.vertex(bufferPoint.x, bufferPoint.y); //TODO is this necessary?
                 g.endShape();
             }
             else {
@@ -251,50 +237,7 @@ public abstract class Path implements Drawable {
      */
     public final Shape derivePath(float[] us) {
         return Shape.derivePath(this, us);
-    }
-
-    /**
-     * Creates a segment of the path starting at trace(u1) and ending at
-     * trace(u2);
-     * 
-     * @param u1 The 1D coordinate of the segment's start, a value within [0, 1)
-     * @param u2 The 1D coordinate of the segment's end, a value within [0, 1)
-     * @return The segment
-     */
-    //TODO WORK IN PROGRESS
-    public Shape createSegment(float u1, float u2) {
-        boolean inRange = (0 <= u1 && u1 < 1 && 0 <= u2 && u2 < 1);
-        if (!inRange) {
-            throw new IllegalArgumentException(Path.class.getName() + ".draw(g, " + u1 + ", " + u2 + ") called with values outside in the range [0, 1).");
-        }
-
-        return new Shape(createSegmentPoints(u1, u2));
-    }
-
-    //TODO WORK IN PROGRESS
-    private ArrayList<Point> createSegmentPoints(float u1, float u2) {
-        if (u1 > u2) {
-            ArrayList<Point> pts = new ArrayList<Point>();
-            pts.addAll(createSegmentPoints(u1, 1));
-            pts.addAll(createSegmentPoints(0, u2));
-            return pts;
-        } else {
-            float length = PApplet.abs(u1 - u2);
-            int n = (int) (sampleCount * length);
-            float du = length / n;
-
-            ArrayList<Point> pts = new ArrayList<Point>();
-
-            float u = u1;
-            for (int i = 0; i < n; i++) {
-                trace(bufferPoint, u);
-                pts.add(new Point(bufferPoint));
-                u = (u + du) % 1f;
-            }
-
-            return pts;
-        }
-    }
+    }    
     
     /**
      * Sets the style of the Path.

@@ -215,7 +215,7 @@ public class Composite<T extends Path, U extends Path> extends Path {
         int bGapCount = b.getGapCount();
         
         if (i == 0) {
-            return a.getGap(0);
+            return 0;
         }
         else if (aGapCount > 0 && a.getGap(0) == 0) {
             if (i < aGapCount) {

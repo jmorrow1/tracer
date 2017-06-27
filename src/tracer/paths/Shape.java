@@ -92,15 +92,22 @@ public class Shape extends Path {
      ***** Behavior *****
      ********************/
     
-    @Override
-    public void draw(PGraphics g) {
-        style.apply(g);
+    public void draw(PGraphics g, boolean disableStyle) {
+        if (!disableStyle) {
+            style.apply(g);
+        }
+            
         g.beginShape();
         for (int i = 0; i < vertices2D.size(); i++) {
             Point pt = vertices2D.get(i);
             g.vertex(pt.x, pt.y);
         }
         g.endShape();
+    }
+    
+    @Override
+    public void draw(PGraphics g) {
+        draw(g, false);
     }
     
     @Override
@@ -487,5 +494,38 @@ public class Shape extends Path {
             u += du;
         }
         return new Shape(pts);
+    }
+    
+    /**
+     * Creates a segment of the path starting at trace(u1) and ending at
+     * trace(u2);
+     * 
+     * @param u1 The 1D coordinate of the segment's start, a value within [0, 1)
+     * @param u2 The 1D coordinate of the segment's end, a value within [0, 1)
+     * @return The segment
+     */
+    public Shape createSegment(float u1, float u2) {       
+        u1 = Path.remainder(u1, 1.0f);
+        u2 = Path.remainder(u2, 1.0f);
+        
+        if (u2 < u1) {
+            float temp = u1;
+            u1 = u2;
+            u2 = temp;
+        }
+
+        Shape shape = new Shape();
+        shape.addVertex(this.trace(u1));
+        for (int i=0; i<this.vertices2D.size(); i++) {
+            float vtx1D = vertices1D.get(i);
+            Point vtx2D = vertices2D.get(i);
+            
+            if (u1 < vtx1D && vtx1D < u2) {
+                shape.addVertex(vtx2D.clone());
+            }
+        }       
+        shape.addVertex(this.trace(u2));
+        
+        return shape;
     }
 }

@@ -99,6 +99,16 @@ public class Point {
         x += pt.x;
         y += pt.y;
     }
+    
+    /**
+     * 
+     * @param x
+     * @param y
+     */
+    public void add(float x, float y) {
+        this.x += x;
+        this.y += y;
+    }
 
     /**
      * Divide this point by a given divisor.

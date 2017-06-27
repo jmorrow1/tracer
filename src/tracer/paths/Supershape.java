@@ -149,12 +149,6 @@ public class Supershape extends Path {
         return (part3 != 0) ? 1f / part3 : 0;
     }
 
-    @Override
-    public void draw(PGraphics g) {
-        style.apply(g);
-        draw(g, sampleCount);
-    }
-    
     private static int sign(float x) {
         if (x > 0)
             return 1;
