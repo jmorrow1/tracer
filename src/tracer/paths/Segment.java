@@ -71,16 +71,7 @@ public class Segment extends Path {
                 v -= 1.0f;
             }
             parent.trace(target, v);
-        }
-            
-        
-    }
-    
-    @Override
-    public void draw(PGraphics g) {
-        super.draw(g); //<-- placeholder
-        
-        //TODO
+        }   
     }
     
     /******************
@@ -146,6 +137,8 @@ public class Segment extends Path {
     
     @Override
     public float getGap(int i) {
+        int originalIndex = i;
+        
         if (i == 0) {
             return 0;
         }
@@ -170,7 +163,7 @@ public class Segment extends Path {
             }
         }
       
-        throw new IndexOutOfBoundsException(this.getClass().toString() + ".getGap(" + i + ")");
+        throw new IndexOutOfBoundsException(this.getClass().toString() + ".getGap(" + originalIndex + ")");
     }
     
     /**

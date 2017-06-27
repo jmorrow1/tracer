@@ -331,7 +331,7 @@ public class Shape extends Path {
             return 0;
         }
         else {
-            return 0;
+            return 1;
         }
     }
 
