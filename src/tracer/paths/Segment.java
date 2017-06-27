@@ -136,7 +136,7 @@ public class Segment extends Path {
         
         for (int j=0; j<parent.getGapCount(); j++) {
             float gap = parent.getGap(j);
-            if (u1 < gap && gap < u2) {
+            if ((u1 < gap && gap < u2) || ((u1 > u2) && (u1 < gap || u2 > gap))) {
                 count++;
             }
         } 
@@ -149,33 +149,23 @@ public class Segment extends Path {
         if (i == 0) {
             return 0;
         }
-        else {
+        else if (i > 0) {
             i--;
-        }
-        
-        if (!reversed) {
             for (int j=0; j<parent.getGapCount(); j++) {
                 float gap = parent.getGap(j);
                 if (u1 < gap && gap < u2) {
                     if (i == 0) {
-                        return gap;
+                        return PApplet.map(gap, u1, u2, 0.0f, 1.0f);
                     }
                     i--;
                 }
-            }
-        }
-        else {
-            for (int j=parent.getGapCount()-1; j>=0; j--) {
-                float gap = parent.getGap(j);
-                if (u1 < gap && gap < u2) {
-                    if (i == 0) {
-                        gap = 1.0f - gap;
-                        if (gap == 1.0f) {
-                            gap = 0.0f;
-                        }
-                        return gap;
+                else if (u1 > u2) {
+                    if (u1 < gap) {
+                        return PApplet.map(gap, u1, u2+1.0f, 0.0f, 1.0f);
                     }
-                    i--;
+                    else if (gap < u2) {
+                        return PApplet.map(gap, u1-1.0f, u2, 0.0f, 1.0f);
+                    }
                 }
             }
         }
