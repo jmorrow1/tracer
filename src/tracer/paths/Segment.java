@@ -13,8 +13,8 @@ import tracer.Point;
  *
  */
 public class Segment extends Path {
-    protected float u1, u2;
-    protected Path parent;
+    private float u1, u2;
+    private Path parent;
     
     /**************************
      ***** Initialization *****
@@ -61,8 +61,19 @@ public class Segment extends Path {
     public void trace(Point target, float u) {
         u = Path.remainder(u, 1.0f);
         
-        float v = reversed ? PApplet.map(u, 0, 1, u2, u1) : PApplet.map(u, 0, 1, u1, u2);
-        parent.trace(target, v);
+        if (u1 < u2) {
+            float v = PApplet.map(u, 0, 1, u1, u2);
+            parent.trace(target, v);
+        }
+        else {
+            float v = PApplet.map(u, 0, 1, u1, 1.0f + u2);
+            if (v >= 1.0f) {
+                v -= 1.0f;
+            }
+            parent.trace(target, v);
+        }
+            
+        
     }
     
     @Override
@@ -119,7 +130,7 @@ public class Segment extends Path {
     public int getGapCount() {
         int count = 0;
         
-        if (u1 == u2) {
+        if (u1 != u2) {
             count++;
         }
         
@@ -134,7 +145,14 @@ public class Segment extends Path {
     }
     
     @Override
-    public float getGap(int i) {        
+    public float getGap(int i) {
+        if (i == 0) {
+            return 0;
+        }
+        else {
+            i--;
+        }
+        
         if (!reversed) {
             for (int j=0; j<parent.getGapCount(); j++) {
                 float gap = parent.getGap(j);
