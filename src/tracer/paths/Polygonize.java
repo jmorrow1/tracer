@@ -62,26 +62,27 @@ public class Polygonize {
      * 
      * @param cenx
      * @param ceny
-     * @param half_width
-     * @param half_height
+     * @param halfWidth
+     * @param halfHeight
      * @param numVertices
      * @param startAngle
      * @return
      */
-    public static Shape makePolygon(float cenx, float ceny, float half_width, float half_height, int numVertices,
-            float startAngle) {
+    public static Shape makePolygon(float cenx, float ceny, float halfWidth,
+            float halfHeight, int numVertices, float startAngle) {
         if (numVertices > 0) {
             float theta = startAngle;
             float dTheta = PApplet.TWO_PI / numVertices;
             Point[] vertices = new Point[numVertices + 1];
             for (int i = 0; i < numVertices; i++) {
-                vertices[i] = new Point(cenx + half_width * PApplet.cos(theta),
-                        ceny + half_height * PApplet.sin(theta));
+                vertices[i] = new Point(cenx + halfWidth * PApplet.cos(theta),
+                        ceny + halfHeight * PApplet.sin(theta));
                 theta += dTheta;
             }
             vertices[numVertices] = vertices[0].clone();
             return new Shape(vertices);
-        } else {
+        } 
+        else {
             return new Shape(new Point[] {});
         }
     }
@@ -130,12 +131,12 @@ public class Polygonize {
      * 
      * @param cenx
      * @param ceny
-     * @param half_width
-     * @param half_height
+     * @param halfWidth
+     * @param halfHeight
      * @param angles
      * @return
      */
-    public static Shape makePolygon(float cenx, float ceny, float half_width, float half_height, float[] angles) {
+    public static Shape makePolygon(float cenx, float ceny, float halfWidth, float halfHeight, float[] angles) {
         if (angles.length != 0) {
             angles = PApplet.sort(angles);
             int n = angles.length;
@@ -143,8 +144,9 @@ public class Polygonize {
 
             int i = 0;
             while (i < n) {
-                vertices[i] = new Point(cenx + half_width * PApplet.cos(angles[i]),
-                        ceny + half_height * PApplet.sin(angles[i]));
+                vertices[i] = new Point(cenx + halfWidth * PApplet.cos(angles[i]),
+                        ceny + halfHeight * PApplet.sin(angles[i]));
+                i++;
             }
             vertices[i] = vertices[0].clone();
             return new Shape(vertices);

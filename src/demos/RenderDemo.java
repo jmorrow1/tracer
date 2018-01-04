@@ -4,10 +4,10 @@ import java.util.ArrayList;
 
 import processing.core.PApplet;
 import tracer.Tracer;
-import tracer.experimental.RenderMetaBalls;
 import tracer.paths.Circle;
 import tracer.paths.Path;
 import tracer.renders.Render;
+import tracer.renders.RenderMesh;
 
 public class RenderDemo extends PApplet {
     
@@ -48,9 +48,8 @@ public class RenderDemo extends PApplet {
         }
         
         //create render
-//        render = new RenderMesh(metatracers, 100);
+        render = new RenderMesh(metatracers, 100);
 //        render = new RenderVoronoi(metatracers);
-        render = new RenderMetaBalls(metatracers);
         render.setFillColor(color(40));
         render.setStroke(false);
         render.setStrokeWeight(2);
