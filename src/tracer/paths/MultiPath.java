@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 
 import processing.core.PApplet;
+import processing.core.PGraphics;
 import tracer.Point;
 
 public class MultiPath extends Path {
@@ -35,10 +36,10 @@ public class MultiPath extends Path {
                 x + r1 * PApplet.cos(a1),
                 y + r1 * PApplet.sin(a1));
         
-        paths.add(arc1);
-        paths.add(ln1);
         paths.add(arc2);
         paths.add(ln2);
+        paths.add(arc1);
+        paths.add(ln1);
         computePathEndPts1D();
     }
     
@@ -88,13 +89,12 @@ public class MultiPath extends Path {
             }
         }
     }
-
+    
     /******************
      ***** Events *****
      ******************/
-    
-    //TODO Maybe come up with a better name:
-    public void make1DProportionalTo2D() {
+
+    public void makeProportional() {
         computePathEndPts1D();
     }
     
@@ -126,7 +126,11 @@ public class MultiPath extends Path {
     
     @Override
     public Path clone() {
-        return new MultiPath(paths);
+        ArrayList<Path> pathCopies = new ArrayList<Path>();
+        for (Path path : paths) {
+            pathCopies.add(path.clone());
+        }
+        return new MultiPath(pathCopies);
     }
 
     @Override

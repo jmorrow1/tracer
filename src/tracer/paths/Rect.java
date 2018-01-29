@@ -280,7 +280,7 @@ public class Rect extends Path {
     /**
      * 
      */
-    public void make1DProportionalTo2D() {
+    public void makeProportional() {
         computeHelperFields();
     }
     

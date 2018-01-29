@@ -15,6 +15,8 @@ public class MultiShape extends Path {
      ***** Initialization *****
      **************************/
     
+    public MultiShape() {}
+    
     public MultiShape(float x, float y, float r) {
         Random rng = new Random();
         
@@ -108,8 +110,7 @@ public class MultiShape extends Path {
      ***** Events *****
      ******************/
     
-    //TODO Maybe come up with a better name:
-    public void make1DProportionalTo2D() {
+    public void makeProportional() {
         computePathEndPts1D();
     }
 

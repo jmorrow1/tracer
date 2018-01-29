@@ -212,12 +212,11 @@ public class Shape extends Path {
         vertices2D.set(i, pt);
         computeVertices1D();
     }
-    
-    //TODO Maybe come up with a better name:
+
     /**
      * 
      */
-    public void make1DProportionalTo2D() {
+    public void makeProportional() {
         computeVertices1D();
     }
     
