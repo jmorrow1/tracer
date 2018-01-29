@@ -795,7 +795,8 @@ public abstract class Path implements Drawable {
         paths.add(new Shape(0, 0, r));
         paths.add(new Superellipse(0, 0, r));
         paths.add(new Supershape(0, 0, r));
-        paths.add(new Multipath(0, 0, r));
+        paths.add(new MultiPath(0, 0, r));
+        paths.add(new MultiShape(0, 0, r));
     }
     
     /**

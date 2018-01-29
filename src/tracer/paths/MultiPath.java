@@ -6,7 +6,7 @@ import java.util.Collection;
 import processing.core.PApplet;
 import tracer.Point;
 
-public class Multipath extends Path {
+public class MultiPath extends Path {
 
     private ArrayList<Path> paths = new ArrayList<Path>();
     private ArrayList<Float> pathEndPts1D = new ArrayList<Float>();
@@ -15,7 +15,7 @@ public class Multipath extends Path {
      ***** Initialization *****
      **************************/
     
-    public Multipath(float x, float y, float r) {
+    public MultiPath(float x, float y, float r) {
         float a1 = 0.5f * PI;
         float a2 = 1.75f * PI;
         float r1 = 0.5f * r;
@@ -42,10 +42,12 @@ public class Multipath extends Path {
         computePathEndPts1D();
     }
     
-    public Multipath(Collection<Path> paths) {
+    public MultiPath(Collection<Path> paths) {
         this.paths.addAll(paths);
         computePathEndPts1D();
     }
+    
+    public MultiPath() {}
     
     private void computePathEndPts1D() {
         pathEndPts1D.clear();
@@ -124,7 +126,7 @@ public class Multipath extends Path {
     
     @Override
     public Path clone() {
-        return new Multipath(paths);
+        return new MultiPath(paths);
     }
 
     @Override
