@@ -4,10 +4,6 @@ import processing.core.PApplet;
 import processing.core.PGraphics;
 import tracer.Point;
 
-//TODO Could add an (optional) optimization where, when getting points from the T path and the U path,
-//the Blender has the T and U paths return their closest cached points which approximate the desired points
-//rather than interpolate between cached points.
-
 /**
  * A path that interpolates between two aggregate paths.
  * 

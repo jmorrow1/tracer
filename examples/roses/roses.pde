@@ -15,6 +15,7 @@ int freq1 = 3;
 int freq2 = 5;
 int n = 20;
 float speed = 0.0004;
+int minDist = 90;
 
 //draw mode
 final static int MESH = 0, CLIQUE = 1, SHP = 2, VORONOI = 3;
@@ -47,7 +48,7 @@ void setup() {
 void switchRenderMode() {
   switch (renderMode) {
     case MESH :
-      RenderMesh r = new RenderMesh(tracers, 90);
+      RenderMesh r = new RenderMesh(tracers, minDist);
       r.setStrokeRamp(80);
       r.setStrokeWeight(4);
       render = r;

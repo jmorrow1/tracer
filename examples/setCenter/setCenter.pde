@@ -4,7 +4,7 @@ import tracer.paths.*;
 int bgColor = #ffffff;
 int strokeColor = #000000;
 int fillColor = #444444;
-float strokeWeight = 2;
+float strokeWeight = 4;
 int strokeCap = ROUND;
 
 //paths
@@ -22,7 +22,7 @@ void setup() {
 
 void style(Path[] paths) {
   for (Path p : paths) {
-    p.setFillColor(fillColor);
+    p.setFill(false);
     p.setStrokeColor(strokeColor);
     p.setStrokeWeight(strokeWeight);
     p.setStrokeCap(strokeCap);
