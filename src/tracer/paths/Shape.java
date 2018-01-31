@@ -407,16 +407,6 @@ public class Shape extends Path {
     /******************
      ***** Static *****
      ******************/
-    
-    //TODO Add exception handling if file is corrupted
-    /**
-     * 
-     * @param json
-     * @return
-     */
-    public static Shape toPath(JSONObject json) {
-        return new Shape(Point.toPoints(json.getJSONArray("vertices")));
-    }
 
     /**
      * Blends two Paths and makes a Shape.

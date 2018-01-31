@@ -383,43 +383,7 @@ public class Point {
             pt.step(dt);
         }
     }
-    
-    //TODO Add exception handling if file is corrupted
-    /**
-     * 
-     * @param json
-     * @return
-     */
-    public static Point toPoint(JSONObject json) {
-        return new Point(json.getFloat("x"), json.getFloat("y"));
-    }
-    
-    //TODO Add exception handling if file is corrupted
-    /**
-     * 
-     * @param json
-     * @return
-     */
-    public static ArrayList<Point> toPoints(JSONArray json) {
-        ArrayList<Point> pts = new ArrayList<Point>();
-        for (int i=0; i<json.size(); i++) {
-            pts.add(toPoint(json.getJSONObject(i)));
-        }
-        return pts;
-    }
-    
-    /**
-     * 
-     * @param pt
-     * @return
-     */
-    public static JSONObject toJSON(Point pt) {
-        JSONObject json = new JSONObject();
-        json.setFloat("x", pt.x);
-        json.setFloat("y", pt.y);
-        return json;
-    }
-    
+  
     /**
      * 
      * Compares Points by comparing their x-values.

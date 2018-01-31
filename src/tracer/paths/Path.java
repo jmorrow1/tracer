@@ -6,7 +6,6 @@ import java.util.Collection;
 import processing.core.PApplet;
 import processing.core.PGraphics;
 import processing.core.PStyle;
-import processing.data.JSONArray;
 import processing.data.JSONObject;
 import tracer.Drawable;
 import tracer.Point;
@@ -797,25 +796,6 @@ public abstract class Path implements Drawable {
         paths.add(new Supershape(0, 0, r));
         paths.add(new MultiPath(0, 0, r));
         paths.add(new MultiShape(0, 0, r));
-    }
-    
-    /**
-     * 
-     * @param path
-     * @return
-     */
-    public static JSONObject toJSON(Path path) {
-        JSONObject json = new JSONObject();
-        JSONArray vertices = new JSONArray();        
-        float u = 0;
-        float du = 1.0f / path.getSampleCount();
-        for (int i=0; i<path.getSampleCount(); i++) {           
-            path.trace(bufferPoint, u);
-            vertices.setJSONObject(i, Point.toJSON(bufferPoint));
-            u = (u+du) % 1.0f;
-        }       
-        json.setJSONArray("vertices", vertices);
-        return json;
     }
     
     /**
