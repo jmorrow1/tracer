@@ -1,4 +1,4 @@
-ease
-paths
-render
 tracer
+tracer.easings
+tracer.paths
+tracer.renders
