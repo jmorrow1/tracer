@@ -33,21 +33,22 @@ public class Tracing extends PApplet {
 
     Point pt = new Point(0, 0);
     float u = 0;
-    int cellSize = 100;
+    int cellSize = 200;
 
     public static void main(String[] args) {
         PApplet.main("demos.Tracing");
     }
 
     public void settings() {
-        size(600, 600, P2D);
+        size(1200, 600, P2D);
     }
 
     public void setup() {
         paths = initList();
         Path.addOneOfEachPathType(0.4f * cellSize, paths);
+        paths.remove(4);
         for (Path p : paths) {
-            p.setStrokeWeight(1.5f);
+            p.setStrokeWeight(3f);
             p.setStrokeColor(0);
             p.setFill(false);
         }
@@ -105,7 +106,7 @@ public class Tracing extends PApplet {
         noFill();
         t.draw(g);
 
-        strokeWeight(6);
+        strokeWeight(10);
         t.trace(pt, u);
         point(pt.x, pt.y);
     }
